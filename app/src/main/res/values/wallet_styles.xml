@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="WalletAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="WalletTabLayoutTextStyle" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14dp</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="WalletCommonButton">
+        <item name="android:layout_width">330dp</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:background">@drawable/wallet_shape_button</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/wallet_white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+</resources>

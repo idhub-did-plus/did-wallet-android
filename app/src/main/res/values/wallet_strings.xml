@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">idhub</string>
+    <string name="wallet_tab_me">我的</string>
+    <string name="wallet_tab_wallet">钱包</string>
+    <string name="wallet_tab_dapp">Dapp</string>
+    <string name="wallet_tab_history">历史</string>
+    <string name="wallet_identity_create">创建身份</string>
+    <string name="wallet_identity_recovery">恢复身份</string>
+    <string name="wallet_identity_import">导入身份</string>
+    <string name="wallet_back">返回</string>
+    <string name="wallet_password_warning_top">密码用于加密保护私钥，以及转账、调用合约等，所以强度非常重要。</string>
+    <string name="wallet_password_warning_bottom">idhub不存储密码，也无法帮您找回，请务必牢记。</string>
+    <string name="wallet_wallet_name">钱包名称</string>
+    <string name="wallet_password">密码</string>
+    <string name="wallet_password_again">重复密码</string>
+    <string name="wallet_password_tip">密码提示信息</string>
+    <string name="wallet_create">创建</string>
+    <string name="wallet_create_wallet">创建钱包</string>
+    <string name="wallet_backup_hint">备份提示</string>
+    <string name="wallet_backup_mnemonic">备份助记词</string>
+    <string name="wallet_offline_manager">离线保管</string>
+    <string name="wallet_backup_hint_top">获得助记词等于拥有钱包资产所有权</string>
+    <string name="wallet_backup_hint_first_1">使用纸和笔正确抄写助记词</string>
+    <string name="wallet_backup_hint_first_2">如果你的手机丢失、被盗、损坏，助记词将可以回复你的资产</string>
+    <string name="wallet_backup_hint_two_1">妥善保管至隔离网络的安全地方</string>
+    <string name="wallet_backup_hint_two_2">请勿将助记词在联网环境下分享和存储，比如邮件、相册、社交应用</string>
+    <string name="wallet_backup_preview_hint">请准备抄写并安全备份助记词</string>
+    <string name="wallet_backup_confirm_hint">请按顺序点击助记词，以确认您正确备份</string>
+    <string name="wallet_next">下一步</string>
+    <string name="wallet_finish">完成</string>
+</resources>

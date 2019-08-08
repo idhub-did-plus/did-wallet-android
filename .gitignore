@@ -1,0 +1,20 @@
+*.iml
+.gradle
+/local.properties
+.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+
+# built application files
+*.apk
+*.ap_
+
+project.properties
+
+# Java class files
+*.class
+
+# files for the dex VM
+*.dex

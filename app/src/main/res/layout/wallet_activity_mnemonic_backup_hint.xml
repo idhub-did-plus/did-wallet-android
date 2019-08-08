@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".identitymanager.identitycreate.MnemonicBackupHintActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/wallet_common_title_layout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_backup_hint_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/wallet_backup_hint"
+        android:textColor="@color/wallet_black"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <TextView
+        android:id="@+id/tv_backup_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="@string/wallet_backup_hint_top"
+        android:textColor="@color/wallet_text_grey"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_backup_hint_title" />
+
+    <TextView
+        android:id="@+id/tv_backup_first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_backup_mnemonic"
+        app:layout_constraintTop_toBottomOf="@id/tv_backup_top" />
+
+    <TextView
+        android:id="@+id/tv_backup_first_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_backup_hint_first_1"
+        app:layout_constraintTop_toBottomOf="@id/tv_backup_first" />
+
+    <TextView
+        android:id="@+id/tv_backup_first_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_backup_hint_first_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_backup_first_1" />
+
+    <TextView
+        android:id="@+id/tv_backup_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_offline_manager"
+        app:layout_constraintTop_toBottomOf="@id/tv_backup_first_2" />
+
+    <TextView
+        android:id="@+id/tv_backup_two_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_backup_hint_two_1"
+        app:layout_constraintTop_toBottomOf="@id/tv_backup_two" />
+
+    <TextView
+        android:id="@+id/tv_backup_two_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wallet_backup_hint_two_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_backup_two_1" />
+
+    <TextView
+        android:id="@+id/tv_create"
+        style="@style/WalletCommonButton"
+        android:layout_marginBottom="14dp"
+        android:text="@string/wallet_next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</android.support.constraint.ConstraintLayout>
