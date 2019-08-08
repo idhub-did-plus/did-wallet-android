@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.TitleLayout;
+import com.idhub.wallet.common.title.TitleLayout;
 
 public class InputPasswordActivity extends AppCompatActivity {
 

@@ -14,6 +14,7 @@
     <color name="wallet_orange">#fed601</color>
     <color name="wallet_hint">#DFDFDF</color>
     <color name="wallet_edittext_color">#63727d</color>
+    <color name="wallet_background">#f0f5f3</color>
 
 
 </resources>

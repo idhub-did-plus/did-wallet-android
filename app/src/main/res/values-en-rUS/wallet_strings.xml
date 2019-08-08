@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">idhub</string>
-    <string name="wallet_tab_me">Me</string>
-    <string name="wallet_tab_wallet">Wallet</string>
-    <string name="wallet_tab_dapp">Dapp</string>
-    <string name="wallet_tab_history">History</string>
+    <string name="wallet_me">Me</string>
+    <string name="wallet_wallet">Wallet</string>
+    <string name="wallet_dapp">Dapp</string>
+    <string name="wallet_history">History</string>
     <string name="wallet_identity_create">create</string>
     <string name="wallet_identity_recovery">recover</string>
     <string name="wallet_identity_import">import</string>

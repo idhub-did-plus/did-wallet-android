@@ -1,9 +1,10 @@
 package com.idhub.wallet;
 
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.idhub.wallet.common.tablayout.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,11 +28,12 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         int tabCount = tabLayout.getTabCount();
-//        if (tabCount == 3) {
-//            tabLayout.getTabAt(0).setIcon(R.drawable.basic_home_icon);
-//            tabLayout.getTabAt(1).setIcon(R.drawable.basic_bill_icon);
-//            tabLayout.getTabAt(2).setIcon(R.drawable.basic_my_icon);
-//        }
+        if (tabCount == 4) {
+            tabLayout.getTabAt(0).setIcon(R.drawable.wallet_me_icon);
+            tabLayout.getTabAt(1).setIcon(R.drawable.wallet_wallet_icon);
+            tabLayout.getTabAt(2).setIcon(R.drawable.wallet_dapp_icon);
+            tabLayout.getTabAt(3).setIcon(R.drawable.wallet_history_icon);
+        }
 
     }
 

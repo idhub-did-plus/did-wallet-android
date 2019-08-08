@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TabLayout">
+        <attr name="wallet_tabIndicatorAnimation" format="boolean" />
+        <attr name="wallet_tabIndicatorColor" format="color" />
+        <attr name="wallet_tabIndicatorHeight" format="dimension" />
+        <attr name="wallet_tabIndicatorWidth" format="dimension" />
+        <attr name="wallet_tabContentStart" format="dimension" />
+        <attr name="wallet_tabBackground" format="reference" />
+        <attr name="wallet_tabMode">
+            <enum name="scrollable" value="0" />
+            <enum name="fixed" value="1" />
+        </attr>
+        <attr name="wallet_tabGravity">
+            <enum name="fill" value="0" />
+            <enum name="center" value="1" />
+        </attr>
+        <attr name="wallet_tabMinWidth" format="dimension" />
+        <attr name="wallet_tabMaxWidth" format="dimension" />
+        <attr name="wallet_tabTextAppearance" format="reference" />
+        <attr name="wallet_tabTextColor" format="color" />
+        <attr name="wallet_tabSelectedTextColor" format="color" />
+        <attr name="wallet_tabTextSize" format="dimension" />
+        <attr name="wallet_tabPaddingStart" format="dimension" />
+        <attr name="wallet_tabPaddingTop" format="dimension" />
+        <attr name="wallet_tabPaddingEnd" format="dimension" />
+        <attr name="wallet_tabPaddingBottom" format="dimension" />
+        <attr name="wallet_tabPadding" format="dimension" />
+        <attr name="wallet_indicatorMarginTop" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="TabItem">
+        <attr name="android:text" />
+        <attr name="android:icon" />
+        <attr name="android:layout" />
+    </declare-styleable>
+
+</resources>

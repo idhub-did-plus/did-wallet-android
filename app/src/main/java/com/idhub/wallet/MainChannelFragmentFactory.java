@@ -12,13 +12,13 @@ public class MainChannelFragmentFactory {
     private static String TAG = MainChannelFragmentFactory.class.getName();
 
     public static Fragment createChannelFragment(Context context,String title) {
-        if (context.getResources().getString(R.string.wallet_tab_me).equals(title)) {
+        if (context.getResources().getString(R.string.wallet_me).equals(title)) {
             return new MeFragment();
-        } else if (context.getResources().getString(R.string.wallet_tab_wallet).equals(title)) {
+        } else if (context.getResources().getString(R.string.wallet_wallet).equals(title)) {
             return new WalletFragment();
-        } else if (context.getResources().getString(R.string.wallet_tab_dapp).equals(title)) {
+        } else if (context.getResources().getString(R.string.wallet_dapp).equals(title)) {
             return new DappFragment();
-        } else if (context.getResources().getString(R.string.wallet_tab_history).equals(title)) {
+        } else if (context.getResources().getString(R.string.wallet_history).equals(title)) {
             return new HositoryFragment();
         } else {
             return new MeFragment();

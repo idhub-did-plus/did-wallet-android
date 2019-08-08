@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DappFragment extends Fragment {
+public class DappFragment extends MainBaseFragment {
 
 
     public DappFragment() {
@@ -27,4 +28,8 @@ public class DappFragment extends Fragment {
         return inflater.inflate(R.layout.wallet_fragment_dapp, container, false);
     }
 
+    @Override
+    protected void loadData() {
+
+    }
 }

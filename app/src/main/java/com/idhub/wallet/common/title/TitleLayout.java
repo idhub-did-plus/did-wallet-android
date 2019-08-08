@@ -1,4 +1,4 @@
-package com.idhub.wallet.common;
+package com.idhub.wallet.common.title;
 
 import android.app.Activity;
 import android.content.Context;
@@ -59,6 +59,11 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
     public void setOnClickListener(OnClickListener onClickListener) {
         mBackImageView.setOnClickListener(onClickListener);
         mBackTextView.setOnClickListener(onClickListener);
+    }
+
+    public void setBackImg(int resId){
+        mBackImageView.setImageResource(resId);
+        mBackTextView.setVisibility(INVISIBLE);
     }
 
     public void setTitle(String title) {

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">idhub</string>
-    <string name="wallet_tab_me">我的</string>
-    <string name="wallet_tab_wallet">钱包</string>
-    <string name="wallet_tab_dapp">Dapp</string>
-    <string name="wallet_tab_history">历史</string>
+    <string name="wallet_me">我的</string>
+    <string name="wallet_wallet">钱包</string>
+    <string name="wallet_dapp">Dapp</string>
+    <string name="wallet_history">历史</string>
     <string name="wallet_identity_create">创建身份</string>
     <string name="wallet_identity_recovery">恢复身份</string>
     <string name="wallet_identity_import">导入身份</string>
@@ -28,4 +28,14 @@
     <string name="wallet_backup_confirm_hint">请按顺序点击助记词，以确认您正确备份</string>
     <string name="wallet_next">下一步</string>
     <string name="wallet_finish">完成</string>
+    <string name="wallet_assets">资产</string>
+    <string name="wallet_wallet_select">钱包选择</string>
+    <string name="wallet_wallet_manager">钱包管理</string>
+    <string name="wallet_import">导入</string>
+    <string name="wallet_cancel">取消</string>
+    <string name="wallet_manager">管理</string>
+    <string name="wallet_export_mnemonic">导出助记词</string>
+    <string name="wallet_export_keystore">导出Keystore</string>
+    <string name="wallet_export_private_key">导出私钥</string>
+
 </resources>

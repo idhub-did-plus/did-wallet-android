@@ -9,18 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/WalletAppTheme">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".identitymanager.IdentityManagerActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".identitymanager.IdentityManagerActivity" />
         <activity android:name=".identitymanager.identitycreate.InputPasswordActivity" />
         <activity android:name=".identitymanager.identitycreate.MnemonicBackupHintActivity" />
         <activity android:name=".identitymanager.identitycreate.MnemonicBackupPreviewActivity" />
-        <activity android:name=".identitymanager.identitycreate.MnemonicBackupConfirmActivity"></activity>
+        <activity android:name=".identitymanager.identitycreate.MnemonicBackupConfirmActivity" />
+        <activity android:name=".wallet.walletsetting.WalletSettingActivity" />
+        <activity android:name=".wallet.manager.WalletManagerActivity"></activity>
     </application>
 
 </manifest>

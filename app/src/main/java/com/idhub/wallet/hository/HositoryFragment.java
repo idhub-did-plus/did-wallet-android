@@ -7,12 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HositoryFragment extends Fragment {
+public class HositoryFragment extends MainBaseFragment {
 
 
     public HositoryFragment() {
@@ -27,4 +28,8 @@ public class HositoryFragment extends Fragment {
         return inflater.inflate(R.layout.wallet_fragment_hository, container, false);
     }
 
+    @Override
+    protected void loadData() {
+
+    }
 }
