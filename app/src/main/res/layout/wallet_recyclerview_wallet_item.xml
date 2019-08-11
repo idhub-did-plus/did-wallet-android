@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.idhub.wallet.wallet.WalletRecyclerViewItem xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_margin="12dp"
+    android:background="@drawable/wallet_shape_wallet_card">
+
+
+    <ImageView
+        android:id="@+id/iv_wallet_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:src="@mipmap/wallet_detail_menu"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_wallet_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/wallet_white"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="ETH-Wallet" />
+
+    <TextView
+        android:id="@+id/tv_wallet_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:textColor="@color/wallet_white"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_wallet_name"
+        tools:text="0xqefslkfjsflksehfs...dskjfhskfh" />
+
+    <TextView
+        android:id="@+id/tv_wallet_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/wallet_white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:text="0.00" />
+
+    <TextView
+        android:id="@+id/tv_ein_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/wallet_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:text="EIN_NUMBER" />
+
+    <TextView
+        android:id="@+id/tv_ein_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:textColor="@color/wallet_white"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_ein_number"
+        tools:text="0xqefslkfjsflksehfs...dskjfhskfh" />
+
+</com.idhub.wallet.wallet.WalletRecyclerViewItem>

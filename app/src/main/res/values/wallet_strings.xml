@@ -33,9 +33,29 @@
     <string name="wallet_wallet_manager">钱包管理</string>
     <string name="wallet_import">导入</string>
     <string name="wallet_cancel">取消</string>
+    <string name="wallet_confirm">确认</string>
     <string name="wallet_manager">管理</string>
     <string name="wallet_export_mnemonic">导出助记词</string>
     <string name="wallet_export_keystore">导出Keystore</string>
+    <string name="wallet_keystore">Keystore</string>
+    <string name="wallet_QR_code">二维码</string>
     <string name="wallet_export_private_key">导出私钥</string>
-
+    <string name="wallet_private_key">私钥</string>
+    <string name="wallet_please_input_password">请输入密码</string>
+    <string name="wallet_offline_save">离线保存</string>
+    <string name="wallet_offline_save_tip">切勿保存至邮箱、笔记本、网盘、聊天工具等，非常危险</string>
+    <string name="wallet_do_not_use_network_transmission">请勿使用网络传输</string>
+    <string name="wallet_do_not_use_network_transmission_tip">请勿通过网络工具传输，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过扫二维码方式传输。</string>
+    <string name="wallet_password_manager_tool_save">密码管理工具保存</string>
+    <string name="wallet_password_manager_tool_save_tip">建议使用密码管理工具管理</string>
+    <string name="wallet_copy_keystore">复制 Keystore</string>
+    <string name="wallet_copy_private_key">复制 Private Key</string>
+    <string name="wallet_scanning_only">仅供直接扫描</string>
+    <string name="wallet_use_in_safe_environment">在安全环境下使用</string>
+    <string name="wallet_use_in_safe_environment_tip">二维码禁止保存、截图、以及拍照。仅供用户在安全环境下直接扫描来方便的导入钱包</string>
+    <string name="wallet_scanning_only_tip">请在确保四周无人及无摄像头的情况下使用。二维码一旦被他人获取将造成不可挽回的资产损失</string>
+    <string name="wallet_show_QR_code">显示二维码</string>
+    <string name="wallet_main_asserts_manager">首页资产管理</string>
+    <string name="wallet_my_asserts_manager">我的资产管理</string>
+    <string name="wallet_hot_asserts">热门资产</string>
 </resources>

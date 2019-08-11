@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.idhub.wallet.wallet.token.TokenManagerItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_token_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="12dp"
+        android:src="@mipmap/wallet_eth_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_token_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/iv_token_icon"
+        app:layout_constraintTop_toTopOf="@id/iv_token_icon"
+        tools:text="ETH" />
+
+    <TextView
+        android:id="@+id/tv_token_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/wallet_text_grey"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/iv_token_icon"
+        app:layout_constraintTop_toBottomOf="@id/tv_token_name"
+        tools:text="0xadasdadasdasd" />
+
+    <ImageView
+        android:id="@+id/iv_token_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:padding="10dp"
+        tools:src="@mipmap/wallet_add_assets"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/wallet_line_gray"
+        app:layout_constraintTop_toBottomOf="@id/iv_token_icon" />
+</com.idhub.wallet.wallet.token.TokenManagerItemView>

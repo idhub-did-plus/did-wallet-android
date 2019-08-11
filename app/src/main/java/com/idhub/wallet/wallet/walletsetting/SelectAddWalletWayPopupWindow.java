@@ -40,11 +40,10 @@ public class SelectAddWalletWayPopupWindow extends PopupWindow implements View.O
                 InputPasswordActivity.startAction(mContxt);
                 break;
             case R.id.tv_import:
-
                 break;
             case R.id.tv_cancel:
-                dismiss();
                 break;
         }
+        dismiss();
     }
 }

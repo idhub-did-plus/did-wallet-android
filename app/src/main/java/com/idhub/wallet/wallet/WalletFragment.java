@@ -11,6 +11,7 @@ import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
+import com.idhub.wallet.wallet.token.TokenManagerActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,11 +43,11 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
                 //展示钱包列表
                 WalletListDialogFragment walletListDialog = new WalletListDialogFragment();
                 if (getFragmentManager() != null) {
-                    walletListDialog.show(getFragmentManager(),"wallet_dialog_fragment");
+                    walletListDialog.show(getFragmentManager(), "wallet_dialog_fragment");
                 }
             }
         });
-        view.findViewById(R.id.iv_wallet_menu).setOnClickListener(this);
+        view.findViewById(R.id.add_token).setOnClickListener(this);
     }
 
     @Override
@@ -56,10 +57,10 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.iv_wallet_menu:
-                WalletManagerActivity.startAction(getContext());
+        switch (v.getId()) {
+            case R.id.add_token:
+                //go to add token
+                TokenManagerActivity.startAction(getContext());
                 break;
         }
     }
