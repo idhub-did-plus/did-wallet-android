@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.qrCode.QRCodeScanActivity;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 import com.idhub.wallet.wallet.token.TokenManagerActivity;
@@ -45,6 +46,12 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
                 if (getFragmentManager() != null) {
                     walletListDialog.show(getFragmentManager(), "wallet_dialog_fragment");
                 }
+            }
+        });
+        titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_qrcode_scan, new TitleLayout.OnImageClickCallbackListener() {
+            @Override
+            public void onImageClick() {
+                QRCodeScanActivity.startAction(getContext());
             }
         });
         view.findViewById(R.id.add_token).setOnClickListener(this);

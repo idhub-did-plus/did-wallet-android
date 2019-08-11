@@ -58,4 +58,6 @@
     <string name="wallet_main_asserts_manager">首页资产管理</string>
     <string name="wallet_my_asserts_manager">我的资产管理</string>
     <string name="wallet_hot_asserts">热门资产</string>
+    <string name="wallet_send">转账</string>
+    <string name="wallet_receive">收款</string>
 </resources>
