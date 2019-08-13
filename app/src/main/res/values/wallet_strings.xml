@@ -60,4 +60,9 @@
     <string name="wallet_hot_asserts">热门资产</string>
     <string name="wallet_send">转账</string>
     <string name="wallet_receive">收款</string>
+    <string name="wallet_designated_amount">指定金额</string>
+    <string name="wallet_mnemonic_order_error">助记词顺序不正确，请校对</string>
+    <string name="network_not_avail">网络不可用，请检查手机网络设置</string>
+    <string name="network_error">网络出错了！</string>
+    <string name="network_timeout">网络请求超时</string>
 </resources>

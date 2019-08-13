@@ -1,5 +1,7 @@
 package com.idhub.wallet.identitymanager;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +16,11 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_activity_identity_manager);
         initView();
+    }
+
+    public static void startAction(Context context) {
+        Intent intent = new Intent(context, IdentityManagerActivity.class);
+        context.startActivity(intent);
     }
 
     private void initView() {

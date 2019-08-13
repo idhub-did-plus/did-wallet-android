@@ -1,5 +1,7 @@
 package com.idhub.wallet;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +21,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.wallet_activity_main);
         initView();
         // Example of a call to a native method
+    }
+
+    public static void startAction(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
     }
 
     private void initView() {

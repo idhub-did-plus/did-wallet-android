@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.idhub.wallet.common.loading.LoadingAndErrorView
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/bg"></View>
+    <LinearLayout
+        android:id="@+id/content_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateDuration="1000"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_gravity="center"
+            android:id="@+id/progressbar"
+            android:indeterminateDrawable="@drawable/wallet_loading_progress_rotate"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_view"
+            android:visibility="gone"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:minHeight="40dp"
+            android:textSize="14sp"
+            android:id="@+id/text_view"
+            android:textColor="@color/wallet_text_grey"
+            android:visibility="gone"/>
+    </LinearLayout>
+</com.idhub.wallet.common.loading.LoadingAndErrorView>
+
+    <!--<ProgressBar-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:indeterminateDuration="1500"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:indeterminateDrawable="@drawable/exchange_loading_progress_rotate"/>-->

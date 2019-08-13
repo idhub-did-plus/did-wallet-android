@@ -80,7 +80,7 @@
         app:layout_constraintTop_toBottomOf="@id/tv_backup_two_1" />
 
     <TextView
-        android:id="@+id/tv_create"
+        android:id="@+id/tv_next"
         style="@style/WalletCommonButton"
         android:layout_marginBottom="14dp"
         android:text="@string/wallet_next"

@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import com.idhub.wallet.dapp.DappFragment;
 import com.idhub.wallet.hository.HositoryFragment;
 import com.idhub.wallet.me.MeFragment;
-import com.idhub.wallet.wallet.WalletFragment;
+import com.idhub.wallet.wallet.mainfragment.WalletFragment;
 
 public class MainChannelFragmentFactory {
     private static String TAG = MainChannelFragmentFactory.class.getName();
