@@ -1,4 +1,4 @@
-package com.idhub.wallet.identitymanager.identitycreate;
+package com.idhub.wallet.createmanager.walletcreate;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.didhub.model.MnemonicAndPath;
+import com.idhub.wallet.common.title.TitleLayout;
 
 public class MnemonicBackupHintActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -17,13 +17,24 @@ public class MnemonicBackupHintActivity extends AppCompatActivity implements Vie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_activity_mnemonic_backup_hint);
-        findViewById(R.id.tv_next).setOnClickListener(this);
-        mMnemonic = getIntent().getStringExtra("data");
+        initView();
     }
 
-    public static void startAction(Context context, String mnemonic) {
+    private void initView() {
+        findViewById(R.id.tv_next).setOnClickListener(this);
+        mMnemonic = getIntent().getStringExtra("data");
+        String id = getIntent().getStringExtra("id");
+//        TitleLayout titleLayout = findViewById(R.id.title);
+//        titleLayout.setBackImgVisible(View.INVISIBLE);
+//        titleLayout.setFirstTextAndClickCallBack("稍后备份", ()->{
+////            finish();
+//        });
+    }
+
+    public static void startAction(Context context, String mnemonic,String id) {
         Intent intent = new Intent(context, MnemonicBackupHintActivity.class);
         intent.putExtra("data", mnemonic);
+        intent.putExtra("id", id);
         context.startActivity(intent);
     }
 
@@ -32,8 +43,12 @@ public class MnemonicBackupHintActivity extends AppCompatActivity implements Vie
         int id = v.getId();
         switch (id) {
             case R.id.tv_next:
-                MnemonicBackupPreviewActivity.startAction(MnemonicBackupHintActivity.this,mMnemonic);
+                MnemonicBackupPreviewActivity.startAction(MnemonicBackupHintActivity.this, mMnemonic);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

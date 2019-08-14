@@ -27,29 +27,18 @@ public class DidHubIdentify {
         identify = this;
     }
 
-    public static DidHubIdentify createIdentity(String name, String password, String passwordHit) {
-
-    List<String> mnemonicCodes = MnemonicUtil.randomMnemonicCodes();
-//        List<String> mnemonicCodes = new ArrayList<>();
-//        mnemonicCodes.add("promote");
-//        mnemonicCodes.add("coach");
-//        mnemonicCodes.add("trophy");
-//        mnemonicCodes.add("term");
-//        mnemonicCodes.add("camera");
-//        mnemonicCodes.add("bean");
-//        mnemonicCodes.add("rotate");
-//        mnemonicCodes.add("project");
-//        mnemonicCodes.add("wave");
-//        mnemonicCodes.add("gentle");
-//        mnemonicCodes.add("amused");
-//        mnemonicCodes.add("prefer");
-
+    public static DidHubIdentify createIdentity(String name, String password, String passwordHit, List<String> mnemonicCodes) {
         Wallet wallet = new Wallet();
         wallet.setName(name);
         wallet.setPasswordHint(passwordHit);
         DidHubIdentify identity = new DidHubIdentify(wallet, mnemonicCodes, password);
         identify = identity;
         return identity;
+    }
+
+    public static DidHubIdentify createIdentity(String name, String password, String passwordHit) {
+        List<String> mnemonicCodes = MnemonicUtil.randomMnemonicCodes();
+        return createIdentity(name, password, passwordHit, mnemonicCodes);
     }
 
     private static DidHubIdentify tryLoadFromFile() {
@@ -61,11 +50,15 @@ public class DidHubIdentify {
 //            DidHubKeyStore keystore = mapper.readValue(file, DidHubKeyStore.class);
 //            return new DidHubIdentify(keystore);
 //        } catch (IOException ignored) {
-            return null;
+        return null;
 //        }
     }
 
-    public DidHubKeyStore getKeyStore(){
-        return mDidHubKeyStore;
+    public DidHubKeyStore getKeyStore() {
+        if (identify != null) {
+            return mDidHubKeyStore;
+        } else {
+            return null;
+        }
     }
 }

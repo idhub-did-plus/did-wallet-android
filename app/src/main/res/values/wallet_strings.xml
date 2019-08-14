@@ -60,9 +60,15 @@
     <string name="wallet_hot_asserts">热门资产</string>
     <string name="wallet_send">转账</string>
     <string name="wallet_receive">收款</string>
+    <string name="wallet_change_assets">更换资产</string>
     <string name="wallet_designated_amount">指定金额</string>
     <string name="wallet_mnemonic_order_error">助记词顺序不正确，请校对</string>
     <string name="network_not_avail">网络不可用，请检查手机网络设置</string>
     <string name="network_error">网络出错了！</string>
     <string name="network_timeout">网络请求超时</string>
+    <string name="network_transaction">交易</string>
+    <string name="network_input_amount">输入金额</string>
+    <string name="network_receive_address">收款地址</string>
+    <string name="network_input_address">输入以太坊地址或ENS域名</string>
+    <string name="network_gas_amount">旷工费用</string>
 </resources>

@@ -1,13 +1,14 @@
-package com.idhub.wallet.identitymanager;
+package com.idhub.wallet.createmanager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.identitymanager.identitycreate.InputPasswordActivity;
+import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 
 public class IdentityManagerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,8 +33,16 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
         int id = v.getId();
         switch (id) {
             case R.id.tv_identity_create:
-                InputPasswordActivity.startAction(this);
+               InputPasswordActivity.startActionForResult(this,100);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            finish();
         }
     }
 }

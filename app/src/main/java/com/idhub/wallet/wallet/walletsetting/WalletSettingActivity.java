@@ -2,6 +2,7 @@ package com.idhub.wallet.wallet.walletsetting;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,5 +59,13 @@ public class WalletSettingActivity extends AppCompatActivity {
         WalletSettingListAdapter walletSettingListAdapter = new WalletSettingListAdapter(this);
         walletSettingListAdapter.addDatas(didHubKeyStores);
         recyclerView.setAdapter(walletSettingListAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            finish();
+        }
     }
 }

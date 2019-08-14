@@ -11,15 +11,10 @@ import android.os.Bundle;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.createmanager.IdentityManagerActivity;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.identitymanager.identitycreate.InputPasswordActivity;
+import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 import com.idhub.wallet.utils.ToastUtils;
-
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -37,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
         if (walletNum > 0) {
             MainActivity.startAction(SplashActivity.this);
         } else {
-            InputPasswordActivity.startAction(SplashActivity.this);
+            IdentityManagerActivity.startAction(SplashActivity.this);
         }
         finish();
     }

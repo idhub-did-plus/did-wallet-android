@@ -7,10 +7,12 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class ApiResultEntity<T> {
-    @SerializedName("status")
-    public int status;
-    @SerializedName("msg")
-    public String msg;
-    @SerializedName("biz")
-    public ApiServiceEntity<T> biz;
+    @SerializedName("jsonrpc")
+    public String jsonrpc;
+    @SerializedName("id")
+    public int id;
+    @SerializedName("result")
+    public T result;
+    @SerializedName("error")
+    public ErrorEntity error;
 }

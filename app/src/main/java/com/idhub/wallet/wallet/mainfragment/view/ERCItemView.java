@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.wallet.mainfragment.model.AssetsModel;
 
 public class ERCItemView extends ConstraintLayout {
 
@@ -25,8 +24,12 @@ public class ERCItemView extends ConstraintLayout {
         mAssetsAmount = findViewById(R.id.tv_assets_amount);
     }
 
-    public void setData(AssetsModel assetsModel) {
-        mAssetsName.setText(assetsModel.getName());
-        mAssetsAmount.setText(assetsModel.getBalance());
+    public void setName(String name) {
+        mAssetsName.setText(name);
+    }
+
+    public void setBalance(String balance){
+        mAssetsAmount.setText(balance);
+
     }
 }

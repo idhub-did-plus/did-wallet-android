@@ -1,4 +1,4 @@
-package com.idhub.wallet.identitymanager.identitycreate;
+package com.idhub.wallet.createmanager.walletcreate;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.flowlayout.FlowLayout;
 import com.idhub.wallet.common.flowlayout.TagAdapter;
 import com.idhub.wallet.common.flowlayout.TagFlowLayout;
-import com.idhub.wallet.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

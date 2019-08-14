@@ -66,6 +66,10 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
         mBackTextView.setVisibility(INVISIBLE);
     }
 
+    public void setBackImgVisible(int visibility){
+        mBackImageView.setVisibility(visibility);
+        mBackTextView.setVisibility(visibility);
+    }
     public void setTitle(String title) {
         mTitleView.setText(title);
     }

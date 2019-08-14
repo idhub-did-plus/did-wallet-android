@@ -4,15 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Toast;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.dialog.InputPasswordDialogFragment;
+import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.wallet.export.ExportWalletContentActivity;
 
-public class WalletManagerActivity extends AppCompatActivity implements View.OnClickListener, InputPasswordDialogFragment.InputPasswordDialogFragmentListener {
+public class WalletManagerActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
     private WalletManagerItem mExportMnemonic;
     private WalletManagerItem mExportKeystore;
@@ -56,21 +57,18 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
     }
 
     private void showPasswordDialog(String data) {
-        InputPasswordDialogFragment inputPasswordDialogFragment = new InputPasswordDialogFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("data", data);
-        inputPasswordDialogFragment.setArguments(bundle);
-        inputPasswordDialogFragment.show(getSupportFragmentManager(), "input_password_dialog_fragment");
+        InputDialogFragment instance = InputDialogFragment.getInstance(data,getString(R.string.wallet_please_input_password),InputType.TYPE_CLASS_TEXT);
+        instance.show(getSupportFragmentManager(), "input_dialog_fragment");
     }
 
     @Override
-    public void inputPasswordConfirm(String password, String data) {
+    public void inputConfirm(String data,String source) {
         //check password
-        Toast.makeText(this, "" + password, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "" + data, Toast.LENGTH_SHORT).show();
         if (data.equals("mnemonic")) {
 
         } else {
-            ExportWalletContentActivity.startAction(WalletManagerActivity.this, data);
+            ExportWalletContentActivity.startAction(WalletManagerActivity.this, source);
         }
     }
 }

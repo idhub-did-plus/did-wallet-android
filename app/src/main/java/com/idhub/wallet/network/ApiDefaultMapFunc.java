@@ -14,16 +14,15 @@ import rx.functions.Func1;
 public class ApiDefaultMapFunc<T> implements Func1<ApiResultEntity<T>, T>{
     @Override
     public T call(ApiResultEntity<T> apiResult) {
-//        Log.e("nyl",apiResult.status+"    "+apiResult.msg);
-        if (apiResult.status != 200) {
-            handleError(apiResult.status);
-            throw new ApiResultException(apiResult.status, apiResult.msg);
+        T result = apiResult.result;
+        ErrorEntity error = apiResult.error;
+        if (result != null) {
+            return result;
+        } else if (error != null) {
+            throw new ApiResultException(error.code, error.message);
+        }else {
+            throw new ApiResultException(0, "网络请求出错");
         }
-        ApiServiceEntity apiService = apiResult.biz;
-        if (apiService.code != 200){
-            throw new ApiServiceException(apiService.code,apiService.msg);
-        }
-        return (T) apiService.data;
     }
 
     private void handleError(int errorCode){

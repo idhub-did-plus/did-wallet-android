@@ -8,25 +8,39 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.idhub.wallet.R;
 
-public class InputPasswordDialogFragment extends DialogFragment implements View.OnClickListener {
+public class InputDialogFragment extends DialogFragment implements View.OnClickListener {
 
-    private InputPasswordDialogFragmentListener mInputPasswordDialogFragmentListener;
+    private InputDialogFragmentListener mInputPasswordDialogFragmentListener;
     private EditText mPasswordEditText;
     private String mData;
+    private String mTitle;
+    private TextView mTitleView;
+    private int mInputType;
 
+    public static InputDialogFragment getInstance(String source,String title,int type){
+        InputDialogFragment inputPasswordDialogFragment = new InputDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("source", source);
+        bundle.putString("title", title);
+        bundle.putInt("type", type);
+        inputPasswordDialogFragment.setArguments(bundle);
+        return inputPasswordDialogFragment;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mInputPasswordDialogFragmentListener = (InputPasswordDialogFragmentListener) context;
+            mInputPasswordDialogFragmentListener = (InputDialogFragmentListener) context;
         } catch (Exception e) {
             throw new ClassCastException(((Activity) context).toString() + " must implementon MyDialogFragment_Listener");
         }
@@ -37,15 +51,20 @@ public class InputPasswordDialogFragment extends DialogFragment implements View.
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mData = bundle.getString("data");
+            mData = bundle.getString("source");
+            mTitle = bundle.getString("title");
+            mInputType = bundle.getInt("type");
         }
-        View view = inflater.inflate(R.layout.wallet_fragment_dialog_input_password, container, false);
+        View view = inflater.inflate(R.layout.wallet_fragment_dialog_input, container, false);
         Window window = getDialog().getWindow();
         if (window != null)
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         view.findViewById(R.id.tv_cancel).setOnClickListener(this);
         view.findViewById(R.id.tv_confirm).setOnClickListener(this);
+        mTitleView = view.findViewById(R.id.tv_title);
+        mTitleView.setText(mTitle);
         mPasswordEditText = view.findViewById(R.id.et_password);
+        mPasswordEditText.setInputType(mInputType);
         return view;
     }
 
@@ -59,15 +78,17 @@ public class InputPasswordDialogFragment extends DialogFragment implements View.
             case R.id.tv_confirm:
                 String password = mPasswordEditText.getText().toString();
                 if (mInputPasswordDialogFragmentListener != null) {
-                    mInputPasswordDialogFragmentListener.inputPasswordConfirm(password,mData);
+                    mInputPasswordDialogFragmentListener.inputConfirm(password,mData);
                 }
                 dismiss();
                 break;
         }
     }
 
-    public interface InputPasswordDialogFragmentListener {
+    public void setEditTextInputType(int type){
+    }
+    public interface InputDialogFragmentListener {
 
-        void inputPasswordConfirm(String password,String data);
+        void inputConfirm(String data,String source);
     }
 }

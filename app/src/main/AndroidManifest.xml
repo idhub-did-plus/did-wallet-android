@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,26 +19,29 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".identitymanager.IdentityManagerActivity" />
-        <activity android:name=".identitymanager.identitycreate.InputPasswordActivity" />
-        <activity android:name=".identitymanager.identitycreate.MnemonicBackupHintActivity" />
-        <activity android:name=".identitymanager.identitycreate.MnemonicBackupPreviewActivity" >
+        <activity android:name=".createmanager.IdentityManagerActivity" />
+        <activity android:name=".createmanager.walletcreate.InputPasswordActivity" />
+        <activity android:name=".createmanager.walletcreate.MnemonicBackupHintActivity" />
+        <activity android:name=".createmanager.walletcreate.MnemonicBackupPreviewActivity" >
         </activity>
-        <activity android:name=".identitymanager.identitycreate.MnemonicBackupConfirmActivity" />
+        <activity android:name=".createmanager.walletcreate.MnemonicBackupConfirmActivity" />
         <activity android:name=".wallet.walletsetting.WalletSettingActivity" />
         <activity android:name=".wallet.manager.WalletManagerActivity" />
         <activity android:name=".wallet.export.ExportWalletContentActivity" />
         <activity android:name=".wallet.token.TokenManagerActivity" />
         <activity android:name=".common.qrCode.QRCodeScanActivity" />
         <activity android:name=".wallet.transaction.TransactionActivity" />
-        <activity android:name=".wallet.transaction.SendActivity" />
-        <activity android:name=".wallet.transaction.ReceiveActivity" />
-        <activity android:name=".splash.SplashActivity">
+        <activity android:name=".wallet.transaction.SendActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".wallet.transaction.ReceiveActivity" />
+        <activity android:name=".splash.SplashActivity">
+
         </activity>
     </application>
 

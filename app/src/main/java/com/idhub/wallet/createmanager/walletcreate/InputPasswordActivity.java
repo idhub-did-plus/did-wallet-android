@@ -1,5 +1,6 @@
-package com.idhub.wallet.identitymanager.identitycreate;
+package com.idhub.wallet.createmanager.walletcreate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,18 +12,16 @@ import android.widget.EditText;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.createmanager.WalletCreateChannel;
 import com.idhub.wallet.didhub.DidHubIdentify;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
-import com.idhub.wallet.didhub.keystore.EncMnemonicKeystore;
 import com.idhub.wallet.didhub.model.MnemonicAndPath;
-import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.utils.ToastUtils;
 
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class InputPasswordActivity extends AppCompatActivity implements View.OnClickListener {
@@ -49,12 +48,11 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
         mPasswordRepeat = findViewById(R.id.et_password_again);
         mPasswordHint = findViewById(R.id.et_password_tip);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
-
     }
 
-    public static void startAction(Context context) {
+    public static void startActionForResult(Context context,int requestCode) {
         Intent intent = new Intent(context, InputPasswordActivity.class);
-        context.startActivity(intent);
+        ((Activity)context).startActivityForResult(intent,requestCode);
     }
 
     @Override
@@ -87,8 +85,10 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
             ToastUtils.showShortToast("两次密码不一致");
             return;
         }
+       createWallet(walletName, password);
+    }
 
-
+    private void createWallet(String walletName, String password) {
         Observable.create((Observable.OnSubscribe<DidHubIdentify>) subscriber -> {
             subscriber.onStart();
             DidHubIdentify identity = DidHubIdentify.createIdentity(walletName, password, mPasswordHint.getText().toString());
@@ -117,10 +117,13 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
                 DidHubKeyStore keyStore = didHubIdentify.getKeyStore();
                 if (keyStore != null) {
                     WalletInfo walletInfo = new WalletInfo(keyStore);
+                    String id = walletInfo.getId();
                     MnemonicAndPath mnemonicAndPath = walletInfo.exportMnemonic(password);
-                    MnemonicBackupHintActivity.startAction(InputPasswordActivity.this, mnemonicAndPath.getMnemonic());
+                    MnemonicBackupHintActivity.startAction(InputPasswordActivity.this, mnemonicAndPath.getMnemonic(), id);
+                    setResult(RESULT_OK);
+                    finish();
                 } else {
-                    ToastUtils.showShortToast("key is null");
+                    ToastUtils.showShortToast("Wallet creation failed");
                 }
             }
         });

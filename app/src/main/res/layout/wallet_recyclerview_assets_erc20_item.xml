@@ -24,7 +24,6 @@
         android:layout_marginLeft="15dp"
         android:textColor="@color/wallet_text_grey"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/tv_assets_icon"
         app:layout_constraintLeft_toRightOf="@id/tv_assets_icon"
         app:layout_constraintTop_toTopOf="@id/tv_assets_icon"
@@ -42,7 +41,7 @@
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="0" />
+        android:text="-" />
 
     <TextView
         android:id="@+id/tv_assets_rmb"
@@ -54,6 +53,6 @@
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_assets_amount"
-        tools:text="0.00" />
+        android:text="-"  />
 
 </com.idhub.wallet.wallet.mainfragment.view.ERCItemView>

@@ -1,16 +1,14 @@
 package com.idhub.wallet.wallet.walletsetting;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.identitymanager.identitycreate.InputPasswordActivity;
+import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 
 public class SelectAddWalletWayPopupWindow extends PopupWindow implements View.OnClickListener {
 
@@ -37,7 +35,7 @@ public class SelectAddWalletWayPopupWindow extends PopupWindow implements View.O
         int id = v.getId();
         switch (id) {
             case R.id.tv_create:
-                InputPasswordActivity.startAction(mContxt);
+                InputPasswordActivity.startActionForResult(mContxt,100);
                 break;
             case R.id.tv_import:
                 break;
