@@ -18,7 +18,8 @@ import java.text.ParseException;
 
 import javax.net.ssl.SSLHandshakeException;
 
-import retrofit2.adapter.rxjava.HttpException;
+import retrofit2.HttpException;
+
 
 public class NetworkException extends Throwable {
 

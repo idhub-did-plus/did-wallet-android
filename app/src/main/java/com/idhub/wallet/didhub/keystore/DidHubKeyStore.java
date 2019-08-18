@@ -1,11 +1,9 @@
 package com.idhub.wallet.didhub.keystore;
 
 
-import android.util.Log;
-
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.idhub.wallet.didhub.WalletOtherSharpreference;
+import com.idhub.wallet.common.sharepreference.WalletOtherSharpreference;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.address.EthereumAddressCreator;
 import com.idhub.wallet.didhub.crypto.Crypto;
@@ -39,18 +37,12 @@ public class DidHubKeyStore extends WalletKeystore implements EncMnemonicKeystor
         MnemonicUtil.validateMnemonics(mnemonicCodes);
         DeterministicSeed seed = new DeterministicSeed(mnemonicCodes, null, "", 0L);
         DeterministicKeyChain keyChain = DeterministicKeyChain.builder().seed(seed).build();
-
         this.mnemonicPath = path;
-        Log.e("LYW", "DidHubKeyStore:path  " + path );
-
         List<ChildNumber> zeroPath = BIP44Util.generatePath(path);
-
         byte[] prvKeyBytes = keyChain.getKeyByPath(zeroPath, true).getPrivKeyBytes();
         this.crypto = Crypto.createPBKDF2CryptoWithKDFCached(password, prvKeyBytes);
         this.encMnemonic = crypto.deriveEncPair(password, Joiner.on(" ").join(mnemonicCodes).getBytes());
-        Log.e("LYW", "DidHubKeyStore:  " + encMnemonic.toString() );
         this.crypto.clearCachedDerivedKey();
-
         this.address = new EthereumAddressCreator().fromPrivateKey(prvKeyBytes);
         wallet.setTimestamp(DateUtil.getUTCTime());
         this.wallet = wallet;
@@ -79,16 +71,4 @@ public class DidHubKeyStore extends WalletKeystore implements EncMnemonicKeystor
         return mnemonicPath;
     }
 
-    @Override
-    public String toString() {
-        return "DidHubKeyStore{" +
-                "encMnemonic=" + encMnemonic +
-                ", mnemonicPath='" + mnemonicPath + '\'' +
-                ", wallet=" + wallet +
-                ", address='" + address + '\'' +
-                ", id='" + id + '\'' +
-                ", version=" + version +
-                ", crypto=" + crypto +
-                '}';
-    }
 }

@@ -1,4 +1,4 @@
-package com.idhub.wallet.didhub;
+package com.idhub.wallet.common.sharepreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,9 +27,10 @@ public class WalletOtherSharpreference {
         return sharedPreferences.getString(WALLET_SELECT, "");
     }
 
-    public void setSelectedId(String id) {
+    public boolean setSelectedId(String id) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.putString(WALLET_SELECT, id).apply();
+        boolean commit = edit.putString(WALLET_SELECT, id).commit();
+        return commit;
     }
 
 

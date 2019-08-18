@@ -1,12 +1,9 @@
 package com.idhub.wallet.wallet.mainfragment;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
 import com.idhub.wallet.wallet.adapter.WalletListAdapter;
@@ -52,10 +50,7 @@ public class WalletListDialogFragment extends DialogFragment implements View.OnC
         WalletListAdapter walletListAdapter = new WalletListAdapter(getContext());
         walletListAdapter.setOnItemClickListener(() -> {
             dismiss();
-            Fragment targetFragment = getTargetFragment();
-            if (targetFragment != null) {
-                targetFragment.onActivityResult(100, Activity.RESULT_OK, new Intent());
-            }
+            WalletSelectedObservable.getInstance().update();
         });
         walletListAdapter.addDatas(didHubKeyStores);
         recyclerView.setAdapter(walletListAdapter);

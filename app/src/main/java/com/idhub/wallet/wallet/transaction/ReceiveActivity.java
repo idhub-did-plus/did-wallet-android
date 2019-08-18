@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,14 +17,15 @@ import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.ToastUtils;
-import com.idhub.wallet.wallet.mainfragment.model.AssetsModel;
+import com.idhub.wallet.greendao.entity.AssetsModel;
 
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class ReceiveActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
@@ -66,31 +66,32 @@ public class ReceiveActivity extends AppCompatActivity implements View.OnClickLi
         codeBuilder.append("decimal=18&").append("value=").append(value);
         String content = codeBuilder.toString();
         LogUtils.e("LYW", "updateQRCode: " + content);
-        Observable.create((Observable.OnSubscribe<Bitmap>) subscriber -> {
+        Observable.create((ObservableOnSubscribe<Bitmap>) emitter -> {
             Bitmap bitmap = QRCodeEncoder.syncEncodeQRCode(content, BGAQRCodeUtil.dp2px(ReceiveActivity.this, 150));
-            subscriber.onNext(bitmap);
-            subscriber.onCompleted();
+            emitter.onNext(bitmap);
+            emitter.onComplete();
         }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<Bitmap>() {
-            @Override
-            public void onCompleted() {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<Bitmap>() {
+                    @Override
+                    public void onNext(Bitmap bitmap) {
+                        if (bitmap != null) {
+                            mQrCodeView.setImageBitmap(bitmap);
+                        } else {
+                            ToastUtils.showShortToast("生成二维码失败");
+                        }
+                    }
 
-            }
+                    @Override
+                    public void onError(Throwable e) {
 
-            @Override
-            public void onError(Throwable e) {
+                    }
 
-            }
+                    @Override
+                    public void onComplete() {
 
-            @Override
-            public void onNext(Bitmap bitmap) {
-                if (bitmap != null) {
-                    mQrCodeView.setImageBitmap(bitmap);
-                } else {
-                    ToastUtils.showShortToast("生成二维码失败");
-                }
-            }
-        });
+                    }
+                });
     }
 
     private void initView() {
@@ -106,7 +107,7 @@ public class ReceiveActivity extends AppCompatActivity implements View.OnClickLi
     private void updateAmountView() {
         if (value == 0) {
             mAmountView.setVisibility(View.INVISIBLE);
-        } else{
+        } else {
             mAmountView.setVisibility(View.VISIBLE);
             mAmountView.setText("请转入 " + value + " " + mAssetsModel.getName());
         }
@@ -122,7 +123,7 @@ public class ReceiveActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_designated_Amount:
-                InputDialogFragment dialogFragment = InputDialogFragment.getInstance("receive", getString(R.string.network_input_amount), InputType.TYPE_CLASS_NUMBER| InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                InputDialogFragment dialogFragment = InputDialogFragment.getInstance("receive", getString(R.string.wallet_input_amount), InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 dialogFragment.show(getSupportFragmentManager(), "input_dialog_fragment");
                 break;
         }

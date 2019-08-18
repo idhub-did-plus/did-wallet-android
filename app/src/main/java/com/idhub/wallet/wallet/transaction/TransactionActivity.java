@@ -2,7 +2,6 @@ package com.idhub.wallet.wallet.transaction;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.wallet.mainfragment.model.AssetsModel;
+import com.idhub.wallet.greendao.entity.AssetsModel;
 
 import java.math.BigInteger;
 
@@ -35,13 +34,12 @@ public class TransactionActivity extends AppCompatActivity implements View.OnCli
 
     private void init() {
         TitleLayout titleLayout = findViewById(R.id.title);
-        titleLayout.setTitle(getString(R.string.network_transaction));
+        titleLayout.setTitle(getString(R.string.wallet_transaction));
         findViewById(R.id.receive).setOnClickListener(this);
         findViewById(R.id.send).setOnClickListener(this);
         TextView balanceAndName = findViewById(R.id.balance_and_name);
         String balance = mAssetsModel.getBalance();
-        balanceAndName.setText(String.valueOf(NumericUtil.bigInteger18ToFloat(new BigInteger(balance)) + " " + mAssetsModel.getName()));
-
+        balanceAndName.setText(String.valueOf(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance)) + " " + mAssetsModel.getName()));
     }
 
     public static void srartAction(Context context, AssetsModel assetsModel) {
@@ -58,7 +56,7 @@ public class TransactionActivity extends AppCompatActivity implements View.OnCli
                 ReceiveActivity.startAction(this,mAssetsModel);
                 break;
             case R.id.send:
-
+                SendActivity.startAction(this, mAssetsModel);
                 break;
         }
     }

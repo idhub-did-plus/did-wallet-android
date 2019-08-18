@@ -9,6 +9,7 @@ import java.math.MathContext;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.security.SecureRandom;
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
@@ -228,10 +229,21 @@ public class NumericUtil {
         return Arrays.copyOfRange(intBytes, zeroLen, intBytes.length);
     }
 
-    public static float bigInteger18ToFloat(BigInteger bigInteger) {
-        BigInteger bigInteger18 = new BigInteger("10000000000000000");
-        BigInteger integer = bigInteger.divide(bigInteger18);
-        float i = integer.floatValue() / 100;
-        return i;
+    public static String ethBigIntegerToNumberViewPointAfterEight(BigInteger bigInteger) {
+        BigDecimal bigInteger18 = new BigDecimal("1000000000000000000");
+        BigDecimal bigDecimal = new BigDecimal(bigInteger);
+        BigDecimal decimal = bigDecimal.divide(bigInteger18, 8, BigDecimal.ROUND_HALF_DOWN);
+        DecimalFormat df = new DecimalFormat("###.########");
+        String format = df.format(decimal);
+        return format;
+    }
+
+    public static String ethBigIntegerToNumberViewPointAfterFour(BigInteger bigInteger) {
+        BigDecimal bigInteger18 = new BigDecimal("1000000000000000000");
+        BigDecimal bigDecimal = new BigDecimal(bigInteger);
+        BigDecimal decimal = bigDecimal.divide(bigInteger18, 4, BigDecimal.ROUND_HALF_DOWN);
+        DecimalFormat df = new DecimalFormat("###.####");
+        String format = df.format(decimal);
+        return format;
     }
 }

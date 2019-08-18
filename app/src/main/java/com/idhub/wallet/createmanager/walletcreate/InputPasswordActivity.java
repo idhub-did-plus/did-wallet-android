@@ -19,10 +19,13 @@ import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
 import com.idhub.wallet.didhub.model.MnemonicAndPath;
 import com.idhub.wallet.utils.ToastUtils;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class InputPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -50,9 +53,9 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
     }
 
-    public static void startActionForResult(Context context,int requestCode) {
+    public static void startActionForResult(Context context, int requestCode) {
         Intent intent = new Intent(context, InputPasswordActivity.class);
-        ((Activity)context).startActivityForResult(intent,requestCode);
+        ((Activity) context).startActivityForResult(intent, requestCode);
     }
 
     @Override
@@ -85,36 +88,21 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
             ToastUtils.showShortToast("两次密码不一致");
             return;
         }
-       createWallet(walletName, password);
+        createWallet(walletName, password);
     }
 
     private void createWallet(String walletName, String password) {
-        Observable.create((Observable.OnSubscribe<DidHubIdentify>) subscriber -> {
-            subscriber.onStart();
-            DidHubIdentify identity = DidHubIdentify.createIdentity(walletName, password, mPasswordHint.getText().toString());
-            subscriber.onNext(identity);
-            subscriber.onCompleted();
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Subscriber<DidHubIdentify>() {
+        DisposableObserver<DidHubIdentify> observer = new DisposableObserver<DidHubIdentify>() {
+
             @Override
-            public void onStart() {
+            protected void onStart() {
+                super.onStart();
                 mLoadingAndErrorView.setVisibility(View.VISIBLE);
             }
 
             @Override
-            public void onCompleted() {
-                mLoadingAndErrorView.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
             public void onNext(DidHubIdentify didHubIdentify) {
-                DidHubKeyStore keyStore = didHubIdentify.getKeyStore();
+                DidHubKeyStore keyStore = didHubIdentify.mDidHubKeyStore;
                 if (keyStore != null) {
                     WalletInfo walletInfo = new WalletInfo(keyStore);
                     String id = walletInfo.getId();
@@ -126,6 +114,21 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
                     ToastUtils.showShortToast("Wallet creation failed");
                 }
             }
-        });
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                mLoadingAndErrorView.setVisibility(View.GONE);
+            }
+        };
+        Observable.create((ObservableOnSubscribe<DidHubIdentify>) emitter -> {
+            DidHubIdentify identity = DidHubIdentify.createIdentity(walletName, password, mPasswordHint.getText().toString());
+            emitter.onNext(identity);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
     }
 }

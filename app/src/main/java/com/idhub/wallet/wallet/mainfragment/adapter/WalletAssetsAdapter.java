@@ -3,31 +3,34 @@ package com.idhub.wallet.wallet.mainfragment.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.network.DIDApiUseCase;
-import com.idhub.wallet.network.exception.NetworkException;
-import com.idhub.wallet.utils.ToastUtils;
-import com.idhub.wallet.wallet.mainfragment.model.AssetsModel;
+import com.idhub.wallet.network.Web3Api;
+import com.idhub.wallet.network.Web3jSubscriber;
+import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.wallet.mainfragment.view.ERCItemView;
 import com.idhub.wallet.wallet.transaction.TransactionActivity;
+
+import org.web3j.protocol.core.methods.response.EthGetBalance;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observer;
 
 public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapter.WalletAssetsAdapterViewHolder> {
 
     private LayoutInflater mInflater;
     private List<AssetsModel> mAssetsModels;
     private Context mContext;
+    String address;
 
     public WalletAssetsAdapter(Context context) {
         mContext = context;
@@ -52,28 +55,30 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapte
         ERCItemView itemView = (ERCItemView) walletAssetsAdapterViewHolder.itemView;
         AssetsModel model = mAssetsModels.get(i);
         itemView.setName(model.getName());
-        DIDApiUseCase.searchBalance(model.getAddress(), model.getToken()).subscribe(new Observer<String>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                NetworkException networkException = new NetworkException(e);
-                String message = networkException.getMessage();
-                ToastUtils.showShortToast(message);
-            }
-
-            @Override
-            public void onNext(String s) {
-                BigInteger bigInteger = NumericUtil.hexToBigInteger(s);
-                Log.e("LYW", "onNext: " + bigInteger);
-                String balance = String.valueOf(bigInteger);
-                model.setBalance(balance);
-                itemView.setBalance(String.valueOf(NumericUtil.bigInteger18ToFloat(bigInteger)));
-            }
-        });
+        String token = model.getToken();
+        address = WalletManager.getAddress();
+        if (!TextUtils.isEmpty(token)) {
+            Web3Api.searchBalance(address, token, new Web3jSubscriber<BigInteger>() {
+                @Override
+                public void onNext(BigInteger bigInteger) {
+                    String balance = String.valueOf(bigInteger);
+                    model.setBalance(balance);
+                    String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
+                    itemView.setBalance(balanceStr);
+                }
+            });
+        } else {
+            Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
+                @Override
+                public void onNext(EthGetBalance o) {
+                    super.onNext(o);
+                    BigInteger balance1 = o.getBalance();
+                    String balance = String.valueOf(balance1);
+                    model.setBalance(balance);
+                    itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1));
+                }
+            });
+        }
     }
 
     @Override

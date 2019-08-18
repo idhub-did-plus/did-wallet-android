@@ -1,10 +1,17 @@
-package com.idhub.wallet.wallet.mainfragment.model;
+package com.idhub.wallet.greendao.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
+
+@Entity
 public class AssetsModel implements Parcelable {
 
+    @Id(autoincrement = true)
+    private Long id;
     private String name;
     private String address;
     private String token;
@@ -22,6 +29,17 @@ public class AssetsModel implements Parcelable {
         balance = in.readString();
     }
 
+    @Generated(hash = 1384688074)
+    public AssetsModel(Long id, String name, String address, String token,
+            String symble, String balance) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.token = token;
+        this.symble = symble;
+        this.balance = balance;
+    }
+
     public static final Creator<AssetsModel> CREATOR = new Creator<AssetsModel>() {
         @Override
         public AssetsModel createFromParcel(Parcel in) {
@@ -33,6 +51,14 @@ public class AssetsModel implements Parcelable {
             return new AssetsModel[size];
         }
     };
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getToken() {
         return token;
@@ -48,14 +74,6 @@ public class AssetsModel implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getSymble() {
@@ -86,5 +104,13 @@ public class AssetsModel implements Parcelable {
         dest.writeString(token);
         dest.writeString(symble);
         dest.writeString(balance);
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

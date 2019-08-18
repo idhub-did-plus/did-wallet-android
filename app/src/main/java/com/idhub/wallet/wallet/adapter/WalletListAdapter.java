@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.didhub.WalletOtherSharpreference;
+import com.idhub.wallet.common.sharepreference.WalletOtherSharpreference;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
 import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
 
@@ -72,8 +72,10 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
             itemView.setOnClickListener(v -> {
                 int adapterPosition = getAdapterPosition();
                 DidHubKeyStore didHubKeyStore = keyStores.get(adapterPosition);
-                WalletOtherSharpreference.getInstance().setSelectedId(didHubKeyStore.getId());
-                onItemClickListener.itemClick();
+                boolean b = WalletOtherSharpreference.getInstance().setSelectedId(didHubKeyStore.getId());
+                if (b) {
+                    onItemClickListener.itemClick();
+                }
             });
         }
     }

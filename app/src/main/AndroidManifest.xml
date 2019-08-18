@@ -9,40 +9,52 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
+        android:name=".App"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".App"
         android:theme="@style/WalletAppTheme">
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".createmanager.IdentityManagerActivity" />
-        <activity android:name=".createmanager.walletcreate.InputPasswordActivity" />
-        <activity android:name=".createmanager.walletcreate.MnemonicBackupHintActivity" />
-        <activity android:name=".createmanager.walletcreate.MnemonicBackupPreviewActivity" >
-        </activity>
-        <activity android:name=".createmanager.walletcreate.MnemonicBackupConfirmActivity" />
-        <activity android:name=".wallet.walletsetting.WalletSettingActivity" />
-        <activity android:name=".wallet.manager.WalletManagerActivity" />
-        <activity android:name=".wallet.export.ExportWalletContentActivity" />
-        <activity android:name=".wallet.token.TokenManagerActivity" />
-        <activity android:name=".common.qrCode.QRCodeScanActivity" />
-        <activity android:name=".wallet.transaction.TransactionActivity" />
-        <activity android:name=".wallet.transaction.SendActivity" >
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity android:name=".createmanager.IdentityManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".createmanager.walletcreate.InputPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".createmanager.walletcreate.MnemonicBackupHintActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".createmanager.walletcreate.MnemonicBackupPreviewActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".createmanager.walletcreate.MnemonicBackupConfirmActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".wallet.walletsetting.WalletSettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".wallet.manager.WalletManagerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".wallet.export.ExportWalletContentActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".wallet.token.TokenManagerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".common.qrCode.QRCodeScanActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".wallet.transaction.TransactionActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".wallet.transaction.SendActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".wallet.transaction.ReceiveActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".splash.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".wallet.transaction.ReceiveActivity" />
-        <activity android:name=".splash.SplashActivity">
-
-        </activity>
+        <activity android:name=".wallet.transaction.SendConfirmActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

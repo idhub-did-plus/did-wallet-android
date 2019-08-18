@@ -10,10 +10,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.io.CharSource;
 import com.google.common.io.Files;
+import com.idhub.wallet.common.sharepreference.WalletOtherSharpreference;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Messages;
 import com.idhub.wallet.didhub.model.TokenException;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.utils.LogUtils;
 
 import org.json.JSONObject;
@@ -27,6 +29,7 @@ public class WalletManager {
     private static Hashtable<String, DidHubKeyStore> keystoreMap = new Hashtable<>();
 
     private static final String keystoreDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+    private static DidHubKeyStore mCurrentDidHubKeyStore;
 
     public static void createWallet(DidHubKeyStore keystore) {
         File file = generateWalletFile(keystore.getId());
@@ -69,7 +72,6 @@ public class WalletManager {
                 int version = jsonObject.getInt("version");
                 if (version == 3) {
                     if (jsonContent.contains("encMnemonic")) {
-                        Log.e("LYW", "scanWallets: " + jsonContent );
                         keystore = unmarshalKeystore(jsonContent, DidHubKeyStore.class);
                     }
                 }
@@ -81,7 +83,6 @@ public class WalletManager {
                 LogUtils.e("didhub", "Can't loaded " + file.getName() + " file", ex);
             }
         }
-        Log.e("LYW", "scanWallets: " + keystoreMap.size() );
     }
 
     public static int getWalletNum() {
@@ -162,7 +163,21 @@ public class WalletManager {
                 return keystore;
             }
         }
-
         return null;
+    }
+
+    public static String getAddress() {
+        return NumericUtil.prependHexPrefix(getCurrentKeyStore().getAddress());
+    }
+
+    public static DidHubKeyStore getCurrentKeyStore() {
+        String selectedId = WalletOtherSharpreference.getInstance().getSelectedId();
+        mCurrentDidHubKeyStore = keystoreMap.get(selectedId);
+        if (mCurrentDidHubKeyStore == null) {
+            String key = keystoreMap.keySet().iterator().next();
+            mCurrentDidHubKeyStore = keystoreMap.get(key);
+            WalletOtherSharpreference.getInstance().setSelectedId(mCurrentDidHubKeyStore.getId());
+        }
+        return mCurrentDidHubKeyStore;
     }
 }

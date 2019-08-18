@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +54,7 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
             mTitle = bundle.getString("title");
             mInputType = bundle.getInt("type");
         }
-        View view = inflater.inflate(R.layout.wallet_fragment_dialog_input, container, false);
+        View view = inflater.inflate(R.layout.wallet_fragment_common_dialog_input, container, false);
         Window window = getDialog().getWindow();
         if (window != null)
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import com.idhub.wallet.R;
 
-public class WalletManagerItem extends ConstraintLayout {
+public class WalletManagerItemView extends ConstraintLayout {
 
 
     private TextView mName;
     private ImageView mIcon;
 
-    public WalletManagerItem(Context context, AttributeSet attrs) {
+    public WalletManagerItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

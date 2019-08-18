@@ -59,6 +59,7 @@
     <string name="wallet_my_asserts_manager">我的资产管理</string>
     <string name="wallet_hot_asserts">热门资产</string>
     <string name="wallet_send">转账</string>
+    <string name="wallet_send_confirm">转账确认</string>
     <string name="wallet_receive">收款</string>
     <string name="wallet_change_assets">更换资产</string>
     <string name="wallet_designated_amount">指定金额</string>
@@ -66,9 +67,19 @@
     <string name="network_not_avail">网络不可用，请检查手机网络设置</string>
     <string name="network_error">网络出错了！</string>
     <string name="network_timeout">网络请求超时</string>
-    <string name="network_transaction">交易</string>
-    <string name="network_input_amount">输入金额</string>
-    <string name="network_receive_address">收款地址</string>
-    <string name="network_input_address">输入以太坊地址或ENS域名</string>
-    <string name="network_gas_amount">旷工费用</string>
+    <string name="wallet_transaction">交易</string>
+    <string name="wallet_input_amount">输入金额</string>
+    <string name="wallet_receive_address">收款地址</string>
+    <string name="wallet_input_address">输入以太坊地址或ENS域名</string>
+    <string name="wallet_gas_amount">旷工费用</string>
+    <string name="wallet_gas_price">Gas价格(Gwei)</string>
+    <string name="wallet_gas_limit">Gas限制</string>
+    <string name="wallet_input_gas_limit">输入Gas限制</string>
+    <string name="wallet_input_gas_price">输入Gas价格</string>
+    <string name="wallet_send_amount_not_empty">转账金额不能为空</string>
+    <string name="wallet_send_address_not_empty">转账地址不能为空</string>
+    <string name="wallet_input_password_false">输入密码不正确</string>
+    <string name="wallet_please_input">请输入</string>
+    <string name="wallet_gasPrice_not_empty">gas价格不能为空</string>
+    <string name="wallet_gasLimit_not_empty">gas限制不能为空</string>
 </resources>

@@ -1,29 +1,14 @@
 package com.idhub.wallet.network;
 
-import android.accounts.AccountManager;
-import android.content.Intent;
-
 import com.idhub.wallet.network.exception.ApiResultException;
-import com.idhub.wallet.network.exception.ApiServiceException;
 
-import rx.functions.Func1;
+import io.reactivex.functions.Function;
+
 
 /**
  * Created by testp11 on 2017/4/12.
  */
-public class ApiDefaultMapFunc<T> implements Func1<ApiResultEntity<T>, T>{
-    @Override
-    public T call(ApiResultEntity<T> apiResult) {
-        T result = apiResult.result;
-        ErrorEntity error = apiResult.error;
-        if (result != null) {
-            return result;
-        } else if (error != null) {
-            throw new ApiResultException(error.code, error.message);
-        }else {
-            throw new ApiResultException(0, "网络请求出错");
-        }
-    }
+public class ApiDefaultMapFunc<T> implements Function<ApiResultEntity<T>, T> {
 
     private void handleError(int errorCode){
         switch (errorCode){
@@ -42,5 +27,17 @@ public class ApiDefaultMapFunc<T> implements Func1<ApiResultEntity<T>, T>{
         }
     }
 
+    @Override
+    public T apply(ApiResultEntity<T> apiResult) {
+        T result = apiResult.result;
+        ErrorEntity error = apiResult.error;
+        if (result != null) {
+            return result;
+        } else if (error != null) {
+            throw new ApiResultException(error.code, error.message);
+        }else {
+            throw new ApiResultException(0, "网络请求出错");
+        }
+    }
 }
 

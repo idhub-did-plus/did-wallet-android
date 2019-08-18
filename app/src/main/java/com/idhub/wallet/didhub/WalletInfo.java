@@ -25,7 +25,7 @@ public class WalletInfo {
     }
 
     public String getAddress() {
-        return this.keystore.getAddress();
+        return NumericUtil.prependHexPrefix(this.keystore.getAddress());
     }
 
     public MnemonicAndPath exportMnemonic(String password) {
@@ -61,7 +61,7 @@ public class WalletInfo {
         throw new TokenException(Messages.ILLEGAL_OPERATION);
     }
 
-    boolean verifyPassword(String password) {
+    public boolean verifyPassword(String password) {
         return keystore.verifyPassword(password);
     }
 

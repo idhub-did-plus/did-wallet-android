@@ -11,13 +11,15 @@ import android.widget.Toast;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.didhub.WalletInfo;
+import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.wallet.export.ExportWalletContentActivity;
 
 public class WalletManagerActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
-    private WalletManagerItem mExportMnemonic;
-    private WalletManagerItem mExportKeystore;
-    private WalletManagerItem mExportPrivateKey;
+    private WalletManagerItemView mExportMnemonic;
+    private WalletManagerItemView mExportKeystore;
+    private WalletManagerItemView mExportPrivateKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +29,7 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initView() {
-        TitleLayout titleLayout = (TitleLayout) findViewById(R.id.title);
+        TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_manager));
         mExportMnemonic = findViewById(R.id.export_mnemonic);
         mExportMnemonic.setData(R.mipmap.wallet_eth_icon, getString(R.string.wallet_export_mnemonic));
@@ -57,14 +59,16 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
     }
 
     private void showPasswordDialog(String data) {
-        InputDialogFragment instance = InputDialogFragment.getInstance(data,getString(R.string.wallet_please_input_password),InputType.TYPE_CLASS_TEXT);
+        InputDialogFragment instance = InputDialogFragment.getInstance(data, getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT);
         instance.show(getSupportFragmentManager(), "input_dialog_fragment");
     }
 
     @Override
-    public void inputConfirm(String data,String source) {
+    public void inputConfirm(String data, String source) {
         //check password
-        Toast.makeText(this, "" + data, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "" + data, Toast.LENGTH_SHORT).show();
+        WalletInfo walletInfo = new WalletInfo(WalletManager.getCurrentKeyStore());
+        boolean b = walletInfo.verifyPassword(data);
         if (data.equals("mnemonic")) {
 
         } else {

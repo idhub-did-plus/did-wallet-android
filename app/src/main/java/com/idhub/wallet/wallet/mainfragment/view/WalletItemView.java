@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 
 public class WalletItemView extends ConstraintLayout implements View.OnClickListener {
@@ -32,7 +33,7 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
 
     public void setData(DidHubKeyStore keyStore) {
         mNameTv.setText(keyStore.getWallet().getName());
-        mAddressTv.setText(keyStore.getAddress());
+        mAddressTv.setText(NumericUtil.prependHexPrefix(keyStore.getAddress()));
     }
 
     public void setMenuIv(int menuIv) {

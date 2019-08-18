@@ -11,19 +11,16 @@ import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Bool;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Uint256;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.methods.request.Transaction;
-import org.web3j.utils.Convert;
 
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
-import rx.Observable;
 
 public class DIDApiUseCase {
 

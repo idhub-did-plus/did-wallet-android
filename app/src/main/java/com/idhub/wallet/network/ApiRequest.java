@@ -10,15 +10,15 @@ import com.google.gson.JsonElement;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+
 
 public class ApiRequest {
     private static final String TAG = ApiRequest.class.getName();
@@ -39,7 +39,7 @@ public class ApiRequest {
         retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(C.API_BASE)
                 .build();
     }
@@ -76,9 +76,9 @@ public class ApiRequest {
     public <T> Observable<T> getMxApiData(String url, final Class<T> clazz) {
         return apiService().getMxApiData(url)
                 .map(new ApiDefaultMapFunc<JsonElement>())
-                .map(new Func1<JsonElement, T>() {
+                .map(new Function<JsonElement, T>() {
                     @Override
-                    public T call(JsonElement jsonElement) {
+                    public T apply(JsonElement jsonElement) throws Exception {
                         return new Gson().fromJson(jsonElement, clazz);
                     }
                 });
@@ -88,11 +88,12 @@ public class ApiRequest {
     public <T> Observable<T> getMxApiData(String url, Map<String, String> params, final Class<T> clazz) {
         return apiService().getMxApiData(url, params)
                 .map(new ApiDefaultMapFunc<JsonElement>())
-                .map(new Func1<JsonElement, T>() {
+                .map(new Function<JsonElement, T>() {
                     @Override
-                    public T call(JsonElement jsonElement) {
+                    public T apply(JsonElement jsonElement) throws Exception {
                         return new Gson().fromJson(jsonElement, clazz);
                     }
+
                 });
     }
 
@@ -100,9 +101,9 @@ public class ApiRequest {
     public <T> Observable<T> postMxApiData(String url, final Class<T> clazz) {
         return apiService().postMxApiData(url)
                 .map(new ApiDefaultMapFunc<JsonElement>())
-                .map(new Func1<JsonElement, T>() {
+                .map(new Function<JsonElement, T>() {
                     @Override
-                    public T call(JsonElement jsonElement) {
+                    public T apply(JsonElement jsonElement) throws Exception {
                         return new Gson().fromJson(jsonElement, clazz);
                     }
                 });
@@ -112,9 +113,9 @@ public class ApiRequest {
     public <T> Observable<T> postMxApiData(String url, Map<String, String> params, final Class<T> clazz) {
         return apiService().postMxApiData(url, params)
                 .map(new ApiDefaultMapFunc<JsonElement>())
-                .map(new Func1<JsonElement, T>() {
+                .map(new Function<JsonElement, T>() {
                     @Override
-                    public T call(JsonElement jsonElement) {
+                    public T apply(JsonElement jsonElement) throws Exception {
                         return new Gson().fromJson(jsonElement, clazz);
                     }
                 });
