@@ -19,33 +19,23 @@ import org.web3j.crypto.TransactionEncoder;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.DefaultBlockParameterNumber;
-import org.web3j.protocol.core.RemoteCall;
-import org.web3j.protocol.core.Request;
 import org.web3j.protocol.core.methods.request.Transaction;
-import org.web3j.protocol.core.methods.response.EthEstimateGas;
 import org.web3j.protocol.core.methods.response.EthGasPrice;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
-import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
-import org.web3j.tx.Transfer;
-import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.tx.gas.StaticGasProvider;
 import org.web3j.utils.Convert;
-import org.web3j.utils.Numeric;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.concurrent.ExecutionException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
-import java8.util.function.Consumer;
 
 
 public class Web3Api {
@@ -122,29 +112,16 @@ public class Web3Api {
     public static void sendTransaction(String address) {
 
     }
-    public static void sendERC20Transaction(String password,String token,String gasPrice,String gasLimit,String toAddress,String value,Web3jSubscriber<TransactionReceipt> web3jSubscriber){
+
+    public static void sendERC20Transaction(String password,String contractAddress,String gasPrice,String gasLimit,String toAddress,String value,Web3jSubscriber<TransactionReceipt> web3jSubscriber){
         Credentials credentials = getCredentials(password);
         StaticGasProvider staticGasProvider = new StaticGasProvider(new BigInteger(gasPrice),new BigInteger(gasLimit));
-        EIP20Interface ierc20 = EIP20Interface.load(token, mWeb3j, credentials, staticGasProvider);
+        EIP20Interface ierc20 = EIP20Interface.load(contractAddress, mWeb3j, credentials, staticGasProvider);
         BigInteger value1 = Convert.toWei(value, Convert.Unit.ETHER).toBigInteger();
-
         Log.e("did", "sendERC20Transaction: " + value1 );
         Log.e("did", "sendERC20Transaction: " + WalletManager.getAddress() );
         Log.e("did", "sendERC20Transaction: " + gasPrice );
         Log.e("did", "sendERC20Transaction: " + gasLimit );
-        try {
-            ierc20.balanceOf(WalletManager.getAddress()).sendAsync().thenAccept(new Consumer<BigInteger>() {
-                @Override
-                public void accept(BigInteger bigInteger) {
-                    Log.e("LYW", "sendERC20Transaction: " + bigInteger );
-
-                }
-            });
-        } catch (Exception e) {
-            Log.e("LYW", "sendERC20Transaction: " + e.toString() );
-
-            e.printStackTrace();
-        }
         ierc20.transfer(toAddress, value1).flowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(web3jSubscriber);
     }
 

@@ -3,7 +3,8 @@ package com.idhub.wallet.createmanager.walletcreate;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,7 +13,6 @@ import android.widget.EditText;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.title.TitleLayout;
-import com.idhub.wallet.createmanager.WalletCreateChannel;
 import com.idhub.wallet.didhub.DidHubIdentify;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
@@ -21,7 +21,6 @@ import com.idhub.wallet.utils.ToastUtils;
 
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -52,6 +51,7 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
         mPasswordHint = findViewById(R.id.et_password_tip);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
     }
+
 
     public static void startActionForResult(Context context, int requestCode) {
         Intent intent = new Intent(context, InputPasswordActivity.class);
@@ -89,6 +89,11 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
             return;
         }
         createWallet(walletName, password);
+        createRecoverAddress();
+    }
+
+    private void createRecoverAddress() {
+
     }
 
     private void createWallet(String walletName, String password) {
@@ -105,11 +110,8 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
                 DidHubKeyStore keyStore = didHubIdentify.mDidHubKeyStore;
                 if (keyStore != null) {
                     WalletInfo walletInfo = new WalletInfo(keyStore);
-                    String id = walletInfo.getId();
                     MnemonicAndPath mnemonicAndPath = walletInfo.exportMnemonic(password);
-                    MnemonicBackupHintActivity.startAction(InputPasswordActivity.this, mnemonicAndPath.getMnemonic(), id);
-                    setResult(RESULT_OK);
-                    finish();
+                    MnemonicBackupHintActivity.startActionforResult(InputPasswordActivity.this, mnemonicAndPath.getMnemonic(),100);
                 } else {
                     ToastUtils.showShortToast("Wallet creation failed");
                 }
@@ -130,5 +132,14 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
             emitter.onNext(identity);
             emitter.onComplete();
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 }

@@ -3,8 +3,8 @@ package com.idhub.wallet.wallet.transaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.network.Web3Api;
 import com.idhub.wallet.utils.ToastUtils;
@@ -81,6 +82,10 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
         String toAddress = mAddressView.getText().toString();
         if (TextUtils.isEmpty(toAddress)) {
             ToastUtils.showShortToast(getString(R.string.wallet_send_address_not_empty));
+            return;
+        }
+        if (!ETHAddressValidator.isValidAddress(toAddress)) {
+            ToastUtils.showShortToast(getString(R.string.wallet_send_address_false));
             return;
         }
         Intent intent = new Intent(this, SendConfirmActivity.class);

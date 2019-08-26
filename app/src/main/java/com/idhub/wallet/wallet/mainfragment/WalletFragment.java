@@ -2,7 +2,7 @@ package com.idhub.wallet.wallet.mainfragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,30 +10,20 @@ import android.view.ViewGroup;
 
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.qrCode.QRCodeScanActivity;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
+import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
-import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.mainfragment.view.WalletFragmentBottomView;
 import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
 import com.idhub.wallet.wallet.token.TokenManagerActivity;
 
-import org.greenrobot.greendao.async.AsyncOperation;
-import org.greenrobot.greendao.async.AsyncOperationListener;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -118,7 +108,10 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
                 walletListDialog.show(getFragmentManager(), "wallet_dialog_fragment");
             }
         });
-        titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_qrcode_scan, () -> QRCodeScanActivity.startAction(getContext()));
+        titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_qrcode_scan, () -> {
+            MipcaActivityCapture.startAction(getContext());
+            Log.e("LYW", "initView:1 " );
+        });
         view.findViewById(R.id.add_token).setOnClickListener(this);
         mWalletItem = view.findViewById(R.id.wallet_card);
         mWalletBottomView = view.findViewById(R.id.bottom_view);

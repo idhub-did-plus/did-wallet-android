@@ -3,7 +3,7 @@ package com.idhub.wallet.didhub.keystore;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.idhub.wallet.common.sharepreference.WalletOtherSharpreference;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.address.EthereumAddressCreator;
 import com.idhub.wallet.didhub.crypto.Crypto;
@@ -48,7 +48,7 @@ public class DidHubKeyStore extends WalletKeystore implements EncMnemonicKeystor
         this.wallet = wallet;
         this.version = VERSION;
         this.id = Strings.isNullOrEmpty(id) ? UUID.randomUUID().toString() : id;
-        WalletOtherSharpreference.getInstance().setSelectedId(id);
+        WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
     }
 
     @Override

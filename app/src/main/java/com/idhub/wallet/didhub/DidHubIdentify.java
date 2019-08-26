@@ -21,6 +21,7 @@ public class DidHubIdentify {
         Wallet wallet = new Wallet();
         wallet.setName(name);
         wallet.setPasswordHint(passwordHit);
+        wallet.setIsgl(false);
         DidHubIdentify identity = new DidHubIdentify(wallet, mnemonicCodes, password);
         identify = identity;
         return identity;
@@ -29,5 +30,9 @@ public class DidHubIdentify {
     public static DidHubIdentify createIdentity(String name, String password, String passwordHit) {
         List<String> mnemonicCodes = MnemonicUtil.randomMnemonicCodes();
         return createIdentity(name, password, passwordHit, mnemonicCodes);
+    }
+
+    public static void createRecoverAddress(){
+
     }
 }

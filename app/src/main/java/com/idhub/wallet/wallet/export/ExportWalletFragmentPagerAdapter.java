@@ -1,13 +1,12 @@
 package com.idhub.wallet.wallet.export;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 
-import com.idhub.wallet.MainChannelFragmentFactory;
 import com.idhub.wallet.R;
 
 public class ExportWalletFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -15,9 +14,11 @@ public class ExportWalletFragmentPagerAdapter extends FragmentPagerAdapter {
     private String[] mItems;
     private Fragment mCurrentFragment;
     private Context mContext;
+    private String mData;
 
-    public ExportWalletFragmentPagerAdapter(FragmentManager fm, Context context,String[] items) {
+    public ExportWalletFragmentPagerAdapter(FragmentManager fm, Context context, String[] items, String data) {
         super(fm);
+        mData = data;
         mContext = context;
         if (items.length > 0) {
             mItems = items;
@@ -28,7 +29,7 @@ public class ExportWalletFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return ExportChannelFragmentFactory.createChannelFragment(mContext,mItems[position]);
+        return ExportChannelFragmentFactory.createChannelFragment(mContext,mItems[position],mData);
     }
 
     @Override

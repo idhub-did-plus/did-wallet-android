@@ -3,7 +3,7 @@ package com.idhub.wallet.common.title;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.AttributeSet;

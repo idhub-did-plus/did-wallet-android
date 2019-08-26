@@ -1,9 +1,6 @@
 package com.idhub.wallet.network;
 
 
-import android.util.Base64;
-
-import com.idhub.wallet.utils.LogUtils;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

@@ -26,4 +26,14 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textAllCaps">false</item>
     </style>
+
+    <style name="WalletDatePickerStyle" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/wallet_white</item>
+        <item name="android:windowEnterAnimation">@anim/wallet_date_picker_in</item>
+        <item name="android:windowExitAnimation">@anim/wallet_date_picker_out</item>
+    </style>
 </resources>

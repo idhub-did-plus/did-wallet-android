@@ -1,7 +1,7 @@
 package com.idhub.wallet.wallet.token;
 
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.AttributeSet;
 
 public class TokenManagerItemView extends ConstraintLayout {

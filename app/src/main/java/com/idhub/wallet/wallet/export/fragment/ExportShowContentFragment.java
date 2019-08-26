@@ -7,12 +7,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
@@ -35,15 +34,17 @@ public class ExportShowContentFragment extends Fragment implements View.OnClickL
     };
     private TextView mBtnText;
     private String mTag;
+    private String mData;
 
     public ExportShowContentFragment() {
         // Required empty public constructor
     }
 
-    public static ExportShowContentFragment newInstance(String tag) {
+    public static ExportShowContentFragment newInstance(String tag,String data) {
         ExportShowContentFragment fragment = new ExportShowContentFragment();
         Bundle args = new Bundle();
         args.putString("tag", tag);
+        args.putString("data", data);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,9 +56,11 @@ public class ExportShowContentFragment extends Fragment implements View.OnClickL
         Bundle bundle = getArguments();
         if (bundle != null) {
             mTag = bundle.getString("tag");
+            mData = bundle.getString("data");
         }
         View view = inflater.inflate(R.layout.wallet_fragment_show_keystore, container, false);
         mText = view.findViewById(R.id.wallet_content);
+        mText.setText(mData);
         mBtnText = view.findViewById(R.id.wallet_copy);
         if (!TextUtils.isEmpty(mTag))
             mBtnText.setText("复制 " + mTag);

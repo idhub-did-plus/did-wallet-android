@@ -3,17 +3,14 @@ package com.idhub.wallet.splash;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
-import com.idhub.wallet.createmanager.IdentityManagerActivity;
-import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 import com.idhub.wallet.utils.ToastUtils;
 
 public class SplashActivity extends AppCompatActivity {
@@ -27,13 +24,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void init() {
         //init , scan wallet keystores
-        WalletManager.scanWallets();
-        int walletNum = WalletManager.getWalletNum();
-        if (walletNum > 0) {
-            MainActivity.startAction(SplashActivity.this);
-        } else {
-            IdentityManagerActivity.startAction(SplashActivity.this);
-        }
+        MainActivity.startAction(SplashActivity.this,"SplashActivity");
         finish();
     }
 

@@ -9,6 +9,12 @@ import com.idhub.wallet.didhub.model.MnemonicAndPath;
 import com.idhub.wallet.didhub.model.TokenException;
 import com.idhub.wallet.didhub.util.NumericUtil;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+
 public class WalletInfo {
     private DidHubKeyStore keystore;
 
@@ -38,11 +44,10 @@ public class WalletInfo {
         return null;
     }
 
-    String exportKeystore(String password) {
+    public String exportKeystore(String password) {
         if (!keystore.verifyPassword(password)) {
             throw new TokenException(Messages.WALLET_INVALID_PASSWORD);
         }
-
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.addMixIn(DidHubKeyStore.class, DidHubExportKeystoreIgnore.class);
@@ -61,8 +66,14 @@ public class WalletInfo {
         throw new TokenException(Messages.ILLEGAL_OPERATION);
     }
 
-    public boolean verifyPassword(String password) {
-        return keystore.verifyPassword(password);
+    public void verifyPassword(String password, DisposableObserver<Boolean> observer) {
+        Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
+            Boolean b = keystore.verifyPassword(password);
+            emitter.onNext(b);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
     }
 
     boolean delete(String password) {

@@ -1,14 +1,14 @@
 package com.idhub.wallet.createmanager.walletcreate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.flowlayout.FlowLayout;
 import com.idhub.wallet.common.flowlayout.TagAdapter;
@@ -109,10 +109,10 @@ public class MnemonicBackupConfirmActivity extends AppCompatActivity implements 
 
     }
 
-    public static void startAction(Context context, String mnemonic) {
+    public static void startActionForResult(Context context, String mnemonic,int requestCode) {
         Intent intent = new Intent(context, MnemonicBackupConfirmActivity.class);
         intent.putExtra("data", mnemonic);
-        context.startActivity(intent);
+        ((Activity) context).startActivityForResult(intent,requestCode);
     }
 
     @Override
@@ -128,11 +128,15 @@ public class MnemonicBackupConfirmActivity extends AppCompatActivity implements 
 
     private void checkSuccess() {
         List<String> confirmDatas = mMnemonicConfirmAdapter.getSurplusDatas();
+        boolean isSuccess = true;
         for (int i = 0; i < confirmDatas.size(); i++) {
             if (!mCodes.get(i).equals(confirmDatas.get(i))) {
-                return;
+                isSuccess = false;
             }
         }
-        MainActivity.startAction(MnemonicBackupConfirmActivity.this);
+        if (isSuccess) {
+            setResult(RESULT_OK);
+            finish();
+        }
     }
 }

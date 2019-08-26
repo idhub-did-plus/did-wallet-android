@@ -8,20 +8,21 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 
-public class SelectAddWalletWayPopupWindow extends PopupWindow implements View.OnClickListener {
+public class SelectAddWalletWayPopupWindow extends PopupWindow {
 
     private Context mContxt;
     private View view;
+    private View.OnClickListener mOnClickListener;
 
-    public SelectAddWalletWayPopupWindow(Context context) {
+    public SelectAddWalletWayPopupWindow(Context context,View.OnClickListener onClickListener ) {
         super(context);
+        mOnClickListener = onClickListener;
         mContxt = context;
         view = LayoutInflater.from(context).inflate(R.layout.wallet_popup_window_add_wallet, null, false);
-        view.findViewById(R.id.tv_create).setOnClickListener(this);
-        view.findViewById(R.id.tv_import).setOnClickListener(this);
-        view.findViewById(R.id.tv_cancel).setOnClickListener(this);
+        view.findViewById(R.id.tv_create).setOnClickListener(mOnClickListener);
+        view.findViewById(R.id.tv_import).setOnClickListener(mOnClickListener);
+        view.findViewById(R.id.tv_cancel).setOnClickListener(mOnClickListener);
         setContentView(view);
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -30,18 +31,5 @@ public class SelectAddWalletWayPopupWindow extends PopupWindow implements View.O
         setBackgroundDrawable(new ColorDrawable(0xb0000000));
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.tv_create:
-                InputPasswordActivity.startActionForResult(mContxt,100);
-                break;
-            case R.id.tv_import:
-                break;
-            case R.id.tv_cancel:
-                break;
-        }
-        dismiss();
-    }
+
 }

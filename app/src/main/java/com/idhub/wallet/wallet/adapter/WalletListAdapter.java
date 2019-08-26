@@ -1,14 +1,14 @@
 package com.idhub.wallet.wallet.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.sharepreference.WalletOtherSharpreference;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
 import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
 
@@ -49,8 +49,9 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
     @Override
     public void onBindViewHolder(@NonNull WalletListAdapterViewHolder walletListAdapterViewHolder, int i) {
         WalletItemView walletItemView = (WalletItemView) walletListAdapterViewHolder.itemView;
+        walletItemView.setClicked(false);
         DidHubKeyStore keyStore = keyStores.get(i);
-        String selectedId = WalletOtherSharpreference.getInstance().getSelectedId();
+        String selectedId = WalletOtherInfoSharpreference.getInstance().getSelectedId();
         if (keyStore.getId().equals(selectedId)) {
             walletItemView.setMenuIvVisible(VISIBLE);
             walletItemView.setMenuIv(R.mipmap.wallet_selected);
@@ -72,7 +73,7 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
             itemView.setOnClickListener(v -> {
                 int adapterPosition = getAdapterPosition();
                 DidHubKeyStore didHubKeyStore = keyStores.get(adapterPosition);
-                boolean b = WalletOtherSharpreference.getInstance().setSelectedId(didHubKeyStore.getId());
+                boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(didHubKeyStore.getId());
                 if (b) {
                     onItemClickListener.itemClick();
                 }

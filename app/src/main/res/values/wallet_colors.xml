@@ -17,5 +17,13 @@
     <color name="wallet_edittext_color">#63727d</color>
     <color name="wallet_background">#fafafa</color>
 
-
+    <!--zing-->
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <!-- Android standard ICS color -->
+    <color name="result_view">#b0000000</color>
+    <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="zing_color">#815cf3</color>
+    <color name="snackbar_bg">#FCEAC8</color>
+    <color name="snackbar_textcolor">#F34E14</color>
 </resources>

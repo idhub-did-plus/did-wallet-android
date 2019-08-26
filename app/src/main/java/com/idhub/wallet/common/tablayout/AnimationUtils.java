@@ -1,6 +1,6 @@
 package com.idhub.wallet.common.tablayout;
 
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import android.view.animation.Interpolator;
 
 public class AnimationUtils {

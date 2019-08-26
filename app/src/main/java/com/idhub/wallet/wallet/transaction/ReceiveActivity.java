@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -16,11 +16,10 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.utils.LogUtils;
+import com.idhub.wallet.utils.QRCodeEncoder;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 
-import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
-import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -67,7 +66,7 @@ public class ReceiveActivity extends AppCompatActivity implements View.OnClickLi
         String content = codeBuilder.toString();
         LogUtils.e("LYW", "updateQRCode: " + content);
         Observable.create((ObservableOnSubscribe<Bitmap>) emitter -> {
-            Bitmap bitmap = QRCodeEncoder.syncEncodeQRCode(content, BGAQRCodeUtil.dp2px(ReceiveActivity.this, 150));
+            Bitmap bitmap = QRCodeEncoder.createQRImage(content, 150, 150);
             emitter.onNext(bitmap);
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())

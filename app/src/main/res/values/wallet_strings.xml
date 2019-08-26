@@ -78,8 +78,43 @@
     <string name="wallet_input_gas_price">输入Gas价格</string>
     <string name="wallet_send_amount_not_empty">转账金额不能为空</string>
     <string name="wallet_send_address_not_empty">转账地址不能为空</string>
+    <string name="wallet_send_address_false">转账地址不正确</string>
     <string name="wallet_input_password_false">输入密码不正确</string>
     <string name="wallet_please_input">请输入</string>
     <string name="wallet_gasPrice_not_empty">gas价格不能为空</string>
     <string name="wallet_gasLimit_not_empty">gas限制不能为空</string>
+    <string name="wallet_upgrade_tip">升级聚合身份之后才能进行多地址管理，请您前去升级身份之后再次尝试创建</string>
+    <string name="wallet_go_upgrade">去升级</string>
+    <string name="wallet_upgrade">升级</string>
+    <string name="wallet_profile">profile</string>
+    <string name="wallet_commit">提交</string>
+    <string name="wallet_select_birthday">点击选择生日</string>
+    <string name="wallet_upload">上传</string>
+    <string name="wallet_take_photo">拍照</string>
+    <string name="wallet_picture">相册</string>
+    <string name="wallet_file">文件</string>
+    <string name="wallet_qualified_investor_condition_first">连续三年年收入超过20万美金，或与配偶一起超过30万。（需要上传图片或PDF格式的银行流水）</string>
+    <string name="wallet_qualified_investor_condition_second">价值超过1百万美金（除自住房之外）。（上传图片或PDF格式的资产证明/负债证明，如果国籍或居住国任一为美国需要上传税表）</string>
+    <string name="wallet_qualified_purchaser_condition_first">A natural person (including any person who holds a joint, community property, or other similar shared ownership interest in an issuer that is excepted under Section (c)(7) of the 1940 Act with that person’s qualified purchaser spouse) who owns not less than $5,000,000 in investments as defined by the Securities and Exchange Commission.(上传图片或PDF格式的银行流水）</string>
+    <string name="wallet_qualified_purchaser_condition_second">A trust that is not covered by clause the family entity definition and that was not formed for the specific purpose of acquiring the Partnership Interest offered, as to which the trustee or other person authorized to make decisions with respect to the trust, and each settlor of the other person who has contributed assets to the trust, a natural person, family entity.</string>
+    <string name="wallet_qualified_purchaser_condition_third">A natural person, a corporation, partnership, association, joint stock company, trust, fund or other organized group of persons, whether incorporated or not, acting for his/her/its own account or the account of other qualified purchasers, (i) who in the aggregate owns and invests on a discretionary basis, not less than $25,000,000 in investments and (ii) An entity in which each of the beneficial owners of the entity’s securities is a qualified purchaser, as that term is defined in the 1940 Act.</string>
+    <string name="wallet_qualified_purchaser_condition_fourth">A “knowledgeable employee,” as defined for purposes of Section 3(c)(5) under the 1940 Act.</string>
+    <string name="back">返回</string>
+    <string name="picture_edit">编辑</string>
+    <string name="sure">确定</string>
+    <string name="crop__wait" translatable="false">数据加载中……</string>
+    <string name="crop__saving" translatable="false">保存图片中……</string>
+    <string name="scan">扫一扫</string>
+    <string name="photo_album">相册</string>
+    <string name="scan_device_zing">将编码放入框内，即可自动扫描</string>
+    <string name="scan_camera_permission">摄像头权限已拒绝</string>
+    <string name="wallet_upgrade_associated_address">升级成关联地址</string>
+    <string name="wallet_associated_address">关联地址</string>
+    <string name="wallet_delete">删除</string>
+    <string name="wallet_wallet_delete">确定删除钱包吗</string>
+    <string name="wallet_select_upload_file_type">选择上传文件类型</string>
+    <string name="wallet_please_input_file_name">请输入证明文件名称</string>
+    <string name="wallet_file_name">证明文件名称：</string>
+    <string name="wallet_upload_file">上传文件</string>
+
 </resources>

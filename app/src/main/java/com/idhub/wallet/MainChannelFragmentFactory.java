@@ -1,7 +1,7 @@
 package com.idhub.wallet;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.idhub.wallet.dapp.DappFragment;
 import com.idhub.wallet.hository.HositoryFragment;

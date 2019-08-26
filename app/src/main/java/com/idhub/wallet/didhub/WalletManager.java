@@ -1,7 +1,6 @@
 package com.idhub.wallet.didhub;
 
 import android.os.Environment;
-import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -10,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.io.CharSource;
 import com.google.common.io.Files;
-import com.idhub.wallet.common.sharepreference.WalletOtherSharpreference;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Messages;
@@ -134,7 +133,7 @@ public class WalletManager {
 //        return walletinfo;
 //    }
 
-    private static WalletInfo flushWallet(DidHubKeyStore keystore, boolean overwrite) {
+    public static WalletInfo flushWallet(DidHubKeyStore keystore, boolean overwrite) {
         DidHubKeyStore existsKeystore = findKeystoreByAddress(keystore.getAddress());
         if (existsKeystore != null) {
             if (!overwrite) {
@@ -171,13 +170,25 @@ public class WalletManager {
     }
 
     public static DidHubKeyStore getCurrentKeyStore() {
-        String selectedId = WalletOtherSharpreference.getInstance().getSelectedId();
+        String selectedId = WalletOtherInfoSharpreference.getInstance().getSelectedId();
         mCurrentDidHubKeyStore = keystoreMap.get(selectedId);
-        if (mCurrentDidHubKeyStore == null) {
+        if (mCurrentDidHubKeyStore == null && keystoreMap.size() > 0) {
             String key = keystoreMap.keySet().iterator().next();
             mCurrentDidHubKeyStore = keystoreMap.get(key);
-            WalletOtherSharpreference.getInstance().setSelectedId(mCurrentDidHubKeyStore.getId());
+            WalletOtherInfoSharpreference.getInstance().setSelectedId(mCurrentDidHubKeyStore.getId());
         }
         return mCurrentDidHubKeyStore;
+    }
+
+    public static DidHubKeyStore getKeyStore(String id) {
+        DidHubKeyStore didHubKeyStore = keystoreMap.get(id);
+        return didHubKeyStore;
+    }
+
+    public static boolean delete(DidHubKeyStore keyStore, String password) {
+        boolean b = keyStore.verifyPassword(password) && WalletManager.generateWalletFile(keyStore.getId()).delete();
+        if (b)
+            keystoreMap.remove(keyStore.getId());
+        return b;
     }
 }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="130dp"
     android:layout_margin="12dp"
     android:background="@drawable/wallet_shape_wallet_card">
 
@@ -61,21 +61,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="40dp"
         android:textColor="@color/wallet_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:text="EIN_NUMBER" />
 
     <TextView
-        android:id="@+id/tv_ein_address"
+        android:id="@+id/tv_associated_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:textColor="@color/wallet_white"
+        android:background="@drawable/wallet_background_stroke_black"
+        android:paddingLeft="5dp"
+        android:paddingTop="3dp"
+        android:paddingRight="5dp"
+        android:layout_marginTop="6dp"
+        android:paddingBottom="3dp"
+        android:text="@string/wallet_upgrade_associated_address"
+        android:textColor="@color/wallet_black"
         android:textSize="12sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_ein_number"
-        tools:text="0xqefslkfjsflksehfs...dskjfhskfh" />
+        android:layout_marginBottom="5dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_ein_number" />
 
 </com.idhub.wallet.wallet.mainfragment.view.WalletItemView>

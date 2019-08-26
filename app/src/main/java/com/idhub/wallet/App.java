@@ -2,7 +2,7 @@ package com.idhub.wallet;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 
 import com.idhub.wallet.greendao.DbUpdateHelper;
 import com.idhub.wallet.greendao.db.DaoMaster;

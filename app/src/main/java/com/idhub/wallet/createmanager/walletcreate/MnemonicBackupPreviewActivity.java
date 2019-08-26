@@ -1,8 +1,10 @@
 package com.idhub.wallet.createmanager.walletcreate;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,10 +46,10 @@ public class MnemonicBackupPreviewActivity extends AppCompatActivity implements 
         });
     }
 
-    public static void startAction(Context context, String mnemonic) {
+    public static void startActionForResult(Context context, String mnemonic,int requestCode) {
         Intent intent = new Intent(context, MnemonicBackupPreviewActivity.class);
         intent.putExtra("data", mnemonic);
-        context.startActivity(intent);
+        ((Activity) context).startActivityForResult(intent,requestCode);
     }
 
     @Override
@@ -55,8 +57,17 @@ public class MnemonicBackupPreviewActivity extends AppCompatActivity implements 
         int id = v.getId();
         switch (id) {
             case R.id.tv_next:
-                MnemonicBackupConfirmActivity.startAction(MnemonicBackupPreviewActivity.this, mMnemonic);
+                MnemonicBackupConfirmActivity.startActionForResult(MnemonicBackupPreviewActivity.this, mMnemonic,100);
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            setResult(RESULT_OK);
+            finish();
         }
     }
 }

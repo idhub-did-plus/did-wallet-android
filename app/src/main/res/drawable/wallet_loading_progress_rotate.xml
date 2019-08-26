@@ -4,7 +4,7 @@
     android:pivotX="50%"
     android:pivotY="50%"
     android:toDegrees="360"
-    android:interpolator="@anim/exchange_decelerate_interpolator"
+    android:interpolator="@anim/wallet_decelerate_interpolator"
 
     >
     <shape

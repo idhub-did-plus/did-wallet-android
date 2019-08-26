@@ -19,6 +19,7 @@ public class Messages {
 
   public static final String ILLEGAL_OPERATION = "illegal_operation";
   public static final String WALLET_EXISTS = "address_already_exist";
+//  public static final String WALLET_INVALID_ADDRESS = "address_invalid";
 
 
 

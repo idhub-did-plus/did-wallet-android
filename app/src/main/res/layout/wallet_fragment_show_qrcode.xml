@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="12dp"
         android:text="@string/wallet_scanning_only"
         android:textColor="@color/wallet_blue_text"
         android:textSize="13sp"
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:text="@string/wallet_use_in_safe_environment"
         android:textColor="@color/wallet_blue_text"
         android:textSize="13sp"
@@ -47,14 +47,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="@color/wallet_line_gray" />
 
     <ImageView
         android:id="@+id/wallet_QR_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:src="@mipmap/wallet_eth_icon" />
 
@@ -65,8 +65,9 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:paddingBottom="8dp"
         android:layout_gravity="center"
         android:layout_marginTop="38dp"
         android:text="@string/wallet_show_QR_code" />

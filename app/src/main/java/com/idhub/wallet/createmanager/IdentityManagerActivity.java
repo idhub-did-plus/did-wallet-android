@@ -2,11 +2,12 @@ package com.idhub.wallet.createmanager;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 
@@ -42,6 +43,7 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
+            MainActivity.startAction(this,"IdentityManager");
             finish();
         }
     }

@@ -3,17 +3,15 @@ package com.idhub.wallet.common.flowlayout;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.LayoutDirection;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.text.TextUtilsCompat;
+import androidx.core.text.TextUtilsCompat;
 
 import com.idhub.wallet.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class FlowLayout extends ViewGroup {
     private static final String TAG = "FlowLayout";

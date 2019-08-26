@@ -7,8 +7,17 @@ public class Wallet  {
      String name;
      String passwordHint;
      long timestamp;
+     boolean isDefaultAddress;
 
     public Wallet() {
+    }
+
+    public boolean isDefaultAddress() {
+        return isDefaultAddress;
+    }
+
+    public void setDefaultAddress(boolean defaultAddress) {
+        isDefaultAddress = defaultAddress;
     }
 
     public long getTimestamp() {

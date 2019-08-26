@@ -11,6 +11,7 @@ import java.nio.ByteOrder;
 import java.security.SecureRandom;
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class NumericUtil {
@@ -246,4 +247,25 @@ public class NumericUtil {
         String format = df.format(decimal);
         return format;
     }
+
+//    /**
+//     * 验证中国手机号
+//     * @param phone
+//     * @return
+//     */
+//    public static boolean verifyPhoneNumber(String phone) {
+//        String regex = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$";
+//        if (phone.length() != 11) {
+//            ToastUtils.showShortToast("手机号长度应为11位数");
+//            return false;
+//        } else {
+//            Pattern p = Pattern.compile(regex);
+//            Matcher m = p.matcher(phone);
+//            boolean isMatch = m.matches();
+//            if (!isMatch) {
+//                ToastUtils.showShortToast("请填入正确的手机号");
+//            }
+//            return isMatch;
+//        }
+//    }
 }

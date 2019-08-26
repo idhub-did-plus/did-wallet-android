@@ -2,29 +2,31 @@ package com.idhub.wallet;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.idhub.wallet.common.tablayout.TabLayout;
+import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.createmanager.IdentityManagerActivity;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
-import com.idhub.wallet.splash.SplashActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wallet_activity_main);
+        Log.e("LYW", "onCreate: " );
         init();
+        setContentView(R.layout.wallet_activity_main);
         initView();
         // Example of a call to a native method
     }
 
     private void init() {
-        //检查钱包数
+        // 检查钱包数
+        WalletManager.scanWallets();
         int walletNum = WalletManager.getWalletNum();
         if (walletNum <= 0) {
             IdentityManagerActivity.startAction(this);
@@ -32,8 +34,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void startAction(Context context) {
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        String data = intent.getStringExtra("data");
+        if ("delete".equals(data)) {
+            if (WalletManager.getWalletNum() <= 0) {
+                IdentityManagerActivity.startAction(this);
+                finish();
+                return;
+            }
+            //删除如果是显示的address 需要通知更新
+            WalletSelectedObservable.getInstance().update();
+        }
+    }
+
+    public static void startAction(Context context,String source) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("data", source);
         context.startActivity(intent);
     }
 
