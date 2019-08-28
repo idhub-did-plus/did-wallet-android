@@ -127,5 +127,19 @@
     <string name="wallet_upload_user_information">上传基本信息</string>
     <string name="wallet_upload_file_add_tip">上传文件信息填写完整之后才可以继续添加需要上传的文件</string>
     <string name="wallet_upload_file_incomplete_tip">上传信息未填写完整，请检查并补充完整之后再次上传</string>
+    <string name="wallet_repeat">重复</string>
+    <string name="wallet_edit_after_again_upload">请修改之后再次上传</string>
+    <string name="wallet_id_photo_positive">身份证件正面照片</string>
+    <string name="wallet_id_photo_negative">身份证件反面照片</string>
+    <string name="wallet_passport_photo">护照照片</string>
+    <string name="wallet_bank_balance_document">银行余额证明文件</string>
+    <string name="wallet_bank_flow_file">银行流水文件</string>
+    <string name="wallet_evaluation_agency_is_assessment_document">评估机构的评估文件</string>
+    <string name="wallet_cfa_net_assets_certification_document">CFA净资产证明文件</string>
+    <string name="wallet_tax_document">税表文件</string>
+    <string name="wallet_credit_report">征信报告</string>
+    <string name="wallet_address_proof_document">住址证明文件</string>
+    <string name="wallet_property_certificate_for_non_self_occupied_housing">非自住房的房产证明</string>
+    <string name="wallet_type_repeat_tip">上传数据只保留一份审核，确定上传将覆盖之前提交过数据，是否继续上传？</string>
 
 </resources>

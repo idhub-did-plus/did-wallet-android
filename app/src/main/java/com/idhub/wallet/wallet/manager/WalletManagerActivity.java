@@ -93,12 +93,14 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
 
     private void showMessageDialog() {
         int walletNum = WalletManager.getWalletNum();
-        if (walletNum <= 1) {
+        if (walletNum <= 1 && !WalletManager.getCurrentKeyStore().getWallet().isAssociate()) {
             MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_tip), getString(R.string.wallet_go_upgrade));
             messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
+            messageDialogFragment.setMessagePasswordDialogFragmentListener(this);
         } else {
             MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_associated_address), getString(R.string.wallet_confirm));
             messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
+            messageDialogFragment.setMessagePasswordDialogFragmentListener(this);
         }
     }
 
@@ -162,7 +164,7 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
     public void confirm() {
         //升级
         int walletNum = WalletManager.getWalletNum();
-        if (walletNum <= 1) {
+        if (walletNum <= 1 && !WalletManager.getCurrentKeyStore().getWallet().isAssociate()) {
             //升级
             UpgradeActivity.startAction(this, mID);
         } else {

@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.dialog.MessageDialogFragment;
+import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.greendao.UploadFileDbManager;
 import com.idhub.wallet.me.information.entity.UploadFileEntity;
 import com.idhub.wallet.utils.ToastUtils;
@@ -33,8 +35,10 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
 
     private UploadFileAdapter mUploadFileAdapter;
     private UploadFileDbManager mUploadFileDbManager;
-    private Map<String, String> mCheckNamesMap = new HashMap<>();//检查名字是否有重复
+    private List<String> mCheckNamesList = new ArrayList<>();//检查名字是否有重复
     private List<String> mCheckTypesList = new ArrayList<>();//检查类型是否有重复
+    private List<String> mRepeatTypesList = new ArrayList<>();//如果有重复的type进行存储
+    private LoadingAndErrorView mLoadingAndErrorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +59,20 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
         mUploadFileDbManager = new UploadFileDbManager();
         mUploadFileDbManager.queryAll(operation -> {
             List<UploadFileEntity> entities = (List<UploadFileEntity>) operation.getResult();
-
+            if (entities != null && entities.size() > 0) {
+                for (UploadFileEntity entity : entities) {
+                    mCheckNamesList.add(entity.getName());
+                    mCheckTypesList.add(entity.getType());
+                }
+            }
         });
         RecyclerView recyclerView = findViewById(R.id.rv_upload_file);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUploadFileAdapter = new UploadFileAdapter(this);
         recyclerView.setAdapter(mUploadFileAdapter);
         findViewById(R.id.tv_upload).setOnClickListener(this);
+        mLoadingAndErrorView = findViewById(R.id.loading_and_error);
+
     }
 
     public static void startAction(Context context) {
@@ -100,23 +111,67 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
                             return;
                         }
                     }
+                    //没有空数据，提交
+                   if (checkNameNotRepeat(datas)){
+                        //重复的四种type给出提示
+                        if (mRepeatTypesList.size() > 0) {
+                            StringBuilder builder = new StringBuilder();
+                            for (String s : mRepeatTypesList) {
+                                builder.append(s).append(",");
+                            }
+                            String message = builder.toString() + getString(R.string.wallet_type_repeat_tip);
+                            MessageDialogFragment dialogFragment = MessageDialogFragment.getInstance(message, getString(R.string.wallet_confirm));
+                            dialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
+                            dialogFragment.setMessagePasswordDialogFragmentListener(()->{
+                                uploadFile(datas);
+                            });
+                        } else {
+                            uploadFile(datas);
+                        }
+                    }
                 }
-               //没有空数据，提交
-                checkData(datas);
-                uploadFile(datas);
                 break;
         }
     }
 
-    private void checkData(List<UploadFileEntity> datas) {
+    private boolean checkNameNotRepeat(List<UploadFileEntity> datas) {
+        //检查name是否有重复
+        //检查type身份证 护照 住址 独一份 。重复的进行记录
+        mRepeatTypesList.clear();
+        List<String> backupNameList = new ArrayList<>(mCheckNamesList);
+        List<String> backupTypeList = new ArrayList<>();
+        for (UploadFileEntity data : datas) {
+            String name = data.getName();
+            if (!backupNameList.contains(name)) {
+                backupNameList.add(name);
+            } else {
+                //name重复
+                ToastUtils.showLongToast(getString(R.string.wallet_file_name) + name + getString(R.string.wallet_repeat) + getString(R.string.wallet_edit_after_again_upload));
+                return false;
+            }
+            String type = data.getType();
+            if (getString(R.string.wallet_id_photo_positive).equals(type) || getString(R.string.wallet_id_photo_negative).equals(type) || getString(R.string.wallet_passport_photo).equals(type) || getString(R.string.wallet_address_proof_document).equals(type)) {
+                if (mCheckTypesList.contains(type)) {
+                    backupTypeList.add(type);
+                }
+            }
+        }
 
+        mRepeatTypesList.addAll(backupTypeList);
+        return true;
     }
 
     private void uploadFile(List<UploadFileEntity> datas) {
-
+        //接口提交成功之后
+        mLoadingAndErrorView.setVisibility(View.VISIBLE);
+        if (mRepeatTypesList.size() > 0) {
+            for (String type : mRepeatTypesList) {
+                mUploadFileDbManager.deleteByType(type);
+            }
+        }
         mUploadFileDbManager.insertListData(datas,operation ->{
             boolean completed = operation.isCompleted();
-            Log.e("LYW", "uploadFile: " + completed );
+            mLoadingAndErrorView.setVisibility(View.GONE);
         });
     }
 }

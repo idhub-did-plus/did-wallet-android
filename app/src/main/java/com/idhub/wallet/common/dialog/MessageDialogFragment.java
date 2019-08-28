@@ -34,13 +34,11 @@ public class MessageDialogFragment extends DialogFragment implements View.OnClic
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        try {
-            mMessagePasswordDialogFragmentListener = (MessageDialogFragmentListener) context;
-        } catch (Exception e) {
-            throw new ClassCastException(((Activity) context).toString() + " must implementon MessageDialogFragmentListener");
-        }
     }
 
+    public void setMessagePasswordDialogFragmentListener(MessageDialogFragmentListener listener) {
+        mMessagePasswordDialogFragmentListener = listener;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -91,7 +91,7 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
     }
 
     @Override
-    public void queryByKey(String key, AsyncOperationListener listener) {
+    public void queryByName(String key, AsyncOperationListener listener) {
         DaoSession daoSession = App.getInstance().getmDaoSession();
         AsyncSession asyncSession = daoSession.startAsyncSession();
         asyncSession.setListenerMainThread(listener);

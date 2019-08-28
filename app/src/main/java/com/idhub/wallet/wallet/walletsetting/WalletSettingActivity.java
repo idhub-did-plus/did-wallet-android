@@ -76,6 +76,7 @@ public class WalletSettingActivity extends AppCompatActivity implements MessageD
                 } else {
                     MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_tip), getString(R.string.wallet_go_upgrade));
                     messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
+                    messageDialogFragment.setMessagePasswordDialogFragmentListener(this);
                 }
                 break;
             case R.id.tv_import:

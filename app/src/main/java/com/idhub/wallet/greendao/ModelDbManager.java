@@ -11,7 +11,7 @@ public interface ModelDbManager<T> {
 
     void queryById(long id, AsyncOperationListener listener);
 
-    void queryByKey(String key, AsyncOperationListener listener);
+    void queryByName(String name, AsyncOperationListener listener);
 
     void queryAll(AsyncOperationListener listener);
 }
