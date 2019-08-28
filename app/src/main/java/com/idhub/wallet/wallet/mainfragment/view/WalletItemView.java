@@ -42,7 +42,7 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
         this.mKeyStore = keyStore;
         mNameTv.setText(keyStore.getWallet().getName());
         mAddressTv.setText(NumericUtil.prependHexPrefix(keyStore.getAddress()));
-        boolean isgl = keyStore.getWallet().isIsgl();
+        boolean isgl = keyStore.getWallet().isAssociate();
         Log.e("LYW", "setData: " + isgl);
         if (isgl) {
             mAssociatedAddress.setText(getContext().getString(R.string.wallet_associated_address));

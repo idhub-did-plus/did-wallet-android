@@ -116,5 +116,16 @@
     <string name="wallet_please_input_file_name">请输入证明文件名称</string>
     <string name="wallet_file_name">证明文件名称：</string>
     <string name="wallet_upload_file">上传文件</string>
+    <string name="wallet_file_manager_not_found">文件管理器未找到</string>
+    <string name="wallet_not_empty_user_head">头像上传不能为空</string>
+    <string name="wallet_user_name">用户名</string>
+    <string name="wallet_input_user_name">请输入用户名</string>
+    <string name="wallet_not_empty_user_name">用户名不能为空</string>
+    <string name="wallet_user_signature">个性签名</string>
+    <string name="wallet_input_user_signature">请输入个性签名</string>
+    <string name="wallet_not_empty_user_signature">个性签名不能为空</string>
+    <string name="wallet_upload_user_information">上传基本信息</string>
+    <string name="wallet_upload_file_add_tip">上传文件信息填写完整之后才可以继续添加需要上传的文件</string>
+    <string name="wallet_upload_file_incomplete_tip">上传信息未填写完整，请检查并补充完整之后再次上传</string>
 
 </resources>

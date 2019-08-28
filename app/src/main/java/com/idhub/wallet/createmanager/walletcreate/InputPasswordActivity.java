@@ -89,11 +89,6 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
             return;
         }
         createWallet(walletName, password);
-        createRecoverAddress();
-    }
-
-    private void createRecoverAddress() {
-
     }
 
     private void createWallet(String walletName, String password) {
@@ -115,6 +110,7 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
                 } else {
                     ToastUtils.showShortToast("Wallet creation failed");
                 }
+                mLoadingAndErrorView.setVisibility(View.GONE);
             }
 
             @Override

@@ -1,6 +1,7 @@
 package com.idhub.wallet.didhub;
 
 import android.os.Environment;
+import android.text.TextUtils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -62,24 +63,27 @@ public class WalletManager {
         File directory = getDefaultKeyDirectory();
 
         keystoreMap.clear();
-        for (File file : directory.listFiles()) {
-            try {
-                DidHubKeyStore keystore = null;
-                CharSource charSource = Files.asCharSource(file, Charset.forName("UTF-8"));
-                String jsonContent = charSource.read();
-                JSONObject jsonObject = new JSONObject(jsonContent);
-                int version = jsonObject.getInt("version");
-                if (version == 3) {
-                    if (jsonContent.contains("encMnemonic")) {
-                        keystore = unmarshalKeystore(jsonContent, DidHubKeyStore.class);
+        File[] files = directory.listFiles();
+        if (files != null && files.length > 0) {
+            for (File file : files) {
+                try {
+                    DidHubKeyStore keystore = null;
+                    CharSource charSource = Files.asCharSource(file, Charset.forName("UTF-8"));
+                    String jsonContent = charSource.read();
+                    JSONObject jsonObject = new JSONObject(jsonContent);
+                    int version = jsonObject.getInt("version");
+                    if (version == 3) {
+                        if (jsonContent.contains("encMnemonic")) {
+                            keystore = unmarshalKeystore(jsonContent, DidHubKeyStore.class);
+                        }
                     }
-                }
 
-                if (keystore != null) {
-                    keystoreMap.put(keystore.getId(), keystore);
+                    if (keystore != null) {
+                        keystoreMap.put(keystore.getId(), keystore);
+                    }
+                } catch (Exception ex) {
+                    LogUtils.e("didhub", "Can't loaded " + file.getName() + " file", ex);
                 }
-            } catch (Exception ex) {
-                LogUtils.e("didhub", "Can't loaded " + file.getName() + " file", ex);
             }
         }
     }
@@ -183,6 +187,18 @@ public class WalletManager {
     public static DidHubKeyStore getKeyStore(String id) {
         DidHubKeyStore didHubKeyStore = keystoreMap.get(id);
         return didHubKeyStore;
+    }
+
+    public static String getDefaultAddress() {
+        String address = "";
+        if (keystoreMap.size() > 0) {
+            for (DidHubKeyStore keystore : keystoreMap.values()) {
+                if (keystore.getWallet().isDefaultAddress()) {
+                    address = NumericUtil.prependHexPrefix(keystore.getAddress());
+                }
+            }
+        }
+        return address;
     }
 
     public static boolean delete(DidHubKeyStore keyStore, String password) {

@@ -54,40 +54,11 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
 
     private void searchAssetmodelData() {
         //查询数据库资产数，先检查是否有ETH和IDHUB
-        AssetsModelDbManager.queryAll(operation -> {
+        new AssetsModelDbManager().queryAll(operation -> {
             if (operation.isCompletedSucessfully()) {
                 mWalletBottomView.setData(((List<AssetsModel>) operation.getResult()));
             }
         });
-//        List<AssetsModel> assetsModels = new ArrayList<>();
-//        AssetsModel assetsModel = new AssetsModel();
-//        assetsModel.setAddress(NumericUtil.prependHexPrefix(mDidHubKeyStore.getAddress()));
-//        assetsModel.setName(mDidHubKeyStore.getWallet().getName());
-//        assetsModels.add(assetsModel);
-//        AssetsModel assetsModel1 = new AssetsModel();
-//        assetsModel1.setName("test");
-//        assetsModel1.setToken("0x4ede434043c47e9774cd7d28a040c28dd757ddfa");
-//        assetsModel1.setAddress("0x88e49D95e98F099C031e35caA683b1611Fb49ce3");
-//        assetsModels.add(assetsModel1);
-//        AssetsModel assetsModel2 = new AssetsModel();
-//        assetsModel2.setName("ETH");
-//        assetsModel2.setAddress("0x88e49D95e98F099C031e35caA683b1611Fb49ce3");
-//        assetsModels.add(assetsModel2);
-//        AssetsModel assetsModel3 = new AssetsModel();
-//        assetsModel3.setName("IDTest");
-//        assetsModel3.setToken("0x4ede434043c47e9774cd7d28a040c28dd757ddfa");
-//        assetsModel3.setAddress(NumericUtil.prependHexPrefix(mDidHubKeyStore.getAddress()));
-//        assetsModels.add(assetsModel3);
-//        AssetsModelDbManager.insertListData(assetsModels, new AsyncOperationListener() {
-//            @Override
-//            public void onAsyncOperationCompleted(AsyncOperation operation) {
-//                if (operation.isCompletedSucessfully()) {
-//                    Object result = operation.getResult();
-//
-//                    Log.e("LYW", "onAsyncOperationCompleted: " + "插入成功" + result);
-//                }
-//            }
-//        });
     }
 
     private void initData() {

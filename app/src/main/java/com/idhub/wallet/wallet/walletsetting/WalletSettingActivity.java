@@ -87,7 +87,7 @@ public class WalletSettingActivity extends AppCompatActivity implements MessageD
     private boolean checkAddressRegisterIDHub() {
         if (mDidHubKeyStores.size() == 1) {
             DidHubKeyStore didHubKeyStore = mDidHubKeyStores.get(0);
-            return didHubKeyStore.getWallet().isIsgl();
+            return didHubKeyStore.getWallet().isAssociate();
         }
         return true;
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.idhub.wallet">
-    <!-- 扫描条形码 启动摄像机 -->
+    <!-- 自动聚焦权限 -->
     <application
         android:name=".App"
         android:allowBackup="false"
@@ -10,7 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/WalletAppTheme">
-        <activity android:name=".me.information.UploadFileActivity"></activity>
+        <activity android:name=".me.information.UploadIDHubInformationActivity"></activity>
+        <activity android:name=".me.information.UploadInformationTypeActivity" />
+        <activity android:name=".createmanager.UploadUserBasicInfoActivity" />
+        <activity android:name=".me.information.UploadFileActivity" />
         <activity android:name=".me.information.Level5Activity" />
         <activity android:name=".me.information.Level4Activity" />
         <activity android:name=".me.information.Level3Activity" />
@@ -78,9 +81,10 @@
         <activity
             android:name=".common.zxinglib.widget.crop.CropImageActivity"
             android:screenOrientation="portrait" />
-    </application> <!-- 扫描条形码 完成会有声音 -->
-    <uses-feature android:name="android.hardware.camera" /> <!-- 使用照相机权限 -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- 自动聚焦权限 -->
+    </application>
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

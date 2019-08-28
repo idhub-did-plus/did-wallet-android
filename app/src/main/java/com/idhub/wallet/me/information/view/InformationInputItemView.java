@@ -29,4 +29,8 @@ public class InformationInputItemView extends ConstraintLayout {
         mTitleView.setText(title);
         mInformationEtView.setHint(hint);
     }
+
+    public String getInputData() {
+        return mInformationEtView.getText().toString();
+    }
 }

@@ -5,11 +5,15 @@ import android.content.Intent;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.createmanager.IdentityManagerActivity;
+import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
+import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e("LYW", "onCreate: " );
         init();
         setContentView(R.layout.wallet_activity_main);
         initView();
@@ -30,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
         int walletNum = WalletManager.getWalletNum();
         if (walletNum <= 0) {
             IdentityManagerActivity.startAction(this);
+            finish();
+            return;
+        }
+        //检查是否上传头像和名字
+        UserBasicInfoEntity userBasicInfo = UserBasicInfoSharpreference.getInstance().getUserBasicInfo();
+        if (TextUtils.isEmpty(userBasicInfo.name)) {
+            //检查姓名是否为空，为空则去填写，不为空meFragment加载
+            UploadUserBasicInfoActivity.startAction(this);
             finish();
         }
     }
@@ -45,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             //删除如果是显示的address 需要通知更新
+            WalletSelectedObservable.getInstance().update();
+        }else if ("upgrade".equals(data)){
             WalletSelectedObservable.getInstance().update();
         }
     }

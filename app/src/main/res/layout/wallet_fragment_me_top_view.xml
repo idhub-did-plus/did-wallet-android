@@ -12,43 +12,62 @@
         android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/wallet_selected"
+        android:src="@mipmap/wallet_default_head"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginLeft="20dp"
-        android:text="Hi, nickname! Idhub did plus"
-        android:textColor="@color/wallet_white"
-        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_head"
         app:layout_constraintLeft_toRightOf="@id/iv_head"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iv_head" />
+        app:layout_constraintTop_toTopOf="@id/iv_head">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/wallet_white"
+            android:textSize="17sp"
+            tools:text="Idhub did plus" />
+
+        <TextView
+            android:id="@+id/tv_signature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/wallet_white"
+            android:textSize="13sp"
+            tools:text="Idhub did plus" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_recover_address"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="recoverAddress:0xasdsdjakd"
         android:textColor="@color/wallet_white"
+        android:singleLine="true"
         android:textSize="13sp"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/iv_head"
         app:layout_constraintTop_toBottomOf="@id/iv_head" />
 
     <TextView
         android:id="@+id/tv_ein_number"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:singleLine="true"
         android:layout_marginBottom="20dp"
         android:text="EIN:0xasdsdjakd"
         android:textColor="@color/wallet_white"
         android:textSize="13sp"
+        app:layout_constraintRight_toLeftOf="@id/upload_file"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/iv_head"
         app:layout_constraintTop_toBottomOf="@id/tv_recover_address" />
@@ -57,13 +76,13 @@
         android:id="@+id/upload_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/wallet_background_stroke_orange"
+        android:padding="5dp"
         android:text="@string/wallet_upload"
         android:textColor="@color/wallet_orange"
-        app:layout_constraintRight_toRightOf="parent"
-        android:padding="5dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginRight="8dp"
-        android:textSize="16sp" />
+        app:layout_constraintRight_toRightOf="parent" />
 </com.idhub.wallet.me.view.MeTopView>

@@ -1,0 +1,16 @@
+{
+  "buildFiles": [
+    "C:\\AndroidProject\\did-wallet-android\\app\\CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\ly\\AppData\\Local\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build C:\\AndroidProject\\did-wallet-android\\app\\.cxx\\cmake\\release\\x86_64 --target clean"
+  ],
+  "libraries": {
+    "native-lib-Release-x86_64": {
+      "artifactName": "native-lib",
+      "buildCommand": "C:\\Users\\ly\\AppData\\Local\\Android\\Sdk\\cmake\\3.6.4111459\\bin\\cmake.exe --build C:\\AndroidProject\\did-wallet-android\\app\\.cxx\\cmake\\release\\x86_64 --target native-lib",
+      "abi": "x86_64",
+      "output": "C:\\AndroidProject\\did-wallet-android\\app\\build\\intermediates\\cmake\\release\\obj\\x86_64\\libnative-lib.so"
+    }
+  }
+}

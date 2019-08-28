@@ -1,9 +1,11 @@
 package com.idhub.wallet.common.dialog;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,20 +17,25 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.core.content.FileProvider;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.idhub.wallet.App;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.zxinglib.util.SDcardUtil;
 import com.idhub.wallet.common.zxinglib.util.TimeUtil;
 import com.idhub.wallet.common.zxinglib.widget.crop.Crop;
+import com.idhub.wallet.utils.LogUtils;
+import com.idhub.wallet.utils.ToastUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -41,33 +48,36 @@ import static com.idhub.wallet.common.zxinglib.widget.crop.Crop.REQUEST_PICK;
 
 public class SelectUploadFileTypeDialogFragment extends DialogFragment implements View.OnClickListener {
 
-    private             File    mTempDir = new File(new File(Environment.getExternalStorageDirectory().getAbsolutePath()), "idhub/temps");
-    private             File    mImagesDir = new File(new File(Environment.getExternalStorageDirectory().getAbsolutePath()), "idhub/images");
+    private File mTempDir = new File(new File(Environment.getExternalStorageDirectory().getAbsolutePath()), "idhub/temps");
+    private File mImagesDir = new File(new File(Environment.getExternalStorageDirectory().getAbsolutePath()), "idhub/images");
+    private String mImageName = TimeUtil.getTimeYYYYMMDDHHMMSS() + ".jpg";
     private Uri fileUri;
-    public static final int     REQUEST_CODE_CAPTURE_CAMEIA = 1711;
-    protected           boolean isCrop                      = false;
-    protected           String  headIcon;
-    protected           boolean isCircleCrop;
-    private        String  FILE_PATH;
-    private              Bitmap  bitmap;
+    public static final int REQUEST_CODE_CAPTURE_CAMEIA = 1711;
+    public static final int REQUEST_SELECT_FILE_CODE = 1928;
+    protected boolean isCrop = false; //裁剪要处理，会有两次返回结果
+    protected String headIcon;
+    protected boolean isCircleCrop;
+    private String FILE_PATH;
+    private Bitmap bitmap;
     private SelectUploadFileTypeDialogFragmentListener mUploadFileTypeDialogFragmentListener;
     private String mSource;
+    public static final String SOURCE_USER_BASIC_INFO = "user_basic_info";
 
-    public static SelectUploadFileTypeDialogFragment getInstance(String surce){
+    public static SelectUploadFileTypeDialogFragment getInstance(String surce) {
         SelectUploadFileTypeDialogFragment uploadFileTypeDialogFragment = new SelectUploadFileTypeDialogFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("source",surce);
+        bundle.putString("source", surce);
         uploadFileTypeDialogFragment.setArguments(bundle);
         return uploadFileTypeDialogFragment;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        try {
-            mUploadFileTypeDialogFragmentListener = (SelectUploadFileTypeDialogFragmentListener) context;
-        } catch (Exception e) {
-            throw new ClassCastException(((Activity) context).toString() + " must implementon MessageDialogFragmentListener");
-        }
+    }
+
+    public void setUploadFileTypeDialogFragmentListeneristener(SelectUploadFileTypeDialogFragmentListener listeneristener) {
+        mUploadFileTypeDialogFragmentListener = listeneristener;
     }
 
     @Nullable
@@ -76,7 +86,6 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
         Bundle bundle = getArguments();
         if (bundle != null) {
             mSource = bundle.getString("source");
-//            mConfirmBtn = bundle.getString("confirmBtn");
         }
         View view = inflater.inflate(R.layout.wallet_popup_window_upload_file, container, false);
         Window window = getDialog().getWindow();
@@ -84,7 +93,13 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         view.findViewById(R.id.tv_take_photo).setOnClickListener(this);
         view.findViewById(R.id.tv_picture).setOnClickListener(this);
-        view.findViewById(R.id.tv_file).setOnClickListener(this);
+        View fileView = view.findViewById(R.id.tv_file);
+        fileView.setOnClickListener(this);
+        if (SOURCE_USER_BASIC_INFO.equals(mSource)) {
+            fileView.setVisibility(View.GONE);
+            mImagesDir = App.getInstance().getFilesDir();
+            mImageName = "user_head.jpg";
+        }
         init();
         return view;
     }
@@ -100,7 +115,20 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
                 Crop.pickImage(this);
                 break;
             case R.id.tv_file:
+                selectFile();
                 break;
+        }
+    }
+
+    private void selectFile() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/pdf").addCategory(Intent.CATEGORY_OPENABLE);
+        if (getContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+            try {
+                startActivityForResult(Intent.createChooser(intent, "Choose File"), REQUEST_SELECT_FILE_CODE);
+            } catch (ActivityNotFoundException e) {
+                ToastUtils.showShortToast(getString(R.string.wallet_file_manager_not_found));
+            }
         }
     }
 
@@ -108,20 +136,27 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PICK && resultCode == Activity.RESULT_OK) {
-            String path = getRealFilePath(data.getData());
-            Log.e("LYW", "onActivityResult: "+ path );
-            mUploadFileTypeDialogFragmentListener.fileResult(path,mSource);
-        }else if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA) {
+            if (SOURCE_USER_BASIC_INFO.equals(mSource)) {
+                beginCrop(data.getData());
+            }else {
+                FILE_PATH = getRealFilePath(data.getData());
+            }
+            if (mUploadFileTypeDialogFragmentListener != null)
+                mUploadFileTypeDialogFragmentListener.selectFileResult(FILE_PATH, mSource);
+        } else if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA &&  resultCode == Activity.RESULT_OK) {
             if (fileUri != null) {
                 beginCrop(fileUri);
             }
-            mUploadFileTypeDialogFragmentListener.fileResult(FILE_PATH,mSource);
-            Log.e("LYW", "onActivityResult: " + FILE_PATH);
-        }else if (requestCode == Crop.REQUEST_CROP) {
+            if (mUploadFileTypeDialogFragmentListener != null)
+                mUploadFileTypeDialogFragmentListener.selectFileResult(FILE_PATH, mSource);
+        } else if (requestCode == Crop.REQUEST_CROP &&  resultCode == Activity.RESULT_OK) {
             getBitmapToPath(headIcon);
-            mUploadFileTypeDialogFragmentListener.fileResult(FILE_PATH,mSource);
-            //图片处理结果
-//            dealImageResult();
+            if (mUploadFileTypeDialogFragmentListener != null)
+                mUploadFileTypeDialogFragmentListener.selectFileResult(FILE_PATH, mSource);
+        } else if (requestCode == REQUEST_SELECT_FILE_CODE && resultCode == Activity.RESULT_OK) {
+            String path = getRealFilePath(data.getData());
+            if (mUploadFileTypeDialogFragmentListener != null)
+                mUploadFileTypeDialogFragmentListener.selectFileResult(path, mSource);
         }
     }
 
@@ -130,6 +165,7 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
             mTempDir.mkdirs();
         }
     }
+
     /**
      * 把图片圆形化
      *
@@ -142,10 +178,9 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
             Uri outputUri = Uri.fromFile(cropFile);
             headIcon = outputUri.getPath();
             new Crop(source).output(outputUri).setCropType(isCircleCrop)
-                    .start(getContext(),this);
+                    .start(getContext(), this);
         } else {
             String path = getRealFilePath(source);
-            Log.e("LYW", "beginCrop: "+ path );
             getBitmapToPath(path);
             //图片处理结果
 //            dealImageResult();
@@ -169,7 +204,7 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
     }
 
     private void bitmapToFile(ByteArrayOutputStream byteArrayOutputStream) {
-        File file = new File(mImagesDir, TimeUtil.getTimeYYYYMMDDHHMMSS() + ".jpg");
+        File file = new File(mImagesDir, mImageName);
         try {
             FileOutputStream fos = new FileOutputStream(file);
             try {
@@ -222,6 +257,7 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
         }
         return bitmap.getRowBytes() * bitmap.getHeight(); // earlier version
     }
+
     /**
      * 加载本地图片
      *
@@ -240,13 +276,14 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
         }
         return bitmap;
     }
+
     private void getImageFromCamera() {
         // create Intent to take a picture and return control to the calling
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         String fileName = String.valueOf(System.currentTimeMillis());
         File cropFile = new File(mTempDir, fileName);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            fileUri = FileProvider.getUriForFile(getContext(), getContext().getApplicationContext().getPackageName() + ".fileprovider", cropFile);
+            fileUri = FileProvider.getUriForFile(App.getInstance(), App.getInstance().getPackageName() + ".fileprovider", cropFile);
         } else {
             fileUri = Uri.fromFile(cropFile);
         }
@@ -287,6 +324,6 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
     }
 
     public interface SelectUploadFileTypeDialogFragmentListener {
-        void fileResult(String path,String source);
+        void selectFileResult(String path, String source);
     }
 }

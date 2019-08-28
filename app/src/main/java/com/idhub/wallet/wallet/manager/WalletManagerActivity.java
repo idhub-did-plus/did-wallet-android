@@ -167,8 +167,10 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
             UpgradeActivity.startAction(this, mID);
         } else {
             //关联
+
+
             DidHubKeyStore keyStore = WalletManager.getKeyStore(mID);
-            keyStore.getWallet().setIsgl(true);
+            keyStore.getWallet().setAssociate(true);
             WalletManager.flushWallet(keyStore, true);
             MainActivity.startAction(this,"associated");
             WalletSelectedObservable.getInstance().update();

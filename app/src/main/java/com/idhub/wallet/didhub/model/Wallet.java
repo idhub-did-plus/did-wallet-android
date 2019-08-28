@@ -2,7 +2,7 @@ package com.idhub.wallet.didhub.model;
 
 public class Wallet  {
 
-     boolean isgl;//是否关联地址
+     boolean associate;//是否关联地址
      String identifer;//身份标识符
      String name;
      String passwordHint;
@@ -28,12 +28,12 @@ public class Wallet  {
         this.timestamp = timestamp;
     }
 
-    public boolean isIsgl() {
-        return isgl;
+    public boolean isAssociate() {
+        return associate;
     }
 
-    public void setIsgl(boolean isgl) {
-        this.isgl = isgl;
+    public void setAssociate(boolean associate) {
+        this.associate = associate;
     }
 
     public String getIdentifer() {
@@ -63,7 +63,7 @@ public class Wallet  {
     @Override
     public String toString() {
         return "Wallet{" +
-                "isgl=" + isgl +
+                "associate=" + associate +
                 ", identifer='" + identifer + '\'' +
                 ", name='" + name + '\'' +
                 ", passwordHint='" + passwordHint + '\'' +

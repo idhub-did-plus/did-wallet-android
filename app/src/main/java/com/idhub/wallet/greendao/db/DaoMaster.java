@@ -22,11 +22,15 @@ public class DaoMaster extends AbstractDaoMaster {
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
         AssetsModelDao.createTable(db, ifNotExists);
+        UploadIDHubInfoEntityDao.createTable(db, ifNotExists);
+        UploadFileEntityDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         AssetsModelDao.dropTable(db, ifExists);
+        UploadIDHubInfoEntityDao.dropTable(db, ifExists);
+        UploadFileEntityDao.dropTable(db, ifExists);
     }
 
     /**
@@ -46,6 +50,8 @@ public class DaoMaster extends AbstractDaoMaster {
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
         registerDaoClass(AssetsModelDao.class);
+        registerDaoClass(UploadIDHubInfoEntityDao.class);
+        registerDaoClass(UploadFileEntityDao.class);
     }
 
     public DaoSession newSession() {

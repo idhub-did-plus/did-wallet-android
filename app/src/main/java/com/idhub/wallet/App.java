@@ -1,8 +1,10 @@
 package com.idhub.wallet;
 
 import android.app.Application;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import androidx.multidex.MultiDex;
+import androidx.multidex.MultiDexApplication;
 
 import com.idhub.wallet.greendao.DbUpdateHelper;
 import com.idhub.wallet.greendao.db.DaoMaster;
@@ -17,13 +19,18 @@ public class App extends Application {
         super.onCreate();
         mApp = this;
         initGreenDao();
-        MultiDex.install(this);
     }
 
     private void initGreenDao() {
         DbUpdateHelper helper = new DbUpdateHelper(this, "idhub_db");
         SQLiteDatabase writableDatabase = helper.getWritableDatabase();
         mDaoSession = new DaoMaster(writableDatabase).newSession();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
     }
 
     public static App getInstance() {
