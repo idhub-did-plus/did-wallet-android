@@ -15,6 +15,16 @@ import com.idhub.wallet.createmanager.IdentityManagerActivity;
 import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.api.etherscan.model.Tx;
+import io.api.etherscan.model.TxToken;
+import wallet.idhub.com.clientlib.ApiFactory;
+import wallet.idhub.com.clientlib.interfaces.IncomingListener;
+import wallet.idhub.com.clientlib.interfaces.IncomingService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +35,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.wallet_activity_main);
         initView();
         // Example of a call to a native method
+        IncomingService incomingService = ApiFactory.getIncomingService();
+        List<String> accounts = new ArrayList<>();
+        accounts.add("0x14bc3096faef7a011ffd655f4a0fd2b534c09d19");
+        accounts.add("0x4c000e507be6663e264a1a21507a69bfa5035d95");//小写
+        incomingService.setAccounts(accounts);
+        incomingService.subscribeTransaction(new IncomingListener<Tx>() {
+            @Override
+            public void income(List<Tx> txes) {
+                Log.e("LYW", "income:subscribeTransaction ");
+                for (Tx tx : txes) {
+                    Log.e("LYW", "income:subscribeTransaction " + tx.toString() );
+                }
+            }
+        });
+        incomingService.subscribeTransfer(new IncomingListener<TxToken>() {
+            @Override
+            public void income(List<TxToken> txTokens) {
+                Log.e("LYW", "income:subscribeTransfer ");
+                for (TxToken txToken : txTokens) {
+                    Log.e("LYW", "income:subscribeTransfer " + txToken.toString());
+                }
+
+            }
+        });
+
     }
 
     private void init() {
@@ -42,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
             //检查姓名是否为空，为空则去填写，不为空meFragment加载
             UploadUserBasicInfoActivity.startAction(this);
             finish();
+        }
+        for (DidHubKeyStore value : WalletManager.getWalletKeystores().values()) {
+            Log.e("LYW", "init: " + value.getAddress() );
         }
     }
 

@@ -124,6 +124,7 @@ public class ReceiveActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.tv_designated_Amount:
                 InputDialogFragment dialogFragment = InputDialogFragment.getInstance("receive", getString(R.string.wallet_input_amount), InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 dialogFragment.show(getSupportFragmentManager(), "input_dialog_fragment");
+                dialogFragment.setInputDialogFragmentListener(this);
                 break;
         }
     }

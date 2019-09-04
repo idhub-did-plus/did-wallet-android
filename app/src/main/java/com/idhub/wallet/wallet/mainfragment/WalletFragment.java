@@ -2,7 +2,9 @@ package com.idhub.wallet.wallet.mainfragment;
 
 
 import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.wallet.mainfragment.view.WalletFragmentBottomView;
@@ -56,7 +59,34 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         //查询数据库资产数，先检查是否有ETH和IDHUB
         new AssetsModelDbManager().queryAll(operation -> {
             if (operation.isCompletedSucessfully()) {
-                mWalletBottomView.setData(((List<AssetsModel>) operation.getResult()));
+                List<AssetsModel> result = (List<AssetsModel>) operation.getResult();
+                AssetsModel assetsModel = new AssetsModel();
+                assetsModel.setName(AssetsDefaultType.ETH_NAME);
+                AssetsModel assetsModel1 = new AssetsModel();
+                assetsModel1.setName(AssetsDefaultType.IDHUB_NAME);
+                assetsModel1.setToken("0x4ede434043c47e9774cd7d28a040c28dd757ddfa");
+                AssetsModel assetsModel2 = new AssetsModel();
+                assetsModel.setName(AssetsDefaultType.ETH_NAME);
+                AssetsModel assetsModel3 = new AssetsModel();
+                assetsModel.setName(AssetsDefaultType.ETH_NAME);
+                AssetsModel assetsModel5 = new AssetsModel();
+                assetsModel5.setName(AssetsDefaultType.ETH_NAME);
+                AssetsModel assetsModel6 = new AssetsModel();
+                assetsModel6.setName(AssetsDefaultType.ETH_NAME);
+                AssetsModel assetsModel7 = new AssetsModel();
+                assetsModel7.setName(AssetsDefaultType.ETH_NAME);
+                AssetsModel assetsModel4 = new AssetsModel();
+                assetsModel4.setName(AssetsDefaultType.IDHUB_NAME);
+                assetsModel4.setToken("0x4ede434043c47e9774cd7d28a040c28dd757ddfa");
+                result.add(assetsModel);
+                result.add(assetsModel1);
+                result.add(assetsModel2);
+                result.add(assetsModel3);
+                result.add(assetsModel4);
+                result.add(assetsModel5);
+                result.add(assetsModel6);
+                result.add(assetsModel7);
+                mWalletBottomView.setData(result);
             }
         });
     }
@@ -81,7 +111,6 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         });
         titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_qrcode_scan, () -> {
             MipcaActivityCapture.startAction(getContext());
-            Log.e("LYW", "initView:1 " );
         });
         view.findViewById(R.id.add_token).setOnClickListener(this);
         mWalletItem = view.findViewById(R.id.wallet_card);

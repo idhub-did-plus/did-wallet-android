@@ -65,6 +65,11 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
     }
 
     @Override
+    public void update(AssetsModel assetsModel) {
+
+    }
+
+    @Override
     public void insertData(AssetsModel assetsModel, AsyncOperationListener asyncOperationListener) {
         AsyncSession asyncSession = App.getInstance().getmDaoSession().startAsyncSession();
         asyncSession.setListenerMainThread(asyncOperationListener);

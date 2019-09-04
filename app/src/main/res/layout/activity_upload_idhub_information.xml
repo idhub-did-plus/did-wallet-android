@@ -74,16 +74,63 @@
                 android:layout_height="wrap_content" />
 
             <include
-                android:id="@+id/address"
+                android:id="@+id/address_proof"
                 layout="@layout/wallet_common_input_information_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <include
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/phone_number"
-                layout="@layout/wallet_common_input_information_item"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/et_phone_number"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="12dp"
+                    android:background="@null"
+                    android:minHeight="60dp"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@id/line"
+                    app:layout_constraintLeft_toRightOf="@id/tv_phone_dialing_code"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:hint="@string/app_name" />
+
+                <TextView
+                    android:text="+"
+                    android:minWidth="40dp"
+                    android:id="@+id/tv_phone_dialing_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toRightOf="@id/tv_phone_number"
+                    app:layout_constraintBottom_toTopOf="@id/line"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/et_phone_number" />
+
+                <TextView
+                    android:id="@+id/tv_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:textColor="@color/wallet_black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@id/line"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="标题:" />
+
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/wallet_line_gray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_phone_number" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <include
                 android:id="@+id/email"

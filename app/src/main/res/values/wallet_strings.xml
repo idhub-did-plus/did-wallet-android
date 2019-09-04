@@ -93,6 +93,9 @@
     <string name="wallet_take_photo">拍照</string>
     <string name="wallet_picture">相册</string>
     <string name="wallet_file">文件</string>
+    <string name="wallet_qualified_investor">合格投资人</string>
+    <string name="wallet_qualified_purchaser">合格购买人</string>
+    <string name="wallet_st_compliance_investor">ST合规投资者</string>
     <string name="wallet_qualified_investor_condition_first">连续三年年收入超过20万美金，或与配偶一起超过30万。（需要上传图片或PDF格式的银行流水）</string>
     <string name="wallet_qualified_investor_condition_second">价值超过1百万美金（除自住房之外）。（上传图片或PDF格式的资产证明/负债证明，如果国籍或居住国任一为美国需要上传税表）</string>
     <string name="wallet_qualified_purchaser_condition_first">A natural person (including any person who holds a joint, community property, or other similar shared ownership interest in an issuer that is excepted under Section (c)(7) of the 1940 Act with that person’s qualified purchaser spouse) who owns not less than $5,000,000 in investments as defined by the Securities and Exchange Commission.(上传图片或PDF格式的银行流水）</string>
@@ -141,5 +144,31 @@
     <string name="wallet_address_proof_document">住址证明文件</string>
     <string name="wallet_property_certificate_for_non_self_occupied_housing">非自住房的房产证明</string>
     <string name="wallet_type_repeat_tip">上传数据只保留一份审核，确定上传将覆盖之前提交过数据，是否继续上传？</string>
+
+    <string name="wallet_id_hub_information_title">认证信息</string>
+    <string name="wallet_first_name">姓氏</string>
+    <string name="wallet_last_name">名字</string>
+    <string name="wallet_birthday">生日</string>
+    <string name="wallet_country">国籍</string>
+    <string name="wallet_residence_country">居住国</string>
+    <string name="wallet_id_number">身份证件号码</string>
+    <string name="wallet_passport_number">护照号码</string>
+    <string name="wallet_phone_number">手机号</string>
+    <string name="wallet_tax_number">纳税号</string>
+    <string name="wallet_ssn_number">社保号</string>
+    <string name="wallet_address">住址</string>
+    <string name="wallet_email">邮箱</string>
+
+    //dapp
+    <string name="wallet_dapp_search_hint">搜索或输入DApp网址</string>
+    <string name="wallet_dialog_title_sign_message">签署消息</string>
+    <string name="wallet_dialog_approve">同意</string>
+    <string name="wallet_dialog_reject">拒绝</string>
+    <string name="wallet_transaction_value">交易价格</string>
+    <string name="wallet_message_to_sign">消息</string>
+    <string name="wallet_signer_address">签署人地址</string>
+    <string name="walet_requester_url">请求链接</string>
+    <string name="wallet_dialog_title_sign_transaction">签署交易</string>
+
 
 </resources>

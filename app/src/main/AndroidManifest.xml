@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.idhub.wallet">
-    <!-- 自动聚焦权限 -->
+
     <application
         android:name=".App"
         android:allowBackup="false"
@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/WalletAppTheme">
-        <activity android:name=".me.information.UploadIDHubInformationActivity"></activity>
+        <activity android:name=".dapp.Web3Activity"></activity>
+        <activity android:name=".me.information.UploadIDHubInformationActivity" />
         <activity android:name=".me.information.UploadInformationTypeActivity" />
         <activity android:name=".createmanager.UploadUserBasicInfoActivity" />
         <activity android:name=".me.information.UploadFileActivity" />
@@ -22,6 +23,7 @@
         <activity android:name=".createmanager.UpgradeActivity" />
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

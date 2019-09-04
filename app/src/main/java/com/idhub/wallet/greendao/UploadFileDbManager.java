@@ -1,11 +1,9 @@
 package com.idhub.wallet.greendao;
 
 import com.idhub.wallet.App;
-import com.idhub.wallet.greendao.db.AssetsModelDao;
 import com.idhub.wallet.greendao.db.DaoSession;
 import com.idhub.wallet.greendao.db.UploadFileEntityDao;
-import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.me.information.entity.UploadFileEntity;
+import com.idhub.wallet.greendao.entity.UploadFileEntity;
 
 import org.greenrobot.greendao.async.AsyncOperationListener;
 import org.greenrobot.greendao.async.AsyncSession;
@@ -71,5 +69,10 @@ public class UploadFileDbManager implements ModelDbManager<UploadFileEntity> {
         AsyncSession asyncSession = daoSession.startAsyncSession();
         asyncSession.setListenerMainThread(listener);
         asyncSession.loadAll(UploadFileEntity.class);
+    }
+
+    @Override
+    public void update(UploadFileEntity uploadFileEntity) {
+
     }
 }

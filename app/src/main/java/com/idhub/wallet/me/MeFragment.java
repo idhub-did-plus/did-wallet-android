@@ -20,18 +20,13 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.me.adapter.LevelAdapter;
-import com.idhub.wallet.me.model.MeLevelEntity;
+import com.idhub.wallet.me.view.MeBottomItemView;
 import com.idhub.wallet.me.view.MeTopView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
-import com.idhub.wallet.utils.LogUtils;
-import com.idhub.wallet.utils.ToastUtils;
 
 import org.web3j.crypto.Credentials;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
 
 import wallet.idhub.com.clientlib.ApiFactory;
 import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
@@ -44,6 +39,10 @@ public class MeFragment extends MainBaseFragment {
 
 
     private MeTopView mTopView;
+    private MeBottomItemView mIDHubVipView;
+    private MeBottomItemView mQualifiedInvestorView;
+    private MeBottomItemView mQualifiedPurchaserView;
+    private MeBottomItemView mStComplianceInvestorView;
 
     public MeFragment() {
         // Required empty public constructor
@@ -56,7 +55,12 @@ public class MeFragment extends MainBaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.wallet_fragment_me, container, false);
         initView(view);
+        initData();
         return view;
+    }
+
+    private void initData() {
+
     }
 
     private void initView(View view) {
@@ -64,27 +68,10 @@ public class MeFragment extends MainBaseFragment {
         titleLayout.setTitle(getString(R.string.wallet_profile));
         titleLayout.setBackImgVisible(View.INVISIBLE);
         mTopView = view.findViewById(R.id.top_view);
-        RecyclerView recyclerView = view.findViewById(R.id.rv_level);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        LevelAdapter adapter = new LevelAdapter(getContext());
-        recyclerView.setAdapter(adapter);
-        MeLevelEntity meLevelEntity = new MeLevelEntity();
-        meLevelEntity.level = "1";
-        MeLevelEntity meLevelEntity1 = new MeLevelEntity();
-        meLevelEntity1.level = "2";
-        MeLevelEntity meLevelEntity2 = new MeLevelEntity();
-        meLevelEntity2.level = "3";
-        MeLevelEntity meLevelEntity3 = new MeLevelEntity();
-        meLevelEntity3.level = "4";
-        MeLevelEntity meLevelEntity4 = new MeLevelEntity();
-        meLevelEntity4.level = "5";
-        List<MeLevelEntity> meLevelEntities = new ArrayList<>();
-        meLevelEntities.add(meLevelEntity);
-        meLevelEntities.add(meLevelEntity1);
-        meLevelEntities.add(meLevelEntity2);
-        meLevelEntities.add(meLevelEntity3);
-        meLevelEntities.add(meLevelEntity4);
-        adapter.addAll(meLevelEntities);
+        mIDHubVipView = view.findViewById(R.id.id_hub_vip);
+        mQualifiedInvestorView = view.findViewById(R.id.qualified_investor);
+        mQualifiedPurchaserView = view.findViewById(R.id.qualified_purchaser);
+        mStComplianceInvestorView = view.findViewById(R.id.st_compliance_investor);
     }
 
     @Override

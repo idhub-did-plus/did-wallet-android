@@ -1,7 +1,10 @@
 package com.idhub.wallet.me.information.view;
 
 import android.content.Context;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,6 +33,11 @@ public class InformationInputItemView extends ConstraintLayout {
         mInformationEtView.setHint(hint);
     }
 
+    public void setValue(String value) {
+        if (!TextUtils.isEmpty(value)) {
+            mInformationEtView.setText(value);
+        }
+    }
     public String getInputData() {
         return mInformationEtView.getText().toString();
     }

@@ -1,11 +1,9 @@
 package com.idhub.wallet.me.information;
 
 import android.content.Context;
-import android.media.Image;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.SelectUploadFileTypeDialogFragment;
-import com.idhub.wallet.me.information.entity.UploadFileEntity;
-import com.idhub.wallet.me.information.view.UploadFileOtherView;
-import com.idhub.wallet.me.view.MeTopView;
+import com.idhub.wallet.greendao.entity.UploadFileEntity;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.util.ArrayList;

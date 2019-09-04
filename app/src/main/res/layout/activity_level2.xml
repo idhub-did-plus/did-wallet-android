@@ -6,71 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".me.information.Level2Activity">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/id_number"
-                layout="@layout/wallet_common_input_information_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-            <include
-                android:id="@+id/passport_number"
-                layout="@layout/wallet_common_input_information_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include
-                android:id="@+id/tax_id"
-                layout="@layout/wallet_common_input_information_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include
-                android:id="@+id/ssn"
-                layout="@layout/wallet_common_input_information_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include
-                android:id="@+id/address"
-                layout="@layout/wallet_common_input_information_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include
-                android:id="@+id/phone_number"
-                layout="@layout/wallet_common_input_information_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <include
-                android:id="@+id/email"
-                layout="@layout/wallet_common_input_information_item"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/tv_upgrade"
-                style="@style/WalletCommonButton"
-                android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="14dp"
-                android:text="@string/wallet_commit" />
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
     <include
         android:id="@+id/title"
         layout="@layout/wallet_common_title_layout"
@@ -80,14 +15,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/loading_and_error"
-        layout="@layout/wallet_common_loading_and_error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

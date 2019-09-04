@@ -1,39 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.idhub.wallet.me.view.MeBottomItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
-    app:layout_goneMarginBottom="10dp"
-    android:layout_marginBottom="20dp"
     android:background="@drawable/wallet_shape_wallet_card">
 
     <TextView
-        android:id="@+id/tv_level"
+        android:id="@+id/tv_level_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        android:text="LEVEL 1"
+        tools:text="合规投资者"
         android:textColor="@color/wallet_white"
         android:textSize="17sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_type"
+        android:id="@+id/tv_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="18dp"
-        android:text="未认证"
+        tools:text="未认证"
         android:textColor="@color/wallet_white"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/tv_level"
-        app:layout_constraintTop_toBottomOf="@id/tv_level" />
+        app:layout_constraintLeft_toLeftOf="@id/tv_level_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_level_name" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</com.idhub.wallet.me.view.MeBottomItemView>

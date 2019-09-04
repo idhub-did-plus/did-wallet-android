@@ -1,8 +1,10 @@
 package com.idhub.wallet.wallet.mainfragment.adapter;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,27 +58,33 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapte
         itemView.setName(model.getName());
         String token = model.getToken();
         address = WalletManager.getAddress();
-        if (!TextUtils.isEmpty(token)) {
-            Web3Api.searchBalance(address, token, new Web3jSubscriber<BigInteger>() {
-                @Override
-                public void onNext(BigInteger bigInteger) {
-                    String balance = String.valueOf(bigInteger);
-                    model.setBalance(balance);
-                    String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
-                    itemView.setBalance(balanceStr);
-                }
-            });
+        String balance = model.getBalance();
+        if (TextUtils.isEmpty(balance)) {
+            itemView.setBalance("-");
+            if (!TextUtils.isEmpty(token)) {
+                Web3Api.searchBalance(address, token, new Web3jSubscriber<BigInteger>() {
+                    @Override
+                    public void onNext(BigInteger bigInteger) {
+                        String balance = String.valueOf(bigInteger);
+                        model.setBalance(balance);
+                        String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
+                        itemView.setBalance(balanceStr);
+                    }
+                });
+            } else {
+                Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
+                    @Override
+                    public void onNext(EthGetBalance o) {
+                        super.onNext(o);
+                        BigInteger balance1 = o.getBalance();
+                        String balance = String.valueOf(balance1);
+                        model.setBalance(balance);
+                        itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1));
+                    }
+                });
+            }
         } else {
-            Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
-                @Override
-                public void onNext(EthGetBalance o) {
-                    super.onNext(o);
-                    BigInteger balance1 = o.getBalance();
-                    String balance = String.valueOf(balance1);
-                    model.setBalance(balance);
-                    itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1));
-                }
-            });
+            itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance)));
         }
     }
 

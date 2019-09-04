@@ -1,5 +1,7 @@
 package wallet.idhub.com.clientlib.etherscan;
 
+import android.util.Log;
+
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +32,7 @@ public class Etherscan implements IncomingService {
 	static {
 		instance = new Etherscan();
 		
-//		instance.init();
+		instance.init();
 	}
 
 	public static IncomingService getInstance() {
@@ -60,7 +62,7 @@ public class Etherscan implements IncomingService {
 	IncomingListener<Tx> txlistener;
 	IncomingListener<TxToken> transferlistener;
 	
-	EthNetwork current = EthNetwork.MAINNET;
+	EthNetwork current = EthNetwork.ROPSTEN;
 	@Override
 	public void setCurrentNetwork(EthNetwork c) {
 		current = c;
@@ -75,7 +77,7 @@ public class Etherscan implements IncomingService {
 			e1.printStackTrace();
 		}
 		for(EthNetwork v : EthNetwork.values()) {
-			apis.put(EthNetwork.MAINNET, new EtherScanApi(v));
+			apis.put(v, new EtherScanApi(v));
 		}
 		
 		pool = Executors.newScheduledThreadPool(1);
@@ -105,7 +107,7 @@ public class Etherscan implements IncomingService {
 		return this.apis.get(current);
 	}
 	void once() throws Exception {
-		long start = 2l;// ProviderFactory.getProvider().getLastEndBlockNumber();
+		long start = 0;// ProviderFactory.getProvider().getLastEndBlockNumber();
 		long end = 99999999l;// ProviderFactory.getProvider().web3j().ethBlockNumber().send().getBlockNumber().longValue();
 		TransactionSession sess = new TransactionSession(accounts, txlistener, transferlistener, api(), start, end);
 		try {

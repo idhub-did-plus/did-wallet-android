@@ -1,5 +1,6 @@
 package com.idhub.wallet.net;
 
+import com.idhub.wallet.common.sharepreference.BlockNumbersSharedPreferences;
 import com.idhub.wallet.network.C;
 
 import org.web3j.crypto.Credentials;
@@ -15,13 +16,15 @@ public class IDHubCredentialProvider implements CredentialProvider {
     private static Web3j mWeb3j = Web3j.build(new HttpService(C.API_BASE));
     private static Credentials client;
     private static String sRecoverAddress;
-    public static void setDefaultCredentials(String privateKey){
+
+    public static void setDefaultCredentials(String privateKey) {
         client = Credentials.create(privateKey);
     }
 
     public static void setRecoverAddress(String recoverAddress) {
         sRecoverAddress = recoverAddress;
     }
+
     @Override
     public Credentials getByAddress(String s) {
         return null;
@@ -46,11 +49,11 @@ public class IDHubCredentialProvider implements CredentialProvider {
 
     @Override
     public long getLastEndBlockNumber() {
-        return 0;
+        return BlockNumbersSharedPreferences.getInstance().getBlockNumber();
     }
 
     @Override
     public void storeLastEndBlockNumber(long l) {
-
+        BlockNumbersSharedPreferences.getInstance().setBlockNumber(l);
     }
 }

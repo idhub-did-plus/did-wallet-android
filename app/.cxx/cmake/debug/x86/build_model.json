@@ -5,7 +5,6 @@
       "sdkFolder": "C:\\Users\\ly\\AppData\\Local\\Android\\Sdk",
       "isNativeCompilerSettingsCacheEnabled": false,
       "isBuildOnlyTargetAbiEnabled": true,
-      "ideBuildTargetAbi": "x86",
       "splitsAbiFilterSet": [],
       "intermediatesFolder": "C:\\AndroidProject\\did-wallet-android\\app\\build\\intermediates",
       "gradleModulePathName": ":app",
@@ -42,12 +41,15 @@
     "gradleBuildOutputFolder": "C:\\AndroidProject\\did-wallet-android\\app\\.cxx\\cxx\\debug",
     "isDebuggableEnabled": true,
     "validAbiList": [
-      "X86"
+      "ARMEABI_V7A",
+      "ARM64_V8A",
+      "X86",
+      "X86_64"
     ],
     "buildTargetSet": []
   },
   "abi": "X86",
-  "abiPlatformVersion": 16,
+  "abiPlatformVersion": 21,
   "cxxBuildFolder": "C:\\AndroidProject\\did-wallet-android\\app\\.cxx\\cmake\\debug\\x86",
   "jsonFile": "C:\\AndroidProject\\did-wallet-android\\app\\.cxx\\cmake\\debug\\x86\\android_gradle_build.json",
   "gradleBuildOutputFolder": "C:\\AndroidProject\\did-wallet-android\\app\\.cxx\\cxx\\debug\\x86",

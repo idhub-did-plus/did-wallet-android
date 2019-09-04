@@ -1,4 +1,4 @@
-package com.idhub.wallet.me.information.entity;
+package com.idhub.wallet.greendao.entity;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;

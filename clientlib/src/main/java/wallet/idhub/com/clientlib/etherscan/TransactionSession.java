@@ -1,5 +1,7 @@
 package wallet.idhub.com.clientlib.etherscan;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,6 @@ public class TransactionSession {
 			}
 		}
 		List<Tx> incomingTxs(String address){
-	    	 
 	    	   List<Tx> txs = api.account().txs(address,start, end);
 	    	   List<Tx> rst = new ArrayList<Tx>();
 	    	  
@@ -75,8 +76,7 @@ public class TransactionSession {
 	    	   return rst;
 	      }
 		List<TxToken> incomingTokens(String address){
-	    	 
-	    	    List<TxToken> es = api.account().txsToken(address, start, end);
+			List<TxToken> es = api.account().txsToken(address, start, end);
 	    	   List<TxToken> rst = new ArrayList<TxToken>();
 	    	  
 	    	   for(TxToken t : es) {

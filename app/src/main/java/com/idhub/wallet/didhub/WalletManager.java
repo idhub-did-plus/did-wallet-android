@@ -153,7 +153,7 @@ public class WalletManager {
         return new WalletInfo(keystore);
     }
 
-    private static DidHubKeyStore findKeystoreByAddress(String address) {
+    public static DidHubKeyStore findKeystoreByAddress(String address) {
         if (Strings.isNullOrEmpty(address)) return null;
 
         for (DidHubKeyStore keystore : keystoreMap.values()) {

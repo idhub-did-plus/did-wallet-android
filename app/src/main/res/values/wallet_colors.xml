@@ -26,4 +26,8 @@
     <color name="zing_color">#815cf3</color>
     <color name="snackbar_bg">#FCEAC8</color>
     <color name="snackbar_textcolor">#F34E14</color>
+
+
+    <color name="wallet_cancel_red">#db393a</color>
+
 </resources>

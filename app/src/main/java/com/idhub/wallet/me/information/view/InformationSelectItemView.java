@@ -1,7 +1,10 @@
 package com.idhub.wallet.me.information.view;
 
 import android.content.Context;
+
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -23,16 +26,17 @@ public class InformationSelectItemView extends ConstraintLayout {
         mTitleView = findViewById(R.id.tv_title);
     }
 
-    public void setData(String title,String hint){
+    public void setData(String title, String hint) {
         mTitleView.setText(title);
         mInformationEtView.setHint(hint);
     }
 
-    public void setInformation(String information){
-        mInformationEtView.setText(information);
+    public void setInformation(String information) {
+        if (!TextUtils.isEmpty(information))
+            mInformationEtView.setText(information);
     }
 
-    public String getInformation(){
+    public String getInformation() {
         return mInformationEtView.getText().toString();
     }
 }

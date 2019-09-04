@@ -49,7 +49,7 @@
     "buildTargetSet": []
   },
   "abi": "X86_64",
-  "abiPlatformVersion": 16,
+  "abiPlatformVersion": 21,
   "cxxBuildFolder": "C:\\AndroidProject\\did-wallet-android\\app\\.cxx\\cmake\\release\\x86_64",
   "jsonFile": "C:\\AndroidProject\\did-wallet-android\\app\\.cxx\\cmake\\release\\x86_64\\android_gradle_build.json",
   "gradleBuildOutputFolder": "C:\\AndroidProject\\did-wallet-android\\app\\.cxx\\cxx\\release\\x86_64",

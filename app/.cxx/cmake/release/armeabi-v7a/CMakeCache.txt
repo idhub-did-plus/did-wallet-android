@@ -21,7 +21,7 @@ ANDROID_ABI:UNINITIALIZED=armeabi-v7a
 ANDROID_NDK:UNINITIALIZED=C:\Users\ly\AppData\Local\Android\Sdk\ndk-bundle
 
 //No help, variable specified on the command line.
-ANDROID_PLATFORM:UNINITIALIZED=android-16
+ANDROID_PLATFORM:UNINITIALIZED=android-21
 
 //Archiver
 CMAKE_AR:FILEPATH=C:/Users/ly/AppData/Local/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/bin/arm-linux-androideabi-ar.exe
@@ -193,10 +193,10 @@ Project_BINARY_DIR:STATIC=C:/AndroidProject/did-wallet-android/app/.cxx/cmake/re
 Project_SOURCE_DIR:STATIC=C:/AndroidProject/did-wallet-android/app
 
 //Path to a library.
-log-lib:FILEPATH=C:/Users/ly/AppData/Local/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/arm-linux-androideabi/16/liblog.so
+log-lib:FILEPATH=C:/Users/ly/AppData/Local/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/arm-linux-androideabi/21/liblog.so
 
 //Dependencies for the target
-native-lib_LIB_DEPENDS:STATIC=general;C:/Users/ly/AppData/Local/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/arm-linux-androideabi/16/liblog.so;
+native-lib_LIB_DEPENDS:STATIC=general;C:/Users/ly/AppData/Local/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/lib/arm-linux-androideabi/21/liblog.so;
 
 
 ########################

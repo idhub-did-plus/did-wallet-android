@@ -1,6 +1,5 @@
 package com.idhub.wallet.common.dialog;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,7 +18,7 @@ import com.idhub.wallet.R;
 
 public class InputDialogFragment extends DialogFragment implements View.OnClickListener {
 
-    private InputDialogFragmentListener mInputPasswordDialogFragmentListener;
+    private InputDialogFragmentListener mInputDialogFragmentListener;
     private EditText mPasswordEditText;
     private String mData;
     private String mTitle;
@@ -38,13 +37,11 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        try {
-            mInputPasswordDialogFragmentListener = (InputDialogFragmentListener) context;
-        } catch (Exception e) {
-            throw new ClassCastException(((Activity) context).toString() + " must implementon MyDialogFragment_Listener");
-        }
     }
 
+    public void setInputDialogFragmentListener(InputDialogFragmentListener inputDialogFragmentListener) {
+        mInputDialogFragmentListener = inputDialogFragmentListener;
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,8 +73,8 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
                 break;
             case R.id.tv_confirm:
                 String password = mPasswordEditText.getText().toString();
-                if (mInputPasswordDialogFragmentListener != null) {
-                    mInputPasswordDialogFragmentListener.inputConfirm(password,mData);
+                if (mInputDialogFragmentListener != null) {
+                    mInputDialogFragmentListener.inputConfirm(password,mData);
                 }
                 dismiss();
                 break;

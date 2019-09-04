@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import androidx.core.app.ActivityCompat;
@@ -23,13 +22,11 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.greendao.UploadFileDbManager;
-import com.idhub.wallet.me.information.entity.UploadFileEntity;
+import com.idhub.wallet.greendao.entity.UploadFileEntity;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class UploadFileActivity extends AppCompatActivity implements View.OnClickListener {
 
