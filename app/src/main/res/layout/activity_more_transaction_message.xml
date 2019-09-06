@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".hository.message.moretransaction.MoreTransactionMessageActivity">
+
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/wallet_common_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.idhub.wallet.common.tablayout.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="6dp"
+        app:tabRippleColor="@android:color/transparent"
+        app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+        app:wallet_tabSelectedTextColor="@color/wallet_blue"
+        app:wallet_tabTextColor="@color/wallet_text_grey"
+        app:wallet_tabTextSize="14sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/wallet_line_gray" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+</LinearLayout>

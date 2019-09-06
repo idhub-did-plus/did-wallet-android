@@ -3,6 +3,8 @@ package com.idhub.wallet;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -13,6 +15,13 @@ import org.junit.Test;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-
+        List<String> datas = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            datas.add(String.valueOf(i));
+        }
+        List<String> entities = datas.subList(datas.size() - 50, datas.size());
+        for (String entity : entities) {
+            System.out.println(entity);
+        }
     }
 }

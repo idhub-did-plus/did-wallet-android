@@ -1,1 +1,1 @@
-include ':app','clientlib'
+include ':app', 'clientlib', ':etherscan'

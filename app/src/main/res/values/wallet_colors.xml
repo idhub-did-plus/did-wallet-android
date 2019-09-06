@@ -5,6 +5,7 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="wallet_line_gray">#f3f3f3</color>
+    <color name="wallet_line_gray_deep">#eeeeee</color>
     <color name="wallet_blue">#0993c2</color>
     <color name="wallet_blue_text">#087eff</color>
     <color name="wallet_white">#ffffff</color>

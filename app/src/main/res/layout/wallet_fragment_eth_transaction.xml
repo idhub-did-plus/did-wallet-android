@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".hository.message.moretransaction.fragment.EthTransactionFragment">
+    <TextView
+        android:id="@+id/message_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/wallet_message_transaction_empty"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/transaction_message_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/wallet_white" />
+
+    <include
+        android:id="@+id/loading_and_error"
+        layout="@layout/wallet_common_loading_and_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+</FrameLayout>

@@ -230,6 +230,15 @@ public class NumericUtil {
         return Arrays.copyOfRange(intBytes, zeroLen, intBytes.length);
     }
 
+    public static String tokenValueFormatViewPointAfterEight(BigInteger tokenValue,String tokenDecimal) {
+        BigDecimal  decimal = new BigDecimal(tokenDecimal);
+        BigDecimal value = new BigDecimal(tokenValue);
+        BigDecimal valueFormat = value.divide(decimal, 8, BigDecimal.ROUND_HALF_DOWN);
+        DecimalFormat df = new DecimalFormat("###.########");
+        String format = df.format(valueFormat);
+        return format;
+    }
+
     public static String ethBigIntegerToNumberViewPointAfterEight(BigInteger bigInteger) {
         BigDecimal bigInteger18 = new BigDecimal("1000000000000000000");
         BigDecimal bigDecimal = new BigDecimal(bigInteger);
@@ -248,24 +257,5 @@ public class NumericUtil {
         return format;
     }
 
-//    /**
-//     * 验证中国手机号
-//     * @param phone
-//     * @return
-//     */
-//    public static boolean verifyPhoneNumber(String phone) {
-//        String regex = "^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\\d{8}$";
-//        if (phone.length() != 11) {
-//            ToastUtils.showShortToast("手机号长度应为11位数");
-//            return false;
-//        } else {
-//            Pattern p = Pattern.compile(regex);
-//            Matcher m = p.matcher(phone);
-//            boolean isMatch = m.matches();
-//            if (!isMatch) {
-//                ToastUtils.showShortToast("请填入正确的手机号");
-//            }
-//            return isMatch;
-//        }
-//    }
+
 }

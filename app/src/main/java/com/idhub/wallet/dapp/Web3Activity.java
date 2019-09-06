@@ -39,6 +39,7 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.transaction.EthereumSign;
 import com.idhub.wallet.didhub.transaction.EthereumTransaction;
+import com.idhub.wallet.network.C;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.math.BigInteger;
@@ -60,7 +61,7 @@ public class Web3Activity extends AppCompatActivity implements OnSignMessageList
     private Message<String> mCurrentSignMessage;
     private Transaction mCurrentTransaction;
     private String mChainID = "1";
-    private String mRpcUrl = "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk";
+    private String mRpcUrl = C.API_BASE;
     private TitleLayout mTitleLayout;
 
     @Override

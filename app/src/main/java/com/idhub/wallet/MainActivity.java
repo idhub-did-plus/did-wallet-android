@@ -16,6 +16,8 @@ import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.greendao.TransactionRecordDbManager;
+import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,20 +45,27 @@ public class MainActivity extends AppCompatActivity {
         incomingService.subscribeTransaction(new IncomingListener<Tx>() {
             @Override
             public void income(List<Tx> txes) {
-                Log.e("LYW", "income:subscribeTransaction ");
+                List<TransactionRecordEntity> transactionRecordEntities = new ArrayList<>();
                 for (Tx tx : txes) {
-                    Log.e("LYW", "income:subscribeTransaction " + tx.toString() );
+                    Log.e("LYW", "income:subscribeTransaction " + tx.toString());
+                    TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
+                    transactionRecordEntity.setTx(tx);
+                    transactionRecordEntities.add(transactionRecordEntity);
                 }
+                new TransactionRecordDbManager().insertListDataTo50Datas(transactionRecordEntities);
             }
         });
         incomingService.subscribeTransfer(new IncomingListener<TxToken>() {
             @Override
             public void income(List<TxToken> txTokens) {
-                Log.e("LYW", "income:subscribeTransfer ");
+                List<TransactionRecordEntity> transactionRecordEntities = new ArrayList<>();
                 for (TxToken txToken : txTokens) {
                     Log.e("LYW", "income:subscribeTransfer " + txToken.toString());
+                    TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
+                    transactionRecordEntity.setTxToken(txToken);
+                    transactionRecordEntities.add(transactionRecordEntity);
                 }
-
+                new TransactionRecordDbManager().insertListDataTo50Datas(transactionRecordEntities);
             }
         });
 

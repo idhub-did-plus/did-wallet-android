@@ -9,8 +9,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/WalletAppTheme">
-        <activity android:name=".dapp.Web3Activity"></activity>
+        android:theme="@style/WalletAppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".hository.message.moretransaction.MoreTransactionMessageActivity"></activity>
+        <activity android:name=".hository.message.HistoryMessageActivity" />
+        <activity android:name=".dapp.Web3Activity" />
         <activity android:name=".me.information.UploadIDHubInformationActivity" />
         <activity android:name=".me.information.UploadInformationTypeActivity" />
         <activity android:name=".createmanager.UploadUserBasicInfoActivity" />
@@ -23,9 +26,9 @@
         <activity android:name=".createmanager.UpgradeActivity" />
         <activity
             android:name=".MainActivity"
-            android:windowSoftInputMode="adjustNothing"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".createmanager.IdentityManagerActivity"
             android:screenOrientation="portrait" />

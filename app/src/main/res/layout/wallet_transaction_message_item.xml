@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.idhub.wallet.hository.message.transaction.TransactionMessageItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".hository.message.transaction.TransactionMessageFragment">
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/message_icon"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        app:layout_constraintLeft_toLeftOf="@id/tv_source"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tv_source"-->
+    <!--        tools:src="@mipmap/wallet_receive_message_icon" />-->
+
+    <TextView
+        android:id="@+id/tv_from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/wallet_text_background_grey"
+        android:padding="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time"
+        android:text="From" />
+
+    <TextView
+        android:id="@+id/tv_from_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_from"
+        app:layout_constraintLeft_toRightOf="@id/tv_from"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_from"
+        tools:text="0x4c000E507bE6663e264a1A21507a69Bfa5035D95" />
+
+
+    <TextView
+        android:id="@+id/tv_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/wallet_text_background_grey"
+        android:padding="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_from"
+        android:text="To" />
+
+    <TextView
+        android:id="@+id/tv_to_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_to"
+        app:layout_constraintLeft_toRightOf="@id/tv_to"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_to"
+        tools:text="0x4c000E507bE6663e264a1A21507a69Bfa5035D95" />
+
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/wallet_text_black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="2019/08/30 17:08" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/type"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginLeft="10dp"-->
+    <!--        android:textColor="@color/wallet_text_black"-->
+    <!--        app:layout_constraintLeft_toRightOf="@id/message_icon"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/message_icon"-->
+    <!--        tools:text="@string/walet_received" />-->
+
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:text="0.0001"
+        android:textColor="@color/wallet_blue_text"
+        app:layout_constraintRight_toLeftOf="@id/name"
+        app:layout_constraintTop_toTopOf="@id/name" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:text="ETH"
+        android:textColor="@color/wallet_blue_text"
+        android:layout_marginTop="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_to" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/wallet_line_gray_deep"
+        app:layout_constraintTop_toBottomOf="@id/name" />
+</com.idhub.wallet.hository.message.transaction.TransactionMessageItemView>

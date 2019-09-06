@@ -170,5 +170,19 @@
     <string name="walet_requester_url">请求链接</string>
     <string name="wallet_dialog_title_sign_transaction">签署交易</string>
 
+    //history
+    <string name="wallet_history_message">历史消息</string>
+    <string name="wallet_message_center">消息中心</string>
+    <string name="wallet_message_transaction">交易信息</string>
+    <string name="wallet_message_idhub">系统消息</string>
+    <string name="wallet_message_empty">当前没有历史记录</string>
+    <string name="wallet_message_transaction_empty">没有交易记录</string>
+    <string name="wallet_sent">发送</string>
+    <string name="wallet_received">接收</string>
+    <string name="wallet_ETH">ETH</string>
+    <string name="wallet_more_data">查看更多数据</string>
+    <string name="wallet_ERC20">ERC20</string>
+    <string name="wallet_ST">ST</string>
+
 
 </resources>
