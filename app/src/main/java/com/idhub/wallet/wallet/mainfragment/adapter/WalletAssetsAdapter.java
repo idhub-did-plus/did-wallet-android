@@ -16,7 +16,7 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.network.Web3Api;
 import com.idhub.wallet.network.Web3jSubscriber;
 import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.wallet.mainfragment.view.ERCItemView;
+import com.idhub.wallet.wallet.mainfragment.view.AssetsItemView;
 import com.idhub.wallet.wallet.transaction.TransactionActivity;
 
 import org.web3j.protocol.core.methods.response.EthGetBalance;
@@ -47,13 +47,13 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapte
     @NonNull
     @Override
     public WalletAssetsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = mInflater.inflate(R.layout.wallet_recyclerview_assets_erc20_item, viewGroup, false);
+        View view = mInflater.inflate(R.layout.wallet_recyclerview_assets_item, viewGroup, false);
         return new WalletAssetsAdapterViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull WalletAssetsAdapterViewHolder walletAssetsAdapterViewHolder, int i) {
-        ERCItemView itemView = (ERCItemView) walletAssetsAdapterViewHolder.itemView;
+        AssetsItemView itemView = (AssetsItemView) walletAssetsAdapterViewHolder.itemView;
         AssetsModel model = mAssetsModels.get(i);
         itemView.setName(model.getName());
         String token = model.getToken();
@@ -61,30 +61,30 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapte
         String balance = model.getBalance();
         if (TextUtils.isEmpty(balance)) {
             itemView.setBalance("-");
-            if (!TextUtils.isEmpty(token)) {
-                Web3Api.searchBalance(address, token, new Web3jSubscriber<BigInteger>() {
-                    @Override
-                    public void onNext(BigInteger bigInteger) {
-                        String balance = String.valueOf(bigInteger);
-                        model.setBalance(balance);
-                        String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
-                        itemView.setBalance(balanceStr);
-                    }
-                });
-            } else {
-                Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
-                    @Override
-                    public void onNext(EthGetBalance o) {
-                        super.onNext(o);
-                        BigInteger balance1 = o.getBalance();
-                        String balance = String.valueOf(balance1);
-                        model.setBalance(balance);
-                        itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1));
-                    }
-                });
-            }
         } else {
             itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance)));
+        }
+        if (!TextUtils.isEmpty(token)) {
+            Web3Api.searchBalance(address, token, new Web3jSubscriber<BigInteger>() {
+                @Override
+                public void onNext(BigInteger bigInteger) {
+                    String balance = String.valueOf(bigInteger);
+                    model.setBalance(balance);
+                    String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
+                    itemView.setBalance(balanceStr);
+                }
+            });
+        } else {
+            Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
+                @Override
+                public void onNext(EthGetBalance o) {
+                    super.onNext(o);
+                    BigInteger balance1 = o.getBalance();
+                    String balance = String.valueOf(balance1);
+                    model.setBalance(balance);
+                    itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1));
+                }
+            });
         }
     }
 

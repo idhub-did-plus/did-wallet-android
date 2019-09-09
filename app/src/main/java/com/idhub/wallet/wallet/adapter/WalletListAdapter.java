@@ -1,8 +1,11 @@
 package com.idhub.wallet.wallet.adapter;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
 
 import java.util.ArrayList;
@@ -23,8 +27,10 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
     private LayoutInflater mInflater;
     private List<DidHubKeyStore> keyStores;
     private OnWalletItemClickListener onItemClickListener;
+    private String mSelectAddress;
 
-    public WalletListAdapter(Context context) {
+    public WalletListAdapter(Context context, String address) {
+        mSelectAddress = address;
         mInflater = LayoutInflater.from(context);
         keyStores = new ArrayList<>();
     }
@@ -51,8 +57,7 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
         WalletItemView walletItemView = (WalletItemView) walletListAdapterViewHolder.itemView;
         walletItemView.setClicked(false);
         DidHubKeyStore keyStore = keyStores.get(i);
-        String selectedId = WalletOtherInfoSharpreference.getInstance().getSelectedId();
-        if (keyStore.getId().equals(selectedId)) {
+        if (NumericUtil.prependHexPrefix(keyStore.getAddress()).equals(NumericUtil.prependHexPrefix(mSelectAddress))) {
             walletItemView.setMenuIvVisible(VISIBLE);
             walletItemView.setMenuIv(R.mipmap.wallet_selected);
         } else {
@@ -73,16 +78,13 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
             itemView.setOnClickListener(v -> {
                 int adapterPosition = getAdapterPosition();
                 DidHubKeyStore didHubKeyStore = keyStores.get(adapterPosition);
-                boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(didHubKeyStore.getId());
-                if (b) {
-                    onItemClickListener.itemClick();
-                }
+                onItemClickListener.itemClick(didHubKeyStore.getId());
             });
         }
     }
 
     public interface OnWalletItemClickListener {
-        void itemClick();
+        void itemClick(String id);
     }
 
 }

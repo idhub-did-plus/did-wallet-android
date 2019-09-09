@@ -3,9 +3,12 @@ package io.api.etherscan.model;
 import io.api.etherscan.util.BasicUtils;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * ! NO DESCRIPTION !
@@ -22,7 +25,7 @@ public class Log {
     private String transactionIndex;
     private Long _transactionIndex;
     private String timeStamp;
-    private LocalDateTime _timeStamp;
+    private String _timeStamp;
     private String data;
     private String gasPrice;
     private BigInteger _gasPrice;
@@ -56,12 +59,16 @@ public class Log {
         return _transactionIndex;
     }
 
-    public LocalDateTime getTimeStamp() {
+    public String getTimeStamp() {
         if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp)) {
             long formatted = (timeStamp.charAt(0) == '0' && timeStamp.charAt(1) == 'x')
                     ? BasicUtils.parseHex(timeStamp).longValue()
                     : Long.valueOf(timeStamp);
-            _timeStamp = LocalDateTime.ofEpochSecond(formatted, 0, ZoneOffset.UTC);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date = new Date(1000L * formatted);
+            _timeStamp = sdf.format(date);
+//            _timeStamp = LocalDateTime.ofEpochSecond(formatted, 0, ZoneOffset.UTC);
         }
         return _timeStamp;
     }

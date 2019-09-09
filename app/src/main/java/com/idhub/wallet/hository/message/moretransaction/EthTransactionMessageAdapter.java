@@ -1,4 +1,4 @@
-package com.idhub.wallet.hository.message.transaction;
+package com.idhub.wallet.hository.message.moretransaction;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
-import com.idhub.wallet.hository.message.moretransaction.MoreTransactionMessageActivity;
+import com.idhub.wallet.hository.message.transaction.TransactionMessageItemView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class EthTransactionMessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private LayoutInflater mInflater;
     private List<TransactionRecordEntity> mData;
@@ -24,7 +24,7 @@ public class TransactionMessageAdapter extends RecyclerView.Adapter<RecyclerView
     private Context mContext;
     private TransactionMesageLoadListener transactionMesageLoadListener;
 
-    public TransactionMessageAdapter(Context context) {
+    public EthTransactionMessageAdapter(Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mData = new ArrayList<>();
@@ -48,7 +48,7 @@ public class TransactionMessageAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public int getItemViewType(int position) {
         int size = mData.size();
-        if (size >= 50 && position == size) {
+        if (position == size) {
             return MORE_TRANSACTION_ITEM;
         } else {
             return TRANSACTION_ITEM;
@@ -79,10 +79,7 @@ public class TransactionMessageAdapter extends RecyclerView.Adapter<RecyclerView
     @Override
     public int getItemCount() {
         int size = mData.size();
-        if (size >= 50) {
-            size = size + 1;
-        }
-        return size;
+        return size+ 1;
     }
 
     public class TransactionMessageAdapterViewHolder extends RecyclerView.ViewHolder {

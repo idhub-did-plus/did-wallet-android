@@ -3,8 +3,9 @@ package io.api.etherscan.model;
 import io.api.etherscan.util.BasicUtils;
 
 import java.math.BigInteger;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * ! NO DESCRIPTION !
@@ -16,7 +17,7 @@ abstract class BaseTx {
 
     private long blockNumber;
     private String timeStamp;
-    private LocalDateTime _timeStamp;
+    private String _timeStamp;
     private String hash;
     private String from;
     private String to;
@@ -31,9 +32,13 @@ abstract class BaseTx {
         return blockNumber;
     }
 
-    public LocalDateTime getTimeStamp() {
-        if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp))
-            _timeStamp = LocalDateTime.ofEpochSecond(Long.valueOf(timeStamp), 0, ZoneOffset.UTC);
+    public String getTimeStamp() {
+        if(_timeStamp == null && !BasicUtils.isEmpty(timeStamp)) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date = new Date(1000L * Long.valueOf(timeStamp));
+            _timeStamp = sdf.format(date);
+        }
         return _timeStamp;
     }
 

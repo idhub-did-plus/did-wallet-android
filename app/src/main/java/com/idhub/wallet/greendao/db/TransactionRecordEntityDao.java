@@ -38,6 +38,7 @@ public class TransactionRecordEntityDao extends AbstractDao<TransactionRecordEnt
         public final static Property TokenSymbol = new Property(11, String.class, "tokenSymbol", false, "TOKEN_SYMBOL");
         public final static Property TokenDecimal = new Property(12, String.class, "tokenDecimal", false, "TOKEN_DECIMAL");
         public final static Property ContractAddress = new Property(13, String.class, "contractAddress", false, "CONTRACT_ADDRESS");
+        public final static Property Hash = new Property(14, String.class, "hash", false, "HASH");
     }
 
 
@@ -66,7 +67,8 @@ public class TransactionRecordEntityDao extends AbstractDao<TransactionRecordEnt
                 "\"TOKEN_NAME\" TEXT," + // 10: tokenName
                 "\"TOKEN_SYMBOL\" TEXT," + // 11: tokenSymbol
                 "\"TOKEN_DECIMAL\" TEXT," + // 12: tokenDecimal
-                "\"CONTRACT_ADDRESS\" TEXT);"); // 13: contractAddress
+                "\"CONTRACT_ADDRESS\" TEXT," + // 13: contractAddress
+                "\"HASH\" TEXT);"); // 14: hash
     }
 
     /** Drops the underlying database table. */
@@ -140,6 +142,11 @@ public class TransactionRecordEntityDao extends AbstractDao<TransactionRecordEnt
         if (contractAddress != null) {
             stmt.bindString(14, contractAddress);
         }
+ 
+        String hash = entity.getHash();
+        if (hash != null) {
+            stmt.bindString(15, hash);
+        }
     }
 
     @Override
@@ -207,6 +214,11 @@ public class TransactionRecordEntityDao extends AbstractDao<TransactionRecordEnt
         if (contractAddress != null) {
             stmt.bindString(14, contractAddress);
         }
+ 
+        String hash = entity.getHash();
+        if (hash != null) {
+            stmt.bindString(15, hash);
+        }
     }
 
     @Override
@@ -230,7 +242,8 @@ public class TransactionRecordEntityDao extends AbstractDao<TransactionRecordEnt
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // tokenName
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // tokenSymbol
             cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // tokenDecimal
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // contractAddress
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // contractAddress
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14) // hash
         );
         return entity;
     }
@@ -251,6 +264,7 @@ public class TransactionRecordEntityDao extends AbstractDao<TransactionRecordEnt
         entity.setTokenSymbol(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setTokenDecimal(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
         entity.setContractAddress(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setHash(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
      }
     
     @Override

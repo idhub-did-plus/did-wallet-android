@@ -3,8 +3,9 @@ package com.idhub.wallet;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 
 /**
@@ -15,13 +16,15 @@ import java.util.List;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        List<String> datas = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            datas.add(String.valueOf(i));
-        }
-        List<String> entities = datas.subList(datas.size() - 50, datas.size());
-        for (String entity : entities) {
-            System.out.println(entity);
-        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(1567668125 * 1000L);
+        System.out.println(date.toString());
+        String s = sdf.format(date);
+        System.out.println(s);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String format = sdf.format(date);
+        System.out.println(format);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        System.out.println(sdf.format(date));
     }
 }

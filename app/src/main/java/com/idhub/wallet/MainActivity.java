@@ -16,8 +16,10 @@ import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.TransactionRecordDbManager;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.wallet.hository.NotificationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,39 +38,6 @@ public class MainActivity extends AppCompatActivity {
         init();
         setContentView(R.layout.wallet_activity_main);
         initView();
-        // Example of a call to a native method
-        IncomingService incomingService = ApiFactory.getIncomingService();
-        List<String> accounts = new ArrayList<>();
-        accounts.add("0x14bc3096faef7a011ffd655f4a0fd2b534c09d19");
-        accounts.add("0x4c000e507be6663e264a1a21507a69bfa5035d95");//小写
-        incomingService.setAccounts(accounts);
-        incomingService.subscribeTransaction(new IncomingListener<Tx>() {
-            @Override
-            public void income(List<Tx> txes) {
-                List<TransactionRecordEntity> transactionRecordEntities = new ArrayList<>();
-                for (Tx tx : txes) {
-                    Log.e("LYW", "income:subscribeTransaction " + tx.toString());
-                    TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
-                    transactionRecordEntity.setTx(tx);
-                    transactionRecordEntities.add(transactionRecordEntity);
-                }
-                new TransactionRecordDbManager().insertListDataTo50Datas(transactionRecordEntities);
-            }
-        });
-        incomingService.subscribeTransfer(new IncomingListener<TxToken>() {
-            @Override
-            public void income(List<TxToken> txTokens) {
-                List<TransactionRecordEntity> transactionRecordEntities = new ArrayList<>();
-                for (TxToken txToken : txTokens) {
-                    Log.e("LYW", "income:subscribeTransfer " + txToken.toString());
-                    TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
-                    transactionRecordEntity.setTxToken(txToken);
-                    transactionRecordEntities.add(transactionRecordEntity);
-                }
-                new TransactionRecordDbManager().insertListDataTo50Datas(transactionRecordEntities);
-            }
-        });
-
     }
 
     private void init() {
@@ -86,10 +55,69 @@ public class MainActivity extends AppCompatActivity {
             //检查姓名是否为空，为空则去填写，不为空meFragment加载
             UploadUserBasicInfoActivity.startAction(this);
             finish();
+            return;
         }
+        List<String> accounts = new ArrayList<>();
         for (DidHubKeyStore value : WalletManager.getWalletKeystores().values()) {
-            Log.e("LYW", "init: " + value.getAddress() );
+            accounts.add(NumericUtil.prependHexPrefix(value.getAddress()));
         }
+        IncomingService incomingService = ApiFactory.getIncomingService();
+        incomingService.setAccounts(accounts);
+        incomingService.subscribeTransaction(new IncomingListener<Tx>() {
+            @Override
+            public void income(List<Tx> txes) {
+                List<TransactionRecordEntity> transactionRecordEntities = new ArrayList<>();
+                for (Tx tx : txes) {
+                    Log.e("LYW", "income:subscribeTransaction " + tx.toString());
+                    TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
+                    transactionRecordEntity.setTx(tx);
+                    transactionRecordEntities.add(transactionRecordEntity);
+                }
+                if (txes.size() == 1) {
+                    Tx tx = txes.get(0);
+                    TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
+                    transactionRecordEntity.setTx(tx);
+                    NotificationUtils.sendTransactionNotification(MainActivity.this,transactionRecordEntity);
+                }
+                new TransactionRecordDbManager().insertListDataTo50Datas(transactionRecordEntities);
+            }
+        });
+        incomingService.subscribeTransfer(new IncomingListener<TxToken>() {
+            @Override
+            public void income(List<TxToken> txTokens) {
+                List<TransactionRecordEntity> transactionRecordEntities = new ArrayList<>();
+                for (TxToken txToken : txTokens) {
+                    Log.e("LYW", "income:subscribeTransfer " + txToken.toString());
+                    TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
+                    transactionRecordEntity.setTxToken(txToken);
+                    transactionRecordEntities.add(transactionRecordEntity);
+                }
+                if (txTokens.size() == 1) {
+                    TxToken tx = txTokens.get(0);
+                    TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
+                    transactionRecordEntity.setTxToken(tx);
+                    NotificationUtils.sendTransactionNotification(MainActivity.this,transactionRecordEntity);
+                }
+                new TransactionRecordDbManager().insertListDataTo50Datas(transactionRecordEntities);
+            }
+        });
+
+        TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
+        transactionRecordEntity.setGas("123");
+        transactionRecordEntity.setGasPrice("00000123");
+        transactionRecordEntity.setFrom("0x4c000E507bE6663e264a1A21507a69Bfa5035D95");
+        transactionRecordEntity.setTo("0x12331216663e264a1A21507a69Bfa50351222");
+
+        NotificationUtils.sendTransactionNotification(this,transactionRecordEntity);
+
+        TransactionRecordEntity recordEntity = new TransactionRecordEntity();
+        recordEntity.setGas("123");
+        recordEntity.setGasPrice("00000123");
+        recordEntity.setFrom("0x4c000E507bE6663e264a1A21507a69Bfa5035D95");
+        recordEntity.setTo("0x12331216663e264a1A21507a69Bfa50351222");
+        recordEntity.setTokenName("idhub");
+        recordEntity.setContractAddress("12333");
+        NotificationUtils.sendTransactionNotification(this,recordEntity);
     }
 
     @Override

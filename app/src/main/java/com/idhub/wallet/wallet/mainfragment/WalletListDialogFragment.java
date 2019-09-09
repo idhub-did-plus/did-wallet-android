@@ -14,6 +14,7 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.wallet.adapter.WalletListAdapter;
 import com.idhub.wallet.wallet.walletsetting.WalletSettingActivity;
 
@@ -22,6 +23,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 public class WalletListDialogFragment extends DialogFragment implements View.OnClickListener {
+
+    private String mAddress;
+    private WalletListSelectItemListener mWalletListSelectItemListener;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +36,25 @@ public class WalletListDialogFragment extends DialogFragment implements View.OnC
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            mAddress = arguments.getString("address");
+        }
         View view = inflater.inflate(R.layout.wallet_dialog_fragment_wallet_list, container, false);
         initView(view);
         return view;
+    }
+
+    public static WalletListDialogFragment getInstance(String address) {
+        WalletListDialogFragment walletListDialogFragment = new WalletListDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("address", address);
+        walletListDialogFragment.setArguments(bundle);
+        return walletListDialogFragment;
+    }
+
+    public void setWalletListSelectItemListener(WalletListSelectItemListener walletListSelectItemListener) {
+        this.mWalletListSelectItemListener = walletListSelectItemListener;
     }
 
     private void initView(View view) {
@@ -47,10 +68,12 @@ public class WalletListDialogFragment extends DialogFragment implements View.OnC
             String key = iterator.next();
             didHubKeyStores.add(walletKeystores.get(key));
         }
-        WalletListAdapter walletListAdapter = new WalletListAdapter(getContext());
-        walletListAdapter.setOnItemClickListener(() -> {
+        WalletListAdapter walletListAdapter = new WalletListAdapter(getContext(),mAddress);
+        walletListAdapter.setOnItemClickListener(id -> {
             dismiss();
-            WalletSelectedObservable.getInstance().update();
+            if (mWalletListSelectItemListener != null) {
+                mWalletListSelectItemListener.selectItem(id);
+            }
         });
         walletListAdapter.addDatas(didHubKeyStores);
         recyclerView.setAdapter(walletListAdapter);
@@ -68,5 +91,9 @@ public class WalletListDialogFragment extends DialogFragment implements View.OnC
                 dismiss();
                 break;
         }
+    }
+
+    public interface WalletListSelectItemListener{
+        void selectItem(String address);
     }
 }

@@ -17,6 +17,25 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="200dp"
+        android:layout_gravity="center_horizontal"
+        tools:text="0xsjagkshd"
+        android:textColor="@color/wallet_blue_text"
+        android:padding="5dp"
+        android:textSize="16sp"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:drawableRight="@mipmap/wallet_arrow_down"
+        android:gravity="center"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/wallet_line_gray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
     <com.idhub.wallet.common.tablayout.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"

@@ -5,13 +5,15 @@
     <application
         android:name=".App"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/wallet_ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/WalletAppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".hository.message.moretransaction.MoreTransactionMessageActivity"></activity>
+        <activity android:name=".hository.TransactionDetailActivity"></activity>
+        <activity android:name=".createmanager.walletimport.ImportWalletActivity" />
+        <activity android:name=".hository.message.moretransaction.MoreTransactionMessageActivity" />
         <activity android:name=".hository.message.HistoryMessageActivity" />
         <activity android:name=".dapp.Web3Activity" />
         <activity android:name=".me.information.UploadIDHubInformationActivity" />

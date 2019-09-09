@@ -226,6 +226,8 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
                 : response.getResult();
     }
 
+
+
     @NotNull
     @Override
     public List<TxToken> txsToken(final String address) throws ApiException {
@@ -241,10 +243,16 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
     @NotNull
     @Override
     public List<TxToken> txsToken(final String address, final long startBlock, final long endBlock) throws ApiException {
+        return txsToken(address, startBlock, endBlock,"%s",OFFSET_MAX);
+    }
+
+    @Override
+    public @NotNull List<TxToken> txsToken(String address, long startBlock, long endBlock, String page, int offset) throws ApiException {
+
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
-        final String offsetParam = PAGE_PARAM + "%s" + OFFSET_PARAM + OFFSET_MAX;
+        final String offsetParam = PAGE_PARAM + page + OFFSET_PARAM + offset;
         final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
         final String urlParams = ACT_TX_TOKEN_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
 

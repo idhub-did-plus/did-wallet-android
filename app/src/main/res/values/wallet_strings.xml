@@ -183,6 +183,28 @@
     <string name="wallet_more_data">查看更多数据</string>
     <string name="wallet_ERC20">ERC20</string>
     <string name="wallet_ST">ST</string>
+    <string name="wallet_no_data">没有更多数据</string>
+    <string name="wallet_transaction_detail_title">交易详情</string>
 
+    //importWallet
+    <string name="wallet_import_wallt">导入钱包</string>
+    <string name="wallet_mnemonic">助记词</string>
+
+    //notification
+    <string name="wallet_transaction_notification_content_title">收到一笔交易</string>
+    <string name="wallet_transaction_notification_content_text_etn">ETH交易</string>
+    <string name="wallet_transaction_notification_content_text_contract">合约交易</string>
+    <string name="wallet_channel_name">交易</string>
+    <string name="wallet_channel_description">交易详情</string>
+    <string name="wallet_more_detail">更多详情</string>
+
+
+    //import wallet
+    <string name="wallet_import_wallet_from_keystore_tip">复制粘贴以太坊官方钱包Keystore文件内容至输入框，或通过扫描Keystore内容生成的二维码录入。</string>
+    <string name="wallet_edit_keystore_tip">Keystore 文件内容</string>
+    <string name="wallet_import_wallet_from_mnemonic_tip">使用助记词导入的同时可以修改钱包密码。</string>
+    <string name="wallet_edit_mnemonic_tip">输入助记词，用空格分隔</string>
+    <string name="wallet_import_wallet_from_mnemonic_tip">输入Private Key文件内容至输入框。或通过扫描Private Key内容生成的二维码录入。请留意字符大小写。</string>
+    <string name="wallet_edit_private_key_tip">输入明文私钥</string>
 
 </resources>

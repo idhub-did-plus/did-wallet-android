@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.idhub.wallet.wallet.mainfragment.view.ERCItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.idhub.wallet.wallet.mainfragment.view.AssetsItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -55,4 +55,4 @@
         app:layout_constraintTop_toBottomOf="@id/tv_assets_amount"
         android:text="-"  />
 
-</com.idhub.wallet.wallet.mainfragment.view.ERCItemView>
+</com.idhub.wallet.wallet.mainfragment.view.AssetsItemView>

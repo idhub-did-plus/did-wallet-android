@@ -13,10 +13,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.wallet.hository.TransactionDetailActivity;
 
 import java.math.BigInteger;
 
-public class TransactionMessageItemView extends ConstraintLayout {
+public class TransactionMessageItemView extends ConstraintLayout implements View.OnClickListener {
 
 
     private TextView mTimeView;
@@ -24,6 +25,7 @@ public class TransactionMessageItemView extends ConstraintLayout {
     private TextView mNameView;
     private TextView mToAddressView;
     private TextView mFromAddressView;
+    private TransactionRecordEntity transactionRecordEntity;
 
     public TransactionMessageItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,9 +39,11 @@ public class TransactionMessageItemView extends ConstraintLayout {
         mTimeView = findViewById(R.id.time);
         mValueView = findViewById(R.id.value);
         mNameView = findViewById(R.id.name);
+        setOnClickListener(this);
     }
 
     public void setData(TransactionRecordEntity transactionRecordEntity){
+        this.transactionRecordEntity = transactionRecordEntity;
         String tokenName = transactionRecordEntity.getTokenName();
         String value = transactionRecordEntity.getValue();
         if (TextUtils.isEmpty(tokenName)) {
@@ -54,5 +58,10 @@ public class TransactionMessageItemView extends ConstraintLayout {
         mTimeView.setText(timeStamp);
         mFromAddressView.setText(transactionRecordEntity.getFrom());
         mToAddressView.setText(transactionRecordEntity.getTo());
+    }
+
+    @Override
+    public void onClick(View v) {
+        TransactionDetailActivity.startAction(getContext(), transactionRecordEntity);
     }
 }

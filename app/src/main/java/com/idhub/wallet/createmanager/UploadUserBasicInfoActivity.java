@@ -98,6 +98,7 @@ public class UploadUserBasicInfoActivity extends AppCompatActivity implements Vi
             userBasicInfoEntity.headPath = mUserHeadPath;
             if (UserBasicInfoSharpreference.getInstance().setUserBasicInfo(userBasicInfoEntity)) {
                 MainActivity.startAction(this,"basic_user_info");
+                finish();
             }
             mLoadingAndErrorView.setVisibility(View.GONE);
 

@@ -1,7 +1,8 @@
 package io.api.etherscan.model;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * ! NO DESCRIPTION !
@@ -15,8 +16,8 @@ public class Price {
     private double ethbtc;
     private String ethusd_timestamp;
     private String ethbtc_timestamp;
-    private LocalDateTime _ethusd_timestamp;
-    private LocalDateTime _ethbtc_timestamp;
+    private String _ethusd_timestamp;
+    private String _ethbtc_timestamp;
 
     public double inUsd() {
         return ethusd;
@@ -26,15 +27,25 @@ public class Price {
         return ethbtc;
     }
 
-    public LocalDateTime usdTimestamp() {
-        if(_ethusd_timestamp == null)
-            _ethusd_timestamp = LocalDateTime.ofEpochSecond(Long.valueOf(ethusd_timestamp), 0, ZoneOffset.UTC);
+    public String usdTimestamp() {
+        if(_ethusd_timestamp == null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date = new Date(1000L * Long.valueOf(ethusd_timestamp));
+            _ethusd_timestamp = sdf.format(date);
+        }
+//            _ethusd_timestamp = LocalDateTime.ofEpochSecond(Long.valueOf(ethusd_timestamp), 0, ZoneOffset.UTC);
         return _ethusd_timestamp;
     }
 
-    public LocalDateTime btcTimestamp() {
-        if(_ethbtc_timestamp == null)
-            _ethbtc_timestamp = LocalDateTime.ofEpochSecond(Long.valueOf(ethbtc_timestamp), 0, ZoneOffset.UTC);
+    public String btcTimestamp() {
+        if(_ethbtc_timestamp == null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date = new Date(1000L * Long.valueOf(ethbtc_timestamp));
+            _ethbtc_timestamp = sdf.format(date);
+        }
+//            _ethbtc_timestamp = LocalDateTime.ofEpochSecond(Long.valueOf(ethbtc_timestamp), 0, ZoneOffset.UTC);
         return _ethbtc_timestamp;
     }
 

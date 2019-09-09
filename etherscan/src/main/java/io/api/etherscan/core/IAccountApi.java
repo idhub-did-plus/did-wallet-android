@@ -82,6 +82,7 @@ public interface IAccountApi {
      * @return txs for address
      * @throws ApiException parent exception class
      */
+    @NotNull List<TxToken> txsToken(String address, long startBlock, long endBlock,String page,int offset) throws ApiException;
     @NotNull List<TxToken> txsToken(String address, long startBlock, long endBlock) throws ApiException;
     @NotNull List<TxToken> txsToken(String address, long startBlock) throws ApiException;
     @NotNull List<TxToken> txsToken(String address) throws ApiException;

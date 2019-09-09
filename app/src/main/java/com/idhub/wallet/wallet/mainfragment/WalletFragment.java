@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
@@ -32,7 +33,7 @@ import java.util.Observer;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WalletFragment extends MainBaseFragment implements View.OnClickListener, Observer {
+public class WalletFragment extends MainBaseFragment implements View.OnClickListener, Observer, WalletListDialogFragment.WalletListSelectItemListener {
 
     private WalletItemView mWalletItem;
 
@@ -60,32 +61,6 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         new AssetsModelDbManager().queryAll(operation -> {
             if (operation.isCompletedSucessfully()) {
                 List<AssetsModel> result = (List<AssetsModel>) operation.getResult();
-                AssetsModel assetsModel = new AssetsModel();
-                assetsModel.setName(AssetsDefaultType.ETH_NAME);
-                AssetsModel assetsModel1 = new AssetsModel();
-                assetsModel1.setName(AssetsDefaultType.IDHUB_NAME);
-                assetsModel1.setToken("0x4ede434043c47e9774cd7d28a040c28dd757ddfa");
-                AssetsModel assetsModel2 = new AssetsModel();
-                assetsModel.setName(AssetsDefaultType.ETH_NAME);
-                AssetsModel assetsModel3 = new AssetsModel();
-                assetsModel.setName(AssetsDefaultType.ETH_NAME);
-                AssetsModel assetsModel5 = new AssetsModel();
-                assetsModel5.setName(AssetsDefaultType.ETH_NAME);
-                AssetsModel assetsModel6 = new AssetsModel();
-                assetsModel6.setName(AssetsDefaultType.ETH_NAME);
-                AssetsModel assetsModel7 = new AssetsModel();
-                assetsModel7.setName(AssetsDefaultType.ETH_NAME);
-                AssetsModel assetsModel4 = new AssetsModel();
-                assetsModel4.setName(AssetsDefaultType.IDHUB_NAME);
-                assetsModel4.setToken("0x4ede434043c47e9774cd7d28a040c28dd757ddfa");
-                result.add(assetsModel);
-                result.add(assetsModel1);
-                result.add(assetsModel2);
-                result.add(assetsModel3);
-                result.add(assetsModel4);
-                result.add(assetsModel5);
-                result.add(assetsModel6);
-                result.add(assetsModel7);
                 mWalletBottomView.setData(result);
             }
         });
@@ -103,11 +78,11 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         titleLayout.setBackImg(R.mipmap.wallet_list_menu);
         titleLayout.setOnClickListener(v -> {
             //展示钱包列表
-            WalletListDialogFragment walletListDialog = new WalletListDialogFragment();
+            WalletListDialogFragment dialogFragment = WalletListDialogFragment.getInstance(mDidHubKeyStore.getAddress());
             if (getFragmentManager() != null) {
-//                walletListDialog.setTargetFragment(WalletFragment.this, 100);
-                walletListDialog.show(getFragmentManager(), "wallet_dialog_fragment");
+                dialogFragment.show(getFragmentManager(), "wallet_dialog_fragment");
             }
+            dialogFragment.setWalletListSelectItemListener(this);
         });
         titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_qrcode_scan, () -> {
             MipcaActivityCapture.startAction(getContext());
@@ -148,5 +123,13 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         mDidHubKeyStore = WalletManager.getCurrentKeyStore();
         mWalletItem.setData(mDidHubKeyStore);
         mWalletBottomView.onRefresh();
+    }
+
+    @Override
+    public void selectItem(String id) {
+        //selectWallet
+        boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
+        if (b)
+            WalletSelectedObservable.getInstance().update();
     }
 }

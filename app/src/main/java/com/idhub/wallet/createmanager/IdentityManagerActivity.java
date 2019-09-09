@@ -1,15 +1,21 @@
 package com.idhub.wallet.createmanager;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
+
 import android.os.Bundle;
 import android.view.View;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
+import com.idhub.wallet.createmanager.walletimport.ImportWalletActivity;
+import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.wallet.hository.NotificationUtils;
 
 public class IdentityManagerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,6 +33,7 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
 
     private void initView() {
         findViewById(R.id.tv_identity_create).setOnClickListener(this);
+        findViewById(R.id.tv_identity_import).setOnClickListener(this);
     }
 
     @Override
@@ -35,6 +42,9 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
         switch (id) {
             case R.id.tv_identity_create:
                InputPasswordActivity.startActionForResult(this,100);
+                break;
+            case R.id.tv_identity_import:
+                ImportWalletActivity.startActionForResult(this,101);
                 break;
         }
     }
@@ -45,6 +55,8 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
         if (requestCode == 100 && resultCode == RESULT_OK) {
             MainActivity.startAction(this,"IdentityManager");
             finish();
+        } else if (requestCode == 101 && resultCode == RESULT_OK) {
+
         }
     }
 }
