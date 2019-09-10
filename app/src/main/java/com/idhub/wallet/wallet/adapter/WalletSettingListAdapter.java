@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
 
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ import java.util.List;
 public class WalletSettingListAdapter extends RecyclerView.Adapter<WalletSettingListAdapter.WalletListAdapterViewHolder> {
 
     private LayoutInflater mInflater;
-    private List<DidHubKeyStore> keyStores;
+    private List<WalletKeystore> keyStores;
 
     public WalletSettingListAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
         keyStores = new ArrayList<>();
     }
-    public void addDatas(List<DidHubKeyStore> keyStores){
+    public void addDatas(List<WalletKeystore> keyStores){
         this.keyStores = keyStores;
         notifyDataSetChanged();
     }

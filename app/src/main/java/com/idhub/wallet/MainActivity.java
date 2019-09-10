@@ -15,7 +15,8 @@ import com.idhub.wallet.createmanager.IdentityManagerActivity;
 import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.TransactionRecordDbManager;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         List<String> accounts = new ArrayList<>();
-        for (DidHubKeyStore value : WalletManager.getWalletKeystores().values()) {
+        for (WalletKeystore value : WalletManager.getWalletKeystores().values()) {
             accounts.add(NumericUtil.prependHexPrefix(value.getAddress()));
         }
         IncomingService incomingService = ApiFactory.getIncomingService();

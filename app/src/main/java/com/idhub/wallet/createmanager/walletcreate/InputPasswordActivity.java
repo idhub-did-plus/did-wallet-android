@@ -15,7 +15,7 @@ import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.DidHubIdentify;
 import com.idhub.wallet.didhub.WalletInfo;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.model.MnemonicAndPath;
 import com.idhub.wallet.utils.ToastUtils;
 
@@ -102,7 +102,7 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void onNext(DidHubIdentify didHubIdentify) {
-                DidHubKeyStore keyStore = didHubIdentify.mDidHubKeyStore;
+                DidHubMnemonicKeyStore keyStore = didHubIdentify.mDidHubMnemonicKeyStore;
                 if (keyStore != null) {
                     WalletInfo walletInfo = new WalletInfo(keyStore);
                     MnemonicAndPath mnemonicAndPath = walletInfo.exportMnemonic(password);

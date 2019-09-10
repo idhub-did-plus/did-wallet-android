@@ -21,6 +21,9 @@ public class Messages {
   public static final String WALLET_EXISTS = "address_already_exist";
 //  public static final String WALLET_INVALID_ADDRESS = "address_invalid";
 
-
+  public static final String MAC_UNMATCH = "mac_unmatch";
+  public static final String PRIVATE_KEY_ADDRESS_NOT_MATCH = "private_key_address_not_match";
+  public static final String PRIVATE_KEY_INVALID = "privatekey_invalid";
+  public static final String KEYSTORE_CONTAINS_INVALID_PRIVATE_KEY = "keystore_contains_invalid_private_key";
 
 }

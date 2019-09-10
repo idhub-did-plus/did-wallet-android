@@ -1,6 +1,6 @@
 package com.idhub.wallet.didhub;
 
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.BIP44Util;
 import com.idhub.wallet.didhub.util.MnemonicUtil;
@@ -9,11 +9,11 @@ import java.util.List;
 
 public class DidHubIdentify {
     private static DidHubIdentify identify;
-    public static DidHubKeyStore mDidHubKeyStore;
+    public static DidHubMnemonicKeyStore mDidHubMnemonicKeyStore;
 
     public DidHubIdentify(Wallet wallet, List<String> mnemonicCodes, String password) {
-        mDidHubKeyStore = new DidHubKeyStore(wallet, mnemonicCodes, password, BIP44Util.ETHEREUM_PATH);
-        WalletManager.createWallet(mDidHubKeyStore);
+        mDidHubMnemonicKeyStore = new DidHubMnemonicKeyStore(wallet, mnemonicCodes, password, BIP44Util.ETHEREUM_PATH,"");
+        WalletManager.createWallet(mDidHubMnemonicKeyStore);
         identify = this;
     }
 

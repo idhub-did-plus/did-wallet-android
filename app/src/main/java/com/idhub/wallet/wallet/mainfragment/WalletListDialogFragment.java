@@ -11,10 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
-import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.wallet.adapter.WalletListAdapter;
 import com.idhub.wallet.wallet.walletsetting.WalletSettingActivity;
 
@@ -62,11 +61,11 @@ public class WalletListDialogFragment extends DialogFragment implements View.OnC
         view.findViewById(R.id.iv_setting).setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.rv_wallet);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        Hashtable<String, DidHubKeyStore> walletKeystores = WalletManager.getWalletKeystores();
-        LinkedList<DidHubKeyStore> didHubKeyStores = new LinkedList<>();
+        Hashtable<String, WalletKeystore> walletKeystores = WalletManager.getWalletKeystores();
+        LinkedList<WalletKeystore> didHubMnemonicKeyStores = new LinkedList<>();
         for (Iterator<String> iterator = walletKeystores.keySet().iterator(); iterator.hasNext(); ) {
             String key = iterator.next();
-            didHubKeyStores.add(walletKeystores.get(key));
+            didHubMnemonicKeyStores.add(walletKeystores.get(key));
         }
         WalletListAdapter walletListAdapter = new WalletListAdapter(getContext(),mAddress);
         walletListAdapter.setOnItemClickListener(id -> {
@@ -75,7 +74,7 @@ public class WalletListDialogFragment extends DialogFragment implements View.OnC
                 mWalletListSelectItemListener.selectItem(id);
             }
         });
-        walletListAdapter.addDatas(didHubKeyStores);
+        walletListAdapter.addDatas(didHubMnemonicKeyStores);
         recyclerView.setAdapter(walletListAdapter);
     }
 

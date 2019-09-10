@@ -5,14 +5,13 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
 
@@ -25,7 +24,7 @@ import static android.view.View.VISIBLE;
 public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.WalletListAdapterViewHolder> {
 
     private LayoutInflater mInflater;
-    private List<DidHubKeyStore> keyStores;
+    private List<WalletKeystore> keyStores;
     private OnWalletItemClickListener onItemClickListener;
     private String mSelectAddress;
 
@@ -35,7 +34,7 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
         keyStores = new ArrayList<>();
     }
 
-    public void addDatas(List<DidHubKeyStore> keyStores) {
+    public void addDatas(List<WalletKeystore> keyStores) {
         this.keyStores = keyStores;
         notifyDataSetChanged();
     }
@@ -56,7 +55,7 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
     public void onBindViewHolder(@NonNull WalletListAdapterViewHolder walletListAdapterViewHolder, int i) {
         WalletItemView walletItemView = (WalletItemView) walletListAdapterViewHolder.itemView;
         walletItemView.setClicked(false);
-        DidHubKeyStore keyStore = keyStores.get(i);
+        WalletKeystore keyStore = keyStores.get(i);
         if (NumericUtil.prependHexPrefix(keyStore.getAddress()).equals(NumericUtil.prependHexPrefix(mSelectAddress))) {
             walletItemView.setMenuIvVisible(VISIBLE);
             walletItemView.setMenuIv(R.mipmap.wallet_selected);
@@ -77,8 +76,8 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
             super(itemView);
             itemView.setOnClickListener(v -> {
                 int adapterPosition = getAdapterPosition();
-                DidHubKeyStore didHubKeyStore = keyStores.get(adapterPosition);
-                onItemClickListener.itemClick(didHubKeyStore.getId());
+                WalletKeystore didHubMnemonicKeyStore = keyStores.get(adapterPosition);
+                onItemClickListener.itemClick(didHubMnemonicKeyStore.getId());
             });
         }
     }

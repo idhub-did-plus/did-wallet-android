@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,8 @@ import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
-import com.idhub.wallet.greendao.AssetsDefaultType;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.wallet.mainfragment.view.WalletFragmentBottomView;
@@ -38,7 +37,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     private WalletItemView mWalletItem;
 
     private WalletFragmentBottomView mWalletBottomView;
-    private DidHubKeyStore mDidHubKeyStore;
+    private WalletKeystore mDidHubMnemonicKeyStore;
 
     public WalletFragment() {
         // Required empty public constructor
@@ -67,8 +66,8 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     }
 
     private void initData() {
-        mDidHubKeyStore = WalletManager.getCurrentKeyStore();
-        mWalletItem.setData(mDidHubKeyStore);
+        mDidHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
+        mWalletItem.setData(mDidHubMnemonicKeyStore);
         searchAssetmodelData();
     }
 
@@ -78,7 +77,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         titleLayout.setBackImg(R.mipmap.wallet_list_menu);
         titleLayout.setOnClickListener(v -> {
             //展示钱包列表
-            WalletListDialogFragment dialogFragment = WalletListDialogFragment.getInstance(mDidHubKeyStore.getAddress());
+            WalletListDialogFragment dialogFragment = WalletListDialogFragment.getInstance(mDidHubMnemonicKeyStore.getAddress());
             if (getFragmentManager() != null) {
                 dialogFragment.show(getFragmentManager(), "wallet_dialog_fragment");
             }
@@ -120,8 +119,8 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     }
 
     private void updateData() {
-        mDidHubKeyStore = WalletManager.getCurrentKeyStore();
-        mWalletItem.setData(mDidHubKeyStore);
+        mDidHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
+        mWalletItem.setData(mDidHubMnemonicKeyStore);
         mWalletBottomView.onRefresh();
     }
 

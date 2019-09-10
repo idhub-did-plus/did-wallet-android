@@ -17,7 +17,8 @@ import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.createmanager.walletcreate.MnemonicBackupHintActivity;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Messages;
 import com.idhub.wallet.didhub.model.MnemonicAndPath;
 import com.idhub.wallet.createmanager.UpgradeActivity;
@@ -113,7 +114,7 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
     @Override
     public void inputConfirm(String data, String source) {
         //check password
-        DidHubKeyStore keyStore = WalletManager.getKeyStore(mID);
+        WalletKeystore keyStore = WalletManager.getKeyStore(mID);
         if (keyStore == null) {
             ToastUtils.showShortToast(Messages.WALLET_INVALID_KEYSTORE);
             return;
@@ -172,7 +173,7 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
             //关联
 
 
-            DidHubKeyStore keyStore = WalletManager.getKeyStore(mID);
+            WalletKeystore keyStore = WalletManager.getKeyStore(mID);
             keyStore.getWallet().setAssociate(true);
             WalletManager.flushWallet(keyStore, true);
             MainActivity.startAction(this,"associated");

@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
@@ -18,12 +17,12 @@ import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
-import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.createmanager.walletcreate.MnemonicBackupHintActivity;
 import com.idhub.wallet.didhub.RecoverAddress;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.MnemonicUtil;
 import com.idhub.wallet.didhub.util.NumericUtil;
@@ -35,9 +34,7 @@ import java.util.List;
 
 import io.reactivex.observers.DisposableObserver;
 import wallet.idhub.com.clientlib.ApiFactory;
-import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
 import wallet.idhub.com.clientlib.interfaces.Listen;
-import wallet.idhub.com.clientlib.interfaces.ResultListener;
 
 public class UpgradeActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
@@ -115,7 +112,7 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
                 //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
                 WalletOtherInfoSharpreference.getInstance().setRecoverAdress(mRecoverAddressStr);
                 WalletOtherInfoSharpreference.getInstance().setEIN(NumericUtil.bigIntegerToHexWithZeroPadded(ein,64));
-                DidHubKeyStore keyStore = WalletManager.getKeyStore(mData);
+                WalletKeystore keyStore = WalletManager.getKeyStore(mData);
                 Wallet wallet = keyStore.getWallet();
                 wallet.setAssociate(true);
                 wallet.setDefaultAddress(true);

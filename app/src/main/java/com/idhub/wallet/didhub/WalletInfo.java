@@ -2,7 +2,9 @@ package com.idhub.wallet.didhub;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.keystore.EncMnemonicKeystore;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.DidHubExportKeystoreIgnore;
 import com.idhub.wallet.didhub.model.Messages;
 import com.idhub.wallet.didhub.model.MnemonicAndPath;
@@ -16,13 +18,13 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class WalletInfo {
-    private DidHubKeyStore keystore;
+    private WalletKeystore keystore;
 
-    public WalletInfo(DidHubKeyStore keyStore) {
+    public WalletInfo(WalletKeystore keyStore) {
         this.keystore = keyStore;
     }
 
-    public DidHubKeyStore getKeyStore() {
+    public WalletKeystore getKeyStore() {
         return keystore;
     }
 
@@ -50,7 +52,7 @@ public class WalletInfo {
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.addMixIn(DidHubKeyStore.class, DidHubExportKeystoreIgnore.class);
+            mapper.addMixIn(DidHubMnemonicKeyStore.class, DidHubExportKeystoreIgnore.class);
             return mapper.writeValueAsString(keystore);
         } catch (Exception ex) {
             throw new TokenException(Messages.WALLET_INVALID, ex);
@@ -59,7 +61,7 @@ public class WalletInfo {
     }
 
     public String exportPrivateKey(String password) {
-        if (keystore instanceof EncMnemonicKeystore) {
+        if (keystore instanceof EncMnemonicKeystore || keystore instanceof DidHubKeyStore) {
             byte[] decrypted = keystore.decryptCiphertext(password);
             return NumericUtil.bytesToHex(decrypted);
         }

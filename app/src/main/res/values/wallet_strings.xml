@@ -204,7 +204,13 @@
     <string name="wallet_edit_keystore_tip">Keystore 文件内容</string>
     <string name="wallet_import_wallet_from_mnemonic_tip">使用助记词导入的同时可以修改钱包密码。</string>
     <string name="wallet_edit_mnemonic_tip">输入助记词，用空格分隔</string>
-    <string name="wallet_import_wallet_from_mnemonic_tip">输入Private Key文件内容至输入框。或通过扫描Private Key内容生成的二维码录入。请留意字符大小写。</string>
+    <string name="wallet_import_wallet_from_private_key_tip">输入Private Key文件内容至输入框。或通过扫描Private Key内容生成的二维码录入。请留意字符大小写。</string>
     <string name="wallet_edit_private_key_tip">输入明文私钥</string>
+    <string name="wallet_begin_import">开始导入</string>
+    <string name="wallet_set_password">设置密码</string>
+    <string name="wallet_wallet_password">钱包密码</string>
+    <string name="wallet_repeat_password">重复输入密码</string>
+    <string name="wallet_no_empty_keystore">Keystore不能为空</string>
+    <string name="wallet_no_empty_password">Password不能为空</string>
 
 </resources>

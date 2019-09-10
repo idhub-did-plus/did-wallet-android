@@ -9,7 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 
@@ -18,7 +19,7 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
     private TextView mNameTv;
     private TextView mAddressTv;
     private ImageView mMenuIv;
-    private DidHubKeyStore mKeyStore;
+    private WalletKeystore mKeyStore;
     private TextView mAssociatedAddress;
     private boolean clicked = true;
     private TextView mEINView;
@@ -38,12 +39,11 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
         mMenuIv.setOnClickListener(this);
     }
 
-    public void setData(DidHubKeyStore keyStore) {
+    public void setData(WalletKeystore keyStore) {
         this.mKeyStore = keyStore;
         mNameTv.setText(keyStore.getWallet().getName());
         mAddressTv.setText(NumericUtil.prependHexPrefix(keyStore.getAddress()));
         boolean isgl = keyStore.getWallet().isAssociate();
-        Log.e("LYW", "setData: " + isgl);
         if (isgl) {
             mAssociatedAddress.setText(getContext().getString(R.string.wallet_associated_address));
             mAssociatedAddress.setTextColor(getContext().getResources().getColor(R.color.wallet_orange));

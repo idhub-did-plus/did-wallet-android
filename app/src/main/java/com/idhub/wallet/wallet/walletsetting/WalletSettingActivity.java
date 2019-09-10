@@ -17,8 +17,9 @@ import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.createmanager.UpgradeActivity;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.wallet.adapter.WalletSettingListAdapter;
 
 import java.util.Hashtable;
@@ -29,7 +30,7 @@ public class WalletSettingActivity extends AppCompatActivity implements MessageD
 
     private View view;
     private SelectAddWalletWayPopupWindow mSelectAddWalletWayPopupWindow;
-    private LinkedList<DidHubKeyStore> mDidHubKeyStores;
+    private LinkedList<WalletKeystore> mDidHubMnemonicKeyStores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +55,14 @@ public class WalletSettingActivity extends AppCompatActivity implements MessageD
         });
         RecyclerView recyclerView = findViewById(R.id.rv_wallet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        Hashtable<String, DidHubKeyStore> walletKeystores = WalletManager.getWalletKeystores();
-        mDidHubKeyStores = new LinkedList<>();
+        Hashtable<String, WalletKeystore> walletKeystores = WalletManager.getWalletKeystores();
+        mDidHubMnemonicKeyStores = new LinkedList<>();
         for (Iterator<String> iterator = walletKeystores.keySet().iterator(); iterator.hasNext(); ) {
             String key = iterator.next();
-            mDidHubKeyStores.add(walletKeystores.get(key));
+            mDidHubMnemonicKeyStores.add(walletKeystores.get(key));
         }
         WalletSettingListAdapter walletSettingListAdapter = new WalletSettingListAdapter(this);
-        walletSettingListAdapter.addDatas(mDidHubKeyStores);
+        walletSettingListAdapter.addDatas(mDidHubMnemonicKeyStores);
         recyclerView.setAdapter(walletSettingListAdapter);
     }
 
@@ -86,9 +87,9 @@ public class WalletSettingActivity extends AppCompatActivity implements MessageD
     };
 
     private boolean checkAddressRegisterIDHub() {
-        if (mDidHubKeyStores.size() == 1) {
-            DidHubKeyStore didHubKeyStore = mDidHubKeyStores.get(0);
-            return didHubKeyStore.getWallet().isAssociate();
+        if (mDidHubMnemonicKeyStores.size() == 1) {
+            WalletKeystore didHubMnemonicKeyStore = mDidHubMnemonicKeyStores.get(0);
+            return didHubMnemonicKeyStore.getWallet().isAssociate();
         }
         return true;
     }
@@ -106,9 +107,9 @@ public class WalletSettingActivity extends AppCompatActivity implements MessageD
     @Override
     public void confirm() {
         //去升级
-        if (mDidHubKeyStores.size() == 1) {
-            DidHubKeyStore didHubKeyStore = mDidHubKeyStores.get(0);
-            UpgradeActivity.startAction(this, didHubKeyStore.getId());
+        if (mDidHubMnemonicKeyStores.size() == 1) {
+            WalletKeystore didHubMnemonicKeyStore = mDidHubMnemonicKeyStores.get(0);
+            UpgradeActivity.startAction(this, didHubMnemonicKeyStore.getId());
         }
     }
 

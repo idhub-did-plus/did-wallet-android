@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.idhub.wallet.createmanager.walletimport.ImportWalletTopView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/key"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/wallet_shape_edittext"
+        android:gravity="left"
+        tools:hint="@string/wallet_edit_keystore_tip"
+        android:minHeight="120dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="5dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="5dp"
+        android:textSize="15sp"
+        android:textColor="@color/wallet_text_black"
+        android:textColorHint="@color/wallet_hint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tip" />
+
+    <TextView
+        android:id="@+id/tip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/wallet_background"
+        android:paddingLeft="12dp"
+        android:paddingTop="15dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="15dp"
+        tools:text="@string/wallet_import_wallet_from_keystore_tip"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</com.idhub.wallet.createmanager.walletimport.ImportWalletTopView>
