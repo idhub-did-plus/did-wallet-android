@@ -17,16 +17,25 @@ import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Messages;
 import com.idhub.wallet.didhub.model.TokenException;
 import com.idhub.wallet.didhub.model.Wallet;
+import com.idhub.wallet.didhub.util.BIP44Util;
+import com.idhub.wallet.didhub.util.MnemonicUtil;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.didhub.util.PrivateKeyValidator;
 import com.idhub.wallet.utils.LogUtils;
 
+import org.bitcoinj.crypto.DeterministicKey;
+import org.bitcoinj.wallet.DeterministicKeyChain;
+import org.bitcoinj.wallet.DeterministicSeed;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.List;
+
+import javax.annotation.Nullable;
 
 public class WalletManager {
     private static Hashtable<String, WalletKeystore> keystoreMap = new Hashtable<>();
@@ -46,6 +55,7 @@ public class WalletManager {
 
     public static File getDefaultKeyDirectory() {
         File directory = new File(new File(keystoreDir), "wallets");
+//        File directory = new File(new File(keystoreDir), "idhuba");
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -132,8 +142,8 @@ public class WalletManager {
         return importWalletFromPrivateKey(wallet, privateKey, password, overwrite);
     }
 
-    private static DidHubMnemonicKeyStore validateKeystore(String keystoreContent, String password) {
-        DidHubMnemonicKeyStore importedKeystore = unmarshalKeystore(keystoreContent, DidHubMnemonicKeyStore.class);
+    private static DidHubKeyStore validateKeystore(String keystoreContent, String password) {
+        DidHubKeyStore importedKeystore = unmarshalKeystore(keystoreContent, DidHubKeyStore.class);
         if (Strings.isNullOrEmpty(importedKeystore.getAddress()) || importedKeystore.getCrypto() == null) {
             throw new TokenException(Messages.WALLET_INVALID_KEYSTORE);
         }
@@ -171,6 +181,51 @@ public class WalletManager {
         keystoreMap.put(keystore.getId(), keystore);
         return new WalletInfo(keystore);
     }
+
+    public static WalletInfo importWalletFromMnemonic(Wallet wallet, String mnemonic, String path, String password, boolean overwrite) {
+        List<String> mnemonicCodes = Arrays.asList(mnemonic.split(" "));
+        MnemonicUtil.validateMnemonics(mnemonicCodes);
+        DidHubMnemonicKeyStore didHubMnemonicKeyStore = new DidHubMnemonicKeyStore(wallet, mnemonicCodes, password, path,"");
+        return flushWallet(didHubMnemonicKeyStore, overwrite);
+    }
+
+
+    public static String findWalletAddressByPrivateKey(String privateKey) {
+        new PrivateKeyValidator(privateKey).validate();
+        String address = new EthereumAddressCreator().fromPrivateKey(privateKey);
+        return address;
+    }
+
+    public static String findWalletAddressByKeystore(String keystoreContent, String password) {
+        WalletKeystore walletKeystore = validateKeystore(keystoreContent, password);
+        byte[] prvKeyBytes = walletKeystore.decryptCiphertext(password);
+        String address = new EthereumAddressCreator().fromPrivateKey(prvKeyBytes);
+        return address;
+    }
+
+    public static String findWalletAddressByMnemonic(String mnemonic, String path) {
+        List<String> mnemonicCodes = Arrays.asList(mnemonic.split(" "));
+        MnemonicUtil.validateMnemonics(mnemonicCodes);
+        DeterministicSeed seed = new DeterministicSeed(mnemonicCodes, null, "", 0L);
+        DeterministicKeyChain keyChain = DeterministicKeyChain.builder().seed(seed).build();
+        if (Strings.isNullOrEmpty(path)) {
+            throw new TokenException(Messages.INVALID_MNEMONIC_PATH);
+        }
+        DeterministicKey key = keyChain.getKeyByPath(BIP44Util.generatePath(path), true);
+        String address = new EthereumAddressCreator().fromPrivateKey(key.getPrivateKeyAsHex());
+        return address;
+    }
+
+
+
+    public static WalletInfo findWalletByAddress( String address) {
+        WalletKeystore keystore = findKeystoreByAddress(address);
+        if (keystore != null) {
+            return new WalletInfo(keystore);
+        }
+        return null;
+    }
+
 
     public static WalletKeystore findKeystoreByAddress(String address) {
         if (Strings.isNullOrEmpty(address)) return null;

@@ -17,6 +17,11 @@ import com.idhub.wallet.hository.message.MessageFragmentPagerAdapter;
 import com.idhub.wallet.hository.message.moretransaction.MoreTransactionMessageActivity;
 
 public class ImportWalletActivity extends AppCompatActivity {
+    public static final String IMPORT = "import";
+    public static final String NO_IMPORT_EQUAL_ADDRESS = "no_import_equal_address";
+    public static final String IMPORT_FIRST_ASSOCIATION = "import_first_association";
+    public static final String IMPORT_EQUAL_ASSOCIATION = "import_equal_association";
+    public static final String NO_IMPORT_OTHER_IDENTIFY = "no_import_other_identify";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -23,6 +23,10 @@ import wallet.idhub.com.clientlib.interfaces.ResultListener;
 
 public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 
+	public BigInteger getEINSync(String associate) throws Exception {
+		return ContractManager.getRegistry1484().getEIN(associate).send();
+	}
+
 	public Listen<Long> getEIN(String associate) {
 
 		CompletableFuture<BigInteger> data = ContractManager.getRegistry1484().getEIN(associate).sendAsync();
@@ -35,14 +39,14 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 					Log.e("LYW", "listen: "+ein);
 					l.result(ein.longValue());
 				}).exceptionally(transactionReceipt -> {
+					String message = transactionReceipt.getMessage();
+					Log.e("LYW", "listen:error " + message);
 					el.error("error!");
 					
 					return null;
 				});
-
 			}
 		};
-
 	}
 
 	public Listen<Identity> getIdentity(long ein) {

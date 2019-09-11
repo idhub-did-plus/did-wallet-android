@@ -44,20 +44,32 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
         singature.setText(userBasicInfo.signature);
 
         mRecoverAddressView = findViewById(R.id.tv_recover_address);
-        String recoverAdress = WalletOtherInfoSharpreference.getInstance().getRecoverAdress();
-        if (!TextUtils.isEmpty(recoverAdress)) {
-            mRecoverAddressView.setText("recoverAddress:" + recoverAdress);
-        }
+
         findViewById(R.id.upload_file).setOnClickListener(this);
         mEINView = findViewById(R.id.tv_ein_number);
     }
 
+    public void setRecoverAddress(String recoverAddress) {
+        setRecoverAddressViewVisible(VISIBLE);
+        mRecoverAddressView.setText("recoverAddress:" + recoverAddress);
+    }
+
     public void setEIN1484(String ein) {
+        setEINVisible(View.VISIBLE);
         mEINView.setText("did:erc1484:" + DeployedContractAddress.IdentityRegistryInterface + ":" + ein);
     }
 
     public void setEIN1056(String address) {
+        setEINVisible(View.VISIBLE);
         mEINView.setText("did:erc1056:" + DeployedContractAddress.EthereumDIDRegistryInterface + ":" + address);
+    }
+
+    public void setEINVisible(int visibility){
+        mEINView.setVisibility(visibility);
+    }
+
+    public void setRecoverAddressViewVisible(int visibility){
+        mRecoverAddressView.setVisibility(visibility);
     }
 
     @Override

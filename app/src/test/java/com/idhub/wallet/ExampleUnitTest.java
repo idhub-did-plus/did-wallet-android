@@ -1,11 +1,22 @@
 package com.idhub.wallet;
 
 
-import org.junit.Test;
+import android.util.Log;
 
+import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.net.IDHubCredentialProvider;
+
+import org.junit.Test;
+import org.web3j.crypto.Credentials;
+
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import wallet.idhub.com.clientlib.ApiFactory;
+import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
+import wallet.idhub.com.clientlib.interfaces.ResultListener;
 
 
 /**
@@ -16,15 +27,14 @@ import java.util.TimeZone;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date(1567668125 * 1000L);
-        System.out.println(date.toString());
-        String s = sdf.format(date);
-        System.out.println(s);
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        String format = sdf.format(date);
-        System.out.println(format);
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
-        System.out.println(sdf.format(date));
+        try {
+            Credentials credentials = Credentials.create("0");
+            BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
+            IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
+            BigInteger big = ApiFactory.getIdentityChainLocal().getEINSync(NumericUtil.prependHexPrefix("f6de4a68a56ed1e858caf089666c8a4e396dedf1"));
+            System.out.println(big.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

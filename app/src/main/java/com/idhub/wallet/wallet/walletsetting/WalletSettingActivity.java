@@ -16,10 +16,12 @@ import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
+import com.idhub.wallet.createmanager.walletimport.ImportWalletActivity;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
+import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.adapter.WalletSettingListAdapter;
 
 import java.util.Hashtable;
@@ -81,6 +83,13 @@ public class WalletSettingActivity extends AppCompatActivity implements MessageD
                 }
                 break;
             case R.id.tv_import:
+                if (checkAddressRegisterIDHub()) {
+                    ImportWalletActivity.startActionForResult(this,101);
+                } else {
+                    MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_tip), getString(R.string.wallet_go_upgrade));
+                    messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
+                    messageDialogFragment.setMessagePasswordDialogFragmentListener(this);
+                }
                 break;
         }
         mSelectAddWalletWayPopupWindow.dismiss();
@@ -98,6 +107,10 @@ public class WalletSettingActivity extends AppCompatActivity implements MessageD
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
+            WalletSelectedObservable.getInstance().update();
+            MainActivity.startAction(this,"add");
+            finish();
+        } else if (requestCode == 101 && resultCode == RESULT_OK) {
             WalletSelectedObservable.getInstance().update();
             MainActivity.startAction(this,"add");
             finish();

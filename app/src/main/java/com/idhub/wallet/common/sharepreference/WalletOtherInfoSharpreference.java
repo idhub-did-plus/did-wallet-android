@@ -34,11 +34,11 @@ public class WalletOtherInfoSharpreference {
         edit.putString(WALLET_EIN, ein).apply();
     }
 
-    public String getRecoverAdress() {
+    public String getRecoverAddress() {
         return sharedPreferences.getString(WALLET_RECOVER_ADDRESS, "");
     }
 
-    public void setRecoverAdress(String address) {
+    public void setRecoverAddress(String address) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString(WALLET_RECOVER_ADDRESS, address).apply();
     }

@@ -56,7 +56,8 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
             MainActivity.startAction(this,"IdentityManager");
             finish();
         } else if (requestCode == 101 && resultCode == RESULT_OK) {
-
+            MainActivity.startAction(this,"IdentityManager");
+            finish();
         }
     }
 }

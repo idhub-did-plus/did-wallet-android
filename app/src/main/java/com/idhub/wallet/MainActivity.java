@@ -103,22 +103,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
-        transactionRecordEntity.setGas("123");
-        transactionRecordEntity.setGasPrice("00000123");
-        transactionRecordEntity.setFrom("0x4c000E507bE6663e264a1A21507a69Bfa5035D95");
-        transactionRecordEntity.setTo("0x12331216663e264a1A21507a69Bfa50351222");
-
-        NotificationUtils.sendTransactionNotification(this,transactionRecordEntity);
-
-        TransactionRecordEntity recordEntity = new TransactionRecordEntity();
-        recordEntity.setGas("123");
-        recordEntity.setGasPrice("00000123");
-        recordEntity.setFrom("0x4c000E507bE6663e264a1A21507a69Bfa5035D95");
-        recordEntity.setTo("0x12331216663e264a1A21507a69Bfa50351222");
-        recordEntity.setTokenName("idhub");
-        recordEntity.setContractAddress("12333");
-        NotificationUtils.sendTransactionNotification(this,recordEntity);
     }
 
     @Override

@@ -26,4 +26,7 @@ public class Messages {
   public static final String PRIVATE_KEY_INVALID = "privatekey_invalid";
   public static final String KEYSTORE_CONTAINS_INVALID_PRIVATE_KEY = "keystore_contains_invalid_private_key";
 
+  public static final String INVALID_MNEMONIC_PATH = "invalid_mnemonic_path";
+
+
 }

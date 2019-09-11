@@ -73,19 +73,19 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
         String password = mPassword.getText().toString();
         String passwordRepeat = mPasswordRepeat.getText().toString();
         if (TextUtils.isEmpty(walletName)) {
-            ToastUtils.showShortToast("钱包名不能为空");
+            ToastUtils.showShortToast(getString(R.string.wallet_no_empty_wallet_name));
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            ToastUtils.showShortToast("密码不能为空");
+            ToastUtils.showShortToast(getString(R.string.wallet_no_empty_password));
             return;
         }
         if (TextUtils.isEmpty(passwordRepeat)) {
-            ToastUtils.showShortToast("重复密码不能为空");
+            ToastUtils.showShortToast(getString(R.string.wallet_no_empty_repeat_password));
             return;
         }
         if (!password.equals(passwordRepeat)) {
-            ToastUtils.showShortToast("两次密码不一致");
+            ToastUtils.showShortToast(getString(R.string.wallet_no_equal_password));
             return;
         }
         createWallet(walletName, password);

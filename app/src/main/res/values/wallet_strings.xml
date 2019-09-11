@@ -211,6 +211,15 @@
     <string name="wallet_wallet_password">钱包密码</string>
     <string name="wallet_repeat_password">重复输入密码</string>
     <string name="wallet_no_empty_keystore">Keystore不能为空</string>
-    <string name="wallet_no_empty_password">Password不能为空</string>
+    <string name="wallet_no_empty_password">密码不能为空</string>
+    <string name="wallet_no_empty_repeat_password">重复密码不能为空</string>
+    <string name="wallet_no_equal_password">两次密码不一致</string>
+    <string name="wallet_no_empty_mnemonic">助记词不能为空</string>
+    <string name="wallet_no_empty_private_key">私钥不能为空</string>
+    <string name="wallet_has_wallet">钱包地址已经存在</string>
+    <string name="wallet_other_identify_wallet">该钱包已经升级不同数字身份</string>
+
+
+    <string name="wallet_no_empty_wallet_name">钱包名不能为空</string>
 
 </resources>

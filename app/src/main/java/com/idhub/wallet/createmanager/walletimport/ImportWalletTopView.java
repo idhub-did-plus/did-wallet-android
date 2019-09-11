@@ -31,6 +31,6 @@ public class ImportWalletTopView extends ConstraintLayout {
     }
 
     public String getKey() {
-        return mKeyView.getText().toString();
+        return mKeyView.getText().toString().trim();
     }
 }

@@ -110,8 +110,8 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
                 BigInteger ein = identityCreatedEventResponse.ein;
                 //success
                 //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
-                WalletOtherInfoSharpreference.getInstance().setRecoverAdress(mRecoverAddressStr);
-                WalletOtherInfoSharpreference.getInstance().setEIN(NumericUtil.bigIntegerToHexWithZeroPadded(ein,64));
+                WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoverAddressStr);
+                WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
                 WalletKeystore keyStore = WalletManager.getKeyStore(mData);
                 Wallet wallet = keyStore.getWallet();
                 wallet.setAssociate(true);

@@ -14,6 +14,9 @@ import java.util.UUID;
 public class DidHubKeyStore extends WalletKeystore {
     public static final int VERSION = 3;
 
+    public DidHubKeyStore() {
+    }
+
     public static DidHubKeyStore create(Wallet wallet, String password, String prvKeyHex) {
         return new DidHubKeyStore(wallet, password, prvKeyHex,"");
     }
