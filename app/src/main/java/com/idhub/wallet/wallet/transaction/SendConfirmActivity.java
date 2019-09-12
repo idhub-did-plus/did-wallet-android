@@ -21,6 +21,7 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.network.Web3Api;
 import com.idhub.wallet.network.Web3jSubscriber;
+import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
 
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
@@ -63,8 +64,8 @@ public class SendConfirmActivity extends AppCompatActivity implements View.OnCli
             mFromAddressView.setText(mAssetsModel.getAddress());
         }
         mGasPrice = WalletTransactionSharpreference.getInstance().getGasPrice();
-        String token = mAssetsModel.getToken();
-        if (TextUtils.isEmpty(token)) {
+        String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
+        if (TextUtils.isEmpty(contractAddress)) {
             mGasLimit = WalletTransactionSharpreference.getInstance().getEthGasLimit();
         } else {
             mGasLimit = WalletTransactionSharpreference.getInstance().getERC20GasLimit();
@@ -120,7 +121,7 @@ public class SendConfirmActivity extends AppCompatActivity implements View.OnCli
             @Override
             public void onNext(Boolean aBoolean) {
                 if (aBoolean) {
-                    Web3Api.sendERC20Transaction(data,mAssetsModel.getToken(),mGasPrice,mGasLimit,mToAddress,mAmount,new Web3jSubscriber<TransactionReceipt>(){
+                    Web3Api.sendERC20Transaction(data,WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel),mGasPrice,mGasLimit,mToAddress,mAmount,new Web3jSubscriber<TransactionReceipt>(){
                         @Override
                         public void onNext(TransactionReceipt o) {
                             super.onNext(o);

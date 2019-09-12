@@ -176,6 +176,9 @@
     <string name="wallet_user_agreement">用户协议</string>
     <string name="wallet_about_we">关于我们</string>
     <string name="wallet_setting_title">设置</string>
+    <string name="wallet_node_setup">节点设置</string>
+    <string name="wallet_node_select">节点选择</string>
+    <string name="wallet_save">保存</string>
 
 
     //history

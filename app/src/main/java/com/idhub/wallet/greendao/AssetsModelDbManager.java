@@ -35,9 +35,10 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
             WhereCondition idhubWhere = AssetsModelDao.Properties.Name.eq(AssetsDefaultType.IDHUB_NAME);
             AssetsModel idhub = daoSession.queryBuilder(AssetsModel.class).where(idhubWhere).unique();
             if (idhub == null) {
+                //TODO:
                 AssetsModel assetsModel = new AssetsModel();
                 assetsModel.setName(AssetsDefaultType.IDHUB_NAME);
-                assetsModel.setToken("0x4ede434043c47e9774cd7d28a040c28dd757ddfa");
+                assetsModel.setRopstenContractAddress("0x4ede434043c47e9774cd7d28a040c28dd757ddfa");
                 daoSession.insert(assetsModel);
             }
             emitter.onComplete();

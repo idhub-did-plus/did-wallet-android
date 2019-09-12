@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.network.Web3Api;
 import com.idhub.wallet.network.Web3jSubscriber;
 import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.wallet.mainfragment.view.AssetsItemView;
 import com.idhub.wallet.wallet.transaction.TransactionActivity;
 
@@ -56,7 +59,7 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapte
         AssetsItemView itemView = (AssetsItemView) walletAssetsAdapterViewHolder.itemView;
         AssetsModel model = mAssetsModels.get(i);
         itemView.setName(model.getName());
-        String token = model.getToken();
+        String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(model);
         address = WalletManager.getAddress();
         String balance = model.getBalance();
         if (TextUtils.isEmpty(balance)) {
@@ -64,8 +67,8 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapte
         } else {
             itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance)));
         }
-        if (!TextUtils.isEmpty(token)) {
-            Web3Api.searchBalance(address, token, new Web3jSubscriber<BigInteger>() {
+        if (!TextUtils.isEmpty(contractAddress)) {
+            Web3Api.searchBalance(address, contractAddress, new Web3jSubscriber<BigInteger>() {
                 @Override
                 public void onNext(BigInteger bigInteger) {
                     String balance = String.valueOf(bigInteger);

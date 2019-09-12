@@ -32,6 +32,7 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
         View view = inflater.inflate(R.layout.wallet_fragment_setting, container, false);
         view.findViewById(R.id.history_message).setOnClickListener(this);
         view.findViewById(R.id.wallet_manager).setOnClickListener(this);
+        view.findViewById(R.id.node_setup).setOnClickListener(this);
         TitleLayout titleLayout = view.findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_setting_title));
         titleLayout.setBackImgVisible(View.INVISIBLE);
@@ -51,6 +52,9 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
                 break;
             case R.id.wallet_manager:
                 WalletSettingActivity.startAction(getContext());
+                break;
+            case R.id.node_setup:
+                NodeSettingActivity.startAction(getContext());
                 break;
         }
     }

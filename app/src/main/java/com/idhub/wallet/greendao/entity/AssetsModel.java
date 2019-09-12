@@ -14,9 +14,11 @@ public class AssetsModel implements Parcelable {
     private Long id;
     private String name;
     private String address;
-    private String token;
+    private String mainContractAddress;
+    private String ropstenContractAddress;
     private String symble;
     private String balance;
+    private String decimals;
 
     public AssetsModel() {
     }
@@ -24,20 +26,25 @@ public class AssetsModel implements Parcelable {
     protected AssetsModel(Parcel in) {
         name = in.readString();
         address = in.readString();
-        token = in.readString();
+        mainContractAddress = in.readString();
+        ropstenContractAddress = in.readString();
+        decimals = in.readString();
         symble = in.readString();
         balance = in.readString();
     }
 
-    @Generated(hash = 1384688074)
-    public AssetsModel(Long id, String name, String address, String token,
-            String symble, String balance) {
+    @Generated(hash = 1668248179)
+    public AssetsModel(Long id, String name, String address,
+            String mainContractAddress, String ropstenContractAddress,
+            String symble, String balance, String decimals) {
         this.id = id;
         this.name = name;
         this.address = address;
-        this.token = token;
+        this.mainContractAddress = mainContractAddress;
+        this.ropstenContractAddress = ropstenContractAddress;
         this.symble = symble;
         this.balance = balance;
+        this.decimals = decimals;
     }
 
     public static final Creator<AssetsModel> CREATOR = new Creator<AssetsModel>() {
@@ -52,46 +59,6 @@ public class AssetsModel implements Parcelable {
         }
     };
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSymble() {
-        return symble;
-    }
-
-    public void setSymble(String symble) {
-        this.symble = symble;
-    }
-
-    public String getBalance() {
-        return balance;
-    }
-
-    public void setBalance(String balance) {
-        this.balance = balance;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -101,9 +68,27 @@ public class AssetsModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeString(address);
-        dest.writeString(token);
+        dest.writeString(mainContractAddress);
+        dest.writeString(ropstenContractAddress);
         dest.writeString(symble);
         dest.writeString(balance);
+        dest.writeString(decimals);
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
@@ -113,4 +98,46 @@ public class AssetsModel implements Parcelable {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public String getRopstenContractAddress() {
+        return this.ropstenContractAddress;
+    }
+
+    public void setRopstenContractAddress(String ropstenContractAddress) {
+        this.ropstenContractAddress = ropstenContractAddress;
+    }
+
+    public String getSymble() {
+        return this.symble;
+    }
+
+    public void setSymble(String symble) {
+        this.symble = symble;
+    }
+
+    public String getBalance() {
+        return this.balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getDecimals() {
+        return this.decimals;
+    }
+
+    public void setDecimals(String decimals) {
+        this.decimals = decimals;
+    }
+
+    public String getMainContractAddress() {
+        return this.mainContractAddress;
+    }
+
+    public void setMainContractAddress(String mainContractAddress) {
+        this.mainContractAddress = mainContractAddress;
+    }
+
+
 }

@@ -3,17 +3,25 @@ package com.idhub.wallet;
 
 import android.util.Log;
 
+import com.idhub.wallet.contract.EIP20Interface;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.net.IDHubCredentialProvider;
+import com.idhub.wallet.network.C;
 
 import org.junit.Test;
+import org.web3j.contracts.token.ERC20Interface;
 import org.web3j.crypto.Credentials;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.tx.gas.DefaultGasProvider;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import wallet.idhub.com.clientlib.ApiFactory;
 import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
 import wallet.idhub.com.clientlib.interfaces.ResultListener;
@@ -27,14 +35,6 @@ import wallet.idhub.com.clientlib.interfaces.ResultListener;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        try {
-            Credentials credentials = Credentials.create("0");
-            BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
-            IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
-            BigInteger big = ApiFactory.getIdentityChainLocal().getEINSync(NumericUtil.prependHexPrefix("f6de4a68a56ed1e858caf089666c8a4e396dedf1"));
-            System.out.println(big.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.idhub.wallet.App;
+import com.idhub.wallet.setting.WalletNodeManager;
 
 public class WalletOtherInfoSharpreference {
     private static WalletOtherInfoSharpreference sWalletOtherInfoSharpreference;
@@ -12,6 +13,7 @@ public class WalletOtherInfoSharpreference {
     private String WALLET_SELECT_ID = "wallet_select_id";
     private String WALLET_RECOVER_ADDRESS = "wallet_recover_address";
     private String WALLET_EIN = "wallet_ein";
+    private String WALLET_NODE = "wallet_node";
 
     private WalletOtherInfoSharpreference() {
         sharedPreferences = App.getInstance().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
@@ -52,6 +54,13 @@ public class WalletOtherInfoSharpreference {
         boolean commit = edit.putString(WALLET_SELECT_ID, id).commit();
         return commit;
     }
+    public String getNode() {
+        return sharedPreferences.getString(WALLET_NODE, WalletNodeManager.nodes.get(0));
+    }
 
+    public void setNode(String node) {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString(WALLET_NODE, node).apply();
+    }
 
 }

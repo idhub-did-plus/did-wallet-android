@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.QRCodeEncoder;
 import com.idhub.wallet.utils.ToastUtils;
@@ -57,10 +58,10 @@ public class ReceiveActivity extends AppCompatActivity implements View.OnClickLi
     private void updateQRCode() {
         StringBuilder codeBuilder = new StringBuilder();
         String address = mAssetsModel.getAddress();
-        String token = mAssetsModel.getToken();
+        String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
         codeBuilder.append("ethereum:").append(address).append("?");
-        if (!TextUtils.isEmpty(token)) {
-            codeBuilder.append("contractAddress=").append(token).append("&");
+        if (!TextUtils.isEmpty(contractAddress)) {
+            codeBuilder.append("contractAddress=").append(contractAddress).append("&");
         }
         codeBuilder.append("decimal=18&").append("value=").append(value);
         String content = codeBuilder.toString();

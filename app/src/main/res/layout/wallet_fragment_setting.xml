@@ -51,6 +51,22 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/node_setup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/wallet_right_arrow"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="20dp"
+            android:text="@string/wallet_node_setup"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line" />
+
+        <TextView
             android:id="@+id/user_agreement"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -65,7 +81,7 @@
             android:textSize="16sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/line" />
+            app:layout_constraintTop_toBottomOf="@id/line2" />
 
         <TextView
             android:id="@+id/about_we"
@@ -83,6 +99,16 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/line1" />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/wallet_line_gray"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/node_setup" />
 
         <View
             android:id="@+id/line1"
