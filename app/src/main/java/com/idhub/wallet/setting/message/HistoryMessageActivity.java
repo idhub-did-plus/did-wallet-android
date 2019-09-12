@@ -1,4 +1,4 @@
-package com.idhub.wallet.hository.message;
+package com.idhub.wallet.setting.message;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -7,11 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.idhub.wallet.MainFragmentPagerAdapter;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.title.TitleLayout;
-import com.idhub.wallet.hository.message.moretransaction.MoreTransactionMessageActivity;
+import com.idhub.wallet.setting.message.moretransaction.MoreTransactionMessageActivity;
 
 public class HistoryMessageActivity extends AppCompatActivity {
 

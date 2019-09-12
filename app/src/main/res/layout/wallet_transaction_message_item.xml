@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.idhub.wallet.hository.message.transaction.TransactionMessageItemView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.idhub.wallet.setting.message.transaction.TransactionMessageItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".hository.message.transaction.TransactionMessageFragment">
+    tools:context=".setting.message.transaction.TransactionMessageFragment">
 
     <!--    <ImageView-->
     <!--        android:id="@+id/message_icon"-->
@@ -117,4 +117,4 @@
         android:layout_marginTop="10dp"
         android:background="@color/wallet_line_gray_deep"
         app:layout_constraintTop_toBottomOf="@id/name" />
-</com.idhub.wallet.hository.message.transaction.TransactionMessageItemView>
+</com.idhub.wallet.setting.message.transaction.TransactionMessageItemView>

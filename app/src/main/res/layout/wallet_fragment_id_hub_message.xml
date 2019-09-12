@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".hository.message.idhub.IdHubMessageFragment">
+    tools:context=".setting.message.idhub.IdHubMessageFragment">
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/idhub_message_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/wallet_white" />
 </FrameLayout>

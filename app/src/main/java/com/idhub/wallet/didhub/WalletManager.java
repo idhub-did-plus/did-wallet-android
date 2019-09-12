@@ -55,7 +55,6 @@ public class WalletManager {
 
     public static File getDefaultKeyDirectory() {
         File directory = new File(new File(keystoreDir), "wallets");
-//        File directory = new File(new File(keystoreDir), "idhuba");
         if (!directory.exists()) {
             directory.mkdirs();
         }

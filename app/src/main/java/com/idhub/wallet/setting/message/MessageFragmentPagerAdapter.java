@@ -1,4 +1,4 @@
-package com.idhub.wallet.hository.message;
+package com.idhub.wallet.setting.message;
 
 import android.content.Context;
 import android.view.ViewGroup;
@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.idhub.wallet.MainChannelFragmentFactory;
 import com.idhub.wallet.R;
 
 public class MessageFragmentPagerAdapter extends FragmentPagerAdapter {

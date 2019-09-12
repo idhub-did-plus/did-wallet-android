@@ -16,4 +16,10 @@ public class DateUtils {
         }
         return formatTime;
     }
+
+    public static String getCurrentDate(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        return simpleDateFormat.format(date);
+    }
 }

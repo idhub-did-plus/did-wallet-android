@@ -1,11 +1,9 @@
 package com.idhub.wallet.createmanager;
 
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationManagerCompat;
 
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +12,6 @@ import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 import com.idhub.wallet.createmanager.walletimport.ImportWalletActivity;
-import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
-import com.idhub.wallet.hository.NotificationUtils;
 
 public class IdentityManagerActivity extends AppCompatActivity implements View.OnClickListener {
 

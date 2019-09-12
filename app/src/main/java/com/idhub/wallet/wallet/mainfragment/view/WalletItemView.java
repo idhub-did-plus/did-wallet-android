@@ -2,6 +2,8 @@ package com.idhub.wallet.wallet.mainfragment.view;
 
 import android.content.Context;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,8 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.utils.StringUtils;
+import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 
 public class WalletItemView extends ConstraintLayout implements View.OnClickListener {
@@ -73,6 +77,11 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
         mMenuIv.setVisibility(visible);
     }
 
+    public void setAddressTextDrawable(){
+        Drawable drawable = getContext().getDrawable(R.mipmap.wallet_address_copy);
+        mAddressTv.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+        mAddressTv.setOnClickListener(this);
+    }
     @Override
     public void onClick(View v) {
         if (clicked) {
@@ -82,6 +91,11 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
                 case R.id.tv_associated_address:
                     //关联地址
                     WalletManagerActivity.startAction(getContext(), mKeyStore.getId());
+                    break;
+                case R.id.tv_wallet_address:
+                    String s = mAddressTv.getText().toString();
+                    StringUtils.copy(getContext(), s);
+                    ToastUtils.showShortToast(getContext().getString(R.string.wallet_copy_address_success));
                     break;
             }
         }

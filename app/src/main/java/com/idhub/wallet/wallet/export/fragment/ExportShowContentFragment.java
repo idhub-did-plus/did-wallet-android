@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.utils.StringUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,20 +75,11 @@ public class ExportShowContentFragment extends Fragment implements View.OnClickL
         switch (id) {
             case R.id.wallet_copy:
                 String str = mText.getText().toString();
-                copy(str);
+                StringUtils.copy(getContext(),str);
                 mBtnText.setText("已复制");
                 handler.sendEmptyMessageDelayed(1, 2000);
                 break;
         }
-    }
-
-    private void copy(String copyStr) {
-        //获取剪贴板管理器：
-        ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-        // 创建普通字符型ClipData
-        ClipData mClipData = ClipData.newPlainText("CopyStr", copyStr);
-        // 将ClipData内容放到系统剪贴板里。
-        cm.setPrimaryClip(mClipData);
     }
 
     @Override

@@ -15,10 +15,18 @@ import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.DidHubIdentify;
 import com.idhub.wallet.didhub.WalletInfo;
+import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.model.MnemonicAndPath;
+import com.idhub.wallet.greendao.IdHubMessageDbManager;
+import com.idhub.wallet.greendao.IdHubMessageType;
+import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
+import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
+
+import org.greenrobot.greendao.async.AsyncOperation;
+import org.greenrobot.greendao.async.AsyncOperationListener;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -102,8 +110,19 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
 
             @Override
             public void onNext(DidHubIdentify didHubIdentify) {
+                //判断第一次创建 设置IdHubMessage
                 DidHubMnemonicKeyStore keyStore = didHubIdentify.mDidHubMnemonicKeyStore;
                 if (keyStore != null) {
+                    int walletNum = WalletManager.getWalletNum();
+                    if (walletNum == 1) {
+                        IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
+                        idHubMessageEntity.setAddress(keyStore.getAddress());
+                        idHubMessageEntity.setType(IdHubMessageType.CREATE_1056_Identity);
+                        idHubMessageEntity.setTime(DateUtils.getCurrentDate());
+                        new IdHubMessageDbManager().insertData(idHubMessageEntity, operation -> {
+                            boolean completed = operation.isCompleted();
+                        });
+                    }
                     WalletInfo walletInfo = new WalletInfo(keyStore);
                     MnemonicAndPath mnemonicAndPath = walletInfo.exportMnemonic(password);
                     MnemonicBackupHintActivity.startActionforResult(InputPasswordActivity.this, mnemonicAndPath.getMnemonic(),100);

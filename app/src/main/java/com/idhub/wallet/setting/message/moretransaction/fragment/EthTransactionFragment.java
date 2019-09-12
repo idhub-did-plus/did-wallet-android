@@ -1,4 +1,4 @@
-package com.idhub.wallet.hository.message.moretransaction.fragment;
+package com.idhub.wallet.setting.message.moretransaction.fragment;
 
 
 import android.content.Context;
@@ -8,19 +8,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
-import com.idhub.wallet.hository.message.moretransaction.EthTransactionMessageAdapter;
-import com.idhub.wallet.hository.message.moretransaction.MoreTransactionMessageActivity;
-import com.idhub.wallet.hository.message.moretransaction.TransactionObservable;
+import com.idhub.wallet.setting.message.moretransaction.EthTransactionMessageAdapter;
+import com.idhub.wallet.setting.message.moretransaction.MoreTransactionMessageActivity;
+import com.idhub.wallet.setting.message.moretransaction.TransactionObservable;
 import com.idhub.wallet.network.C;
 import com.idhub.wallet.utils.ToastUtils;
 
@@ -30,7 +28,6 @@ import java.util.Observer;
 
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.model.Tx;
-import io.api.etherscan.model.TxToken;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,7 +37,8 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ERC20TransactionFragment extends Fragment implements EthTransactionMessageAdapter.TransactionMesageLoadListener, Observer {
+public class EthTransactionFragment extends Fragment implements EthTransactionMessageAdapter.TransactionMesageLoadListener, Observer {
+
 
     private RecyclerView mRecyclerView;
     private EthTransactionMessageAdapter mAdapter;
@@ -54,7 +52,7 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
     private String mAddress;
     private EtherScanApi mApi = new EtherScanApi(C.ROPSTEN);
 
-    public ERC20TransactionFragment() {
+    public EthTransactionFragment() {
         // Required empty public constructor
     }
 
@@ -70,7 +68,7 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.wallet_fragment_erc20_transaction, container, false);
+        View view = inflater.inflate(R.layout.wallet_fragment_eth_transaction, container, false);
         mRecyclerView = view.findViewById(R.id.transaction_message_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new EthTransactionMessageAdapter(getContext());
@@ -95,14 +93,14 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
     }
 
     private void loadData() {
-        Observable.create((ObservableOnSubscribe<List<TxToken>>) emitter -> {
-            List<TxToken> txs = mApi.account().txsToken(mAddress, 0, MAX_END_BLOCK, String.valueOf(mPage), mOffset);
+        Observable.create((ObservableOnSubscribe<List<Tx>>) emitter -> {
+            List<Tx> txs = mApi.account().txs(mAddress, 0, MAX_END_BLOCK, String.valueOf(mPage), mOffset);
             emitter.onNext(txs);
             emitter.onComplete();
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableObserver<List<TxToken>>() {
+                .subscribe(new DisposableObserver<List<Tx>>() {
                     @Override
                     protected void onStart() {
                         super.onStart();
@@ -110,15 +108,14 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
                     }
 
                     @Override
-                    public void onNext(List<TxToken> txTokens) {
+                    public void onNext(List<Tx> txes) {
                         List<TransactionRecordEntity> recordEntities = new ArrayList<>();
-                        int size = txTokens.size();
+                        int size = txes.size();
                         for (int i = 0; i < size; i++) {
                             TransactionRecordEntity recordEntity = new TransactionRecordEntity();
-                            recordEntity.setTxToken(txTokens.get(i));
+                            recordEntity.setTx(txes.get(i));
                             recordEntities.add(recordEntity);
                         }
-                        Log.e("LYW", "onNext: " + size);
                         if (mPage == 1) {
                             if (size <= 0) {
                                 mEmptyView.setVisibility(View.VISIBLE);
@@ -138,6 +135,7 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
                             //不到一整页数据
                             hasNextPage = false;
                         }
+
                     }
 
                     @Override
@@ -164,7 +162,7 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
             mPage++;
             loadData();
         } else {
-            Toast.makeText(mActivity, getString(R.string.wallet_no_data), Toast.LENGTH_SHORT).show();
+            ToastUtils.showShortToast( getString(R.string.wallet_no_data));
         }
     }
 

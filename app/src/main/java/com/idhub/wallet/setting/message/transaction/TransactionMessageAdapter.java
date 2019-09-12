@@ -1,4 +1,4 @@
-package com.idhub.wallet.hository.message.transaction;
+package com.idhub.wallet.setting.message.transaction;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
-import com.idhub.wallet.hository.message.moretransaction.MoreTransactionMessageActivity;
 
 import java.util.ArrayList;
 import java.util.List;

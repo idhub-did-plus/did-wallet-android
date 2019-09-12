@@ -22,7 +22,11 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdHubMessageDbManager;
+import com.idhub.wallet.greendao.IdHubMessageType;
+import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
 import com.idhub.wallet.net.IDHubCredentialProvider;
+import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 import org.web3j.crypto.Credentials;
@@ -110,18 +114,18 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
                     case IMPORT:
                         wallet.setName("ETH-Wallet");
                         wallet.setAssociate(false);
-                        importWallet(wallet, key, password);
+                        importWallet(wallet, key, password,msg);
                         break;
                     case IMPORT_FIRST_ASSOCIATION:
                         wallet.setName("ETH-Wallet");
                         wallet.setAssociate(true);
                         wallet.setDefaultAddress(true);
-                        importWallet(wallet, key, password);
+                        importWallet(wallet, key, password,msg);
                         break;
                     case IMPORT_EQUAL_ASSOCIATION:
                         wallet.setName("ETH-Wallet");
                         wallet.setAssociate(true);
-                        importWallet(wallet, key, password);
+                        importWallet(wallet, key, password,msg);
                         break;
                     case NO_IMPORT_OTHER_IDENTIFY:
                         ToastUtils.showLongToast(getString(R.string.wallet_other_identify_wallet));
@@ -143,7 +147,7 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
 
     }
 
-    private void importWallet(Wallet wallet,String key, String password) {
+    private void importWallet(Wallet wallet,String key, String password,String importType) {
         Observable.create((ObservableOnSubscribe<WalletInfo>) emitter -> {
             WalletInfo walletInfo = WalletManager.importWalletFromKeystore(wallet, key, password, true);
             emitter.onNext(walletInfo);
@@ -160,6 +164,26 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
 
                     @Override
                     public void onNext(WalletInfo walletInfo) {
+                        switch (importType){
+                            case IMPORT:
+                                IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
+                                idHubMessageEntity.setType(IdHubMessageType.IMPORT_1056_IDENTITY);
+                                idHubMessageEntity.setTime(DateUtils.getCurrentDate());
+                                idHubMessageEntity.setAddress(walletInfo.getAddress());
+                                new IdHubMessageDbManager().insertData(idHubMessageEntity,null);
+                                break;
+                            case IMPORT_FIRST_ASSOCIATION:
+                                IdHubMessageEntity idHubMessageEntity1 = new IdHubMessageEntity();
+                                idHubMessageEntity1.setType(IdHubMessageType.IMPORT_1484_IDENTITY);
+                                idHubMessageEntity1.setTime(DateUtils.getCurrentDate());
+                                idHubMessageEntity1.setAddress(walletInfo.getAddress());
+                                idHubMessageEntity1.setDefaultAddress(walletInfo.getAddress());
+                                new IdHubMessageDbManager().insertData(idHubMessageEntity1,null);
+                                break;
+                            case IMPORT_EQUAL_ASSOCIATION:
+
+                                break;
+                        }
                         Activity activity = (Activity) getContext();
                         if (activity instanceof ImportWalletActivity) {
                             activity.setResult(Activity.RESULT_OK);
@@ -187,22 +211,23 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
             if (wallet != null) {
                 emitter.onNext(NO_IMPORT_EQUAL_ADDRESS);
             } else {
-                //检查ein
+                //检查是否已经注册身份，已注册进行ein判断
                 Credentials credentials = Credentials.create("0");
                 BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
                 IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
-                BigInteger einSync = ApiFactory.getIdentityChainLocal().getEINSync(address);
-                if ("0".equals(einSync.toString())) {
-                    //导入一个没有关联地址的钱包
+                Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(address);
+                if (!hasIdentity) {
+                    //导入一个没有注册身份的钱包
                     emitter.onNext(IMPORT);
                 } else {
-                    //获取当前ein
+                    //已经注册身份
                     String defaultAddress = WalletManager.getDefaultAddress();
                     if (TextUtils.isEmpty(defaultAddress)) {
-                        //导入第一个有关联地址的wallet
-                        WalletOtherInfoSharpreference.getInstance().setEIN(einSync.toString());
+                        //导入第一个注册身份的wallet
                         emitter.onNext(IMPORT_FIRST_ASSOCIATION);
                     } else {
+                        //判断ein是否和已有身份的ein相同
+                        BigInteger einSync = ApiFactory.getIdentityChainLocal().getEINSync(address);
                         String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
                         if (TextUtils.isEmpty(ein)) {
                             ein = ApiFactory.getIdentityChainLocal().getEINSync(defaultAddress).toString();

@@ -72,6 +72,13 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo_Light_Dialog_MinWidth);
+
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }

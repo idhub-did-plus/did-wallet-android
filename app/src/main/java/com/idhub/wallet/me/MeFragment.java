@@ -68,7 +68,6 @@ public class MeFragment extends MainBaseFragment {
     }
 
     private void initData() {
-
     }
 
     private void initView(View view) {
@@ -92,27 +91,29 @@ public class MeFragment extends MainBaseFragment {
             mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
         } else {
             //先获取sp里是否有存储，没有则进行网络请求
-            WalletOtherInfoSharpreference sharpreference = WalletOtherInfoSharpreference.getInstance();
-            String ein = sharpreference.getEIN();
-            Log.e("LYW", "loadData:1 " + ein );
+            String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
             if (TextUtils.isEmpty(ein)) {
                 Credentials credentials = Credentials.create("0");
                 BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
                 IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
                 ApiFactory.getIdentityChainLocal().getEIN(defaultAddress).listen(aLong -> {
                     String einStr = aLong.toString();
-                    Log.e("LYW", "loadData:2 " + einStr );
-                    sharpreference.setEIN(einStr);
+                    WalletOtherInfoSharpreference.getInstance().setEIN(einStr);
                     Message message = Message.obtain();
                     message.what = 1;
                     message.obj = einStr;
                     handler.sendMessage(message);
+                    Log.e("LYW", "loadDataein: " );
+
                 }, s -> {
+                    Log.e("LYW", "loadDataein:error " );
                     Message message = Message.obtain();
                     message.what = 2;
                     handler.sendMessage(message);
                 });
             } else {
+                Log.e("LYW", "loadDataset " );
+
                 setEIN1484View(ein);
                 setRecoverAddress(ein);
             }
@@ -121,8 +122,8 @@ public class MeFragment extends MainBaseFragment {
 
     private void setRecoverAddress(String ein) {
         //recoverAddress
-        WalletOtherInfoSharpreference sharpreference = WalletOtherInfoSharpreference.getInstance();
-        String recoverAddress = sharpreference.getRecoverAddress();
+        String recoverAddress = WalletOtherInfoSharpreference.getInstance().getRecoverAddress();
+        Log.e("LYW", "setRecoverAddress: " + recoverAddress );
         if (TextUtils.isEmpty(recoverAddress)) {
             if (TextUtils.isEmpty(ein)) {
                 mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
@@ -132,12 +133,14 @@ public class MeFragment extends MainBaseFragment {
                 IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
                 ApiFactory.getIdentityChainLocal().getIdentity(Long.parseLong(ein)).listen(rst -> {
                     String recoveryAddress = rst.getRecoveryAddress();
-                    sharpreference.setRecoverAddress(recoverAddress);
+                    WalletOtherInfoSharpreference.getInstance().setRecoverAddress(recoveryAddress);
+                    Log.e("LYW", "setRecoverAddress:1 " + recoveryAddress );
                     Message message = Message.obtain();
                     message.what = 3;
                     message.obj = recoveryAddress;
                     handler.sendMessage(message);
                 }, msg -> {
+                    Log.e("LYW", "setRecoverAddress:2 "  +msg);
                     Message message = Message.obtain();
                     message.what = 4;
                     handler.sendMessage(message);
@@ -167,19 +170,24 @@ public class MeFragment extends MainBaseFragment {
                 MeFragment  meFragment = (MeFragment)fragment;
                 switch (msg.what) {
                     case 1:
+                        Log.e("LYW", "handleMessage: 1");
                         String ein = ((String) msg.obj);
                         meFragment.setEIN1484View(ein);
                         meFragment.setRecoverAddress(ein);
                         break;
                     case 2:
+                        Log.e("LYW", "handleMessage: 2");
                         meFragment.mTopView.setEINVisible(View.INVISIBLE);
                         meFragment.setRecoverAddress("");
                         break;
                     case 3:
+                        Log.e("LYW", "handleMessage: 3");
                         String recoveryAddress = ((String) msg.obj);
                         meFragment.mTopView.setRecoverAddress(recoveryAddress);
                         break;
                     case 4:
+                        Log.e("LYW", "handleMessage: 4");
+
                         meFragment.mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
                         break;
                 }

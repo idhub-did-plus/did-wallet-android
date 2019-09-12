@@ -8,11 +8,6 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.createmanager.walletimport.fragment.ImportWalletFromKeystoreFragment;
 import com.idhub.wallet.createmanager.walletimport.fragment.ImportWalletFromMnemonicFragment;
 import com.idhub.wallet.createmanager.walletimport.fragment.ImportWalletFromPrivateKeyFragment;
-import com.idhub.wallet.hository.message.idhub.IdHubMessageFragment;
-import com.idhub.wallet.hository.message.moretransaction.fragment.ERC20TransactionFragment;
-import com.idhub.wallet.hository.message.moretransaction.fragment.EthTransactionFragment;
-import com.idhub.wallet.hository.message.moretransaction.fragment.STTransactionFragment;
-import com.idhub.wallet.hository.message.transaction.TransactionMessageFragment;
 
 public class ImportWalletFragmentFactory {
     private static String TAG = ImportWalletFragmentFactory.class.getName();

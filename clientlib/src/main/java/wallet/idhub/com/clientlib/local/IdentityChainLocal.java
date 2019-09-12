@@ -13,6 +13,7 @@ import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreate
 import com.idhub.magic.center.service.DeployedContractAddress;
 
 import java8.util.concurrent.CompletableFuture;
+import java8.util.function.Consumer;
 import wallet.idhub.com.clientlib.ProviderFactory;
 import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
 import wallet.idhub.com.clientlib.interfaces.Identity;
@@ -27,6 +28,12 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		return ContractManager.getRegistry1484().getEIN(associate).send();
 	}
 
+	@Override
+	public Boolean hasIdentity(String address) throws Exception {
+		Boolean aBoolean = ContractManager.getRegistry1484().hasIdentity(address).send();
+		return aBoolean;
+	}
+
 	public Listen<Long> getEIN(String associate) {
 
 		CompletableFuture<BigInteger> data = ContractManager.getRegistry1484().getEIN(associate).sendAsync();
@@ -35,13 +42,16 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 			@Override
 			public void listen(ResultListener<Long> l, ExceptionListener el) {
 
-				data.thenAccept(ein -> {
-					Log.e("LYW", "listen: "+ein);
-					l.result(ein.longValue());
+				data.thenAccept(new Consumer<BigInteger>() {
+					@Override
+					public void accept(BigInteger ein) {
+						Log.e("LYW", "listen: " + ein.toString());
+						l.result(ein.longValue());
+					}
 				}).exceptionally(transactionReceipt -> {
 					String message = transactionReceipt.getMessage();
 					Log.e("LYW", "listen:error " + message);
-					el.error("error!");
+					el.error(transactionReceipt.getMessage());
 					
 					return null;
 				});
@@ -60,9 +70,9 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 				data.thenAccept(id -> {
 					Identity identity = new Identity(id.getValue1(), id.getValue2(), id.getValue3(), id.getValue4());
 					l.result(identity);
-
 				}).exceptionally(transactionReceipt -> {
-					l.result(null);
+				    transactionReceipt.printStackTrace();
+					el.error(transactionReceipt.getMessage());
 					return null;
 				});
 
@@ -77,7 +87,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 		String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 		List<String> ps = new ArrayList<String>();
 		List<String> rs = new ArrayList<String>();
-		rs.add(DeployedContractAddress.IdentityRegistryInterface);
+		rs.add(DeployedContractAddress.ERC1056ResolverInterface);
 
 		return createIdentity(rec, asso, ps, rs);
 
@@ -98,10 +108,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 					listener.result(es.get(0));
 
 				}).exceptionally(transactionReceipt -> {
-					Log.e("LYW", "listen: " );
-					transactionReceipt.printStackTrace();
-					Log.e("LYW", "listen: ");
-					listener.result(null);
+					el.error(transactionReceipt.getMessage());
 					return null;
 				});
 

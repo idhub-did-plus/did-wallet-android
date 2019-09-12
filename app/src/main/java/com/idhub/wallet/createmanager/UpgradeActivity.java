@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.InputType;
 import android.view.View;
 
@@ -26,7 +28,11 @@ import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.MnemonicUtil;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdHubMessageDbManager;
+import com.idhub.wallet.greendao.IdHubMessageType;
+import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
 import com.idhub.wallet.net.IDHubCredentialProvider;
+import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.math.BigInteger;
@@ -42,7 +48,43 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
     private String mRecoverAddressStr;
     private LoadingAndErrorView mLoadingAndErrorView;
     private String mPwd;
-
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    IdentityRegistryInterface.IdentityCreatedEventResponse identityCreatedEventResponse = (IdentityRegistryInterface.IdentityCreatedEventResponse) msg.obj;
+                    BigInteger ein = identityCreatedEventResponse.ein;
+                    //升级1484success
+                    //升级成功存储数据库
+                    IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
+                    idHubMessageEntity.setTime(DateUtils.getCurrentDate());
+                    idHubMessageEntity.setType(IdHubMessageType.UPGRADE_1484_IDENTITY);
+                    idHubMessageEntity.setAddress(identityCreatedEventResponse.associatedAddress);
+                    idHubMessageEntity.setEin(ein.toString());
+                    idHubMessageEntity.setRecoverAddress(identityCreatedEventResponse.recoveryAddress);
+                    idHubMessageEntity.setDefaultAddress(identityCreatedEventResponse.associatedAddress);
+                    new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
+                    //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
+                    WalletOtherInfoSharpreference.getInstance().setRecoverAddress(identityCreatedEventResponse.recoveryAddress);
+                    WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
+                    WalletKeystore keyStore = WalletManager.getKeyStore(mData);
+                    Wallet wallet = keyStore.getWallet();
+                    wallet.setAssociate(true);
+                    wallet.setDefaultAddress(true);
+                    WalletManager.flushWallet(keyStore, true);
+                    MainActivity.startAction(UpgradeActivity.this, "upgrade");
+                    mLoadingAndErrorView.setVisibility(View.GONE);
+                    break;
+                case 2:
+                    mLoadingAndErrorView.setVisibility(View.GONE);
+                    String message = (String) msg.obj;
+                    ToastUtils.showLongToast(getString(R.string.wallet_upgrade_error) + message);
+                    break;
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +142,7 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
+            mLoadingAndErrorView.setVisibility(View.VISIBLE);
             WalletInfo walletInfo = new WalletInfo(WalletManager.getKeyStore(mData));
             String privateKey = walletInfo.exportPrivateKey(mPwd);
             IDHubCredentialProvider.setDefaultCredentials(privateKey);
@@ -107,18 +150,19 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
             Listen<IdentityRegistryInterface.IdentityCreatedEventResponse> identity = ApiFactory.getIdentityChainLocal().createIdentity();
             //error
             identity.listen(identityCreatedEventResponse -> {
-                BigInteger ein = identityCreatedEventResponse.ein;
-                //success
-                //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
-                WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoverAddressStr);
-                WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
-                WalletKeystore keyStore = WalletManager.getKeyStore(mData);
-                Wallet wallet = keyStore.getWallet();
-                wallet.setAssociate(true);
-                wallet.setDefaultAddress(true);
-                WalletManager.flushWallet(keyStore, true);
-                MainActivity.startAction(UpgradeActivity.this, "upgrade");
-            }, message -> ToastUtils.showShortToast(message));
+                Message message = Message.obtain();
+                message.what = 1;
+                message.obj = identityCreatedEventResponse;
+                handler.sendMessage(message);
+
+
+            }, message -> {
+                Message messageError = Message.obtain();
+                messageError.what = 2;
+                messageError.obj = message;
+                handler.sendMessage(messageError);
+            });
+
         }
     }
 
@@ -147,12 +191,13 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
 
             @Override
             public void onError(Throwable e) {
-
+                mLoadingAndErrorView.setVisibility(View.GONE);
+                ToastUtils.showShortToast(e.getMessage());
             }
 
             @Override
             public void onComplete() {
-
+                mLoadingAndErrorView.setVisibility(View.GONE);
             }
         });
     }

@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/WalletAppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".hository.TransactionDetailActivity"></activity>
+        <activity android:name=".setting.TransactionDetailActivity"></activity>
         <activity android:name=".createmanager.walletimport.ImportWalletActivity" />
-        <activity android:name=".hository.message.moretransaction.MoreTransactionMessageActivity" />
-        <activity android:name=".hository.message.HistoryMessageActivity" />
+        <activity android:name=".setting.message.moretransaction.MoreTransactionMessageActivity" />
+        <activity android:name=".setting.message.HistoryMessageActivity" />
         <activity android:name=".dapp.Web3Activity" />
         <activity android:name=".me.information.UploadIDHubInformationActivity" />
         <activity android:name=".me.information.UploadInformationTypeActivity" />

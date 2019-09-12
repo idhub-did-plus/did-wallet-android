@@ -1,4 +1,4 @@
-package com.idhub.wallet.hository.message.moretransaction;
+package com.idhub.wallet.setting.message.moretransaction;
 
 import java.util.Observable;
 

@@ -1,4 +1,4 @@
-package com.idhub.wallet.hository;
+package com.idhub.wallet.setting;
 
 
 import android.os.Bundle;
@@ -9,15 +9,18 @@ import android.view.ViewGroup;
 
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
-import com.idhub.wallet.hository.message.HistoryMessageActivity;
+import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.setting.message.HistoryMessageActivity;
+import com.idhub.wallet.wallet.manager.WalletManagerActivity;
+import com.idhub.wallet.wallet.walletsetting.WalletSettingActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HositoryFragment extends MainBaseFragment implements View.OnClickListener {
+public class SettingFragment extends MainBaseFragment implements View.OnClickListener {
 
 
-    public HositoryFragment() {
+    public SettingFragment() {
         // Required empty public constructor
     }
 
@@ -26,8 +29,12 @@ public class HositoryFragment extends MainBaseFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.wallet_fragment_hository, container, false);
+        View view = inflater.inflate(R.layout.wallet_fragment_setting, container, false);
         view.findViewById(R.id.history_message).setOnClickListener(this);
+        view.findViewById(R.id.wallet_manager).setOnClickListener(this);
+        TitleLayout titleLayout = view.findViewById(R.id.title);
+        titleLayout.setTitle(getString(R.string.wallet_setting_title));
+        titleLayout.setBackImgVisible(View.INVISIBLE);
         return view;
     }
 
@@ -41,6 +48,9 @@ public class HositoryFragment extends MainBaseFragment implements View.OnClickLi
         switch (v.getId()) {
             case R.id.history_message:
                 HistoryMessageActivity.startAction(getContext());
+                break;
+            case R.id.wallet_manager:
+                WalletSettingActivity.startAction(getContext());
                 break;
         }
     }

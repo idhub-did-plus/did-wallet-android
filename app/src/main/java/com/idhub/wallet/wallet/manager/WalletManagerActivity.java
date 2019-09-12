@@ -6,22 +6,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
+import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
+import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.createmanager.walletcreate.MnemonicBackupHintActivity;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
 import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Messages;
 import com.idhub.wallet.didhub.model.MnemonicAndPath;
 import com.idhub.wallet.createmanager.UpgradeActivity;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.export.ExportWalletContentActivity;
 
@@ -40,6 +49,9 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
     private final String PRIVATEKEY = "privatekey";
     private final String DELETE = "delete";
     private WalletManagerItemView mDelete;
+    private ImageView headView;
+    private TextView mWalletNameView;
+    private TextView mWalletAddressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,27 +59,45 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.wallet_activity_wallet_manager);
         mID = getIntent().getStringExtra("data");
         initView();
+        initData();
     }
 
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_manager));
+        headView = findViewById(R.id.iv_head);
+        UserBasicInfoEntity userBasicInfo = UserBasicInfoSharpreference.getInstance().getUserBasicInfo();
+        Glide.with(this).load(userBasicInfo.headPath).apply(RequestOptions.bitmapTransform(new CircleCrop())).placeholder(R.mipmap.wallet_default_head).into(headView);
+        mWalletNameView = findViewById(R.id.tv_wallet_name);
+        mWalletAddressView = findViewById(R.id.tv_wallet_address);
+
         mExportMnemonic = findViewById(R.id.export_mnemonic);
-        mExportMnemonic.setData(R.mipmap.wallet_eth_icon, getString(R.string.wallet_export_mnemonic));
+        mExportMnemonic.setData(R.mipmap.wallet_export_mnemonic, getString(R.string.wallet_export_mnemonic));
         mExportMnemonic.setOnClickListener(this);
         mExportKeystore = findViewById(R.id.export_keystore);
-        mExportKeystore.setData(R.mipmap.wallet_eth_icon, getString(R.string.wallet_export_keystore));
+        mExportKeystore.setData(R.mipmap.wallet_export_keystore, getString(R.string.wallet_export_keystore));
         mExportKeystore.setOnClickListener(this);
         mExportPrivateKey = findViewById(R.id.export_private_key);
-        mExportPrivateKey.setData(R.mipmap.wallet_eth_icon, getString(R.string.wallet_export_private_key));
+        mExportPrivateKey.setData(R.mipmap.wallet_export_private_key, getString(R.string.wallet_export_private_key));
         mExportPrivateKey.setOnClickListener(this);
         mAssociatedAddress = findViewById(R.id.associated_address);
-        mAssociatedAddress.setData(R.mipmap.wallet_eth_icon, getString(R.string.wallet_associated_address));
+        mAssociatedAddress.setData(R.mipmap.wallet_association_address, getString(R.string.wallet_associated_address));
         mAssociatedAddress.setOnClickListener(this);
         mDelete = findViewById(R.id.delete);
-        mDelete.setData(R.mipmap.wallet_eth_icon, getString(R.string.wallet_delete));
+        mDelete.setData(R.mipmap.wallet_delete_wallet, getString(R.string.wallet_delete));
         mDelete.setOnClickListener(this);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
+    }
+
+    private void initData() {
+        WalletKeystore keyStore = WalletManager.getKeyStore(mID);
+        mWalletNameView.setText(keyStore.getWallet().getName());
+        mWalletAddressView.setText(NumericUtil.prependHexPrefix(keyStore.getAddress()));
+        if (keyStore instanceof DidHubKeyStore) {
+            mExportMnemonic.setVisibility(View.GONE);
+        } else if (keyStore instanceof DidHubMnemonicKeyStore) {
+            mExportMnemonic.setVisibility(View.VISIBLE);
+        }
     }
 
     public static void startAction(Context context, String id) {

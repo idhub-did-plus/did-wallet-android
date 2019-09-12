@@ -1,4 +1,4 @@
-package com.idhub.wallet.hository;
+package com.idhub.wallet.setting;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;

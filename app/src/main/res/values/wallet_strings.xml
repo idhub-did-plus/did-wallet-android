@@ -50,6 +50,7 @@
     <string name="wallet_password_manager_tool_save_tip">建议使用密码管理工具管理</string>
     <string name="wallet_copy_keystore">复制 Keystore</string>
     <string name="wallet_copy_private_key">复制 Private Key</string>
+    <string name="wallet_copy_address_success">地址复制成功</string>
     <string name="wallet_scanning_only">仅供直接扫描</string>
     <string name="wallet_use_in_safe_environment">在安全环境下使用</string>
     <string name="wallet_use_in_safe_environment_tip">二维码禁止保存、截图、以及拍照。仅供用户在安全环境下直接扫描来方便的导入钱包</string>
@@ -86,6 +87,7 @@
     <string name="wallet_upgrade_tip">升级聚合身份之后才能进行多地址管理，请您前去升级身份之后再次尝试创建</string>
     <string name="wallet_go_upgrade">去升级</string>
     <string name="wallet_upgrade">升级</string>
+    <string name="wallet_upgrade_error">升级失败</string>
     <string name="wallet_profile">profile</string>
     <string name="wallet_commit">提交</string>
     <string name="wallet_select_birthday">点击选择生日</string>
@@ -170,8 +172,13 @@
     <string name="walet_requester_url">请求链接</string>
     <string name="wallet_dialog_title_sign_transaction">签署交易</string>
 
+    //setting
+    <string name="wallet_user_agreement">用户协议</string>
+    <string name="wallet_about_we">关于我们</string>
+    <string name="wallet_setting_title">设置</string>
+
+
     //history
-    <string name="wallet_history_message">历史消息</string>
     <string name="wallet_message_center">消息中心</string>
     <string name="wallet_message_transaction">交易信息</string>
     <string name="wallet_message_idhub">系统消息</string>
@@ -185,6 +192,16 @@
     <string name="wallet_ST">ST</string>
     <string name="wallet_no_data">没有更多数据</string>
     <string name="wallet_transaction_detail_title">交易详情</string>
+    <string name="wallet_recovery_address">恢复地址</string>
+    <string name="wallet_wallet_address">钱包地址</string>
+    <string name="wallet_default_address">默认地址</string>
+    <string name="wallet_ein">EIN</string>
+    <string name="wallet_create_1056_identity">创建1056身份</string>
+    <string name="wallet_upgrade_1484_identity">升级1484身份</string>
+    <string name="wallet_import_1056_identity">导入1056身份</string>
+    <string name="wallet_import_1484_identity">导入1484身份</string>
+    <string name="wallet_upgrade_association_identity">升级关联地址</string>
+    <string name="wallet_recovery_identity">恢复身份</string>
 
     //importWallet
     <string name="wallet_import_wallt">导入钱包</string>

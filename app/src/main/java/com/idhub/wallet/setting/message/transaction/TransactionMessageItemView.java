@@ -1,11 +1,9 @@
-package com.idhub.wallet.hository.message.transaction;
+package com.idhub.wallet.setting.message.transaction;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,7 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
-import com.idhub.wallet.hository.TransactionDetailActivity;
+import com.idhub.wallet.setting.TransactionDetailActivity;
 
 import java.math.BigInteger;
 

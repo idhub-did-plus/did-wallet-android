@@ -1,5 +1,4 @@
-package com.idhub.wallet.hository.message.idhub;
-
+package com.idhub.wallet.setting.message.moretransaction.fragment;
 
 import android.os.Bundle;
 
@@ -11,13 +10,10 @@ import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class IdHubMessageFragment extends Fragment {
+public class STTransactionFragment extends Fragment {
 
 
-    public IdHubMessageFragment() {
+    public STTransactionFragment() {
         // Required empty public constructor
     }
 
@@ -26,7 +22,10 @@ public class IdHubMessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.wallet_fragment_id_hub_message, container, false);
+        View view = inflater.inflate(R.layout.wallet_fragment_st_transaction, container, false);
+        return view;
     }
+
+
 
 }

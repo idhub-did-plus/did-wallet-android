@@ -25,6 +25,7 @@ public class DaoMaster extends AbstractDaoMaster {
         TransactionRecordEntityDao.createTable(db, ifNotExists);
         UploadFileEntityDao.createTable(db, ifNotExists);
         UploadIDHubInfoEntityDao.createTable(db, ifNotExists);
+        IdHubMessageEntityDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -33,6 +34,7 @@ public class DaoMaster extends AbstractDaoMaster {
         TransactionRecordEntityDao.dropTable(db, ifExists);
         UploadFileEntityDao.dropTable(db, ifExists);
         UploadIDHubInfoEntityDao.dropTable(db, ifExists);
+        IdHubMessageEntityDao.dropTable(db, ifExists);
     }
 
     /**
@@ -55,6 +57,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(TransactionRecordEntityDao.class);
         registerDaoClass(UploadFileEntityDao.class);
         registerDaoClass(UploadIDHubInfoEntityDao.class);
+        registerDaoClass(IdHubMessageEntityDao.class);
     }
 
     public DaoSession newSession() {

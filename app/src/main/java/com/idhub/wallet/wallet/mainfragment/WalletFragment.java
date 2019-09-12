@@ -88,6 +88,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         });
         view.findViewById(R.id.add_token).setOnClickListener(this);
         mWalletItem = view.findViewById(R.id.wallet_card);
+        mWalletItem.setAddressTextDrawable();
         mWalletBottomView = view.findViewById(R.id.bottom_view);
 
     }

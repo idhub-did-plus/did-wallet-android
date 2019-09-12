@@ -4,7 +4,7 @@ import android.content.Context;
 import androidx.fragment.app.Fragment;
 
 import com.idhub.wallet.dapp.DappFragment;
-import com.idhub.wallet.hository.HositoryFragment;
+import com.idhub.wallet.setting.SettingFragment;
 import com.idhub.wallet.me.MeFragment;
 import com.idhub.wallet.wallet.mainfragment.WalletFragment;
 
@@ -19,7 +19,7 @@ public class MainChannelFragmentFactory {
         } else if (context.getResources().getString(R.string.wallet_dapp).equals(title)) {
             return new DappFragment();
         } else if (context.getResources().getString(R.string.wallet_history).equals(title)) {
-            return new HositoryFragment();
+            return new SettingFragment();
         } else {
             return new MeFragment();
         }

@@ -1,15 +1,15 @@
-package com.idhub.wallet.hository.message;
+package com.idhub.wallet.setting.message;
 
 import android.content.Context;
 
 import androidx.fragment.app.Fragment;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.hository.message.idhub.IdHubMessageFragment;
-import com.idhub.wallet.hository.message.moretransaction.fragment.ERC20TransactionFragment;
-import com.idhub.wallet.hository.message.moretransaction.fragment.EthTransactionFragment;
-import com.idhub.wallet.hository.message.moretransaction.fragment.STTransactionFragment;
-import com.idhub.wallet.hository.message.transaction.TransactionMessageFragment;
+import com.idhub.wallet.setting.message.idhub.IdHubMessageFragment;
+import com.idhub.wallet.setting.message.moretransaction.fragment.ERC20TransactionFragment;
+import com.idhub.wallet.setting.message.moretransaction.fragment.EthTransactionFragment;
+import com.idhub.wallet.setting.message.moretransaction.fragment.STTransactionFragment;
+import com.idhub.wallet.setting.message.transaction.TransactionMessageFragment;
 
 public class MessageChannelFragmentFactory {
     private static String TAG = MessageChannelFragmentFactory.class.getName();

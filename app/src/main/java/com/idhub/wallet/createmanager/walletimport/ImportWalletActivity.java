@@ -11,10 +11,6 @@ import android.os.Bundle;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.title.TitleLayout;
-import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
-import com.idhub.wallet.hository.message.HistoryMessageActivity;
-import com.idhub.wallet.hository.message.MessageFragmentPagerAdapter;
-import com.idhub.wallet.hository.message.moretransaction.MoreTransactionMessageActivity;
 
 public class ImportWalletActivity extends AppCompatActivity {
     public static final String IMPORT = "import";
