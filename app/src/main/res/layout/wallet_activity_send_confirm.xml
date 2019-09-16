@@ -86,6 +86,36 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/to"
         tools:text="0xdaskaslsadasdjas" />
+    <View
+        android:id="@+id/line5"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/wallet_line_gray"
+        app:layout_constraintTop_toBottomOf="@id/to_address" />
+    <TextView
+        android:id="@+id/partition_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Partition"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line5" />
+
+    <TextView
+        android:id="@+id/partition"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:textSize="13sp"
+        android:layout_marginRight="12dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/partition_name"
+        tools:text="0xdaskaslsadasdjas" />
 
     <View
         android:id="@+id/line3"
@@ -93,7 +123,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="10dp"
         android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/to_address" />
+        app:layout_constraintTop_toBottomOf="@id/partition" />
 
     <TextView
         android:id="@+id/gas_name"

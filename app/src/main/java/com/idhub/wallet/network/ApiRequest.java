@@ -6,6 +6,7 @@ package com.idhub.wallet.network;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.idhub.wallet.net.C;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;

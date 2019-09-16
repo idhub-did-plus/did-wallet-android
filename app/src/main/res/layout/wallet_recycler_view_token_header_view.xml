@@ -4,8 +4,40 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+<!--    <LinearLayout-->
+<!--        android:id="@+id/main_asserts_manager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:paddingTop="15dp"-->
+<!--        android:paddingBottom="15dp">-->
+
+<!--        <TextView-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="15dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="@string/wallet_main_asserts_manager"-->
+<!--            android:textColor="@color/wallet_text_black"-->
+<!--            android:textSize="13sp" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            android:layout_marginRight="15dp"-->
+<!--            android:src="@mipmap/wallet_right_arrow" />-->
+
+<!--    </LinearLayout>-->
+
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:layout_marginLeft="15dp"-->
+<!--        android:background="@color/wallet_line_gray" />-->
+
     <LinearLayout
-        android:id="@+id/main_asserts_manager"
+        android:id="@+id/add_assets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -17,39 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
-            android:text="@string/wallet_main_asserts_manager"
-            android:textColor="@color/wallet_text_black"
-            android:textSize="13sp" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/wallet_right_arrow" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="15dp"
-        android:background="@color/wallet_line_gray" />
-
-    <LinearLayout
-        android:id="@+id/my_asserts_manager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="1"
-            android:text="@string/wallet_my_asserts_manager"
+            android:text="@string/wallet_add_assets"
             android:textColor="@color/wallet_text_black"
             android:textSize="13sp" />
 

@@ -2,11 +2,14 @@ package com.idhub.wallet;
 
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.tablayout.TabLayout;
@@ -31,6 +34,8 @@ import wallet.idhub.com.clientlib.interfaces.IncomingListener;
 import wallet.idhub.com.clientlib.interfaces.IncomingService;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MainFragmentPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +135,28 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
-        MainFragmentPagerAdapter adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), this);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Fragment fragment = adapter.getItem(position);
+
+                View view = fragment.getView();
+                if (view != null) {
+                    view.requestLayout();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         int tabCount = tabLayout.getTabCount();

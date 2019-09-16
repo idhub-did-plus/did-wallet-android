@@ -1,6 +1,8 @@
 package com.idhub.wallet.greendao;
 
 
+import android.util.Log;
+
 import com.idhub.wallet.App;
 import com.idhub.wallet.greendao.db.AssetsModelDao;
 import com.idhub.wallet.greendao.db.DaoSession;
@@ -29,18 +31,13 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
             AssetsModel unique = daoSession.queryBuilder(AssetsModel.class).where(eq).unique();
             if (unique == null) {
                 AssetsModel assetsModel = new AssetsModel();
+                assetsModel.setType(AssetsDefaultType.ETH_NAME);
                 assetsModel.setName(AssetsDefaultType.ETH_NAME);
+                assetsModel.setDecimals("18");
+                assetsModel.setSymbol(AssetsDefaultType.ETH_NAME);
                 daoSession.insert(assetsModel);
             }
-            WhereCondition idhubWhere = AssetsModelDao.Properties.Name.eq(AssetsDefaultType.IDHUB_NAME);
-            AssetsModel idhub = daoSession.queryBuilder(AssetsModel.class).where(idhubWhere).unique();
-            if (idhub == null) {
-                //TODO:
-                AssetsModel assetsModel = new AssetsModel();
-                assetsModel.setName(AssetsDefaultType.IDHUB_NAME);
-                assetsModel.setRopstenContractAddress("0x4ede434043c47e9774cd7d28a040c28dd757ddfa");
-                daoSession.insert(assetsModel);
-            }
+
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -52,6 +49,7 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                         ToastUtils.showShortToast("初始化资产失败");
                     }
 
@@ -77,6 +75,12 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
         asyncSession.insertOrReplace(assetsModel);
     }
 
+
+    public void insertDatasync(AssetsModel assetsModel) {
+        AssetsModelDao assetsModelDao = App.getInstance().getmDaoSession().getAssetsModelDao();
+        assetsModelDao.insertOrReplace(assetsModel);
+    }
+
     @Override
     public void insertListData(List<AssetsModel> list, AsyncOperationListener listener) {
         if (list != null && list.size() > 0) {
@@ -88,12 +92,6 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
 
     @Override
     public void queryById(long id, AsyncOperationListener listener) {
-        DaoSession daoSession = App.getInstance().getmDaoSession();
-        AsyncSession asyncSession = daoSession.startAsyncSession();
-        asyncSession.setListenerMainThread(listener);
-        WhereCondition eq = AssetsModelDao.Properties.Id.eq(id);
-        Query<AssetsModel> build = daoSession.queryBuilder(AssetsModel.class).where(eq).build();
-        asyncSession.queryUnique(build);
     }
 
     @Override
@@ -104,5 +102,34 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
         WhereCondition eq = AssetsModelDao.Properties.Name.eq(key);
         Query<AssetsModel> build = daoSession.queryBuilder(AssetsModel.class).where(eq).build();
         asyncSession.queryUnique(build);
+    }
+
+    public void queryByMainContractAddressKey(String key, AsyncOperationListener listener) {
+        DaoSession daoSession = App.getInstance().getmDaoSession();
+        AsyncSession asyncSession = daoSession.startAsyncSession();
+        asyncSession.setListenerMainThread(listener);
+        WhereCondition eq = AssetsModelDao.Properties.MainContractAddress.eq(key);
+        Query<AssetsModel> build = daoSession.queryBuilder(AssetsModel.class).where(eq).build();
+        asyncSession.queryList(build);
+    }
+
+    public void queryByRopstenContractAddressKey(String key, AsyncOperationListener listener) {
+        DaoSession daoSession = App.getInstance().getmDaoSession();
+        AsyncSession asyncSession = daoSession.startAsyncSession();
+        asyncSession.setListenerMainThread(listener);
+        WhereCondition eq = AssetsModelDao.Properties.RopstenContractAddress.eq(key);
+        Query<AssetsModel> build = daoSession.queryBuilder(AssetsModel.class).where(eq).build();
+        asyncSession.queryList(build);
+    }
+
+    public AssetsModel queryByMainContractAddressKeysync(String key) {
+        AssetsModelDao assetsModelDao = App.getInstance().getmDaoSession().getAssetsModelDao();
+        WhereCondition eq = AssetsModelDao.Properties.MainContractAddress.eq(key);
+        return assetsModelDao.queryBuilder().where(eq).build().unique();
+    }
+    public AssetsModel queryByRopstenContractAddressKeysync(String key) {
+        AssetsModelDao assetsModelDao = App.getInstance().getmDaoSession().getAssetsModelDao();
+        WhereCondition eq = AssetsModelDao.Properties.RopstenContractAddress.eq(key);
+        return assetsModelDao.queryBuilder().where(eq).build().unique();
     }
 }

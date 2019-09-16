@@ -1,4 +1,4 @@
-package com.idhub.wallet.network;
+package com.idhub.wallet.net;
 
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 

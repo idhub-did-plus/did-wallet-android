@@ -15,7 +15,7 @@ import com.idhub.wallet.greendao.entity.AssetsModel;
 /** 
  * DAO for table "ASSETS_MODEL".
 */
-public class AssetsModelDao extends AbstractDao<AssetsModel, Long> {
+public class AssetsModelDao extends AbstractDao<AssetsModel, Void> {
 
     public static final String TABLENAME = "ASSETS_MODEL";
 
@@ -24,14 +24,14 @@ public class AssetsModelDao extends AbstractDao<AssetsModel, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property Address = new Property(2, String.class, "address", false, "ADDRESS");
-        public final static Property MainContractAddress = new Property(3, String.class, "mainContractAddress", false, "MAIN_CONTRACT_ADDRESS");
-        public final static Property RopstenContractAddress = new Property(4, String.class, "ropstenContractAddress", false, "ROPSTEN_CONTRACT_ADDRESS");
-        public final static Property Symble = new Property(5, String.class, "symble", false, "SYMBLE");
-        public final static Property Balance = new Property(6, String.class, "balance", false, "BALANCE");
-        public final static Property Decimals = new Property(7, String.class, "decimals", false, "DECIMALS");
+        public final static Property Name = new Property(0, String.class, "name", false, "NAME");
+        public final static Property Address = new Property(1, String.class, "address", false, "ADDRESS");
+        public final static Property MainContractAddress = new Property(2, String.class, "mainContractAddress", false, "MAIN_CONTRACT_ADDRESS");
+        public final static Property RopstenContractAddress = new Property(3, String.class, "ropstenContractAddress", false, "ROPSTEN_CONTRACT_ADDRESS");
+        public final static Property Symbol = new Property(4, String.class, "symbol", false, "SYMBOL");
+        public final static Property Balance = new Property(5, String.class, "balance", false, "BALANCE");
+        public final static Property Decimals = new Property(6, String.class, "decimals", false, "DECIMALS");
+        public final static Property Type = new Property(7, String.class, "type", false, "TYPE");
     }
 
 
@@ -47,14 +47,14 @@ public class AssetsModelDao extends AbstractDao<AssetsModel, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"ASSETS_MODEL\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"NAME\" TEXT," + // 1: name
-                "\"ADDRESS\" TEXT," + // 2: address
-                "\"MAIN_CONTRACT_ADDRESS\" TEXT," + // 3: mainContractAddress
-                "\"ROPSTEN_CONTRACT_ADDRESS\" TEXT," + // 4: ropstenContractAddress
-                "\"SYMBLE\" TEXT," + // 5: symble
-                "\"BALANCE\" TEXT," + // 6: balance
-                "\"DECIMALS\" TEXT);"); // 7: decimals
+                "\"NAME\" TEXT," + // 0: name
+                "\"ADDRESS\" TEXT," + // 1: address
+                "\"MAIN_CONTRACT_ADDRESS\" TEXT," + // 2: mainContractAddress
+                "\"ROPSTEN_CONTRACT_ADDRESS\" TEXT," + // 3: ropstenContractAddress
+                "\"SYMBOL\" TEXT," + // 4: symbol
+                "\"BALANCE\" TEXT," + // 5: balance
+                "\"DECIMALS\" TEXT," + // 6: decimals
+                "\"TYPE\" TEXT);"); // 7: type
     }
 
     /** Drops the underlying database table. */
@@ -67,44 +67,44 @@ public class AssetsModelDao extends AbstractDao<AssetsModel, Long> {
     protected final void bindValues(DatabaseStatement stmt, AssetsModel entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
- 
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(2, name);
+            stmt.bindString(1, name);
         }
  
         String address = entity.getAddress();
         if (address != null) {
-            stmt.bindString(3, address);
+            stmt.bindString(2, address);
         }
  
         String mainContractAddress = entity.getMainContractAddress();
         if (mainContractAddress != null) {
-            stmt.bindString(4, mainContractAddress);
+            stmt.bindString(3, mainContractAddress);
         }
  
         String ropstenContractAddress = entity.getRopstenContractAddress();
         if (ropstenContractAddress != null) {
-            stmt.bindString(5, ropstenContractAddress);
+            stmt.bindString(4, ropstenContractAddress);
         }
  
-        String symble = entity.getSymble();
-        if (symble != null) {
-            stmt.bindString(6, symble);
+        String symbol = entity.getSymbol();
+        if (symbol != null) {
+            stmt.bindString(5, symbol);
         }
  
         String balance = entity.getBalance();
         if (balance != null) {
-            stmt.bindString(7, balance);
+            stmt.bindString(6, balance);
         }
  
         String decimals = entity.getDecimals();
         if (decimals != null) {
-            stmt.bindString(8, decimals);
+            stmt.bindString(7, decimals);
+        }
+ 
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(8, type);
         }
     }
 
@@ -112,97 +112,94 @@ public class AssetsModelDao extends AbstractDao<AssetsModel, Long> {
     protected final void bindValues(SQLiteStatement stmt, AssetsModel entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
- 
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(2, name);
+            stmt.bindString(1, name);
         }
  
         String address = entity.getAddress();
         if (address != null) {
-            stmt.bindString(3, address);
+            stmt.bindString(2, address);
         }
  
         String mainContractAddress = entity.getMainContractAddress();
         if (mainContractAddress != null) {
-            stmt.bindString(4, mainContractAddress);
+            stmt.bindString(3, mainContractAddress);
         }
  
         String ropstenContractAddress = entity.getRopstenContractAddress();
         if (ropstenContractAddress != null) {
-            stmt.bindString(5, ropstenContractAddress);
+            stmt.bindString(4, ropstenContractAddress);
         }
  
-        String symble = entity.getSymble();
-        if (symble != null) {
-            stmt.bindString(6, symble);
+        String symbol = entity.getSymbol();
+        if (symbol != null) {
+            stmt.bindString(5, symbol);
         }
  
         String balance = entity.getBalance();
         if (balance != null) {
-            stmt.bindString(7, balance);
+            stmt.bindString(6, balance);
         }
  
         String decimals = entity.getDecimals();
         if (decimals != null) {
-            stmt.bindString(8, decimals);
+            stmt.bindString(7, decimals);
+        }
+ 
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(8, type);
         }
     }
 
     @Override
-    public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+    public Void readKey(Cursor cursor, int offset) {
+        return null;
     }    
 
     @Override
     public AssetsModel readEntity(Cursor cursor, int offset) {
         AssetsModel entity = new AssetsModel( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // address
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // mainContractAddress
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // ropstenContractAddress
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // symble
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // balance
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // decimals
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // name
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // address
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // mainContractAddress
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // ropstenContractAddress
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // symbol
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // balance
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // decimals
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // type
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, AssetsModel entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setAddress(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setMainContractAddress(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setRopstenContractAddress(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setSymble(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setBalance(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setDecimals(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setName(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setAddress(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setMainContractAddress(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setRopstenContractAddress(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setSymbol(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setBalance(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setDecimals(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setType(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     @Override
-    protected final Long updateKeyAfterInsert(AssetsModel entity, long rowId) {
-        entity.setId(rowId);
-        return rowId;
+    protected final Void updateKeyAfterInsert(AssetsModel entity, long rowId) {
+        // Unsupported or missing PK type
+        return null;
     }
     
     @Override
-    public Long getKey(AssetsModel entity) {
-        if(entity != null) {
-            return entity.getId();
-        } else {
-            return null;
-        }
+    public Void getKey(AssetsModel entity) {
+        return null;
     }
 
     @Override
     public boolean hasKey(AssetsModel entity) {
-        return entity.getId() != null;
+        // TODO
+        return false;
     }
 
     @Override

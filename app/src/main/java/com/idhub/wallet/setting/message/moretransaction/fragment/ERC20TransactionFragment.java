@@ -21,7 +21,7 @@ import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
 import com.idhub.wallet.setting.message.moretransaction.EthTransactionMessageAdapter;
 import com.idhub.wallet.setting.message.moretransaction.MoreTransactionMessageActivity;
 import com.idhub.wallet.setting.message.moretransaction.TransactionObservable;
-import com.idhub.wallet.network.C;
+import com.idhub.wallet.net.C;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.util.ArrayList;

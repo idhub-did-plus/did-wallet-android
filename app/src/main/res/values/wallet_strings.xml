@@ -242,4 +242,22 @@
 
     <string name="wallet_no_empty_wallet_name">钱包名不能为空</string>
 
+    //assets
+    <string name="wallet_assets_add_success">资产添加成功</string>
+    <string name="wallet_assets_unkonw">资产未找到</string>
+    <string name="wallet_assets_address_fail">无效地址</string>
+    <string name="wallet_assets_add_fail">资产添加失败</string>
+    <string name="wallet_assets_has">资产已存在</string>
+    <string name="wallet_add_assets">添加资产</string>
+    <string name="wallet_input_contract_address">输入合约地址</string>
+    <string name="wallet_view_detail">查看详情</string>
+    <string name="wallet_partition">partition(选择partition交易)</string>
+    <string name="wallet_detail">详情</string>
+    <string name="wallet_total_supply">总发行量</string>
+    <string name="wallet_total_name">全称</string>
+    <string name="wallet_symbol">简称</string>
+    <string name="wallet_operate">经济地址</string>
+    <string name="wallet_controller">监管地址</string>
+    <string name="wallet_balance">余额</string>
+
 </resources>

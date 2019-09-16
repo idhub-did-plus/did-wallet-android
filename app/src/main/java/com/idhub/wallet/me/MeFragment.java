@@ -112,7 +112,6 @@ public class MeFragment extends MainBaseFragment {
                     handler.sendMessage(message);
                 });
             } else {
-                Log.e("LYW", "loadDataset " );
 
                 setEIN1484View(ein);
                 setRecoverAddress(ein);

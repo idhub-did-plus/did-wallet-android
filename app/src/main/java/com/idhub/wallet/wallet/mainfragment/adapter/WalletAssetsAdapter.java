@@ -6,20 +6,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.contract.ERC1400;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.wallet.network.Web3Api;
+import com.idhub.wallet.greendao.AssetsDefaultType;
+import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.network.Web3jSubscriber;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.wallet.wallet.assets.AssetsType;
+import com.idhub.wallet.wallet.mainfragment.view.AssetsErc1400ItemView;
 import com.idhub.wallet.wallet.mainfragment.view.AssetsItemView;
+import com.idhub.wallet.wallet.token.Erc1400DetailActivity;
 import com.idhub.wallet.wallet.transaction.TransactionActivity;
 
 import org.web3j.protocol.core.methods.response.EthGetBalance;
@@ -29,11 +33,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapter.WalletAssetsAdapterViewHolder> {
+public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private LayoutInflater mInflater;
     private List<AssetsModel> mAssetsModels;
     private Context mContext;
+    private static final int ERC20_ITEM = 0;
+    private static final int ERC1400_ITEM = 1;
     String address;
 
     public WalletAssetsAdapter(Context context) {
@@ -43,51 +49,79 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapte
     }
 
     public void addDatas(List<AssetsModel> assetsModels) {
-        mAssetsModels = assetsModels;
+        mAssetsModels.clear();
+        mAssetsModels.addAll(assetsModels);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (AssetsDefaultType.ERC1400.equals(mAssetsModels.get(position).getType())) {
+            return ERC1400_ITEM;
+        } else {
+            return ERC20_ITEM;
+        }
     }
 
     @NonNull
     @Override
-    public WalletAssetsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = mInflater.inflate(R.layout.wallet_recyclerview_assets_item, viewGroup, false);
-        return new WalletAssetsAdapterViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        RecyclerView.ViewHolder viewHolder = null;
+        if (i == ERC1400_ITEM){
+            View view = mInflater.inflate(R.layout.wallet_recyclerview_assets_st_item, viewGroup, false);
+            viewHolder = new WalletAssetsErc1400AdapterViewHolder(view);
+        }else {
+            View view = mInflater.inflate(R.layout.wallet_recyclerview_assets_item, viewGroup, false);
+            viewHolder = new WalletAssetsAdapterViewHolder(view);
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull WalletAssetsAdapterViewHolder walletAssetsAdapterViewHolder, int i) {
-        AssetsItemView itemView = (AssetsItemView) walletAssetsAdapterViewHolder.itemView;
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         AssetsModel model = mAssetsModels.get(i);
-        itemView.setName(model.getName());
-        String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(model);
-        address = WalletManager.getAddress();
-        String balance = model.getBalance();
-        if (TextUtils.isEmpty(balance)) {
-            itemView.setBalance("-");
-        } else {
-            itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance)));
-        }
-        if (!TextUtils.isEmpty(contractAddress)) {
-            Web3Api.searchBalance(address, contractAddress, new Web3jSubscriber<BigInteger>() {
-                @Override
-                public void onNext(BigInteger bigInteger) {
-                    String balance = String.valueOf(bigInteger);
-                    model.setBalance(balance);
-                    String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
-                    itemView.setBalance(balanceStr);
-                }
-            });
-        } else {
-            Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
-                @Override
-                public void onNext(EthGetBalance o) {
-                    super.onNext(o);
-                    BigInteger balance1 = o.getBalance();
-                    String balance = String.valueOf(balance1);
-                    model.setBalance(balance);
-                    itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1));
-                }
-            });
+        String symble = model.getSymbol();
+        Integer integer = AssetsType.assetsMipmap.get(symble);
+        if (viewHolder instanceof WalletAssetsAdapterViewHolder){
+            AssetsItemView itemView = (AssetsItemView)((WalletAssetsAdapterViewHolder) viewHolder).itemView;
+            if (integer != null)
+                itemView.setAssetsImage(integer);
+            itemView.setName(symble);
+            String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(model);
+            address = WalletManager.getAddress();
+            String balance = model.getBalance();
+            if (TextUtils.isEmpty(balance)) {
+                itemView.setBalance("-");
+            } else {
+                itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance)));
+            }
+            if (AssetsDefaultType.ERC20.equals(model.getType())) {
+                Web3Api.searchBalance(address, contractAddress, new Web3jSubscriber<BigInteger>() {
+                    @Override
+                    public void onNext(BigInteger bigInteger) {
+                        String balance = String.valueOf(bigInteger);
+                        model.setBalance(balance);
+                        String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
+                        itemView.setBalance(balanceStr);
+                    }
+                });
+            } else if (AssetsDefaultType.ETH_NAME.equals(model.getType())){
+                Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
+                    @Override
+                    public void onNext(EthGetBalance o) {
+                        super.onNext(o);
+                        BigInteger balance1 = o.getBalance();
+                        String balance = String.valueOf(balance1);
+                        model.setBalance(balance);
+                        itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1));
+                    }
+                });
+            }
+        }else if (viewHolder instanceof WalletAssetsErc1400AdapterViewHolder){
+            AssetsErc1400ItemView itemView = (AssetsErc1400ItemView)((WalletAssetsErc1400AdapterViewHolder) viewHolder).itemView;
+            if (integer != null)
+                itemView.setAssetsImage(integer);
+            itemView.setName(symble);
         }
     }
 
@@ -107,6 +141,20 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<WalletAssetsAdapte
         public void onClick(View v) {
             AssetsModel model = mAssetsModels.get(getLayoutPosition());
             TransactionActivity.srartAction(mContext, model);
+        }
+    }
+
+    public class WalletAssetsErc1400AdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        public WalletAssetsErc1400AdapterViewHolder(@NonNull View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            AssetsModel model = mAssetsModels.get(getLayoutPosition());
+            Erc1400DetailActivity.startAction(mContext, model);
         }
     }
 }

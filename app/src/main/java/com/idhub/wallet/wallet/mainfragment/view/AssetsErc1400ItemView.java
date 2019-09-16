@@ -1,22 +1,22 @@
 package com.idhub.wallet.wallet.mainfragment.view;
 
 import android.content.Context;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.idhub.wallet.R;
 
-public class AssetsItemView extends ConstraintLayout {
+public class AssetsErc1400ItemView extends ConstraintLayout {
 
 
     private TextView mAssetsAmount;
     private TextView mAssetsName;
     private ImageView mAssetsImage;
 
-    public AssetsItemView(Context context, AttributeSet attrs) {
+    public AssetsErc1400ItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -30,14 +30,6 @@ public class AssetsItemView extends ConstraintLayout {
 
     public void setName(String name) {
         mAssetsName.setText(name);
-    }
-
-    public void setBalance(String balance){
-        mAssetsAmount.setText(balance);
-    }
-
-    public void setErc1400Balance(){
-        mAssetsAmount.setText(getContext().getString(R.string.wallet_view_detail));
     }
 
     public void setAssetsImage(int mipmap) {

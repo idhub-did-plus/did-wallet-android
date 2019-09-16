@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +15,21 @@ import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.common.walletobservable.WalletNodeSelectedObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
+import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.wallet.mainfragment.view.WalletFragmentBottomView;
 import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
 import com.idhub.wallet.wallet.token.TokenManagerActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -39,6 +45,8 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     private WalletFragmentBottomView mWalletBottomView;
     private WalletKeystore mDidHubMnemonicKeyStore;
 
+    private NodeOberver nodeObervable = new NodeOberver();
+
     public WalletFragment() {
         // Required empty public constructor
     }
@@ -52,15 +60,39 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         initView(view);
         initData();
         WalletSelectedObservable.getInstance().addObserver(this);
+        WalletNodeSelectedObservable.getInstance().addObserver(nodeObervable);
         return view;
     }
 
     private void searchAssetmodelData() {
-        //查询数据库资产数，先检查是否有ETH和IDHUB
+        //查询数据库资产数，先检查是否有ETH
         new AssetsModelDbManager().queryAll(operation -> {
             if (operation.isCompletedSucessfully()) {
                 List<AssetsModel> result = (List<AssetsModel>) operation.getResult();
-                mWalletBottomView.setData(result);
+                String node = WalletOtherInfoSharpreference.getInstance().getNode();
+                ArrayList<AssetsModel> list = new ArrayList<>();
+                Log.e("LYW", "searchAssetmodelData: " + node);
+                //过滤 显示对应ropsten或mainnet上的contractAddress
+                if (WalletNodeManager.ROPSTEN.equals(node)){
+                    for (AssetsModel assetsModel : result) {
+                        if (assetsModel.getType().equals(AssetsDefaultType.ETH_NAME)) {
+                            list.add(assetsModel);
+                        }
+                        if (!TextUtils.isEmpty(assetsModel.getRopstenContractAddress())) {
+                            list.add(assetsModel);
+                        }
+                    }
+                } else if (WalletNodeManager.MAINNET.equals(node)) {
+                    for (AssetsModel assetsModel : result) {
+                        if (assetsModel.getType().equals(AssetsDefaultType.ETH_NAME) ) {
+                            list.add(assetsModel);
+                        }
+                        if (!TextUtils.isEmpty(assetsModel.getMainContractAddress())) {
+                            list.add(assetsModel);
+                        }
+                    }
+                }
+                mWalletBottomView.setData(list);
             }
         });
     }
@@ -112,6 +144,16 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     public void onDestroyView() {
         super.onDestroyView();
         WalletSelectedObservable.getInstance().deleteObserver(this);
+        WalletNodeSelectedObservable.getInstance().deleteObserver(nodeObervable);
+
+    }
+
+    public class NodeOberver implements Observer {
+
+        @Override
+        public void update(Observable o, Object arg) {
+            searchAssetmodelData();
+        }
     }
 
     @Override
@@ -119,11 +161,6 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         initData();
     }
 
-    private void updateData() {
-        mDidHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
-        mWalletItem.setData(mDidHubMnemonicKeyStore);
-        mWalletBottomView.onRefresh();
-    }
 
     @Override
     public void selectItem(String id) {

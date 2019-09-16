@@ -19,7 +19,7 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.network.Web3Api;
+import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.network.Web3jSubscriber;
 import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
@@ -43,6 +43,9 @@ public class SendConfirmActivity extends AppCompatActivity implements View.OnCli
     private String mGasPrice;
     private String mToAddress;
     private String mAmount;
+    private View mPartitionName;
+    private TextView mPartitionView;
+    private View mLineView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,18 @@ public class SendConfirmActivity extends AppCompatActivity implements View.OnCli
             mGasLimit = WalletTransactionSharpreference.getInstance().getERC20GasLimit();
         }
         setGasAmount();
+
+        byte[] partition = mAssetsModel.partition;
+        if (partition != null) {
+            mPartitionName.setVisibility(View.VISIBLE);
+            mPartitionView.setVisibility(View.VISIBLE);
+            mLineView.setVisibility(View.VISIBLE);
+            mPartitionView.setText(NumericUtil.prependHexPrefix(NumericUtil.bytesToHex(partition)));
+        } else {
+            mPartitionName.setVisibility(View.GONE);
+            mPartitionView.setVisibility(View.GONE);
+            mLineView.setVisibility(View.GONE);
+        }
     }
 
     private void setGasAmount() {
@@ -92,6 +107,9 @@ public class SendConfirmActivity extends AppCompatActivity implements View.OnCli
         mConfirmView = findViewById(R.id.tv_confirm);
         mConfirmView.setOnClickListener(this);
         mGasAmountView.setOnClickListener(this);
+        mPartitionName = findViewById(R.id.partition_name);
+        mPartitionView = findViewById(R.id.partition);
+        mLineView = findViewById(R.id.line3);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
     }
 

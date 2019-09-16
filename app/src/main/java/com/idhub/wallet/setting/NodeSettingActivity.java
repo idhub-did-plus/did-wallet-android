@@ -11,6 +11,7 @@ import android.os.Bundle;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.common.walletobservable.WalletNodeSelectedObservable;
 
 import java.util.List;
 
@@ -36,7 +37,9 @@ public class NodeSettingActivity extends AppCompatActivity {
         titleLayout.setFirstTextAndClickCallBack(getString(R.string.wallet_save), () -> {
            //保存节点
             String node = mAdapter.getNode();
-            WalletOtherInfoSharpreference.getInstance().setNode(node);
+            if (WalletOtherInfoSharpreference.getInstance().setNode(node)) {
+                WalletNodeSelectedObservable.getInstance().update();
+            }
             finish();
         });
         List<String> nodes = WalletNodeManager.nodes;

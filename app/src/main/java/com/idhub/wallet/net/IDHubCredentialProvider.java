@@ -1,7 +1,6 @@
 package com.idhub.wallet.net;
 
 import com.idhub.wallet.common.sharepreference.BlockNumbersSharedPreferences;
-import com.idhub.wallet.network.C;
 
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;

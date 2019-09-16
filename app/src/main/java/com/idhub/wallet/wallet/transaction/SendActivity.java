@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.network.Web3Api;
+import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 
