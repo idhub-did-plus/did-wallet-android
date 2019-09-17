@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import java.util.List;
+
 public class StringsListView extends RecyclerView {
 
     private StringsListAdapter mStringsListAdapter;
@@ -33,5 +35,8 @@ public class StringsListView extends RecyclerView {
 
     public void addItem(String path) {
         mStringsListAdapter.addItem(path);
+    }
+    public void addAll(List<String> path) {
+        mStringsListAdapter.addAll(path);
     }
 }

@@ -68,27 +68,6 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/operate_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/wallet_operate"
-        android:textColor="@color/wallet_text_black"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="@id/total_supply_name"
-        app:layout_constraintTop_toBottomOf="@id/symbol_name" />
-
-    <TextView
-        android:id="@+id/operate"
-        android:layout_width="wrap_content"
-        android:textSize="16sp"
-        android:text="@string/wallet_view_detail"
-        android:textColor="@color/wallet_blue_text"
-        app:layout_constraintTop_toTopOf="@id/operate_name"
-        app:layout_constraintLeft_toLeftOf="@id/total_supply"
-        android:layout_height="wrap_content" />
-
-    <TextView
         android:id="@+id/controller_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -97,7 +76,7 @@
         android:textColor="@color/wallet_text_black"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="@id/total_supply_name"
-        app:layout_constraintTop_toBottomOf="@id/operate_name" />
+        app:layout_constraintTop_toBottomOf="@id/symbol_name" />
 
     <TextView
         android:id="@+id/controller"

@@ -5,6 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".me.information.Level3Activity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_vip"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/wallet_text_black"
+                tools:text="@string/wallet_idhub_vip_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="15dp" />
+            <RadioGroup
+                android:id="@+id/qualified_investor_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/qualified_investor_condition_first"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wallet_qualified_investor_condition_first"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/qualified_investor_condition_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/wallet_qualified_investor_condition_second"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_apply"
+                style="@style/WalletCommonButton"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="14dp"
+                android:text="@string/wallet_apply_for" />
+        </LinearLayout>
+    </ScrollView>
+
     <include
         android:id="@+id/title"
         layout="@layout/wallet_common_title_layout"
@@ -13,34 +71,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:layout_height="0dp"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title">
-
-        <include
-            android:id="@+id/sms_code"
-            layout="@layout/wallet_common_input_information_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <include
-            android:id="@+id/email_confirmation"
-            layout="@layout/wallet_common_input_information_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tv_upgrade"
-            style="@style/WalletCommonButton"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="14dp"
-            android:text="@string/wallet_commit" />
-    </LinearLayout>
 
     <include
         android:id="@+id/loading_and_error"

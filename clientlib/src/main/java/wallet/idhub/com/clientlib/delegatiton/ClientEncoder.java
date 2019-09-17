@@ -13,7 +13,6 @@ import org.web3j.utils.Numeric;
 import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
 import com.idhub.magic.center.service.DeployedContractAddress;
 import com.idhub.magic.center.util.CryptoUtil;
-
 import wallet.idhub.com.clientlib.ProviderFactory;
 
 public class ClientEncoder {
@@ -51,7 +50,7 @@ public class ClientEncoder {
 		Sign.SignatureData sm = Sign.signMessage(hexMessage, pair);
 		String r = Numeric.toHexString(sm.getR());
 		String s = Numeric.toHexString(sm.getS());
-		String v = Numeric.toHexString(new byte[]{sm.getV()});
+		String v = Numeric.toHexString(new byte[sm.getV()]);
 		param.r = r;
 		param.s = s;
 		param.v = v;

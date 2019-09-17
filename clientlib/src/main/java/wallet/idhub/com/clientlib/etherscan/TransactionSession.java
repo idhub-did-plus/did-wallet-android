@@ -1,15 +1,13 @@
 package wallet.idhub.com.clientlib.etherscan;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import wallet.idhub.com.clientlib.interfaces.IncomingListener;
 
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;
-import wallet.idhub.com.clientlib.interfaces.IncomingListener;
 
 public class TransactionSession {
 	 List<String> accounts;
@@ -64,28 +62,30 @@ public class TransactionSession {
 			}
 		}
 		List<Tx> incomingTxs(String address){
+	    	 
 	    	   List<Tx> txs = api.account().txs(address,start, end);
-	    	   List<Tx> rst = new ArrayList<Tx>();
-	    	  
-	    	   for(Tx t : txs) {
-	    		 
-	    		  if( t.getTo().equals(address)){
-	    			   rst.add(t);
-	    		   }
-	    	   }
-	    	   return rst;
+//	    	   List<Tx> rst = new ArrayList<Tx>();
+//
+//	    	   for(Tx t : txs) {
+//
+//	    		  if( t.getTo().equals(address)){
+//	    			   rst.add(t);
+//	    		   }
+//	    	   }
+	    	   return txs;
 	      }
 		List<TxToken> incomingTokens(String address){
-			List<TxToken> es = api.account().txsToken(address, start, end);
-	    	   List<TxToken> rst = new ArrayList<TxToken>();
-	    	  
-	    	   for(TxToken t : es) {
-	    		 
-	    		  if( t.getTo().equals(address)){
-	    			   rst.add(t);
-	    		   }
-	    	   }
-	    	   return rst;
+	    	 
+	    	    List<TxToken> es = api.account().txsToken(address, start, end);
+//	    	   List<TxToken> rst = new ArrayList<TxToken>();
+//
+//	    	   for(TxToken t : es) {
+//
+//	    		  if( t.getTo().equals(address)){
+//	    			   rst.add(t);
+//	    		   }
+//	    	   }
+	    	   return es;
 	      }
 		
 }

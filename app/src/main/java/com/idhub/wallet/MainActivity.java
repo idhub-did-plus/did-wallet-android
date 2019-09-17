@@ -23,6 +23,7 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.TransactionRecordDbManager;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
 import com.idhub.wallet.setting.NotificationUtils;
+import com.idhub.wallet.wallet.mainfragment.WalletFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,21 +139,22 @@ public class MainActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
-                Fragment fragment = adapter.getItem(position);
-
-                View view = fragment.getView();
-                if (view != null) {
-                    view.requestLayout();
+                Fragment fragment = adapter.getCurrentFragment();
+                if (fragment instanceof WalletFragment) {
+                    View view = fragment.getView();
+                    if (view != null) {
+                        view.requestLayout();
+                    }
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
+
 
             }
         });

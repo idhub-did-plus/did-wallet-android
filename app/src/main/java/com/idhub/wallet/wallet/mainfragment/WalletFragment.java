@@ -3,6 +3,7 @@ package com.idhub.wallet.wallet.mainfragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.common.walletobservable.WalletNodeSelectedObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
@@ -45,7 +47,8 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     private WalletFragmentBottomView mWalletBottomView;
     private WalletKeystore mDidHubMnemonicKeyStore;
 
-    private NodeOberver nodeObervable = new NodeOberver();
+    private Observer nodeObervable = (o, arg) -> searchAssetmodelData();
+    private Observer addAssetsOberver = (o, arg) -> searchAssetmodelData();
 
     public WalletFragment() {
         // Required empty public constructor
@@ -60,8 +63,15 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         initView(view);
         initData();
         WalletSelectedObservable.getInstance().addObserver(this);
+        WalletAddAssetsObservable.getInstance().addObserver(addAssetsOberver);
         WalletNodeSelectedObservable.getInstance().addObserver(nodeObervable);
         return view;
+    }
+
+    @Nullable
+    @Override
+    public View getView() {
+        return super.getView();
     }
 
     private void searchAssetmodelData() {
@@ -145,15 +155,8 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         super.onDestroyView();
         WalletSelectedObservable.getInstance().deleteObserver(this);
         WalletNodeSelectedObservable.getInstance().deleteObserver(nodeObervable);
+        WalletAddAssetsObservable.getInstance().deleteObserver(addAssetsOberver);
 
-    }
-
-    public class NodeOberver implements Observer {
-
-        @Override
-        public void update(Observable o, Object arg) {
-            searchAssetmodelData();
-        }
     }
 
     @Override
@@ -169,4 +172,5 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         if (b)
             WalletSelectedObservable.getInstance().update();
     }
+
 }

@@ -54,7 +54,8 @@ public class WalletManager {
     }
 
     public static File getDefaultKeyDirectory() {
-        File directory = new File(new File(keystoreDir), "wallets");
+//        File directory = new File(new File(keystoreDir), "wallets");
+        File directory = new File(new File(keystoreDir), "id");
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -215,7 +216,18 @@ public class WalletManager {
         return address;
     }
 
+    public static String findPrivateKeyByMnemonic(String mnemonic, String path) {
+        List<String> mnemonicCodes = Arrays.asList(mnemonic.split(" "));
+        MnemonicUtil.validateMnemonics(mnemonicCodes);
+        DeterministicSeed seed = new DeterministicSeed(mnemonicCodes, null, "", 0L);
+        DeterministicKeyChain keyChain = DeterministicKeyChain.builder().seed(seed).build();
+        if (Strings.isNullOrEmpty(path)) {
+            throw new TokenException(Messages.INVALID_MNEMONIC_PATH);
+        }
+        DeterministicKey key = keyChain.getKeyByPath(BIP44Util.generatePath(path), true);
+       return key.getPrivateKeyAsHex();
 
+    }
 
     public static WalletInfo findWalletByAddress( String address) {
         WalletKeystore keystore = findKeystoreByAddress(address);

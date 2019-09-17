@@ -1,7 +1,5 @@
 package wallet.idhub.com.clientlib.local;
 
-import android.util.Log;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,6 @@ import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreate
 import com.idhub.magic.center.service.DeployedContractAddress;
 
 import java8.util.concurrent.CompletableFuture;
-import java8.util.function.Consumer;
 import wallet.idhub.com.clientlib.ProviderFactory;
 import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
 import wallet.idhub.com.clientlib.interfaces.Identity;
@@ -24,16 +21,6 @@ import wallet.idhub.com.clientlib.interfaces.ResultListener;
 
 public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 
-	public BigInteger getEINSync(String associate) throws Exception {
-		return ContractManager.getRegistry1484().getEIN(associate).send();
-	}
-
-	@Override
-	public Boolean hasIdentity(String address) throws Exception {
-		Boolean aBoolean = ContractManager.getRegistry1484().hasIdentity(address).send();
-		return aBoolean;
-	}
-
 	public Listen<Long> getEIN(String associate) {
 
 		CompletableFuture<BigInteger> data = ContractManager.getRegistry1484().getEIN(associate).sendAsync();
@@ -41,22 +28,17 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 
 			@Override
 			public void listen(ResultListener<Long> l, ExceptionListener el) {
-
-				data.thenAccept(new Consumer<BigInteger>() {
-					@Override
-					public void accept(BigInteger ein) {
-						Log.e("LYW", "listen: " + ein.toString());
-						l.result(ein.longValue());
-					}
+				data.thenAccept(ein -> {
+					l.result(ein.longValue());
 				}).exceptionally(transactionReceipt -> {
-					String message = transactionReceipt.getMessage();
-					Log.e("LYW", "listen:error " + message);
-					el.error(transactionReceipt.getMessage());
+					el.error("error!");
 					
 					return null;
 				});
+
 			}
 		};
+
 	}
 
 	public Listen<Identity> getIdentity(long ein) {
@@ -70,8 +52,8 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 				data.thenAccept(id -> {
 					Identity identity = new Identity(id.getValue1(), id.getValue2(), id.getValue3(), id.getValue4());
 					l.result(identity);
+
 				}).exceptionally(transactionReceipt -> {
-				    transactionReceipt.printStackTrace();
 					el.error(transactionReceipt.getMessage());
 					return null;
 				});
@@ -82,12 +64,23 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
 	}
 
 	@Override
+	public BigInteger getEINSync(String associate) throws Exception {
+		return ContractManager.getRegistry1484().getEIN(associate).send();
+	}
+
+	@Override
+	public Boolean hasIdentity(String address) throws Exception {
+		Boolean aBoolean = ContractManager.getRegistry1484().hasIdentity(address).send();
+		return aBoolean;
+	}
+
+	@Override
 	public Listen<IdentityCreatedEventResponse> createIdentity() {
 		String rec = ProviderFactory.getProvider().getRecoverAddress();
 		String asso = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
 		List<String> ps = new ArrayList<String>();
 		List<String> rs = new ArrayList<String>();
-		rs.add(DeployedContractAddress.ERC1056ResolverInterface);
+		rs.add(DeployedContractAddress.IdentityRegistryInterface);
 
 		return createIdentity(rec, asso, ps, rs);
 

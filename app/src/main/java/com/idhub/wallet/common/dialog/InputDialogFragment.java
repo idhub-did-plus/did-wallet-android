@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.utils.ToastUtils;
 
 public class InputDialogFragment extends DialogFragment implements View.OnClickListener {
 
@@ -73,6 +76,10 @@ public class InputDialogFragment extends DialogFragment implements View.OnClickL
                 break;
             case R.id.tv_confirm:
                 String password = mPasswordEditText.getText().toString();
+                if (TextUtils.isEmpty(password)) {
+                    ToastUtils.showShortToast(getString(R.string.wallet_please_input_content));
+                    return;
+                }
                 if (mInputDialogFragmentListener != null) {
                     mInputDialogFragmentListener.inputConfirm(password,mData);
                 }

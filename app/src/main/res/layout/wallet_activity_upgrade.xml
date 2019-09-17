@@ -14,6 +14,24 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/sv_upgrade"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tv_upgrade"
+        android:layout_width="0dp"
+        android:layout_height="0dp" >
+
+        <TextView
+            android:text="@string/wallet_upgrade_hint"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="18sp"
+            android:padding="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.core.widget.NestedScrollView>
     <TextView
         android:id="@+id/tv_upgrade"
         style="@style/WalletCommonButton"

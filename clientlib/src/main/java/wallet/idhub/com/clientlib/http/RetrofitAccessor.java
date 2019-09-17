@@ -14,6 +14,12 @@ import com.idhub.magic.center.ustorage.entity.IdentityArchive;
 import com.idhub.magic.center.ustorage.entity.IdentityInfo;
 import com.idhub.magic.center.util.AuthenticationUtils;
 import com.idhub.magic.center.util.Signature;
+import wallet.idhub.com.clientlib.ProviderFactory;
+import wallet.idhub.com.clientlib.interfaces.DelegationService;
+import wallet.idhub.com.clientlib.interfaces.EventService;
+import wallet.idhub.com.clientlib.interfaces.IdentityStorage;
+import wallet.idhub.com.clientlib.interfaces.TemplateService;
+import wallet.idhub.com.clientlib.interfaces.ClaimService;
 
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
@@ -25,11 +31,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
-import wallet.idhub.com.clientlib.ProviderFactory;
-import wallet.idhub.com.clientlib.interfaces.DelegationService;
-import wallet.idhub.com.clientlib.interfaces.EventService;
-import wallet.idhub.com.clientlib.interfaces.IdentityStorage;
-import wallet.idhub.com.clientlib.interfaces.KycService;
 
 public class RetrofitAccessor {
 	static RetrofitAccessor instance = new RetrofitAccessor();
@@ -46,11 +47,14 @@ public class RetrofitAccessor {
 	IdentityStorage identityStorage;
 	EventService eventService;
 	DelegationService delegationService;
-	KycService kycService;
+	ClaimService kycService;
 	ObjectMapper mapper = new ObjectMapper();
- 
+	TemplateService templateService;
 	
-	 public IdentityStorage getIdentityStorage() {
+	 public TemplateService getTemplateService() {
+		return templateService;
+	}
+	public IdentityStorage getIdentityStorage() {
 		return identityStorage;
 	}
 
@@ -79,10 +83,10 @@ public class RetrofitAccessor {
 		identityStorage = retrofit.create(IdentityStorage.class);
 		eventService = retrofit.create(EventService.class);
 		delegationService = retrofit.create(DelegationService.class);
-		kycService =  retrofit.create(KycService.class);
+		kycService =  retrofit.create(ClaimService.class);
 	}
 
-	public KycService getKycService() {
+	public ClaimService getKycService() {
 		return kycService;
 	}
 	public DelegationService getDelegationService() {
@@ -115,8 +119,8 @@ public class RetrofitAccessor {
 			IdentityInfo ii = new IdentityInfo();
 			//ii.setBirthday(new Date());
 			ii.setCountry("china");
-			ii.setFirstName("yuqi");
-			ii.setLastName("bai");
+		//	ii.setFirstName("yuqi");
+		//	ii.setLastName("bai");
 			ii.setPassportNumber("ggggg");
 			ida.setIdentityInfo(ii);
 		    //   RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), ida);

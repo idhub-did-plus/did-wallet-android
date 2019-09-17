@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Message;
@@ -19,11 +20,18 @@ import android.view.ViewGroup;
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.me.information.Level1Activity;
+import com.idhub.wallet.me.information.Level2Activity;
+import com.idhub.wallet.me.information.Level3Activity;
+import com.idhub.wallet.me.information.Level4Activity;
+import com.idhub.wallet.me.information.Level5Activity;
 import com.idhub.wallet.me.view.MeBottomItemView;
 import com.idhub.wallet.me.view.MeTopView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
@@ -33,6 +41,8 @@ import org.web3j.crypto.Credentials;
 
 import java.lang.ref.WeakReference;
 import java.math.BigInteger;
+import java.util.Observable;
+import java.util.Observer;
 
 import wallet.idhub.com.clientlib.ApiFactory;
 import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
@@ -42,15 +52,19 @@ import wallet.idhub.com.clientlib.interfaces.ResultListener;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MeFragment extends MainBaseFragment {
+public class MeFragment extends MainBaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     private MeTopView mTopView;
     private MeBottomItemView mIDHubVipView;
+    private MeBottomItemView mIDHubSuperVipView;
     private MeBottomItemView mQualifiedInvestorView;
     private MeBottomItemView mQualifiedPurchaserView;
     private MeBottomItemView mStComplianceInvestorView;
     private Handler handler = new NetHandler(this);
+
+    private Observer observer = (o, arg) -> initVipState();
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public MeFragment() {
         // Required empty public constructor
@@ -68,19 +82,58 @@ public class MeFragment extends MainBaseFragment {
     }
 
     private void initData() {
+        WalletVipStateObservable.getInstance().addObserver(observer);
+        mIDHubVipView.setName(getString(R.string.wallet_idhub_vip));
+        mIDHubSuperVipView.setName(getString(R.string.wallet_idhub_super_vip));
+        mQualifiedInvestorView.setName(getString(R.string.wallet_qualified_investor));
+        mQualifiedPurchaserView.setName(getString(R.string.wallet_qualified_purchaser));
+        mStComplianceInvestorView.setName(getString(R.string.wallet_st_compliance_investor));
+        //查询 会员状态
+        initVipState();
+    }
+
+    private void initVipState() {
+        WalletVipSharedPreferences vipSharedPreferences = WalletVipSharedPreferences.getInstance();
+        mIDHubVipView.setState(vipSharedPreferences.getIdhubVipState());
+        mIDHubSuperVipView.setState(vipSharedPreferences.getIdhubSuperVipState());
+        mQualifiedInvestorView.setState(vipSharedPreferences.getQualifiedInvestorVipState());
+        mQualifiedPurchaserView.setState(vipSharedPreferences.getQualifiedPurchaserVipState());
+        mStComplianceInvestorView.setState(vipSharedPreferences.getComplianceInvestorVipState());
     }
 
     private void initView(View view) {
         TitleLayout titleLayout = view.findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_profile));
         titleLayout.setBackImgVisible(View.INVISIBLE);
+        swipeRefreshLayout = view.findViewById(R.id.srl_level);
+        swipeRefreshLayout.setOnRefreshListener(this);
         mTopView = view.findViewById(R.id.top_view);
         mIDHubVipView = view.findViewById(R.id.id_hub_vip);
+        mIDHubVipView.setOnClickListener(this);
+        mIDHubSuperVipView = view.findViewById(R.id.id_hub_super_vip);
+        mIDHubSuperVipView.setOnClickListener(this);
         mQualifiedInvestorView = view.findViewById(R.id.qualified_investor);
+        mQualifiedInvestorView.setOnClickListener(this);
         mQualifiedPurchaserView = view.findViewById(R.id.qualified_purchaser);
+        mQualifiedPurchaserView.setOnClickListener(this);
         mStComplianceInvestorView = view.findViewById(R.id.st_compliance_investor);
-    }
+        mStComplianceInvestorView.setOnClickListener(this);
 
+    }
+    @Override
+    public void onClick(View v) {
+        if (v == mIDHubVipView) {
+            Level1Activity.startAction(getContext());
+        } else if (v == mIDHubSuperVipView) {
+            Level2Activity.startAction(getContext());
+        } else if (v == mQualifiedInvestorView) {
+            Level3Activity.startAction(getContext());
+        } else if (v == mQualifiedPurchaserView) {
+            Level4Activity.startAction(getContext());
+        } else if (v == mStComplianceInvestorView) {
+            Level5Activity.startAction(getContext());
+        }
+    }
     @Override
     protected void loadData() {
         //ein
@@ -103,10 +156,7 @@ public class MeFragment extends MainBaseFragment {
                     message.what = 1;
                     message.obj = einStr;
                     handler.sendMessage(message);
-                    Log.e("LYW", "loadDataein: " );
-
                 }, s -> {
-                    Log.e("LYW", "loadDataein:error " );
                     Message message = Message.obtain();
                     message.what = 2;
                     handler.sendMessage(message);
@@ -154,6 +204,16 @@ public class MeFragment extends MainBaseFragment {
         mTopView.setEIN1484(NumericUtil.bigIntegerToHexWithZeroPadded(new BigInteger(ein), 64));
     }
 
+    @Override
+    public void onRefresh() {
+        //刷新
+        new Handler().postDelayed(() -> {
+            if (swipeRefreshLayout.isRefreshing()) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 1500);
+    }
+
     private static class NetHandler extends Handler{
         private final WeakReference<Fragment> mFragmentReference;
 
@@ -194,4 +254,12 @@ public class MeFragment extends MainBaseFragment {
             }
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        WalletVipStateObservable.getInstance().deleteObserver(observer);
+        handler.removeCallbacksAndMessages(null);
+    }
+
 }

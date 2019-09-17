@@ -21,7 +21,6 @@ import com.idhub.magic.center.contracts.EthereumClaimsRegistryInterface;
 import com.idhub.magic.center.contracts.EthereumDIDRegistryInterface;
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 import com.idhub.magic.center.service.DeployedContractAddress;
-
 import wallet.idhub.com.clientlib.ProviderFactory;
 
 public class ContractManager {

@@ -97,13 +97,13 @@
     <string name="wallet_file">文件</string>
     <string name="wallet_qualified_investor">合格投资人</string>
     <string name="wallet_qualified_purchaser">合格购买人</string>
-    <string name="wallet_st_compliance_investor">ST合规投资者</string>
+    <string name="wallet_st_compliance_investor">合规投资者</string>
     <string name="wallet_qualified_investor_condition_first">连续三年年收入超过20万美金，或与配偶一起超过30万。（需要上传图片或PDF格式的银行流水）</string>
     <string name="wallet_qualified_investor_condition_second">价值超过1百万美金（除自住房之外）。（上传图片或PDF格式的资产证明/负债证明，如果国籍或居住国任一为美国需要上传税表）</string>
-    <string name="wallet_qualified_purchaser_condition_first">A natural person (including any person who holds a joint, community property, or other similar shared ownership interest in an issuer that is excepted under Section (c)(7) of the 1940 Act with that person’s qualified purchaser spouse) who owns not less than $5,000,000 in investments as defined by the Securities and Exchange Commission.(上传图片或PDF格式的银行流水）</string>
-    <string name="wallet_qualified_purchaser_condition_second">A trust that is not covered by clause the family entity definition and that was not formed for the specific purpose of acquiring the Partnership Interest offered, as to which the trustee or other person authorized to make decisions with respect to the trust, and each settlor of the other person who has contributed assets to the trust, a natural person, family entity.</string>
-    <string name="wallet_qualified_purchaser_condition_third">A natural person, a corporation, partnership, association, joint stock company, trust, fund or other organized group of persons, whether incorporated or not, acting for his/her/its own account or the account of other qualified purchasers, (i) who in the aggregate owns and invests on a discretionary basis, not less than $25,000,000 in investments and (ii) An entity in which each of the beneficial owners of the entity’s securities is a qualified purchaser, as that term is defined in the 1940 Act.</string>
-    <string name="wallet_qualified_purchaser_condition_fourth">A “knowledgeable employee,” as defined for purposes of Section 3(c)(5) under the 1940 Act.</string>
+    <string name="wallet_qualified_purchaser_condition_first">投资经历总额超过500万美金的自然人</string>
+    <string name="wallet_qualified_purchaser_condition_second">家庭实体定义未涵盖的信托并且不是为了获得合伙权益而形成的信托，受托人或其他授权对信托作出决定的人，以及每个委托人为信托，自然人，家庭实体提供资产的另一人</string>
+    <string name="wallet_qualified_purchaser_condition_third">自然人，公司，合伙企业，协会，股份公司，信托，基金或其他有组织的团体，无论是否成立，代表他/她/她自己的帐户或其他合格购买者的帐户，（i）总计拥有和投资的全权委托人，投资不少于25000000美元;及（ii）该实体证券的每个实益拥有人均为合格买方的实体</string>
+    <string name="wallet_qualified_purchaser_condition_fourth">知识渊博的员工</string>
     <string name="back">返回</string>
     <string name="picture_edit">编辑</string>
     <string name="sure">确定</string>
@@ -256,8 +256,45 @@
     <string name="wallet_total_supply">总发行量</string>
     <string name="wallet_total_name">全称</string>
     <string name="wallet_symbol">简称</string>
-    <string name="wallet_operate">经济地址</string>
+    <string name="wallet_operate">经纪地址</string>
     <string name="wallet_controller">监管地址</string>
     <string name="wallet_balance">余额</string>
+
+    //me
+    <string name="wallet_idhub_vip">idHub会员</string>
+    <string name="wallet_idhub_super_vip">idHub超级会员</string>
+    <string name="wallet_no_appply_for">未申请</string>
+    <string name="wallet_apply_for">申请</string>
+    <string name="wallet_apply_for_ing">申请中</string>
+    <string name="wallet_vip">vip</string>
+    <string name="wallet_have_apply_for">已申请</string>
+    <string name="wallet_no_controllers">没有监管地址</string>
+    <string name="wallet_select_item_apply">请选择之后再次尝试申请</string>
+    <string name="wallet_have_apply_for_idhub_vip">请先升级成为IdHub会员之后再次尝试申请</string>
+    <string name="wallet_have_apply_for_qualified_investor_vip">请先升级成为合格投资人之后再次尝试申请</string>
+    <string name="wallet_have_apply_for_qualified_purchaser_vip">请先升级成为合格购买人之后再次尝试申请</string>
+    <string name="wallet_idhub_vip_content">IDHub基于区块链技术的去中心化数字身份将身份控制权收回到个人手中，为用户塑造完整、可信的自主身份，构建以用户为主导的数字身份管理和应用平台，以及安全、自主、可信的身份管理机制。</string>
+    <string name="wallet_idhub_super_vip_content">IDHub建立在开放原则之上，通过区块链技术，对个人身份的有效性、真实性、唯一性进行合理验证，力求将身份控制权由第三方信息服务机构重新收回到个人手中，为用户塑造完整、可信的自主身份，构建以用户为主导的数字身份管理和应用平台，以及安全、自主、可信的身份管理机制，并为用户在证券通政领域提供合规检查及认证服务。</string>
+
+    <string name="wallet_compliance_investor_vip_content">1、同时成为ST合格投资人和合格购买人之后即为证券通政合规投资者
+2、成为ST合规投资者之后可参与STO申购及证券通政交易
+3、ST合规投资者仍要受到证券通政发行区域的法律限制
+4、不同司法管辖区的证券通政合规投资者的权利不同，详情参考具体的证券通政细节</string>
+
+    //upgrade
+    <string name="wallet_upgrade_hint">用户提示:
+1、用户默认身份采用ERC1056协议，只允许进行单地址管理。
+2、用户可以升级为聚合身份采用ERC1484协议，只有升级为聚合身份之后才可以进行多地址管理，原有地址被设置为默认地址。
+3、用户调用ERC1484合约升级身份，需要用户默认地址有足够的ETH余额支付以太坊交易燃料（gad）。
+4、用户升级为聚合身份之后，可以自由选择将地址添加为聚合身份的关联地址。
+5、每个地址只可以关联一个聚合身份，每个聚合身份拥有一个恢复地址。
+6、恢复地址应当采用冷钱包形式存储，此应用不会存储任何和恢复地址相关的备份信息，请务必注意。
+7、恢复地址可以在您钱包被盗或不小心丢失的情况下帮助您恢复聚合身份的控制权，重新下载此应用点击“恢复身份”按钮即可进入恢复页面。
+8、如果您的恢复地址被恶意盗用，请及时联系客服。</string>
+
+
+    //recoveryIdentity
+    <string name="wallet_input_ein">输入EIN</string>
+    <string name="wallet_please_input_content">请输入内容</string>
 
 </resources>

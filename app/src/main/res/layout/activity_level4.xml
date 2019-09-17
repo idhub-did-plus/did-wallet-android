@@ -14,7 +14,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
+            <TextView
+                android:id="@+id/tv_vip"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textColor="@color/wallet_text_black"
+                android:text="@string/wallet_idhub_vip_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="15dp" />
             <RadioGroup
                 android:id="@+id/qualified_investor_condition"
                 android:layout_width="match_parent"
@@ -25,28 +35,44 @@
                 android:orientation="vertical">
 
                 <RadioButton
-                    android:id="@+id/qualified_investor_condition_first"
+                    android:id="@+id/qualified_purchaser_condition_first"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/wallet_qualified_investor_condition_first"
+                    android:text="@string/wallet_qualified_purchaser_condition_first"
                     android:textSize="16sp" />
 
                 <RadioButton
-                    android:id="@+id/qualified_investor_condition_second"
+                    android:id="@+id/qualified_purchaser_condition_second"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="@string/wallet_qualified_investor_condition_second"
+                    android:text="@string/wallet_qualified_purchaser_condition_second"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/qualified_purchaser_condition_third"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/wallet_qualified_purchaser_condition_third"
+                    android:textSize="16sp" />
+
+                <RadioButton
+                    android:id="@+id/qualified_purchaser_condition_fourth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/wallet_qualified_purchaser_condition_fourth"
                     android:textSize="16sp" />
             </RadioGroup>
 
             <TextView
-                android:id="@+id/tv_upgrade"
+                android:id="@+id/tv_apply"
                 style="@style/WalletCommonButton"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="14dp"
-                android:text="@string/wallet_commit" />
+                android:text="@string/wallet_apply_for" />
         </LinearLayout>
     </ScrollView>
 
@@ -69,5 +95,4 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

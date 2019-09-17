@@ -10,4 +10,10 @@
     <string name="wallet_identity_import">import</string>
     <string name="wallet_back">back</string>
 
+    //me
+    <string name="wallet_qualified_purchaser_condition_first">A natural person (including any person who holds a joint, community property, or other similar shared ownership interest in an issuer that is excepted under Section (c)(7) of the 1940 Act with that person’s qualified purchaser spouse) who owns not less than $5,000,000 in investments as defined by the Securities and Exchange Commission.(上传图片或PDF格式的银行流水）</string>
+    <string name="wallet_qualified_purchaser_condition_second">A trust that is not covered by clause the family entity definition and that was not formed for the specific purpose of acquiring the Partnership Interest offered, as to which the trustee or other person authorized to make decisions with respect to the trust, and each settlor of the other person who has contributed assets to the trust, a natural person, family entity.</string>
+    <string name="wallet_qualified_purchaser_condition_third">A natural person, a corporation, partnership, association, joint stock company, trust, fund or other organized group of persons, whether incorporated or not, acting for his/her/its own account or the account of other qualified purchasers, (i) who in the aggregate owns and invests on a discretionary basis, not less than $25,000,000 in investments and (ii) An entity in which each of the beneficial owners of the entity’s securities is a qualified purchaser, as that term is defined in the 1940 Act.</string>
+    <string name="wallet_qualified_purchaser_condition_fourth">A “knowledgeable employee,” as defined for purposes of Section 3(c)(5) under the 1940 Act.</string>
+
 </resources>

@@ -1,7 +1,5 @@
 package wallet.idhub.com.clientlib.event;
 
-import com.idhub.magic.center.service.DeployedContractAddress;
-
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
@@ -24,12 +22,13 @@ import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.tx.Contract;
 
+import com.idhub.magic.center.service.DeployedContractAddress;
+import wallet.idhub.com.clientlib.ProviderFactory;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
-import wallet.idhub.com.clientlib.ProviderFactory;
 
 public class ChainEventListener {
 

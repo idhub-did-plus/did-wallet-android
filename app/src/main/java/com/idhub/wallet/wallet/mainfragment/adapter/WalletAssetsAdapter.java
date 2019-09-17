@@ -140,7 +140,9 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @Override
         public void onClick(View v) {
             AssetsModel model = mAssetsModels.get(getLayoutPosition());
-            TransactionActivity.srartAction(mContext, model);
+            if (!TextUtils.isEmpty(model.getBalance())) {
+                TransactionActivity.srartAction(mContext, model);
+            }
         }
     }
 

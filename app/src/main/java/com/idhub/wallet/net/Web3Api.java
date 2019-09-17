@@ -67,6 +67,12 @@ public class Web3Api {
         mWeb3j = Web3j.build(new HttpService(apiBase));
     }
 
+    public static void searchERC1400Controllers(String contractAddress, DisposableSubscriber<List> observer) {
+        DefaultGasProvider defaultGasProvider = new DefaultGasProvider();
+        Credentials credentials = Credentials.create("0");
+        ERC1400 erc1400 = ERC1400.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
+        erc1400.controllers().flowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+    }
 
     public static void searchERC1400Balance(String contractAddress, byte[] partition, String address, DisposableSubscriber<BigInteger> observer) {
         DefaultGasProvider defaultGasProvider = new DefaultGasProvider();

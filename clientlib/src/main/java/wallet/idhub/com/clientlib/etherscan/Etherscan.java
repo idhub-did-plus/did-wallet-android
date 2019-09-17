@@ -1,7 +1,5 @@
 package wallet.idhub.com.clientlib.etherscan;
 
-import android.util.Log;
-
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,14 +16,14 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import wallet.idhub.com.clientlib.ProviderFactory;
+import wallet.idhub.com.clientlib.interfaces.IncomingListener;
+import wallet.idhub.com.clientlib.interfaces.IncomingService;
 
 import io.api.etherscan.core.impl.EtherScanApi;
 import io.api.etherscan.model.EthNetwork;
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;
-import wallet.idhub.com.clientlib.ProviderFactory;
-import wallet.idhub.com.clientlib.interfaces.IncomingListener;
-import wallet.idhub.com.clientlib.interfaces.IncomingService;
 
 public class Etherscan implements IncomingService {
 	static Etherscan instance;
@@ -62,7 +60,8 @@ public class Etherscan implements IncomingService {
 	IncomingListener<Tx> txlistener;
 	IncomingListener<TxToken> transferlistener;
 	
-	EthNetwork current = EthNetwork.ROPSTEN;
+	EthNetwork current = EthNetwork.MAINNET;
+
 	@Override
 	public void setCurrentNetwork(EthNetwork c) {
 		current = c;
@@ -81,15 +80,20 @@ public class Etherscan implements IncomingService {
 		}
 		
 		pool = Executors.newScheduledThreadPool(1);
-		pool.scheduleAtFixedRate(() -> {
-			try {
-				once();
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		pool.scheduleAtFixedRate(new Runnable() {
 
-		}, 0, 15, TimeUnit.SECONDS);
+			@Override
+			public void run() {
+				
+					try {
+						once();
+					} catch (Throwable e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+				
+			}}, 0, 15, TimeUnit.SECONDS);
 	}
 
 	private void disableSslCheck() throws Exception {

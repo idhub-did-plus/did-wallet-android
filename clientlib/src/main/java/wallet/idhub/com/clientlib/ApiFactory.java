@@ -10,7 +10,8 @@ import wallet.idhub.com.clientlib.interfaces.IdentityChainDelegate;
 import wallet.idhub.com.clientlib.interfaces.IdentityChainViewer;
 import wallet.idhub.com.clientlib.interfaces.IdentityStorage;
 import wallet.idhub.com.clientlib.interfaces.IncomingService;
-import wallet.idhub.com.clientlib.interfaces.KycService;
+import wallet.idhub.com.clientlib.interfaces.TemplateService;
+import wallet.idhub.com.clientlib.interfaces.ClaimService;
 import wallet.idhub.com.clientlib.local.IdentityChainLocal;
 
 public class ApiFactory {
@@ -32,7 +33,7 @@ public class ApiFactory {
 		return EventFetcher.getInstance();
 	}
 	
-	static public KycService getKycService() {
+	static public ClaimService getKycService() {
 		return retrofitAccessor.getKycService();
 	}
 	//上面是跟后端访问接口
@@ -43,6 +44,8 @@ public class ApiFactory {
 	static public IdentityChainViewer getIdentityChainViewer() {
 		return local;
 	}
-
+	static public TemplateService getTemplateService() {
+		return retrofitAccessor.getTemplateService();
+	}
 	
 }

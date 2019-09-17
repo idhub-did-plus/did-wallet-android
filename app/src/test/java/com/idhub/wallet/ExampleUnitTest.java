@@ -1,5 +1,7 @@
 package com.idhub.wallet;
 
+import android.util.Log;
+
 import com.idhub.wallet.contract.ERC1400;
 
 import org.junit.Test;
@@ -29,9 +31,9 @@ public class ExampleUnitTest {
         ERC1400 erc1400 = ERC1400.load("0x6cf0d301c00feab199757b616eae46f369c6e141", mWeb3j, credentials, defaultGasProvider);
         String send1 = erc1400.symbol().send();
         System.out.println(send1 +"11");
-        List list = erc1400.controllers().send();
-        for (Object o : list) {
-
+        List<String> list = erc1400.controllers().send();
+        for (String o : list) {
+            System.out.println(o);
         }
         List<byte[]> send = erc1400.totalPartitions().send();
         byte[] o = send.get(0);

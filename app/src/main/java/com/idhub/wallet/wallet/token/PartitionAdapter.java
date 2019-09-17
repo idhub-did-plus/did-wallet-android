@@ -1,6 +1,7 @@
 package com.idhub.wallet.wallet.token;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -168,7 +169,9 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         @Override
         public void onClick(View v) {
             PartitionEntity entity = mData.get(getLayoutPosition());
-            TransactionActivity.srartAction(mContext, mAssetsModel,entity);
+            if (!TextUtils.isEmpty(entity.balance)) {
+                TransactionActivity.srartAction(mContext, mAssetsModel,entity);
+            }
         }
     }
 
@@ -183,7 +186,7 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             totalSupply = itemView.findViewById(R.id.total_supply);
             name = itemView.findViewById(R.id.name);
             symbol = itemView.findViewById(R.id.symbol);
-            itemView.findViewById(R.id.operate).setOnClickListener(this);
+
             itemView.findViewById(R.id.controller).setOnClickListener(this);
         }
 
@@ -191,9 +194,9 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.controller:
-
-                    break;
-                case R.id.operate:
+                    String contractAddressToNode = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
+                    WalletControllersDialogFragment dialogFragment = WalletControllersDialogFragment.getInstance(contractAddressToNode);
+                    dialogFragment.show(((AppCompatActivity) mContext).getSupportFragmentManager(), "wallet_controllers_dialog_fragment");
                     break;
             }
         }

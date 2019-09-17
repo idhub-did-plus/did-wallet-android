@@ -10,11 +10,11 @@ import java.util.concurrent.TimeUnit;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.idhub.magic.center.event.MagicEvent;
 import com.idhub.magic.center.parameter.MagicResponse;
-
 import wallet.idhub.com.clientlib.ProviderFactory;
 import wallet.idhub.com.clientlib.http.RetrofitAccessor;
 import wallet.idhub.com.clientlib.interfaces.EventListenerService;
 import wallet.idhub.com.clientlib.interfaces.EventService;
+
 
 public class EventFetcher implements EventListenerService {
 	static EventFetcher instance = new EventFetcher();

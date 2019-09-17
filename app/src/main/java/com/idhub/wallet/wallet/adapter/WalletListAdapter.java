@@ -23,14 +23,12 @@ import static android.view.View.VISIBLE;
 
 public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.WalletListAdapterViewHolder> {
 
-    private LayoutInflater mInflater;
     private List<WalletKeystore> keyStores;
     private OnWalletItemClickListener onItemClickListener;
     private String mSelectAddress;
 
     public WalletListAdapter(Context context, String address) {
         mSelectAddress = address;
-        mInflater = LayoutInflater.from(context);
         keyStores = new ArrayList<>();
     }
 
@@ -46,7 +44,7 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
     @NonNull
     @Override
     public WalletListAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = mInflater.inflate(R.layout.wallet_recyclerview_wallet_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.wallet_recyclerview_wallet_item, viewGroup, false);
         WalletListAdapterViewHolder adapterViewHolder = new WalletListAdapterViewHolder(view);
         return adapterViewHolder;
     }

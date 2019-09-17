@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.setting.WalletNodeManager;
@@ -73,6 +74,7 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
         if (v == mTokenAdd) {
             new AssetsModelDbManager().insertData(assetsModel, operation -> {
                 if (operation.isCompleted()) {
+                    WalletAddAssetsObservable.getInstance().update();
                     ToastUtils.showShortToast(getContext().getString(R.string.wallet_assets_add_success));
                     mTokenAdd.setImageResource(R.mipmap.wallet_assets_selected);
                     mTokenAdd.setClickable(false);

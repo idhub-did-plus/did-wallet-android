@@ -5,12 +5,16 @@ import android.content.Intent;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 import com.idhub.wallet.MainActivity;
@@ -85,6 +89,8 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     };
+    private TextView mUpgradeView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,8 +112,19 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_upgrade));
-        findViewById(R.id.tv_upgrade).setOnClickListener(this);
+        mUpgradeView = findViewById(R.id.tv_upgrade);
+        mUpgradeView.setBackgroundResource(R.drawable.wallet_shape_button_grey);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
+        NestedScrollView scrollView = findViewById(R.id.sv_upgrade);
+        scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            View view = v.getChildAt(0);
+            int height = view.getMeasuredHeight();
+            int measuredHeight = v.getMeasuredHeight();
+            if (scrollY + measuredHeight == height) {
+                mUpgradeView.setBackgroundResource(R.drawable.wallet_shape_button);
+                mUpgradeView.setOnClickListener(UpgradeActivity.this);
+            }
+        });
     }
 
     @Override
