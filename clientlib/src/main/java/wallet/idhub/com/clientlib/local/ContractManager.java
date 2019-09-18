@@ -37,7 +37,7 @@ public class ContractManager {
 
    static{
     	Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
-        
+       System.out.println(credentials.getAddress());
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface,
                 web3j,
@@ -61,7 +61,12 @@ public class ContractManager {
         );
     
     }
-    
+
+    static public EthereumDIDRegistryInterface getRegistry1056() {
+        return registry1056;
+    }
+
+
     static public EthereumClaimsRegistryInterface getRegistry780() {
 		return registry780;
 	}

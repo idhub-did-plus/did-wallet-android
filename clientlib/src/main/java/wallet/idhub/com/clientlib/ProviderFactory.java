@@ -6,7 +6,7 @@ public class ProviderFactory {
 	static CredentialProvider provider;
 	static {
 		try {
-			provider = (CredentialProvider) Class.forName("wallet.idhub.com.clientlib.interfaces.MockProvider").newInstance();
+			provider = (CredentialProvider) Class.forName("com.idhub.wallet.net.IDHubCredentialProvider").newInstance();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -22,6 +22,7 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
@@ -64,6 +65,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
     private Handler handler = new NetHandler(this);
 
     private Observer observer = (o, arg) -> initVipState();
+    private Observer upgradeObserver = (o, arg) -> loadData();
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public MeFragment() {
@@ -83,6 +85,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
 
     private void initData() {
         WalletVipStateObservable.getInstance().addObserver(observer);
+        WalletUpgradeObservable.getInstance().addObserver(upgradeObserver);
         mIDHubVipView.setName(getString(R.string.wallet_idhub_vip));
         mIDHubSuperVipView.setName(getString(R.string.wallet_idhub_super_vip));
         mQualifiedInvestorView.setName(getString(R.string.wallet_qualified_investor));
@@ -172,7 +175,6 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
     private void setRecoverAddress(String ein) {
         //recoverAddress
         String recoverAddress = WalletOtherInfoSharpreference.getInstance().getRecoverAddress();
-        Log.e("LYW", "setRecoverAddress: " + recoverAddress );
         if (TextUtils.isEmpty(recoverAddress)) {
             if (TextUtils.isEmpty(ein)) {
                 mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
@@ -183,13 +185,11 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                 ApiFactory.getIdentityChainLocal().getIdentity(Long.parseLong(ein)).listen(rst -> {
                     String recoveryAddress = rst.getRecoveryAddress();
                     WalletOtherInfoSharpreference.getInstance().setRecoverAddress(recoveryAddress);
-                    Log.e("LYW", "setRecoverAddress:1 " + recoveryAddress );
                     Message message = Message.obtain();
                     message.what = 3;
                     message.obj = recoveryAddress;
                     handler.sendMessage(message);
                 }, msg -> {
-                    Log.e("LYW", "setRecoverAddress:2 "  +msg);
                     Message message = Message.obtain();
                     message.what = 4;
                     handler.sendMessage(message);
@@ -259,6 +259,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
     public void onDestroy() {
         super.onDestroy();
         WalletVipStateObservable.getInstance().deleteObserver(observer);
+        WalletUpgradeObservable.getInstance().deleteObserver(upgradeObserver);
         handler.removeCallbacksAndMessages(null);
     }
 

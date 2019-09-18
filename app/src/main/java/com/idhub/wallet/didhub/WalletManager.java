@@ -54,8 +54,8 @@ public class WalletManager {
     }
 
     public static File getDefaultKeyDirectory() {
-//        File directory = new File(new File(keystoreDir), "wallets");
-        File directory = new File(new File(keystoreDir), "id");
+        File directory = new File(new File(keystoreDir), "wallets");
+//        File directory = new File(new File(keystoreDir), "id");
         if (!directory.exists()) {
             directory.mkdirs();
         }
@@ -88,7 +88,7 @@ public class WalletManager {
                     if (version == 3) {
                         if (jsonContent.contains("encMnemonic")) {
                             keystore = unmarshalKeystore(jsonContent, DidHubMnemonicKeyStore.class);
-                        }else {
+                        } else {
                             keystore = unmarshalKeystore(jsonContent, DidHubKeyStore.class);
                         }
                     }
@@ -185,7 +185,7 @@ public class WalletManager {
     public static WalletInfo importWalletFromMnemonic(Wallet wallet, String mnemonic, String path, String password, boolean overwrite) {
         List<String> mnemonicCodes = Arrays.asList(mnemonic.split(" "));
         MnemonicUtil.validateMnemonics(mnemonicCodes);
-        DidHubMnemonicKeyStore didHubMnemonicKeyStore = new DidHubMnemonicKeyStore(wallet, mnemonicCodes, password, path,"");
+        DidHubMnemonicKeyStore didHubMnemonicKeyStore = new DidHubMnemonicKeyStore(wallet, mnemonicCodes, password, path, "");
         return flushWallet(didHubMnemonicKeyStore, overwrite);
     }
 
@@ -225,11 +225,11 @@ public class WalletManager {
             throw new TokenException(Messages.INVALID_MNEMONIC_PATH);
         }
         DeterministicKey key = keyChain.getKeyByPath(BIP44Util.generatePath(path), true);
-       return key.getPrivateKeyAsHex();
+        return key.getPrivateKeyAsHex();
 
     }
 
-    public static WalletInfo findWalletByAddress( String address) {
+    public static WalletInfo findWalletByAddress(String address) {
         WalletKeystore keystore = findKeystoreByAddress(address);
         if (keystore != null) {
             return new WalletInfo(keystore);
@@ -288,6 +288,13 @@ public class WalletManager {
 
     public static boolean delete(WalletKeystore keyStore, String password) {
         boolean b = keyStore.verifyPassword(password) && WalletManager.generateWalletFile(keyStore.getId()).delete();
+        if (b)
+            keystoreMap.remove(keyStore.getId());
+        return b;
+    }
+
+    public static boolean delete(WalletKeystore keyStore) {
+        boolean b =WalletManager.generateWalletFile(keyStore.getId()).delete();
         if (b)
             keystoreMap.remove(keyStore.getId());
         return b;

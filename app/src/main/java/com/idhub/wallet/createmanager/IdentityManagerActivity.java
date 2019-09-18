@@ -12,6 +12,7 @@ import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 import com.idhub.wallet.createmanager.walletimport.ImportWalletActivity;
+import com.idhub.wallet.createmanager.walletrecover.WalletIdentityRecoveryActivity;
 
 public class IdentityManagerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,6 +30,7 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
 
     private void initView() {
         findViewById(R.id.tv_identity_create).setOnClickListener(this);
+        findViewById(R.id.tv_identity_recover).setOnClickListener(this);
         findViewById(R.id.tv_identity_import).setOnClickListener(this);
     }
 
@@ -42,6 +44,9 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
             case R.id.tv_identity_import:
                 ImportWalletActivity.startActionForResult(this,101);
                 break;
+            case R.id.tv_identity_recover:
+                WalletIdentityRecoveryActivity.startActionForResult(this,102);
+                break;
         }
     }
 
@@ -52,6 +57,9 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
             MainActivity.startAction(this,"IdentityManager");
             finish();
         } else if (requestCode == 101 && resultCode == RESULT_OK) {
+            MainActivity.startAction(this,"IdentityManager");
+            finish();
+        } else if (requestCode == 102 && resultCode == RESULT_OK) {
             MainActivity.startAction(this,"IdentityManager");
             finish();
         }

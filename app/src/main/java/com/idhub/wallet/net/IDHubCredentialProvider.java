@@ -8,11 +8,11 @@ import org.web3j.protocol.http.HttpService;
 
 import wallet.idhub.com.clientlib.interfaces.CredentialProvider;
 
-//import wallet.idhub.com.clientlib.interfaces.CredentialProvider;
 
 public class IDHubCredentialProvider implements CredentialProvider {
 
-    private static Web3j mWeb3j = Web3j.build(new HttpService(C.API_BASE));
+//    private static Web3j mWeb3j = Web3j.build(new HttpService(C.API_BASE));
+    private static Web3j mWeb3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
     private static Credentials client;
     private static String sRecoverAddress;
 
@@ -26,7 +26,8 @@ public class IDHubCredentialProvider implements CredentialProvider {
 
     @Override
     public Credentials getByAddress(String s) {
-        return null;
+
+        return client;
     }
 
     @Override
@@ -48,11 +49,12 @@ public class IDHubCredentialProvider implements CredentialProvider {
 
     @Override
     public long getLastEndBlockNumber() {
-        return BlockNumbersSharedPreferences.getInstance().getBlockNumber();
+        return 0;
+//        return BlockNumbersSharedPreferences.getInstance().getBlockNumber();
     }
 
     @Override
     public void storeLastEndBlockNumber(long l) {
-        BlockNumbersSharedPreferences.getInstance().setBlockNumber(l);
+//        BlockNumbersSharedPreferences.getInstance().setBlockNumber(l);
     }
 }

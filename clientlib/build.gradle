@@ -36,5 +36,5 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     api 'com.squareup.retrofit2:converter-jackson:2.0.0'
     api project(path: ':etherscan')
-//    api files('libs/magic-common-0.0.1-SNAPSHOT.jar')
+    //    api files('libs/magic-common-0.0.1-SNAPSHOT.jar')
 }

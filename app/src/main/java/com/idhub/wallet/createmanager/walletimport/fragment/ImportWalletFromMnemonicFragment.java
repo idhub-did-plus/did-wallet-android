@@ -186,6 +186,7 @@ public class ImportWalletFromMnemonicFragment extends Fragment implements View.O
 
                                 break;
                         }
+                        mLoadingAndErrorView.setVisibility(View.GONE);
                         Activity activity = (Activity) getContext();
                         if (activity instanceof ImportWalletActivity) {
                             activity.setResult(Activity.RESULT_OK);
@@ -201,7 +202,7 @@ public class ImportWalletFromMnemonicFragment extends Fragment implements View.O
 
                     @Override
                     public void onComplete() {
-                        mLoadingAndErrorView.setVisibility(View.GONE);
+
                     }
                 });
     }

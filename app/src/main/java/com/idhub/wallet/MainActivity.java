@@ -14,6 +14,7 @@ import android.view.View;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
+import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.createmanager.IdentityManagerActivity;
 import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             WalletSelectedObservable.getInstance().update();
         }else if ("upgrade".equals(data)){
             WalletSelectedObservable.getInstance().update();
+            WalletUpgradeObservable.getInstance().update();
         }
     }
 

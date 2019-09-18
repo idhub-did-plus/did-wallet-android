@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.idhub.magic.center.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
@@ -42,7 +43,9 @@ import com.idhub.wallet.utils.ToastUtils;
 import java.math.BigInteger;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import wallet.idhub.com.clientlib.ApiFactory;
 import wallet.idhub.com.clientlib.interfaces.Listen;
 
@@ -65,10 +68,11 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
                     IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
                     idHubMessageEntity.setTime(DateUtils.getCurrentDate());
                     idHubMessageEntity.setType(IdHubMessageType.UPGRADE_1484_IDENTITY);
-                    idHubMessageEntity.setAddress(identityCreatedEventResponse.associatedAddress);
+                    String associatedAddress = identityCreatedEventResponse.associatedAddress;
+                    idHubMessageEntity.setAddress(associatedAddress);
                     idHubMessageEntity.setEin(ein.toString());
                     idHubMessageEntity.setRecoverAddress(identityCreatedEventResponse.recoveryAddress);
-                    idHubMessageEntity.setDefaultAddress(identityCreatedEventResponse.associatedAddress);
+                    idHubMessageEntity.setDefaultAddress(associatedAddress);
                     new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
                     //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
                     WalletOtherInfoSharpreference.getInstance().setRecoverAddress(identityCreatedEventResponse.recoveryAddress);
@@ -78,8 +82,31 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
                     wallet.setAssociate(true);
                     wallet.setDefaultAddress(true);
                     WalletManager.flushWallet(keyStore, true);
-                    MainActivity.startAction(UpgradeActivity.this, "upgrade");
-                    mLoadingAndErrorView.setVisibility(View.GONE);
+                    //调用1056的initialize
+                    ApiFactory.getIdentityChainLocal().initialize(associatedAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
+                        @Override
+                        public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
+                            String initiator = identityInitializedEventResponse.initiator;
+                            String indeitity = identityInitializedEventResponse.indeitity;
+                            BigInteger ein1 = identityInitializedEventResponse.ein;
+                            Log.e("LYW", "onNext: " + indeitity +"  "+ initiator+"  " +ein1 );
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mLoadingAndErrorView.setVisibility(View.GONE);
+                            MainActivity.startAction(UpgradeActivity.this, "upgrade");
+                            Log.e("LYW", "onError: " +e.getMessage() );
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            MainActivity.startAction(UpgradeActivity.this, "upgrade");
+                            mLoadingAndErrorView.setVisibility(View.GONE);
+                        }
+                    });
+
+
                     break;
                 case 2:
                     mLoadingAndErrorView.setVisibility(View.GONE);
@@ -116,6 +143,10 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
         mUpgradeView.setBackgroundResource(R.drawable.wallet_shape_button_grey);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
         NestedScrollView scrollView = findViewById(R.id.sv_upgrade);
+        if (scrollView.getMeasuredHeight() == 0) {
+            mUpgradeView.setBackgroundResource(R.drawable.wallet_shape_button);
+            mUpgradeView.setOnClickListener(UpgradeActivity.this);
+        }
         scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             View view = v.getChildAt(0);
             int height = view.getMeasuredHeight();
@@ -172,8 +203,8 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
                 message.obj = identityCreatedEventResponse;
                 handler.sendMessage(message);
 
-
             }, message -> {
+                Log.e("LYW", "onActivityResult: " + message);
                 Message messageError = Message.obtain();
                 messageError.what = 2;
                 messageError.obj = message;

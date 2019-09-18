@@ -55,7 +55,7 @@ public class WalletOtherInfoSharpreference {
         return commit;
     }
     public String getNode() {
-        return sharedPreferences.getString(WALLET_NODE, WalletNodeManager.nodes.get(0));
+        return sharedPreferences.getString(WALLET_NODE, WalletNodeManager.nodes.get(1));
     }
 
     public boolean setNode(String node) {
