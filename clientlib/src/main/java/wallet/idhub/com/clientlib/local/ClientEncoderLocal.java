@@ -30,12 +30,15 @@ public class ClientEncoderLocal {
                 "I authorize being added to this Identity via recovery.",
                 param.ein, newAssociatedAddress, param.timestamp);
 
-        Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
+        Credentials credentials =Credentials.create(param.newAssociationAddressPrivateKey);
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(hexMessage, pair);
         param.r = sm.getR();
         param.s = sm.getS();
         param.v = new BigInteger(String.valueOf(sm.getV()));
+        Log.e("LYW", "recoveryIdentityEncoder: r" + Numeric.toHexString(sm.getR()) );
+        Log.e("LYW", "recoveryIdentityEncoder: s" + Numeric.toHexString(sm.getS()) );
+        Log.e("LYW", "recoveryIdentityEncoder: v" + String.valueOf(sm.getV()) );
         return param;
     }
 
@@ -50,7 +53,7 @@ public class ClientEncoderLocal {
                 "I authorize being added to this Identity.",
                 addAssociatedAddressParam.ein, addressToAdd, addAssociatedAddressParam.timestamp);
 
-        Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
+        Credentials credentials = Credentials.create(addAssociatedAddressParam.associationPrivateKey);
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(encodeMessage, pair);
         addAssociatedAddressParam.r = sm.getR();
@@ -87,10 +90,11 @@ public class ClientEncoderLocal {
         Address contract = new Address(DeployedContractAddress.ERC1056ResolverInterface);
         Address ethereumDIDRegistryContract = new Address(DeployedContractAddress.EthereumDIDRegistryInterface);
         Address identityAddress = new Address(resetIdentityParam.identity);
+
         byte[] encodeMessage = CryptoUtil.encodePacked(
                 (byte) 0x19, (byte) 0, ethereumDIDRegistryContract, resetIdentityParam.noce, identityAddress, "changeOwner", contract);
 
-        Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
+        Credentials credentials = Credentials.create(resetIdentityParam.privateKey);
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(encodeMessage, pair);
         resetIdentityParam.r = sm.getR();

@@ -11,28 +11,33 @@ public class DidHubIdentify {
     private static DidHubIdentify identify;
     public static DidHubMnemonicKeyStore mDidHubMnemonicKeyStore;
 
-    public DidHubIdentify(Wallet wallet, List<String> mnemonicCodes, String password) {
+    public DidHubIdentify(Wallet wallet, List<String> mnemonicCodes, String password,boolean isSave) {
         mDidHubMnemonicKeyStore = new DidHubMnemonicKeyStore(wallet, mnemonicCodes, password, BIP44Util.ETHEREUM_PATH,"");
-        WalletManager.createWallet(mDidHubMnemonicKeyStore);
+        if (isSave) {
+            WalletManager.createWallet(mDidHubMnemonicKeyStore);
+        }
         identify = this;
     }
 
-    public static DidHubIdentify createIdentity(String name, String password, String passwordHit, List<String> mnemonicCodes) {
+    private static DidHubIdentify createIdentity(String name, String password, String passwordHit, List<String> mnemonicCodes,boolean isSave) {
         Wallet wallet = new Wallet();
         wallet.setName(name);
         wallet.setPasswordHint(passwordHit);
         wallet.setAssociate(false);
-        DidHubIdentify identity = new DidHubIdentify(wallet, mnemonicCodes, password);
+        DidHubIdentify identity = new DidHubIdentify(wallet, mnemonicCodes, password,isSave);
         identify = identity;
         return identity;
     }
 
+    public static DidHubIdentify createIdentity(String name, String password, String passwordHit,boolean isSave) {
+        List<String> mnemonicCodes = MnemonicUtil.randomMnemonicCodes();
+        return createIdentity(name, password, passwordHit, mnemonicCodes,isSave);
+    }
+
     public static DidHubIdentify createIdentity(String name, String password, String passwordHit) {
         List<String> mnemonicCodes = MnemonicUtil.randomMnemonicCodes();
-        return createIdentity(name, password, passwordHit, mnemonicCodes);
+        return createIdentity(name, password, passwordHit, mnemonicCodes,true);
     }
 
-    public static void createRecoverAddress(){
 
-    }
 }

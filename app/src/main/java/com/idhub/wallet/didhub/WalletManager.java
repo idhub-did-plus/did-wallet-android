@@ -285,6 +285,17 @@ public class WalletManager {
         }
         return address;
     }
+    public static WalletKeystore getDefaultKeystore() {
+        WalletKeystore walletKeystore = null;
+        if (keystoreMap.size() > 0) {
+            for (WalletKeystore keystore : keystoreMap.values()) {
+                if (keystore.getWallet().isDefaultAddress()) {
+                    walletKeystore =keystore;
+                }
+            }
+        }
+        return walletKeystore;
+    }
 
     public static boolean delete(WalletKeystore keyStore, String password) {
         boolean b = keyStore.verifyPassword(password) && WalletManager.generateWalletFile(keyStore.getId()).delete();

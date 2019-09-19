@@ -39,7 +39,7 @@ public class IdentityManagerActivity extends AppCompatActivity implements View.O
         int id = v.getId();
         switch (id) {
             case R.id.tv_identity_create:
-               InputPasswordActivity.startActionForResult(this,100);
+               InputPasswordActivity.startActionForResult(this,100,true);
                 break;
             case R.id.tv_identity_import:
                 ImportWalletActivity.startActionForResult(this,101);

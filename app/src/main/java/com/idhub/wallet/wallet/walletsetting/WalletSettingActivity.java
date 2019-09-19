@@ -75,7 +75,7 @@ public class WalletSettingActivity extends AppCompatActivity implements MessageD
                 //再次创建的时候需要检查未升级的时候需要提醒用户去升级才能继续创建钱包
                 boolean b = checkAddressRegisterIDHub();
                 if (b) {
-                    InputPasswordActivity.startActionForResult(this, 100);
+                    InputPasswordActivity.startActionForResult(this, 100,true);
                 } else {
                     MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_tip), getString(R.string.wallet_go_upgrade));
                     messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");

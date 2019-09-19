@@ -1,10 +1,16 @@
 package com.idhub.wallet.wallet.manager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,12 +18,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
@@ -30,14 +38,27 @@ import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Messages;
 import com.idhub.wallet.didhub.model.MnemonicAndPath;
 import com.idhub.wallet.createmanager.UpgradeActivity;
+import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.export.ExportWalletContentActivity;
 
+import java.math.BigInteger;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import wallet.idhub.com.clientlib.ApiFactory;
+import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
+import wallet.idhub.com.clientlib.interfaces.ResultListener;
 
-public class WalletManagerActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener, MessageDialogFragment.MessageDialogFragmentListener {
+public class WalletManagerActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener, MessageDialogFragment.MessageDialogFragmentListener, AddAssociationAddressDialogFragment.AddAssociationAddressDialogFragmentListener {
 
+    private WalletManagerItemView mExportPasswordHint;
     private WalletManagerItemView mExportMnemonic;
     private WalletManagerItemView mExportKeystore;
     private WalletManagerItemView mExportPrivateKey;
@@ -52,6 +73,8 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
     private ImageView headView;
     private TextView mWalletNameView;
     private TextView mWalletAddressView;
+    private WalletKeystore mDefaultKeystore;
+    private WalletKeystore mAssociationKeyStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +85,7 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
         initData();
     }
 
+    @SuppressLint("WrongViewCast")
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_manager));
@@ -71,6 +95,10 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
         mWalletNameView = findViewById(R.id.tv_wallet_name);
         mWalletAddressView = findViewById(R.id.tv_wallet_address);
 
+        mExportPasswordHint = findViewById(R.id.export_password_hint);
+        mExportPasswordHint.setVisibility(View.GONE);
+        mExportPasswordHint.setData(R.mipmap.wallet_export_mnemonic,getString(R.string.wallet_export_password_hint));
+        mExportPasswordHint.setOnClickListener(this);
         mExportMnemonic = findViewById(R.id.export_mnemonic);
         mExportMnemonic.setData(R.mipmap.wallet_export_mnemonic, getString(R.string.wallet_export_mnemonic));
         mExportMnemonic.setOnClickListener(this);
@@ -98,6 +126,9 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
         } else if (keyStore instanceof DidHubMnemonicKeyStore) {
             mExportMnemonic.setVisibility(View.VISIBLE);
         }
+        if (keyStore.getWallet().isAssociate()) {
+            mAssociatedAddress.setVisibility(View.GONE);
+        }
     }
 
     public static void startAction(Context context, String id) {
@@ -119,12 +150,17 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
             showMessageDialog();
         } else if (v == mDelete) {
             showPasswordDialog(DELETE);
+        } else if (v == mExportPasswordHint) {
+
         }
     }
 
     private void showMessageDialog() {
+        WalletKeystore keyStore = WalletManager.getKeyStore(mID);
+        Wallet wallet = keyStore.getWallet();
+
         int walletNum = WalletManager.getWalletNum();
-        if (walletNum <= 1 && !WalletManager.getCurrentKeyStore().getWallet().isAssociate()) {
+        if (walletNum <= 1 && !wallet.isAssociate()) {
             MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_tip), getString(R.string.wallet_go_upgrade));
             messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
             messageDialogFragment.setMessagePasswordDialogFragmentListener(this);
@@ -173,7 +209,7 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
                         ExportWalletContentActivity.startAction(WalletManagerActivity.this, source, s);
                     } else if (source.equals(DELETE)) {
                         WalletManager.delete(WalletManager.getKeyStore(mID), data);
-                        MainActivity.startAction(WalletManagerActivity.this,DELETE);
+                        MainActivity.startAction(WalletManagerActivity.this, DELETE);
                     }
                 } else {
                     ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
@@ -201,13 +237,86 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
             UpgradeActivity.startAction(this, mID);
         } else {
             //关联
-
-
-            WalletKeystore keyStore = WalletManager.getKeyStore(mID);
-            keyStore.getWallet().setAssociate(true);
-            WalletManager.flushWallet(keyStore, true);
-            MainActivity.startAction(this,"associated");
-            WalletSelectedObservable.getInstance().update();
+            //输入密码
+            mDefaultKeystore  = WalletManager.getDefaultKeystore();
+            if (mDefaultKeystore == null) {
+                return;
+            }
+            mAssociationKeyStore = WalletManager.getKeyStore(mID);
+            AddAssociationAddressDialogFragment dialogFragment = AddAssociationAddressDialogFragment.getInstance(mDefaultKeystore.getAddress(),mAssociationKeyStore.getAddress());
+            dialogFragment.show(getSupportFragmentManager(), "add_association_address_dialog_fragment");
+            dialogFragment.setAddAssociationAddressDialogFragmentListener(this);
         }
     }
+
+    @Override
+    public void confirm(String defaultPsd, String associationPsd) {
+        WalletInfo defaultAddressWalletInfo = new WalletInfo(mDefaultKeystore);
+        WalletInfo associationAddressWalletInfo = new WalletInfo(mAssociationKeyStore);
+        mLoadingAndErrorView.setVisibility(View.VISIBLE);
+
+        Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
+            boolean defaultPsdResult = defaultAddressWalletInfo.verifyPassword(defaultPsd);
+            if (!defaultPsdResult) {
+                emitter.onError(new Throwable(getString(R.string.wallet_default_password_false)));
+                return;
+            }
+            boolean associationPsdResult = associationAddressWalletInfo.verifyPassword(associationPsd);
+            if (!associationPsdResult) {
+                emitter.onError(new Throwable(getString(R.string.wallet_association_password_false)));
+                return;
+            }
+            emitter.onNext(true);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<Boolean>() {
+            @Override
+            public void onNext(Boolean aBoolean) {
+                String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
+                //关联地址签名消息。默认地址发交易
+                IDHubCredentialProvider.setDefaultCredentials(defaultAddressWalletInfo.exportPrivateKey(defaultPsd));
+                ApiFactory.getIdentityChainLocal().addAssociatedAddress(new BigInteger(ein), mDefaultKeystore.getAddress(), mAssociationKeyStore.getAddress(),associationAddressWalletInfo.exportPrivateKey(associationPsd))
+                        .listen(rst -> {
+                            mAssociationKeyStore.getWallet().setAssociate(true);
+                            WalletManager.flushWallet(mAssociationKeyStore, true);
+                            Message message = Message.obtain();
+                            message.what = 1;
+                            message.obj = rst;
+                            handler.sendMessage(message);
+                        }, msg -> {
+                            Message message = Message.obtain();
+                            message.what = 2;
+                            message.obj = msg;
+                            handler.sendMessage(message);
+                        });
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mLoadingAndErrorView.setVisibility(View.GONE);
+                ToastUtils.showShortToast(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mLoadingAndErrorView.setVisibility(View.GONE);
+            switch (msg.what) {
+                case 1:
+                    MainActivity.startAction(WalletManagerActivity.this, "associated");
+                    WalletSelectedObservable.getInstance().update();
+                    break;
+                case 2:
+                    ToastUtils.showShortToast(getString(R.string.wallet_upgrade_association_false));
+                    break;
+            }
+        }
+    };
 }

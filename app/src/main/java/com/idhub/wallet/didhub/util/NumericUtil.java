@@ -257,5 +257,11 @@ public class NumericUtil {
         return format;
     }
 
-
+    public static BigDecimal valueFormatByDecimal(String value, int decimals) {
+        BigDecimal valueBigDecimal = new BigDecimal(value);
+        BigDecimal decimal = new BigDecimal(10);
+        BigDecimal pow = decimal.pow(decimals);
+        BigDecimal multiply = valueBigDecimal.multiply(pow);
+        return multiply;
+    }
 }

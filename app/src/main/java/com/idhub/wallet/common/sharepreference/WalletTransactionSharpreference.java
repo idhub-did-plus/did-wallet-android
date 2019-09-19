@@ -53,7 +53,7 @@ public class WalletTransactionSharpreference {
     }
 
     public String getSTGasLimit() {
-        return sharedPreferences.getString(WALLET_GAS_ST_LIMIT, "72000");
+        return sharedPreferences.getString(WALLET_GAS_ST_LIMIT, "720000");
     }
 
     public void setSTGasLimit(String gasLimit) {

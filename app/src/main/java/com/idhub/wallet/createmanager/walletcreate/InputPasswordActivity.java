@@ -41,12 +41,16 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
     private EditText mWalletName;
     private EditText mPasswordHint;
     private LoadingAndErrorView mLoadingAndErrorView;
+    private boolean mIsSave;
+    private String mPasswordStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_activity_input_password);
         initView();
+        Intent intent = getIntent();
+        mIsSave = intent.getBooleanExtra("isSave", true);
     }
 
     private void initView() {
@@ -61,8 +65,9 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
     }
 
 
-    public static void startActionForResult(Context context, int requestCode) {
+    public static void startActionForResult(Context context, int requestCode,boolean isSave) {
         Intent intent = new Intent(context, InputPasswordActivity.class);
+        intent.putExtra("isSave", isSave);
         ((Activity) context).startActivityForResult(intent, requestCode);
     }
 
@@ -96,6 +101,7 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
             ToastUtils.showShortToast(getString(R.string.wallet_no_equal_password));
             return;
         }
+        mPasswordStr = password;
         createWallet(walletName, password);
     }
 
@@ -143,7 +149,7 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
             }
         };
         Observable.create((ObservableOnSubscribe<DidHubIdentify>) emitter -> {
-            DidHubIdentify identity = DidHubIdentify.createIdentity(walletName, password, mPasswordHint.getText().toString());
+            DidHubIdentify identity = DidHubIdentify.createIdentity(walletName, password, mPasswordHint.getText().toString(),mIsSave);
             emitter.onNext(identity);
             emitter.onComplete();
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
@@ -153,7 +159,11 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
-            setResult(RESULT_OK);
+            Intent intent = new Intent();
+            if (!mIsSave) {
+                intent.putExtra("password", mPasswordStr);
+            }
+            setResult(RESULT_OK,intent);
             finish();
         }
     }

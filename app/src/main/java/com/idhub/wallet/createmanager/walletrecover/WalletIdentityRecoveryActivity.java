@@ -24,15 +24,18 @@ import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 import com.idhub.wallet.createmanager.walletimport.ImportWalletTopView;
+import com.idhub.wallet.didhub.DidHubIdentify;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.address.EthereumAddressCreator;
+import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.BIP44Util;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
 import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
+import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
@@ -54,6 +57,9 @@ public class WalletIdentityRecoveryActivity extends AppCompatActivity implements
     private String mPrivateKey;
     private String mRecoveryAddress;
     private boolean isSuccess;
+    private WalletKeystore mWalletKeystore;
+    private String mPassword;
+
     public static void startActionForResult(Activity activity,int requestCode) {
         Intent intent = new Intent(activity, WalletIdentityRecoveryActivity.class);
         activity.startActivityForResult(intent, requestCode);
@@ -69,7 +75,7 @@ public class WalletIdentityRecoveryActivity extends AppCompatActivity implements
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
         findViewById(R.id.tv_import).setOnClickListener(this);
         mTopView = findViewById(R.id.top_view);
-        mTopView.setData(getString(R.string.wallet_import_wallet_from_mnemonic_tip), getString(R.string.wallet_edit_mnemonic_tip));
+        mTopView.setData(getString(R.string.wallet_recovery_identity_from_mnemonic_tip), getString(R.string.wallet_edit_mnemonic_tip));
     }
 
     @Override
@@ -108,7 +114,7 @@ public class WalletIdentityRecoveryActivity extends AppCompatActivity implements
                         mPrivateKey = s;
                         mRecoveryAddress = new EthereumAddressCreator().fromPrivateKey(s);
                         //create wallet
-                        InputPasswordActivity.startActionForResult(WalletIdentityRecoveryActivity.this,100);
+                        InputPasswordActivity.startActionForResult(WalletIdentityRecoveryActivity.this,100,false);
                     }
 
                     @Override
@@ -129,7 +135,15 @@ public class WalletIdentityRecoveryActivity extends AppCompatActivity implements
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
-            InputDialogFragment instance = InputDialogFragment.getInstance("ein", getString(R.string.wallet_input_ein), InputType.TYPE_CLASS_TEXT);
+            if (data != null) {
+                mPassword = data.getStringExtra("password");
+            }
+            mWalletKeystore = DidHubIdentify.mDidHubMnemonicKeyStore;
+            if (mWalletKeystore == null) {
+                finish();
+                return;
+            }
+            InputDialogFragment instance = InputDialogFragment.getInstance("ein", getString(R.string.wallet_input_ein_recovery_identity), InputType.TYPE_CLASS_TEXT);
             instance.show(getSupportFragmentManager(), "input_dialog_fragment");
             instance.setInputDialogFragmentListener(this);
         }
@@ -137,11 +151,14 @@ public class WalletIdentityRecoveryActivity extends AppCompatActivity implements
 
     @Override
     public void inputConfirm(String ein, String source) {
-        String address = WalletManager.getAddress();
-        Log.e("LYW", "inputConfirm: " + address);
+        String address = mWalletKeystore.getAddress();
+        Log.e("LYW", "inputConfirm: " + address );
         mLoadingAndErrorView.setVisibility(View.VISIBLE);
-        ApiFactory.getIdentityChainLocal().recoveryIdentity(ein, address).listen(rst -> {
+        IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
+        ApiFactory.getIdentityChainLocal().recoveryIdentity(ein, address,new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword)).listen(rst -> {
             isSuccess = true;
+            //恢复成功保存钱包
+            WalletManager.createWallet(mWalletKeystore);
             Message message = Message.obtain();
             message.what = 1;
             message.obj = rst;
@@ -157,14 +174,6 @@ public class WalletIdentityRecoveryActivity extends AppCompatActivity implements
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        if (isSuccess) {
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    WalletManager.delete(WalletManager.getCurrentKeyStore());
-//                }
-//            }).start();
-//        }
     }
 
     private Handler handler = new Handler() {
@@ -195,7 +204,7 @@ public class WalletIdentityRecoveryActivity extends AppCompatActivity implements
                     wallet.setDefaultAddress(true);
                     WalletManager.flushWallet(keyStore, true);
                     //调用1056的reset
-                    ApiFactory.getIdentityChainLocal().reset(keyStore.getAddress()).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityResetedEventResponse>() {
+                    ApiFactory.getIdentityChainLocal().reset(keyStore.getAddress(),new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityResetedEventResponse>() {
                         @Override
                         public void onNext(ERC1056ResolverInterface.IdentityResetedEventResponse identityResetedEventResponse) {
                             String initiator = identityResetedEventResponse.initiator;
@@ -220,6 +229,8 @@ public class WalletIdentityRecoveryActivity extends AppCompatActivity implements
                     });
                     break;
                 case 2:
+                    Log.e("LYW", "inputConfirm: " + msg );
+                    ToastUtils.showShortToast(getString(R.string.wallet_recovery_identity_fail));
                     mLoadingAndErrorView.setVisibility(View.GONE);
                     break;
             }

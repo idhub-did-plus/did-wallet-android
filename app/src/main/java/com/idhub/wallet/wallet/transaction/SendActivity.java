@@ -52,8 +52,8 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
         mBalanceView = findViewById(R.id.balance);
         mAmountView = findViewById(R.id.input_amount);
         mAddressView = findViewById(R.id.input_address);
-        mNameView.setText(mAssetsModel.getName());
-        mBalanceView.setText("余额：" + NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(mAssetsModel.getBalance())) + "" + mAssetsModel.getName());
+        mNameView.setText(mAssetsModel.getSymbol());
+        mBalanceView.setText("余额：" + NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(mAssetsModel.getBalance())) + "" + mAssetsModel.getSymbol());
         findViewById(R.id.tv_next).setOnClickListener(this);
         Web3Api.getGasPrice();
     }

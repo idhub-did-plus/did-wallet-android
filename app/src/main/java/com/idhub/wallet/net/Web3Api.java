@@ -13,28 +13,36 @@ import com.idhub.wallet.contract.EIP20Interface;
 import com.idhub.wallet.contract.ERC1400;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
+import com.idhub.wallet.net.parameter.EthTransactionParam;
 import com.idhub.wallet.network.Web3jSubscriber;
 import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.LogUtils;
 
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.RawTransaction;
+import org.web3j.crypto.TransactionEncoder;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.core.methods.response.EthGasPrice;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
+import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.http.HttpService;
+import org.web3j.tuples.generated.Tuple3;
 import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.tx.gas.StaticGasProvider;
 import org.web3j.utils.Convert;
+import org.web3j.utils.Numeric;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Observer;
@@ -87,6 +95,7 @@ public class Web3Api {
         ERC1400 erc1400 = ERC1400.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
         erc1400.totalPartitions().flowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
     }
+
     public static void searchERC1400TotalSupply(String contractAddress, DisposableSubscriber<BigInteger> observer) {
         DefaultGasProvider defaultGasProvider = new DefaultGasProvider();
         Credentials credentials = Credentials.create("0");
@@ -101,7 +110,7 @@ public class Web3Api {
         Observable.create((ObservableOnSubscribe<AssetsModel>) emitter -> {
             List list = erc1400.totalPartitions().send();
             String name = erc1400.name().send();
-            BigInteger decimal = erc1400.granularity().send();
+            BigInteger decimal = erc1400.decimals().send();
             String symbol = erc1400.symbol().send();
             if (TextUtils.isEmpty(symbol)) {
                 emitter.onError(new Throwable(App.getInstance().getString(R.string.wallet_assets_unkonw)));
@@ -165,16 +174,12 @@ public class Web3Api {
 
     public static void searchBalance(String address, String token, DisposableSubscriber<BigInteger> observer) {
         DefaultGasProvider defaultGasProvider = new DefaultGasProvider();
-        BigInteger gasPrice = defaultGasProvider.getGasPrice();
-        BigInteger gasLimit = defaultGasProvider.getGasLimit();
-        Log.e("LYW", "searchBalance: " + gasPrice + "  gasLimit  " + gasLimit);
         Credentials credentials = Credentials.create("0");
         EIP20Interface ierc20 = EIP20Interface.load(token, mWeb3j, credentials, defaultGasProvider);
         ierc20.balanceOf(address).flowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
     }
 
     public static void searchBalance(String address, DisposableSubscriber<EthGetBalance> observer) {
-//        DefaultBlockParameterNumber defaultBlockParameter = new DefaultBlockParameterNumber();
         mWeb3j.ethGetBalance(address, DefaultBlockParameterName.LATEST)
                 .flowable()
                 .subscribeOn(Schedulers.io())
@@ -182,32 +187,19 @@ public class Web3Api {
                 .subscribe(observer);
     }
 
-    public static void getNoce(String address, String to) throws IOException {
-        //获取noce
-        EthGetTransactionCount send = mWeb3j.ethGetTransactionCount("0x4c000E507bE6663e264a1A21507a69Bfa5035D95", DefaultBlockParameterName.LATEST).send();
-//        BigInteger gasPrice = new BigInteger(WalletTransactionSharpreference.getInstance().getGasPrice());
-        BigInteger gasPrice = new BigInteger("1000000000");
-        BigInteger transactionCount = send.getTransactionCount();
-//        Log.e("LYW", "onNext:gasPrice " + gasPrice + " transactionCount " + transactionCount);
-        System.out.println("onNext:gasPrice " + gasPrice + " transactionCount " + transactionCount);
-        BigInteger value = Convert.toWei("0.1", Convert.Unit.ETHER).toBigInteger();
+    public static void sendETHTransaction(EthTransactionParam param,DisposableObserver<EthSendTransaction> observer) {
+        Observable.create((ObservableOnSubscribe<EthSendTransaction>) emitter -> {
+            EthGetTransactionCount send = mWeb3j.ethGetTransactionCount(param.fromAddress, DefaultBlockParameterName.LATEST).send();//获取noce
+            BigInteger transactionCount = send.getTransactionCount();
+            BigInteger value = Convert.toWei(param.value, Convert.Unit.ETHER).toBigInteger();
+            RawTransaction etherTransaction = RawTransaction.createEtherTransaction(transactionCount, new BigInteger(param.gasPrice), new BigInteger(param.gasLimit), param.toAddress, value);
+            byte[] signedMessage = TransactionEncoder.signMessage(etherTransaction, getCredentials(param.password));
+            String hexValue = Numeric.toHexString(signedMessage);
+            EthSendTransaction ethSendTransaction = mWeb3j.ethSendRawTransaction(hexValue).send();
+            emitter.onNext(ethSendTransaction);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
 
-        Transaction etherTransaction1 = Transaction.createEtherTransaction("0x4c000E507bE6663e264a1A21507a69Bfa5035D95", transactionCount, gasPrice, null, "0x1B273c7B4e025877BCE40248F4f30Ca0641F7eCF", value);
-        try {
-            BigInteger amountUsed = mWeb3j.ethEstimateGas(etherTransaction1).send().getAmountUsed();
-//            Log.e("LYW", "onNext:amountUsed " + amountUsed);
-            System.out.println("onNext:amountUsed " + amountUsed);
-            RawTransaction etherTransaction = RawTransaction.createEtherTransaction(transactionCount, gasPrice, amountUsed, "0x1B273c7B4e025877BCE40248F4f30Ca0641F7eCF", value);
-//            byte[] signedMessage = TransactionEncoder.signMessage(etherTransaction, getCredentials());
-//            String hexValue = Numeric.toHexString(signedMessage);
-//
-//            EthSendTransaction ethSendTransaction = mWeb3j.ethSendRawTransaction(hexValue).send();
-//            Log.e("LYW", "onNext: " + ethSendTransaction.getTransactionHash());
-//            System.out.println("onNext: " + ethSendTransaction.getTransactionHash());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -224,27 +216,38 @@ public class Web3Api {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
     }
 
-    public static void getGasLimit() {
-
-    }
-
-    public static void sendTransaction(String address) {
-
-    }
-
-    public static void sendERC20Transaction(String password, String contractAddress, String gasPrice, String gasLimit, String toAddress, String value, Web3jSubscriber<TransactionReceipt> web3jSubscriber) {
+    public static void sendERC20Transaction(String password,String decimals, String contractAddress, String gasPrice, String gasLimit, String toAddress, String value, DisposableSubscriber<TransactionReceipt> web3jSubscriber) {
         Credentials credentials = getCredentials(password);
         StaticGasProvider staticGasProvider = new StaticGasProvider(new BigInteger(gasPrice), new BigInteger(gasLimit));
         EIP20Interface ierc20 = EIP20Interface.load(contractAddress, mWeb3j, credentials, staticGasProvider);
-        BigInteger value1 = Convert.toWei(value, Convert.Unit.ETHER).toBigInteger();
-        Log.e("did", "sendERC20Transaction: " + value1);
-        Log.e("did", "sendERC20Transaction: " + WalletManager.getAddress());
-        Log.e("did", "sendERC20Transaction: " + gasPrice);
-        Log.e("did", "sendERC20Transaction: " + gasLimit);
-        ierc20.transfer(toAddress, value1).flowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(web3jSubscriber);
+        BigDecimal value1 = NumericUtil.valueFormatByDecimal(value, Integer.valueOf(decimals));
+        ierc20.transfer(toAddress, value1.toBigInteger()).flowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(web3jSubscriber);
+    }
+
+    public static void sendERC1400Transaction(ERC1400TransactionParam param,DisposableObserver<ERC1400.TransferByPartitionEventResponse> web3jSubscriber){
+        Observable.create((ObservableOnSubscribe<ERC1400.TransferByPartitionEventResponse>) emitter -> {
+            Credentials credentials = getCredentials(param.password);
+            StaticGasProvider staticGasProvider = new StaticGasProvider(new BigInteger(param.gasPrice), new BigInteger(param.gasLimit));
+            ERC1400 erc1400 = ERC1400.load(param.contratAddress, mWeb3j, credentials, staticGasProvider);
+            BigDecimal decimal = NumericUtil.valueFormatByDecimal(param.value, Integer.valueOf(param.decimals));
+            Log.e("LYW", "sendERC1400Transaction: " +decimal.toBigInteger());
+            Log.e("LYW", "sendERC1400Transaction: paratition " +Numeric.toHexString( param.paratition) + " fromAddress  " + param.fromAddress + " toAddress " + param.toAddress + "  value " + decimal.toBigInteger());
+
+            Tuple3<byte[], byte[], byte[]> send = erc1400.canTransferByPartition(param.paratition, param.fromAddress, param.toAddress, decimal.toBigInteger(), param.data).send();
+            byte[] value1 = send.getValue1();
+            Log.e("LYW", "sendERC1400Transaction: " + Numeric.toHexString(value1));
+            byte[] value3 = send.getValue3();
+            Log.e("LYW", "sendERC1400Transaction: " + Numeric.toHexString(value3));
+            //判断
+            //交易
+            TransactionReceipt transactionReceipt = erc1400.transferByPartition(param.paratition, param.toAddress, decimal.toBigInteger(), param.data).send();
+            List<ERC1400.TransferByPartitionEventResponse> transferByPartitionEvents = erc1400.getTransferByPartitionEvents(transactionReceipt);
+            ERC1400.TransferByPartitionEventResponse transferByPartitionEventResponse = transferByPartitionEvents.get(0);
+            emitter.onNext(transferByPartitionEventResponse);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(web3jSubscriber);
     }
 
     static Credentials getCredentials(String password) {

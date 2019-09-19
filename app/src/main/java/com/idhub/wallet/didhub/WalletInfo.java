@@ -77,6 +77,9 @@ public class WalletInfo {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
+    public boolean verifyPassword(String password) {
+            return keystore.verifyPassword(password);
+    }
 
     boolean delete(String password) {
         return keystore.verifyPassword(password) && WalletManager.generateWalletFile(keystore.getId()).delete();

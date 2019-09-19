@@ -36,6 +36,7 @@
     <string name="wallet_confirm">确认</string>
     <string name="wallet_manager">管理</string>
     <string name="wallet_export_mnemonic">导出助记词</string>
+    <string name="wallet_export_password_hint">密码提示信息</string>
     <string name="wallet_export_keystore">导出Keystore</string>
     <string name="wallet_keystore">Keystore</string>
     <string name="wallet_QR_code">二维码</string>
@@ -294,7 +295,21 @@
 
 
     //recoveryIdentity
-    <string name="wallet_input_ein">输入EIN</string>
+    <string name="wallet_input_ein_recovery_identity">输入EIN恢复身份</string>
     <string name="wallet_please_input_content">请输入内容</string>
+    <string name="wallet_recovery_identity_fail">身份恢复失败</string>
+    <string name="wallet_recovery_identity_from_mnemonic_tip">输入助记词恢复身份</string>
 
+    //transaction
+    <string name="wallet_transaction_fail">交易失败</string>
+    <string name="wallet_transaction_success">交易发送成功</string>
+
+    //associationAddress
+    <string name="wallet_default_address_password">请输入defaultAddress密码</string>
+    <string name="wallet_association_address_password">请输入关联地址密码</string>
+    <string name="wallet_default_password_empty">默认地址密码不能为空</string>
+    <string name="wallet_association_password_empty">关联地址密码不能为空</string>
+    <string name="wallet_default_password_false">默认地址密码输入错误</string>
+    <string name="wallet_association_password_false">关联地址密码输入错误</string>
+    <string name="wallet_upgrade_association_false">关联地址升级失败</string>
 </resources>

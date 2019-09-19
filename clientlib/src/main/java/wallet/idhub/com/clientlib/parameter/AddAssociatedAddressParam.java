@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 public class AddAssociatedAddressParam {
     public String approvingAddress;
+    public String associationPrivateKey;
     public String addressToAdd;
     public BigInteger v;
     public BigInteger ein;

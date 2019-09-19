@@ -49,12 +49,11 @@ public class IDHubCredentialProvider implements CredentialProvider {
 
     @Override
     public long getLastEndBlockNumber() {
-        return 0;
-//        return BlockNumbersSharedPreferences.getInstance().getBlockNumber();
+        return BlockNumbersSharedPreferences.getInstance().getBlockNumber();
     }
 
     @Override
     public void storeLastEndBlockNumber(long l) {
-//        BlockNumbersSharedPreferences.getInstance().setBlockNumber(l);
+        BlockNumbersSharedPreferences.getInstance().setBlockNumber(l);
     }
 }

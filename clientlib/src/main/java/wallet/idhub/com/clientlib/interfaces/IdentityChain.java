@@ -20,9 +20,9 @@ public interface IdentityChain {
 	BigInteger getEINSync(String associate) throws Exception;
 	Boolean hasIdentity(String address) throws Exception;
 
-	Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd);
-	Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress);
-	Observable<ERC1056ResolverInterface.IdentityResetedEventResponse> reset(String newIdentity);
+	Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd,String associationPrivateKey);
+	Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress,String newAssociationAddressPrivateKey);
+	Observable<ERC1056ResolverInterface.IdentityResetedEventResponse> reset(String newIdentity,String privateKey);
 	Observable< ERC1056ResolverInterface.IdentityInitializedEventResponse> initialize(String identity);
 
 }

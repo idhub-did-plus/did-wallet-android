@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.tablayout.TabLayout;
+import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.createmanager.IdentityManagerActivity;
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             public void income(List<Tx> txes) {
                 List<TransactionRecordEntity> transactionRecordEntities = new ArrayList<>();
                 for (Tx tx : txes) {
-                    Log.e("LYW", "income:subscribeTransaction " + tx.toString());
                     TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
                     transactionRecordEntity.setTx(tx);
                     transactionRecordEntities.add(transactionRecordEntity);
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
                     transactionRecordEntity.setTx(tx);
                     NotificationUtils.sendTransactionNotification(MainActivity.this,transactionRecordEntity);
+                    WalletAddAssetsObservable.getInstance().update();
                 }
                 new TransactionRecordDbManager().insertListDataTo50Datas(transactionRecordEntities);
             }
@@ -94,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
             public void income(List<TxToken> txTokens) {
                 List<TransactionRecordEntity> transactionRecordEntities = new ArrayList<>();
                 for (TxToken txToken : txTokens) {
-                    Log.e("LYW", "income:subscribeTransfer " + txToken.toString());
                     TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
                     transactionRecordEntity.setTxToken(txToken);
                     transactionRecordEntities.add(transactionRecordEntity);
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     TransactionRecordEntity transactionRecordEntity = new TransactionRecordEntity();
                     transactionRecordEntity.setTxToken(tx);
                     NotificationUtils.sendTransactionNotification(MainActivity.this,transactionRecordEntity);
+                    WalletAddAssetsObservable.getInstance().update();
                 }
                 new TransactionRecordDbManager().insertListDataTo50Datas(transactionRecordEntities);
             }
@@ -126,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
         }else if ("upgrade".equals(data)){
             WalletSelectedObservable.getInstance().update();
             WalletUpgradeObservable.getInstance().update();
+        } else if ("transaction".equals(data)) {
+            WalletAddAssetsObservable.getInstance().update();
         }
     }
 
