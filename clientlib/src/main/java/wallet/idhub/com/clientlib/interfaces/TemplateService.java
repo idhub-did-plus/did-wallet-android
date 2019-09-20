@@ -1,8 +1,8 @@
 package wallet.idhub.com.clientlib.interfaces;
 
-import com.idhub.magic.center.parameter.MagicResponse;
-import com.idhub.magic.center.service.TemplateData;
-import com.idhub.magic.center.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.service.TemplateData;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

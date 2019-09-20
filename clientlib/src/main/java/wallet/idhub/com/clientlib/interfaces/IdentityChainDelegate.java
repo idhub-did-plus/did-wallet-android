@@ -2,7 +2,7 @@ package wallet.idhub.com.clientlib.interfaces;
 
 import java.util.List;
 
-import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 
 public interface IdentityChainDelegate {
 	void createIdentity();

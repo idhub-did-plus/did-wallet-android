@@ -118,6 +118,8 @@
     <string name="wallet_associated_address">关联地址</string>
     <string name="wallet_delete">删除</string>
     <string name="wallet_wallet_delete">确定删除钱包吗</string>
+
+    //information
     <string name="wallet_select_upload_file_type">选择上传文件类型</string>
     <string name="wallet_please_input_file_name">请输入证明文件名称</string>
     <string name="wallet_file_name">证明文件名称：</string>
@@ -150,7 +152,9 @@
 
     <string name="wallet_id_hub_information_title">认证信息</string>
     <string name="wallet_first_name">姓氏</string>
+    <string name="wallet_middle_name">middle name</string>
     <string name="wallet_last_name">名字</string>
+    <string name="wallet_gender">性别</string>
     <string name="wallet_birthday">生日</string>
     <string name="wallet_country">国籍</string>
     <string name="wallet_residence_country">居住国</string>
@@ -159,7 +163,15 @@
     <string name="wallet_phone_number">手机号</string>
     <string name="wallet_tax_number">纳税号</string>
     <string name="wallet_ssn_number">社保号</string>
-    <string name="wallet_address">住址</string>
+    <string name="wallet_street">Street</string>
+    <string name="wallet_address_country">国家</string>
+    <string name="wallet_address_country_hint">同居住国</string>
+    <string name="wallet_postal_code">邮编</string>
+    <string name="wallet_city">省份</string>
+    <string name="wallet_state">城市</string>
+    <string name="wallet_neighborhood">区县</string>
+    <string name="wallet_address_detail">详细地址</string>
+    <string name="wallet_address_detail_hint">（包括乡镇、街道、小区、门牌号等）</string>
     <string name="wallet_email">邮箱</string>
 
     //dapp

@@ -16,6 +16,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <include
+                android:id="@+id/first_name"
+                layout="@layout/wallet_common_input_information_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/middle_name"
+                layout="@layout/wallet_common_input_information_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <include
                 android:id="@+id/last_name"
@@ -23,9 +34,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-
             <include
-                android:id="@+id/first_name"
+                android:id="@+id/gender"
                 layout="@layout/wallet_common_input_information_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -74,7 +84,37 @@
                 android:layout_height="wrap_content" />
 
             <include
-                android:id="@+id/address_proof"
+                android:id="@+id/street"
+                layout="@layout/wallet_common_input_information_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/address_country"
+                layout="@layout/wallet_common_select_information_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/postal_code"
+                layout="@layout/wallet_common_input_information_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/city"
+                layout="@layout/wallet_common_input_information_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/state"
+                layout="@layout/wallet_common_input_information_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/neighborhood"
+                layout="@layout/wallet_common_input_information_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <include
+                android:id="@+id/address_detail"
                 layout="@layout/wallet_common_input_information_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

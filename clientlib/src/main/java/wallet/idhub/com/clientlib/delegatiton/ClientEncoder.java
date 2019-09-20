@@ -10,10 +10,10 @@ import org.web3j.crypto.ECKeyPair;
 import org.web3j.crypto.Sign;
 import org.web3j.utils.Numeric;
 
-import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
-import com.idhub.magic.center.service.DeployedContractAddress;
-import com.idhub.magic.center.util.CryptoUtil;
 import wallet.idhub.com.clientlib.ProviderFactory;
+import com.idhub.magic.common.parameter.CreateIdentityDelegatedParam;
+import com.idhub.magic.common.service.DeployedContractAddress;
+import com.idhub.magic.common.util.CryptoUtil;
 
 public class ClientEncoder {
 

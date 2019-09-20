@@ -28,7 +28,6 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    api 'org.web3j:core:4.2.0-android'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
@@ -36,5 +35,7 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     api 'com.squareup.retrofit2:converter-jackson:2.0.0'
     api project(path: ':etherscan')
+    api project(path: ':commom')
+
     //    api files('libs/magic-common-0.0.1-SNAPSHOT.jar')
 }

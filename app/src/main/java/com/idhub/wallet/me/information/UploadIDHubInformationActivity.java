@@ -11,32 +11,53 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.idhub.magic.center.ustorage.entity.BasicInfo;
-import com.idhub.magic.center.ustorage.entity.FinancialProfile;
-import com.idhub.magic.center.ustorage.entity.IdentityArchive;
-import com.idhub.magic.center.ustorage.entity.IdentityInfo;
+import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.ustorage.entity.BasicInfo;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.IdentityInfo;
+import com.idhub.magic.common.ustorage.entity.component.Address;
+import com.idhub.magic.common.ustorage.entity.component.AddressElement;
+import com.idhub.magic.common.ustorage.entity.component.Name;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.country.Country;
 import com.idhub.wallet.common.country.CountryPickerCallbacks;
 import com.idhub.wallet.common.country.CountryPickerDialog;
 import com.idhub.wallet.common.date.DatePicker;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.didhub.WalletInfo;
+import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.greendao.UploadIDHubInfoDbManager;
 import com.idhub.wallet.greendao.entity.UploadIDHubInfoEntity;
 import com.idhub.wallet.me.information.view.InformationInputItemView;
 import com.idhub.wallet.me.information.view.InformationSelectItemView;
+import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.DateUtils;
 
 import org.greenrobot.greendao.async.AsyncOperation;
 import org.greenrobot.greendao.async.AsyncOperationListener;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import wallet.idhub.com.clientlib.ApiFactory;
 
 public class UploadIDHubInformationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private InformationInputItemView mLastNameView;
+    private InformationInputItemView mGenderView;
     private InformationInputItemView mFirstNameView;
     private InformationSelectItemView mNationalityView;
     private InformationSelectItemView mCountryOfResidenceView;
@@ -46,7 +67,6 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
     private EditText mPhoneNumberView;
     private InformationInputItemView mTaxIdView;
     private InformationInputItemView mSSNView;
-    private InformationInputItemView mAddressView;
     private InformationInputItemView mEmailView;
     private UploadIDHubInfoEntity mIdHubInfoEntity;
     private UploadIDHubInfoDbManager mUploadIDHubInfoDbManager;
@@ -54,6 +74,16 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
     private String mResidenceCountryIsoCode;
     private String mCountryIsoCode;
     private TextView mPhoneDialingCodeView;
+    private InformationInputItemView mMiddleNameView;
+    private InformationInputItemView mStreetView;
+    private InformationSelectItemView mAddressCountryView;
+    private InformationInputItemView mCityView;
+    private InformationInputItemView mPostalCodeView;
+    private InformationInputItemView mStateView;
+    private InformationInputItemView mNeighborhoodView;
+    private InformationInputItemView mAddressDetailView;
+    private boolean mIsLocalzh;
+    private String mAddressCountryCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +91,22 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_upload_idhub_information);
         initView();
         initData();
+
     }
 
     private void initData() {
+        String locale = Locale.getDefault().toString();
+        mIsLocalzh = locale.contains("zh");
+        if (mIsLocalzh) {
+            mMiddleNameView.setVisibility(View.GONE);
+            mStreetView.setVisibility(View.GONE);
+            mAddressDetailView.setVisibility(View.VISIBLE);
+        } else {
+            mMiddleNameView.setVisibility(View.VISIBLE);
+            mStreetView.setVisibility(View.VISIBLE);
+            mAddressDetailView.setVisibility(View.GONE);
+        }
+
         mUploadIDHubInfoDbManager = new UploadIDHubInfoDbManager();
         mUploadIDHubInfoDbManager.queryById(1, new AsyncOperationListener() {
             @Override
@@ -72,17 +115,32 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
                 if (mIdHubInfoEntity != null) {
                     mFirstNameView.setValue(mIdHubInfoEntity.getFirstName());
                     mLastNameView.setValue(mIdHubInfoEntity.getLastName());
+                    mGenderView.setValue(mIdHubInfoEntity.getGender());
                     mBirthdayView.setInformation(mIdHubInfoEntity.getBirthday());
                     mNationalityView.setInformation(mIdHubInfoEntity.getCountry());
                     mCountryOfResidenceView.setInformation(mIdHubInfoEntity.getResidenceCountry());
                     mIdNumberView.setValue(mIdHubInfoEntity.getIdcardNumber());
                     mPassportNumberView.setValue(mIdHubInfoEntity.getPassportNumber());
                     mPhoneNumberView.setText(mIdHubInfoEntity.getPhone());
-                    mAddressView.setValue(mIdHubInfoEntity.getAddress());
+                    if (mIsLocalzh) {
+                        mAddressDetailView.setValue(mIdHubInfoEntity.getStreet());
+                    } else {
+                        mStreetView.setValue(mIdHubInfoEntity.getStreet());
+                        mMiddleNameView.setValue(mIdHubInfoEntity.getMiddleName());
+                    }
+                    mAddressCountryView.setInformation(mIdHubInfoEntity.getAddressCountry());
+                    mPostalCodeView.setValue(mIdHubInfoEntity.getPostalCode());
+                    mCityView.setValue(mIdHubInfoEntity.getCity());
+                    mStateView.setValue(mIdHubInfoEntity.getState());
+                    mNeighborhoodView.setValue(mIdHubInfoEntity.getNeighborhood());
+
                     mTaxIdView.setValue(mIdHubInfoEntity.getTaxNumber());
                     mSSNView.setValue(mIdHubInfoEntity.getSsnNumber());
                     mEmailView.setValue(mIdHubInfoEntity.getEmail());
                     mPhoneDialingCodeView.setText(mIdHubInfoEntity.getPhoneDialingCode());
+                    mCountryIsoCode = mIdHubInfoEntity.getCountryIsoCode();
+                    mResidenceCountryIsoCode = mIdHubInfoEntity.getResidenceCountryIsoCode();
+                    mAddressCountryCode = mIdHubInfoEntity.getAddressCountryCode();
                 }
             }
         });
@@ -91,10 +149,14 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_id_hub_information_title));
-        mLastNameView = findViewById(R.id.last_name);
-        mLastNameView.setData(getString(R.string.wallet_first_name), getString(R.string.wallet_please_input) + getString(R.string.wallet_first_name));
         mFirstNameView = findViewById(R.id.first_name);
-        mFirstNameView.setData(getString(R.string.wallet_last_name), getString(R.string.wallet_please_input) + getString(R.string.wallet_last_name));
+        mFirstNameView.setData(getString(R.string.wallet_first_name), getString(R.string.wallet_please_input) + getString(R.string.wallet_first_name));
+        mMiddleNameView = findViewById(R.id.middle_name);
+        mMiddleNameView.setData(getString(R.string.wallet_middle_name), getString(R.string.wallet_please_input) + getString(R.string.wallet_middle_name));
+        mLastNameView = findViewById(R.id.last_name);
+        mLastNameView.setData(getString(R.string.wallet_last_name), getString(R.string.wallet_please_input) + getString(R.string.wallet_last_name));
+        mGenderView = findViewById(R.id.gender);
+        mGenderView.setData(getString(R.string.wallet_gender), getString(R.string.wallet_please_input) + getString(R.string.wallet_gender));
         mBirthdayView = findViewById(R.id.birthday);
         mBirthdayView.setData(getString(R.string.wallet_birthday), getString(R.string.wallet_please_input) + getString(R.string.wallet_birthday));
         mBirthdayView.setOnClickListener(this);
@@ -120,8 +182,24 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         mTaxIdView.setData(getString(R.string.wallet_tax_number), getString(R.string.wallet_please_input) + getString(R.string.wallet_tax_number));
         mSSNView = findViewById(R.id.ssn);
         mSSNView.setData(getString(R.string.wallet_ssn_number), getString(R.string.wallet_please_input) + getString(R.string.wallet_ssn_number));
-        mAddressView = findViewById(R.id.address_proof);
-        mAddressView.setData(getString(R.string.wallet_address), getString(R.string.wallet_please_input) + getString(R.string.wallet_address));
+
+        mStreetView = findViewById(R.id.street);
+        mStreetView.setData(getString(R.string.wallet_street), getString(R.string.wallet_please_input) + getString(R.string.wallet_street));
+        mAddressCountryView = findViewById(R.id.address_country);
+        mAddressCountryView.setOnClickListener(this);
+        mAddressCountryView.setData(getString(R.string.wallet_address_country), getString(R.string.wallet_address_country_hint));
+        mPostalCodeView = findViewById(R.id.postal_code);
+        mPostalCodeView.setData(getString(R.string.wallet_postal_code), getString(R.string.wallet_please_input) + getString(R.string.wallet_postal_code));
+        mCityView = findViewById(R.id.city);
+        mCityView.setData(getString(R.string.wallet_city), getString(R.string.wallet_please_input) + getString(R.string.wallet_city));
+        mStateView = findViewById(R.id.state);
+        mStateView.setData(getString(R.string.wallet_state), getString(R.string.wallet_please_input) + getString(R.string.wallet_state));
+        mNeighborhoodView = findViewById(R.id.neighborhood);
+        mNeighborhoodView.setData(getString(R.string.wallet_neighborhood), getString(R.string.wallet_please_input) + getString(R.string.wallet_neighborhood));
+        mAddressDetailView = findViewById(R.id.address_detail);
+        mAddressDetailView.setData(getString(R.string.wallet_address_detail), getString(R.string.wallet_address_detail_hint));
+
+
         mEmailView = findViewById(R.id.email);
         mEmailView.setData(getString(R.string.wallet_email), getString(R.string.wallet_please_input) + getString(R.string.wallet_email));
         findViewById(R.id.tv_upgrade).setOnClickListener(this);
@@ -151,6 +229,9 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
             case R.id.tv_phone_dialing_code:
                 selectDialingCode();
                 break;
+            case R.id.address_country:
+                selectNationlity(mAddressCountryView, "addressCountry");
+                break;
         }
     }
 
@@ -166,7 +247,15 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         String dialingCode = mPhoneDialingCode;
         String taxIdViewInputData = mTaxIdView.getInputData();
         String ssnViewInputData = mSSNView.getInputData();
-        String addressViewInputData = mAddressView.getInputData();
+        String middleName = mMiddleNameView.getInputData();
+        String gender = mGenderView.getInputData();
+        String street = mStreetView.getInputData();
+        String addressContry = mAddressCountryView.getInformation();
+        String postalCode = mPostalCodeView.getInputData();
+        String city = mCityView.getInputData();
+        String state = mStateView.getInputData();
+        String neighborhood = mNeighborhoodView.getInputData();
+        String addressDetail = mAddressDetailView.getInputData();
         String emailViewInputData = mEmailView.getInputData();
         if (mIdHubInfoEntity == null) {
             UploadIDHubInfoEntity uploadIDHubInfoEntity = new UploadIDHubInfoEntity();
@@ -181,7 +270,19 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
             uploadIDHubInfoEntity.setPhoneDialingCode(dialingCode);
             uploadIDHubInfoEntity.setTaxNumber(taxIdViewInputData);
             uploadIDHubInfoEntity.setSsnNumber(ssnViewInputData);
-            uploadIDHubInfoEntity.setAddress(addressViewInputData);
+            if (mIsLocalzh) {
+                uploadIDHubInfoEntity.setStreet(addressDetail);
+            } else {
+                uploadIDHubInfoEntity.setStreet(street);
+            }
+            uploadIDHubInfoEntity.setMiddleName(middleName);
+            uploadIDHubInfoEntity.setGender(gender);
+            uploadIDHubInfoEntity.setAddressCountry(addressContry);
+            uploadIDHubInfoEntity.setAddressCountryCode(mAddressCountryCode);
+            uploadIDHubInfoEntity.setPostalCode(postalCode);
+            uploadIDHubInfoEntity.setCity(city);
+            uploadIDHubInfoEntity.setState(state);
+            uploadIDHubInfoEntity.setNeighborhood(neighborhood);
             uploadIDHubInfoEntity.setEmail(emailViewInputData);
             uploadIDHubInfoEntity.setResidenceCountryIsoCode(mResidenceCountryIsoCode);
             uploadIDHubInfoEntity.setCountryIsoCode(mCountryIsoCode);
@@ -198,7 +299,19 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
             mIdHubInfoEntity.setPhoneDialingCode(dialingCode);
             mIdHubInfoEntity.setTaxNumber(taxIdViewInputData);
             mIdHubInfoEntity.setSsnNumber(ssnViewInputData);
-            mIdHubInfoEntity.setAddress(addressViewInputData);
+            if (mIsLocalzh) {
+                mIdHubInfoEntity.setStreet(addressDetail);
+            } else {
+                mIdHubInfoEntity.setStreet(street);
+            }
+            mIdHubInfoEntity.setMiddleName(middleName);
+            mIdHubInfoEntity.setGender(gender);
+            mIdHubInfoEntity.setAddressCountry(addressContry);
+            mIdHubInfoEntity.setAddressCountryCode(mAddressCountryCode);
+            mIdHubInfoEntity.setPostalCode(postalCode);
+            mIdHubInfoEntity.setCity(city);
+            mIdHubInfoEntity.setState(state);
+            mIdHubInfoEntity.setNeighborhood(neighborhood);
             mIdHubInfoEntity.setEmail(emailViewInputData);
             mIdHubInfoEntity.setResidenceCountryIsoCode(mResidenceCountryIsoCode);
             mIdHubInfoEntity.setCountryIsoCode(mCountryIsoCode);
@@ -206,15 +319,112 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         }
         IdentityArchive identityArchive = new IdentityArchive();
         BasicInfo basicInfo = new BasicInfo();
-        identityArchive.setBasicInfo(basicInfo);
+        basicInfo.setTaxId(taxIdViewInputData);
+        basicInfo.setEmail(emailViewInputData);
+        basicInfo.setSsn(ssnViewInputData);
+
         IdentityInfo identityInfo = new IdentityInfo();
-//        identityInfo.setBirthday();
+        Name name = new Name();
+        name.setFirstName(firstNameViewInputData);
+        name.setMiddleName(middleName);
+        name.setLastName(lastNameViewInputData);
+        Address address = new Address();
+        address.setPostalCode(postalCode);
+        ArrayList<AddressElement> elements = new ArrayList<>();
+        if (mIsLocalzh) {
+            AddressElement addressCountryElement = new AddressElement();
+            addressCountryElement.name = "国家";
+            addressCountryElement.value = mAddressCountryCode;
+            elements.add(addressCountryElement);
+
+            AddressElement addressCityElement = new AddressElement();
+            addressCityElement.name = "省份";
+            addressCityElement.value = city;
+            elements.add(addressCityElement);
+
+            AddressElement addressStateElement = new AddressElement();
+            addressStateElement.name = "城市";
+            addressStateElement.value = state;
+            elements.add(addressStateElement);
+
+            AddressElement addressNeighborhoodElement = new AddressElement();
+            addressNeighborhoodElement.name = "区县";
+            addressNeighborhoodElement.value = neighborhood;
+            elements.add(addressNeighborhoodElement);
+
+            AddressElement addressDetailElement = new AddressElement();
+            addressDetailElement.name = "详细地址";
+            addressDetailElement.value = addressDetail;
+            elements.add(addressDetailElement);
+
+        } else {
+            AddressElement addressDetailElement = new AddressElement();
+            addressDetailElement.name = "street";
+            addressDetailElement.value = street;
+            elements.add(addressDetailElement);
+
+            AddressElement addressCountryElement = new AddressElement();
+            addressCountryElement.name = "country";
+            addressCountryElement.value = mAddressCountryCode;
+            elements.add(addressCountryElement);
+
+            AddressElement addressCityElement = new AddressElement();
+            addressCityElement.name = "city";
+            addressCityElement.value = city;
+            elements.add(addressCityElement);
+
+            AddressElement addressStateElement = new AddressElement();
+            addressStateElement.name = "state";
+            addressStateElement.value = state;
+            elements.add(addressStateElement);
+
+            AddressElement addressNeighborhoodElement = new AddressElement();
+            addressNeighborhoodElement.name = "neighborhood";
+            addressNeighborhoodElement.value = neighborhood;
+            elements.add(addressNeighborhoodElement);
+        }
+        address.setAddressSequence(elements);
+        identityInfo.setName(name);
+        identityInfo.setAddress(address);
+        identityInfo.setGender(gender);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date parse = sdf.parse(birthdayViewInformation);
+            Log.e("LYW", "submit: " + parse);
+            identityInfo.setBirthday(parse);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        identityInfo.setCountry(mCountryIsoCode);
+        identityInfo.setResidenceCountry(mResidenceCountryIsoCode);
+        identityInfo.setIdcardNumber(idNumberViewInputData);
+        identityInfo.setPassportNumber(passportNumberViewInputData);
+        identityInfo.setPhoneNumber(phoneNumberViewInputData);
+
         identityArchive.setIdentityInfo(identityInfo);
-        FinancialProfile financialProfile = new FinancialProfile();
+        identityArchive.setBasicInfo(basicInfo);
+        IDHubCredentialProvider.setDefaultCredentials(new WalletInfo(WalletManager.getDefaultKeystore()).exportPrivateKey("123"));
+        Call<MagicResponse> call = ApiFactory.getArchiveStorage().storeArchive(identityArchive, WalletManager.getDefaultAddress());
+        call.enqueue(new Callback<MagicResponse>() {
+            @Override
+            public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
 
-        identityArchive.setFinancialProfile(financialProfile);
-//        ApiFactory.getArchiveStorage().storeArchive()
+                MagicResponse body = response.body();
 
+                if (body != null) {
+                    boolean success = body.isSuccess();
+                    String message = body.getMessage();
+                    Log.e("LYW", "submit: " + success + " " + message);
+                } else {
+                    Log.e("LYW", "submit:null " );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MagicResponse> call, Throwable t) {
+                Log.e("LYW", "onFailure: " + t.getMessage());
+            }
+        });
 
     }
 
@@ -230,8 +440,15 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
                                 mPhoneDialingCodeView.setText("+" + mPhoneDialingCode);
                             }
                             mResidenceCountryIsoCode = country.getIsoCode();
-                        } else {
+                            String information = mAddressCountryView.getInformation();
+                            if (TextUtils.isEmpty(information)) {
+                                mAddressCountryView.setInformation(country.getCountryName(UploadIDHubInformationActivity.this));
+                                mAddressCountryCode = country.getIsoCode();
+                            }
+                        } else if ("country".equals(source)) {
                             mCountryIsoCode = country.getIsoCode();
+                        } else if ("addressCountry".equals(source)) {
+                            mAddressCountryCode = country.getIsoCode();
                         }
                         informationSelectItemView.setInformation(country.getCountryName(UploadIDHubInformationActivity.this));
                     }

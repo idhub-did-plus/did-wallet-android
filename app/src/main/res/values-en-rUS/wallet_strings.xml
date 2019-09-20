@@ -16,4 +16,15 @@
     <string name="wallet_qualified_purchaser_condition_third">A natural person, a corporation, partnership, association, joint stock company, trust, fund or other organized group of persons, whether incorporated or not, acting for his/her/its own account or the account of other qualified purchasers, (i) who in the aggregate owns and invests on a discretionary basis, not less than $25,000,000 in investments and (ii) An entity in which each of the beneficial owners of the entity’s securities is a qualified purchaser, as that term is defined in the 1940 Act.</string>
     <string name="wallet_qualified_purchaser_condition_fourth">A “knowledgeable employee,” as defined for purposes of Section 3(c)(5) under the 1940 Act.</string>
 
+
+    //information
+    <string name="wallet_middle_name">middle name</string>
+    <string name="wallet_street">Street</string>
+    <string name="wallet_address_country">Country</string>
+    <string name="wallet_postal_code">Zip/Postal Code</string>
+    <string name="wallet_city">City</string>
+    <string name="wallet_state">State</string>
+    <string name="wallet_neighborhood">Neighborhood</string>
+    <string name="wallet_address_detail">详细地址</string>
+    <string name="wallet_address_detail_hint">（包括乡镇、街道、小区、门牌号等）</string>
 </resources>

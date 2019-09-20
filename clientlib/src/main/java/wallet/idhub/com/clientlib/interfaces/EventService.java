@@ -2,8 +2,8 @@ package wallet.idhub.com.clientlib.interfaces;
 
 import java.util.List;
 
-import com.idhub.magic.center.event.MagicEvent;
-import com.idhub.magic.center.parameter.MagicResponse;
+import com.idhub.magic.common.event.MagicEvent;
+import com.idhub.magic.common.parameter.MagicResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

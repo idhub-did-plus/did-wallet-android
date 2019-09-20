@@ -1,13 +1,9 @@
 package wallet.idhub.com.clientlib.local;
 
-import android.util.Log;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.idhub.magic.center.contracts.ERC1056ResolverInterface;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
 
 import java8.util.concurrent.CompletableFuture;
 import java8.util.function.Consumer;
@@ -15,13 +11,11 @@ import wallet.idhub.com.clientlib.parameter.AddAssociatedAddressParam;
 import wallet.idhub.com.clientlib.parameter.InitializeIdentityParam;
 import wallet.idhub.com.clientlib.parameter.RecoveryIdentityParam;
 import wallet.idhub.com.clientlib.parameter.ResetIdentityParam;
+import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import io.reactivex.Observable;
-
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple4;
-
-import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
-import com.idhub.magic.center.service.DeployedContractAddress;
 
 import wallet.idhub.com.clientlib.ProviderFactory;
 import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
@@ -30,6 +24,8 @@ import wallet.idhub.com.clientlib.interfaces.IdentityChain;
 import wallet.idhub.com.clientlib.interfaces.IdentityChainViewer;
 import wallet.idhub.com.clientlib.interfaces.Listen;
 import wallet.idhub.com.clientlib.interfaces.ResultListener;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+import com.idhub.magic.common.service.DeployedContractAddress;
 
 
 public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
@@ -128,11 +124,11 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
     }
 
     @Override
-    public Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress, String newAssiciationAddressPrivateKey) {
+    public Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress, String privateKey) {
         RecoveryIdentityParam recoveryIdentityParam = new RecoveryIdentityParam();
         recoveryIdentityParam.ein = new BigInteger(ein);
+        recoveryIdentityParam.privateKey = privateKey;
         recoveryIdentityParam.newAssociationAddress = newAssociationAddress;
-        recoveryIdentityParam.newAssociationAddressPrivateKey = newAssiciationAddressPrivateKey;
         recoveryIdentityParam.timestamp = BigInteger.valueOf(System.currentTimeMillis() / 1000);
         RecoveryIdentityParam param = ClientEncoderLocal.recoveryIdentityEncoder(recoveryIdentityParam);
         CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().triggerRecovery(param.ein, param.newAssociationAddress, param.v, param.r, param.s, param.timestamp).sendAsync();
@@ -145,7 +141,6 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
                             .getRecoveryTriggeredEvents(transactionReceipt);
                     l.result(recoveryTriggeredEvents.get(0));
                 }).exceptionally(throwable -> {
-                    throwable.printStackTrace();
                     el.error(throwable.getMessage());
                     return null;
                 });
@@ -154,11 +149,11 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
     }
 
     @Override
-    public Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd,String associationPrivateKey) {
+    public Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd, String privateKey) {
         AddAssociatedAddressParam addAssociatedAddressParam = new AddAssociatedAddressParam();
-        addAssociatedAddressParam.associationPrivateKey = associationPrivateKey;
         addAssociatedAddressParam.addressToAdd = addressToAdd;
         addAssociatedAddressParam.ein = ein;
+        addAssociatedAddressParam.privateKey = privateKey;
         addAssociatedAddressParam.approvingAddress = approvingAddress;
         addAssociatedAddressParam.timestamp = BigInteger.valueOf(System.currentTimeMillis() / 1000);
         AddAssociatedAddressParam param = ClientEncoderLocal.addAssociatedAddressEncoder(addAssociatedAddressParam);
@@ -184,8 +179,8 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
     public Observable<ERC1056ResolverInterface.IdentityResetedEventResponse> reset(String newIdentity, String privateKey) {
         return Observable.create(observableEmitter -> {
             ResetIdentityParam resetIdentityParam = new ResetIdentityParam();
-            resetIdentityParam.identity = newIdentity;
             resetIdentityParam.privateKey = privateKey;
+            resetIdentityParam.identity = newIdentity;
             String identityOwner = ContractManager.getRegistry1056().identityOwner(newIdentity).send();
             resetIdentityParam.noce = ContractManager.getRegistry1056().nonce(identityOwner).send();
             ResetIdentityParam param = ClientEncoderLocal.resetIdentity(resetIdentityParam);

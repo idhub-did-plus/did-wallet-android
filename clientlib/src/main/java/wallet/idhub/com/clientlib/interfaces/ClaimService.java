@@ -2,8 +2,8 @@ package wallet.idhub.com.clientlib.interfaces;
 
 import java.util.List;
 
-import com.idhub.magic.center.kvc.entity.ClaimOrder;
-import com.idhub.magic.center.parameter.MagicResponse;
+import com.idhub.magic.common.kvc.entity.ClaimOrder;
+import com.idhub.magic.common.parameter.MagicResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

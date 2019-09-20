@@ -8,11 +8,11 @@ import org.web3j.utils.Numeric;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
-import com.idhub.magic.center.service.DeployedContractAddress;
 import wallet.idhub.com.clientlib.ProviderFactory;
 import wallet.idhub.com.clientlib.http.RetrofitAccessor;
 import wallet.idhub.com.clientlib.interfaces.IdentityChainDelegate;
+import com.idhub.magic.common.parameter.CreateIdentityDelegatedParam;
+import com.idhub.magic.common.service.DeployedContractAddress;
 
 public class IdentityChainDelegateImpl implements IdentityChainDelegate{
 	ObjectMapper mapper = new ObjectMapper();

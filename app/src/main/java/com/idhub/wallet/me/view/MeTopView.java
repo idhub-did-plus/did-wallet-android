@@ -14,14 +14,28 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
-import com.idhub.magic.center.service.DeployedContractAddress;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
+import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
+import com.idhub.wallet.didhub.WalletInfo;
+import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.me.information.UploadFileActivity;
 import com.idhub.wallet.me.information.UploadInformationTypeActivity;
+import com.idhub.wallet.net.IDHubCredentialProvider;
+
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import wallet.idhub.com.clientlib.ApiFactory;
 
 public class MeTopView extends ConstraintLayout implements View.OnClickListener {
 
@@ -77,6 +91,31 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
         int id = v.getId();
         switch (id) {
             case R.id.upload_file:
+                IDHubCredentialProvider.setDefaultCredentials(new WalletInfo(WalletManager.getDefaultKeystore()).exportPrivateKey("123"));
+                File file = new File(UserBasicInfoSharpreference.getInstance().getUserBasicInfo().headPath);
+                MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+                String defaultAddress = WalletManager.getDefaultAddress();
+                Log.e("LYW", "onClick: "+ defaultAddress );
+                ApiFactory.getArchiveStorage().uploadMaterial(defaultAddress,"idcardImage","头像",filePart).enqueue(new Callback<MagicResponse>() {
+                    @Override
+                    public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
+                        MagicResponse magicResponse = response.body();
+                        if (magicResponse != null) {
+                            Log.e("LYW", "onResponse: " + magicResponse.getMessage() + magicResponse.isSuccess());
+                        } else {
+                            Log.e("LYW", "onResponse: null" );
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MagicResponse> call, Throwable t) {
+                        Log.e("LYW", "onFailure: " + t.getMessage() );
+                        t.printStackTrace();
+
+                    }
+                });
                 UploadInformationTypeActivity.startAction(getContext());
                 break;
         }

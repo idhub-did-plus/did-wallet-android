@@ -8,17 +8,17 @@ import org.web3j.crypto.Credentials;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.idhub.magic.center.parameter.MagicResponse;
-import com.idhub.magic.center.ustorage.entity.FinancialProfile;
-import com.idhub.magic.center.ustorage.entity.IdentityArchive;
-import com.idhub.magic.center.ustorage.entity.IdentityInfo;
-import com.idhub.magic.center.util.AuthenticationUtils;
-import com.idhub.magic.center.util.Signature;
 import wallet.idhub.com.clientlib.ProviderFactory;
 import wallet.idhub.com.clientlib.interfaces.DelegationService;
 import wallet.idhub.com.clientlib.interfaces.EventService;
 import wallet.idhub.com.clientlib.interfaces.IdentityStorage;
 import wallet.idhub.com.clientlib.interfaces.TemplateService;
+import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.ustorage.entity.FinancialProfile;
+import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.IdentityInfo;
+import com.idhub.magic.common.util.AuthenticationUtils;
+import com.idhub.magic.common.util.Signature;
 import wallet.idhub.com.clientlib.interfaces.ClaimService;
 
 import okhttp3.HttpUrl;
@@ -77,7 +77,7 @@ public class RetrofitAccessor {
 		}).build();
 		
 		
-		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://localhost:8080")
+		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.16.58.31:8080")
 				.addConverterFactory(JacksonConverterFactory.create(mapper)).client(client).build();
 
 		identityStorage = retrofit.create(IdentityStorage.class);

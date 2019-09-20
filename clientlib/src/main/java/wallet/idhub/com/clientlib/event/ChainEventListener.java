@@ -22,8 +22,8 @@ import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.protocol.core.methods.response.Log;
 import org.web3j.tx.Contract;
 
-import com.idhub.magic.center.service.DeployedContractAddress;
 import wallet.idhub.com.clientlib.ProviderFactory;
+import com.idhub.magic.common.service.DeployedContractAddress;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;

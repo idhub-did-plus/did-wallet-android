@@ -1,8 +1,6 @@
 package wallet.idhub.com.clientlib.local;
 
 
-import android.util.Log;
-
 import java.math.BigDecimal;
 
 import org.slf4j.Logger;
@@ -18,30 +16,28 @@ import org.web3j.tx.gas.DefaultGasProvider;
 //import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
 
-import com.idhub.magic.center.contracts.ERC1056ResolverInterface;
-import com.idhub.magic.center.contracts.EthereumClaimsRegistryInterface;
-import com.idhub.magic.center.contracts.EthereumDIDRegistryInterface;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
-import com.idhub.magic.center.service.DeployedContractAddress;
-
 import wallet.idhub.com.clientlib.ProviderFactory;
+import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
+import com.idhub.magic.common.contracts.EthereumClaimsRegistryInterface;
+import com.idhub.magic.common.contracts.EthereumDIDRegistryInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
+import com.idhub.magic.common.service.DeployedContractAddress;
 
 public class ContractManager {
 
     private static final Logger log = LoggerFactory.getLogger(ContractManager.class);
 
-    static Web3j web3j = ProviderFactory.getProvider().web3j();
+    static  Web3j web3j = ProviderFactory.getProvider().web3j();
 
-    static IdentityRegistryInterface registry1484;
-    static ERC1056ResolverInterface resolver1056;
-    static EthereumDIDRegistryInterface registry1056;
-    static EthereumClaimsRegistryInterface registry780;
-    static Credentials credentials;
+	static IdentityRegistryInterface registry1484;
+	static  ERC1056ResolverInterface resolver1056;
+	static  EthereumDIDRegistryInterface registry1056;
+	static  EthereumClaimsRegistryInterface registry780;
+	static  Credentials credentials;
 
-    static {
-        Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
-        System.out.println(credentials.getAddress());
-        Log.e("LYW", "static initializer: " + credentials.getAddress());
+   static{
+    	Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
+        
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface,
                 web3j,
@@ -63,7 +59,7 @@ public class ContractManager {
                 credentials,
                 contractGasProvider
         );
-
+    
     }
 
     static public EthereumDIDRegistryInterface getRegistry1056() {
@@ -72,20 +68,20 @@ public class ContractManager {
 
 
     static public EthereumClaimsRegistryInterface getRegistry780() {
-        return registry780;
-    }
+		return registry780;
+	}
 
 
     static public ERC1056ResolverInterface getResolver1056() {
-        return resolver1056;
-    }
+		return resolver1056;
+	}
 
     static public IdentityRegistryInterface getRegistry1484() {
-        return registry1484;
-    }
+		return registry1484;
+	}
 
-    void send() throws Exception {
-
+	void send() throws Exception{
+       
 
         // FIXME: Request some Ether for the Rinkeby test network at https://www.rinkeby.io/#faucet
         log.info("Sending 1 Wei ("
@@ -98,6 +94,6 @@ public class ContractManager {
         log.info("Transaction complete, view it at https://rinkeby.etherscan.io/tx/"
                 + transferReceipt.getTransactionHash());
 
-
+      
     }
 }

@@ -1,7 +1,7 @@
 package wallet.idhub.com.clientlib.interfaces;
 
-import com.idhub.magic.center.parameter.CreateIdentityDelegatedParam;
-import com.idhub.magic.center.parameter.MagicResponse;
+import com.idhub.magic.common.parameter.CreateIdentityDelegatedParam;
+import com.idhub.magic.common.parameter.MagicResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -3,11 +3,11 @@ package wallet.idhub.com.clientlib.interfaces;
 import java.math.BigInteger;
 import java.util.List;
 
-import com.idhub.magic.center.contracts.ERC1056ResolverInterface;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface;
-import com.idhub.magic.center.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
+
+import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 import io.reactivex.Observable;
-import org.web3j.protocol.core.methods.response.TransactionReceipt;
 
 public interface IdentityChain {
 	Listen<IdentityCreatedEventResponse> createIdentity();
@@ -20,9 +20,9 @@ public interface IdentityChain {
 	BigInteger getEINSync(String associate) throws Exception;
 	Boolean hasIdentity(String address) throws Exception;
 
-	Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd,String associationPrivateKey);
-	Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress,String newAssociationAddressPrivateKey);
-	Observable<ERC1056ResolverInterface.IdentityResetedEventResponse> reset(String newIdentity,String privateKey);
+	Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd, String associationPrivateKey);
+	Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress, String newAssociationAddressPrivateKey);
+	Observable<ERC1056ResolverInterface.IdentityResetedEventResponse> reset(String newIdentity, String privateKey);
 	Observable< ERC1056ResolverInterface.IdentityInitializedEventResponse> initialize(String identity);
 
 }

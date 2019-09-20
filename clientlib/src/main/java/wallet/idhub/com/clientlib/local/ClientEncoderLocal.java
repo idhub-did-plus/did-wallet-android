@@ -1,9 +1,12 @@
 package wallet.idhub.com.clientlib.local;
 
-import android.util.Log;
-
-import com.idhub.magic.center.service.DeployedContractAddress;
-import com.idhub.magic.center.util.CryptoUtil;
+import wallet.idhub.com.clientlib.ProviderFactory;
+import wallet.idhub.com.clientlib.parameter.AddAssociatedAddressParam;
+import wallet.idhub.com.clientlib.parameter.InitializeIdentityParam;
+import wallet.idhub.com.clientlib.parameter.RecoveryIdentityParam;
+import wallet.idhub.com.clientlib.parameter.ResetIdentityParam;
+import com.idhub.magic.common.service.DeployedContractAddress;
+import com.idhub.magic.common.util.CryptoUtil;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Uint;
 import org.web3j.crypto.Credentials;
@@ -13,32 +16,24 @@ import org.web3j.utils.Numeric;
 
 import java.math.BigInteger;
 
-import wallet.idhub.com.clientlib.ProviderFactory;
-import wallet.idhub.com.clientlib.parameter.AddAssociatedAddressParam;
-import wallet.idhub.com.clientlib.parameter.InitializeIdentityParam;
-import wallet.idhub.com.clientlib.parameter.RecoveryIdentityParam;
-import wallet.idhub.com.clientlib.parameter.ResetIdentityParam;
-
 public class ClientEncoderLocal {
 
     public static RecoveryIdentityParam recoveryIdentityEncoder(RecoveryIdentityParam param) {
 
         Address contract = new Address(DeployedContractAddress.IdentityRegistryInterface);
         Address newAssociatedAddress = new Address(param.newAssociationAddress);
+
         byte[] hexMessage = CryptoUtil.encodePacked(
                 (byte) 0x19, (byte) 0, contract,
                 "I authorize being added to this Identity via recovery.",
                 param.ein, newAssociatedAddress, param.timestamp);
 
-        Credentials credentials =Credentials.create(param.newAssociationAddressPrivateKey);
+        Credentials credentials =Credentials.create(param.privateKey);
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(hexMessage, pair);
         param.r = sm.getR();
         param.s = sm.getS();
-        param.v = new BigInteger(String.valueOf(sm.getV()));
-        Log.e("LYW", "recoveryIdentityEncoder: r" + Numeric.toHexString(sm.getR()) );
-        Log.e("LYW", "recoveryIdentityEncoder: s" + Numeric.toHexString(sm.getS()) );
-        Log.e("LYW", "recoveryIdentityEncoder: v" + String.valueOf(sm.getV()) );
+        param.v =new BigInteger(String.valueOf(sm.getV()));
         return param;
     }
 
@@ -53,7 +48,7 @@ public class ClientEncoderLocal {
                 "I authorize being added to this Identity.",
                 addAssociatedAddressParam.ein, addressToAdd, addAssociatedAddressParam.timestamp);
 
-        Credentials credentials = Credentials.create(addAssociatedAddressParam.associationPrivateKey);
+        Credentials credentials = Credentials.create(addAssociatedAddressParam.privateKey);
         ECKeyPair pair = credentials.getEcKeyPair();
         Sign.SignatureData sm = Sign.signMessage(encodeMessage, pair);
         addAssociatedAddressParam.r = sm.getR();
@@ -66,13 +61,8 @@ public class ClientEncoderLocal {
         Address contract = new Address(DeployedContractAddress.ERC1056ResolverInterface);
         Address ethereumDIDRegistryContract = new Address(DeployedContractAddress.EthereumDIDRegistryInterface);
         Address identityAddress = new Address(initializeIdentityParam.identity);
-        BigInteger noce = initializeIdentityParam.noce;
-        System.out.println(noce);
-        System.out.println(identityAddress.getValue());
-        System.out.println(ethereumDIDRegistryContract.getValue());
-        System.out.println(contract.getValue());
         byte[] encodeMessage = CryptoUtil.encodePacked(
-                (byte) 0x19, (byte) 0, ethereumDIDRegistryContract, noce, identityAddress, "changeOwner", contract);
+                (byte) 0x19, (byte) 0, ethereumDIDRegistryContract, initializeIdentityParam.noce, identityAddress, "changeOwner", contract);
 
         Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
         ECKeyPair pair = credentials.getEcKeyPair();
@@ -80,9 +70,6 @@ public class ClientEncoderLocal {
         initializeIdentityParam.r = sm.getR();
         initializeIdentityParam.s = sm.getS();
         initializeIdentityParam.v = new BigInteger(String.valueOf(sm.getV()));
-        System.out.println("r "+ Numeric.toHexString(sm.getR()));
-        System.out.println("s "+ Numeric.toHexString(sm.getS()));
-        System.out.println("v "+new BigInteger(String.valueOf(sm.getV())) );
         return initializeIdentityParam;
     }
 
@@ -90,7 +77,6 @@ public class ClientEncoderLocal {
         Address contract = new Address(DeployedContractAddress.ERC1056ResolverInterface);
         Address ethereumDIDRegistryContract = new Address(DeployedContractAddress.EthereumDIDRegistryInterface);
         Address identityAddress = new Address(resetIdentityParam.identity);
-
         byte[] encodeMessage = CryptoUtil.encodePacked(
                 (byte) 0x19, (byte) 0, ethereumDIDRegistryContract, resetIdentityParam.noce, identityAddress, "changeOwner", contract);
 

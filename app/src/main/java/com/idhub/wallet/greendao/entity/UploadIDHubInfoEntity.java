@@ -9,7 +9,9 @@ public class UploadIDHubInfoEntity {
     @Id(autoincrement = true)
     private Long id;
     private String firstName = "";
+    private String middleName = "";
     private String lastName = "";
+    private String gender = "";
     private String birthday ="";
     private String country = "";
     private String residenceCountry ="";
@@ -17,21 +19,38 @@ public class UploadIDHubInfoEntity {
     private String passportNumber ="";
     private String taxNumber ="";
     private String ssnNumber ="";
-    private String address ="";
+    private String street ="";
+    private String addressCountry ="";
+    private String addressCountryCode ="";
+    private String postalCode ="";
+    private String neighborhood ="";
+    private String city ="";
+    private String state ="";
+
+
     private String phone ="";
     private String phoneDialingCode ="";
     private String email ="";
     private String residenceCountryIsoCode ="";
     private String countryIsoCode ="";
-    @Generated(hash = 367612103)
-    public UploadIDHubInfoEntity(Long id, String firstName, String lastName,
-            String birthday, String country, String residenceCountry,
-            String idcardNumber, String passportNumber, String taxNumber,
-            String ssnNumber, String address, String phone, String phoneDialingCode,
-            String email, String residenceCountryIsoCode, String countryIsoCode) {
+
+
+
+
+    @Generated(hash = 154892847)
+    public UploadIDHubInfoEntity(Long id, String firstName, String middleName,
+            String lastName, String gender, String birthday, String country,
+            String residenceCountry, String idcardNumber, String passportNumber,
+            String taxNumber, String ssnNumber, String street,
+            String addressCountry, String addressCountryCode, String postalCode,
+            String neighborhood, String city, String state, String phone,
+            String phoneDialingCode, String email, String residenceCountryIsoCode,
+            String countryIsoCode) {
         this.id = id;
         this.firstName = firstName;
+        this.middleName = middleName;
         this.lastName = lastName;
+        this.gender = gender;
         this.birthday = birthday;
         this.country = country;
         this.residenceCountry = residenceCountry;
@@ -39,7 +58,13 @@ public class UploadIDHubInfoEntity {
         this.passportNumber = passportNumber;
         this.taxNumber = taxNumber;
         this.ssnNumber = ssnNumber;
-        this.address = address;
+        this.street = street;
+        this.addressCountry = addressCountry;
+        this.addressCountryCode = addressCountryCode;
+        this.postalCode = postalCode;
+        this.neighborhood = neighborhood;
+        this.city = city;
+        this.state = state;
         this.phone = phone;
         this.phoneDialingCode = phoneDialingCode;
         this.email = email;
@@ -49,6 +74,10 @@ public class UploadIDHubInfoEntity {
     @Generated(hash = 1575712821)
     public UploadIDHubInfoEntity() {
     }
+
+
+
+    
     public Long getId() {
         return this.id;
     }
@@ -109,12 +138,6 @@ public class UploadIDHubInfoEntity {
     public void setSsnNumber(String ssnNumber) {
         this.ssnNumber = ssnNumber;
     }
-    public String getAddress() {
-        return this.address;
-    }
-    public void setAddress(String address) {
-        this.address = address;
-    }
     public String getPhone() {
         return this.phone;
     }
@@ -146,4 +169,75 @@ public class UploadIDHubInfoEntity {
         this.countryIsoCode = countryIsoCode;
     }
 
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getAddressCountry() {
+        return addressCountry;
+    }
+
+    public void setAddressCountry(String addressCountry) {
+        this.addressCountry = addressCountry;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAddressCountryCode() {
+        return addressCountryCode;
+    }
+
+    public void setAddressCountryCode(String addressCountryCode) {
+        this.addressCountryCode = addressCountryCode;
+    }
 }
