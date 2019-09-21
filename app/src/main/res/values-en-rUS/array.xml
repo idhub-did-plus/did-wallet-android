@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="identity_file_spinner">
-        <item>身份证件正面照片aa</item>
+        <item>身份证件正面照片</item>
         <item>身份证件反面照片</item>
         <item>护照照片</item>
         <item>银行余额证明文件</item>

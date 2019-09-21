@@ -42,13 +42,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,7 +50,7 @@ import wallet.idhub.com.clientlib.ApiFactory;
 public class UploadIDHubInformationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private InformationInputItemView mLastNameView;
-    private InformationInputItemView mGenderView;
+    private InformationSelectItemView mGenderView;
     private InformationInputItemView mFirstNameView;
     private InformationSelectItemView mNationalityView;
     private InformationSelectItemView mCountryOfResidenceView;
@@ -115,7 +108,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
                 if (mIdHubInfoEntity != null) {
                     mFirstNameView.setValue(mIdHubInfoEntity.getFirstName());
                     mLastNameView.setValue(mIdHubInfoEntity.getLastName());
-                    mGenderView.setValue(mIdHubInfoEntity.getGender());
+                    mGenderView.setInformation(mIdHubInfoEntity.getGender());
                     mBirthdayView.setInformation(mIdHubInfoEntity.getBirthday());
                     mNationalityView.setInformation(mIdHubInfoEntity.getCountry());
                     mCountryOfResidenceView.setInformation(mIdHubInfoEntity.getResidenceCountry());
@@ -156,15 +149,16 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         mLastNameView = findViewById(R.id.last_name);
         mLastNameView.setData(getString(R.string.wallet_last_name), getString(R.string.wallet_please_input) + getString(R.string.wallet_last_name));
         mGenderView = findViewById(R.id.gender);
-        mGenderView.setData(getString(R.string.wallet_gender), getString(R.string.wallet_please_input) + getString(R.string.wallet_gender));
+        mGenderView.setData(getString(R.string.wallet_gender), getString(R.string.wallet_please_select) + getString(R.string.wallet_gender));
+        mGenderView.setOnClickListener(this);
         mBirthdayView = findViewById(R.id.birthday);
-        mBirthdayView.setData(getString(R.string.wallet_birthday), getString(R.string.wallet_please_input) + getString(R.string.wallet_birthday));
+        mBirthdayView.setData(getString(R.string.wallet_birthday), getString(R.string.wallet_please_select) + getString(R.string.wallet_birthday));
         mBirthdayView.setOnClickListener(this);
         mNationalityView = findViewById(R.id.nationality);
-        mNationalityView.setData(getString(R.string.wallet_country), getString(R.string.wallet_please_input) + getString(R.string.wallet_country));
+        mNationalityView.setData(getString(R.string.wallet_country), getString(R.string.wallet_please_select) + getString(R.string.wallet_country));
         mNationalityView.setOnClickListener(this);
         mCountryOfResidenceView = findViewById(R.id.country_of_residence);
-        mCountryOfResidenceView.setData(getString(R.string.wallet_residence_country), getString(R.string.wallet_please_input) + getString(R.string.wallet_residence_country));
+        mCountryOfResidenceView.setData(getString(R.string.wallet_residence_country), getString(R.string.wallet_please_select) + getString(R.string.wallet_residence_country));
         mCountryOfResidenceView.setOnClickListener(this);
 
         mIdNumberView = findViewById(R.id.id_number);
@@ -232,10 +226,25 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
             case R.id.address_country:
                 selectNationlity(mAddressCountryView, "addressCountry");
                 break;
+            case R.id.gender:
+                selectGender();
+                break;
         }
     }
 
+    private void selectGender() {
+        GenderSelectDialogFragment fragment = GenderSelectDialogFragment.getInstance();
+        fragment.show(getSupportFragmentManager(), "gender_select_dialog_fragment");
+        fragment.setGenderSelectDialogFragmentListener(new GenderSelectDialogFragment.GenderSelectDialogFragmentListener() {
+            @Override
+            public void genderSelect(String gender) {
+                mGenderView.setInformation(gender);
+            }
+        });
+    }
+
     private void submit() {
+
         String lastNameViewInputData = mLastNameView.getInputData();
         String firstNameViewInputData = mFirstNameView.getInputData();
         String birthdayViewInformation = mBirthdayView.getInformation();
@@ -248,7 +257,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         String taxIdViewInputData = mTaxIdView.getInputData();
         String ssnViewInputData = mSSNView.getInputData();
         String middleName = mMiddleNameView.getInputData();
-        String gender = mGenderView.getInputData();
+        String gender = mGenderView.getInformation();
         String street = mStreetView.getInputData();
         String addressContry = mAddressCountryView.getInformation();
         String postalCode = mPostalCodeView.getInputData();

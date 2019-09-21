@@ -91,31 +91,31 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
         int id = v.getId();
         switch (id) {
             case R.id.upload_file:
-                IDHubCredentialProvider.setDefaultCredentials(new WalletInfo(WalletManager.getDefaultKeystore()).exportPrivateKey("123"));
-                File file = new File(UserBasicInfoSharpreference.getInstance().getUserBasicInfo().headPath);
-                MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-
-                String defaultAddress = WalletManager.getDefaultAddress();
-                Log.e("LYW", "onClick: "+ defaultAddress );
-                ApiFactory.getArchiveStorage().uploadMaterial(defaultAddress,"idcardImage","头像",filePart).enqueue(new Callback<MagicResponse>() {
-                    @Override
-                    public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
-                        MagicResponse magicResponse = response.body();
-                        if (magicResponse != null) {
-                            Log.e("LYW", "onResponse: " + magicResponse.getMessage() + magicResponse.isSuccess());
-                        } else {
-                            Log.e("LYW", "onResponse: null" );
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<MagicResponse> call, Throwable t) {
-                        Log.e("LYW", "onFailure: " + t.getMessage() );
-                        t.printStackTrace();
-
-                    }
-                });
+//                IDHubCredentialProvider.setDefaultCredentials(new WalletInfo(WalletManager.getDefaultKeystore()).exportPrivateKey("123"));
+//                File file = new File(UserBasicInfoSharpreference.getInstance().getUserBasicInfo().headPath);
+//                MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+//
+//                String defaultAddress = WalletManager.getDefaultAddress();
+//                Log.e("LYW", "onClick: "+ defaultAddress );
+//                ApiFactory.getArchiveStorage().uploadMaterial(defaultAddress,"idcardImage","头像",filePart).enqueue(new Callback<MagicResponse>() {
+//                    @Override
+//                    public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
+//                        MagicResponse magicResponse = response.body();
+//                        if (magicResponse != null) {
+//                            Log.e("LYW", "onResponse: " + magicResponse.getMessage() + magicResponse.isSuccess());
+//                        } else {
+//                            Log.e("LYW", "onResponse: null" );
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<MagicResponse> call, Throwable t) {
+//                        Log.e("LYW", "onFailure: " + t.getMessage() );
+//                        t.printStackTrace();
+//
+//                    }
+//                });
                 UploadInformationTypeActivity.startAction(getContext());
                 break;
         }

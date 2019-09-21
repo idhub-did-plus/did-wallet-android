@@ -83,6 +83,7 @@
     <string name="wallet_send_address_false">转账地址不正确</string>
     <string name="wallet_input_password_false">输入密码不正确</string>
     <string name="wallet_please_input">请输入</string>
+    <string name="wallet_please_select">请选择</string>
     <string name="wallet_gasPrice_not_empty">gas价格不能为空</string>
     <string name="wallet_gasLimit_not_empty">gas限制不能为空</string>
     <string name="wallet_upgrade_tip">升级聚合身份之后才能进行多地址管理，请您前去升级身份之后再次尝试创建</string>
@@ -173,6 +174,8 @@
     <string name="wallet_address_detail">详细地址</string>
     <string name="wallet_address_detail_hint">（包括乡镇、街道、小区、门牌号等）</string>
     <string name="wallet_email">邮箱</string>
+    <string name="wallet_gender_boy">男</string>
+    <string name="wallet_gender_girl">女</string>
 
     //dapp
     <string name="wallet_dapp_search_hint">搜索或输入DApp网址</string>

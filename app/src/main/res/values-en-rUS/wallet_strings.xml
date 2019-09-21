@@ -27,4 +27,6 @@
     <string name="wallet_neighborhood">Neighborhood</string>
     <string name="wallet_address_detail">详细地址</string>
     <string name="wallet_address_detail_hint">（包括乡镇、街道、小区、门牌号等）</string>
+    <string name="wallet_gender_boy">male</string>
+    <string name="wallet_gender_girl">female</string>
 </resources>

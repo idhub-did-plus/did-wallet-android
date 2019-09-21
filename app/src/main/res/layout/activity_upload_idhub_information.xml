@@ -36,7 +36,7 @@
 
             <include
                 android:id="@+id/gender"
-                layout="@layout/wallet_common_input_information_item"
+                layout="@layout/wallet_common_select_information_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
