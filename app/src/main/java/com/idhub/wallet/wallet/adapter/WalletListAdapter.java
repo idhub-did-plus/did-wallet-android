@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
@@ -26,8 +25,10 @@ public class WalletListAdapter extends RecyclerView.Adapter<WalletListAdapter.Wa
     private List<WalletKeystore> keyStores;
     private OnWalletItemClickListener onItemClickListener;
     private String mSelectAddress;
+    private Context mContext;
 
     public WalletListAdapter(Context context, String address) {
+        mContext = context;
         mSelectAddress = address;
         keyStores = new ArrayList<>();
     }

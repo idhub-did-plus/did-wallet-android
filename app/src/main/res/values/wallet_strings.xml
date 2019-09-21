@@ -134,7 +134,7 @@
     <string name="wallet_input_user_signature">请输入个性签名</string>
     <string name="wallet_not_empty_user_signature">个性签名不能为空</string>
     <string name="wallet_upload_user_information">上传基本信息</string>
-    <string name="wallet_upload_file_add_tip">上传文件信息填写完整之后才可以继续添加需要上传的文件</string>
+    <string name="wallet_upload_file_add_tip">添加文件上传之后才可以继续添加需要上传的文件</string>
     <string name="wallet_upload_file_incomplete_tip">上传信息未填写完整，请检查并补充完整之后再次上传</string>
     <string name="wallet_repeat">重复</string>
     <string name="wallet_edit_after_again_upload">请修改之后再次上传</string>
@@ -176,6 +176,9 @@
     <string name="wallet_email">邮箱</string>
     <string name="wallet_gender_boy">男</string>
     <string name="wallet_gender_girl">女</string>
+    <string name="wallet_upload_fail">上传失败</string>
+    <string name="wallet_upload_success">上传成功</string>
+    <string name="wallet_already_upload_success">当前添加文件已经上传</string>
 
     //dapp
     <string name="wallet_dapp_search_hint">搜索或输入DApp网址</string>
@@ -320,7 +323,7 @@
     <string name="wallet_transaction_success">交易发送成功</string>
 
     //associationAddress
-    <string name="wallet_default_address_password">请输入defaultAddress密码</string>
+    <string name="wallet_default_address_password">请输入默认地址密码</string>
     <string name="wallet_association_address_password">请输入关联地址密码</string>
     <string name="wallet_default_password_empty">默认地址密码不能为空</string>
     <string name="wallet_association_password_empty">关联地址密码不能为空</string>

@@ -18,11 +18,13 @@ import com.idhub.magic.common.ustorage.entity.IdentityInfo;
 import com.idhub.magic.common.ustorage.entity.component.Address;
 import com.idhub.magic.common.ustorage.entity.component.AddressElement;
 import com.idhub.magic.common.ustorage.entity.component.Name;
+import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.country.Country;
 import com.idhub.wallet.common.country.CountryPickerCallbacks;
 import com.idhub.wallet.common.country.CountryPickerDialog;
 import com.idhub.wallet.common.date.DatePicker;
+import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
@@ -32,6 +34,7 @@ import com.idhub.wallet.me.information.view.InformationInputItemView;
 import com.idhub.wallet.me.information.view.InformationSelectItemView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.DateUtils;
+import com.idhub.wallet.utils.ToastUtils;
 
 import org.greenrobot.greendao.async.AsyncOperation;
 import org.greenrobot.greendao.async.AsyncOperationListener;
@@ -77,6 +80,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
     private InformationInputItemView mAddressDetailView;
     private boolean mIsLocalzh;
     private String mAddressCountryCode;
+    private LoadingAndErrorView mLoadingAndErrorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +134,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
                     mTaxIdView.setValue(mIdHubInfoEntity.getTaxNumber());
                     mSSNView.setValue(mIdHubInfoEntity.getSsnNumber());
                     mEmailView.setValue(mIdHubInfoEntity.getEmail());
-                    mPhoneDialingCodeView.setText(mIdHubInfoEntity.getPhoneDialingCode());
+                    mPhoneDialingCodeView.setText("+"+mIdHubInfoEntity.getPhoneDialingCode());
                     mCountryIsoCode = mIdHubInfoEntity.getCountryIsoCode();
                     mResidenceCountryIsoCode = mIdHubInfoEntity.getResidenceCountryIsoCode();
                     mAddressCountryCode = mIdHubInfoEntity.getAddressCountryCode();
@@ -197,6 +201,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         mEmailView = findViewById(R.id.email);
         mEmailView.setData(getString(R.string.wallet_email), getString(R.string.wallet_please_input) + getString(R.string.wallet_email));
         findViewById(R.id.tv_upgrade).setOnClickListener(this);
+        mLoadingAndErrorView = findViewById(R.id.loading_and_error);
     }
 
     public static void startAction(Context context) {
@@ -244,7 +249,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
     }
 
     private void submit() {
-
+        mLoadingAndErrorView.onLoading();
         String lastNameViewInputData = mLastNameView.getInputData();
         String firstNameViewInputData = mFirstNameView.getInputData();
         String birthdayViewInformation = mBirthdayView.getInformation();
@@ -399,7 +404,6 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date parse = sdf.parse(birthdayViewInformation);
-            Log.e("LYW", "submit: " + parse);
             identityInfo.setBirthday(parse);
         } catch (ParseException e) {
             e.printStackTrace();
@@ -417,21 +421,20 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         call.enqueue(new Callback<MagicResponse>() {
             @Override
             public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
-
+                mLoadingAndErrorView.onGone();
                 MagicResponse body = response.body();
-
-                if (body != null) {
-                    boolean success = body.isSuccess();
-                    String message = body.getMessage();
-                    Log.e("LYW", "submit: " + success + " " + message);
+                if (body != null && body.isSuccess()) {
+                    MainActivity.startAction(UploadIDHubInformationActivity.this,"upload_information");
+                    finish();
                 } else {
-                    Log.e("LYW", "submit:null " );
+                    ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));
                 }
             }
 
             @Override
             public void onFailure(Call<MagicResponse> call, Throwable t) {
-                Log.e("LYW", "onFailure: " + t.getMessage());
+                mLoadingAndErrorView.onGone();
+                ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));
             }
         });
 
@@ -442,7 +445,6 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
                 new CountryPickerDialog(UploadIDHubInformationActivity.this, new CountryPickerCallbacks() {
                     @Override
                     public void onCountrySelected(Country country) {
-                        Log.e("LYW", "onCountrySelected: " + country.getDialingCode() + " " + country.getIsoCode());
                         if ("residenceCountry".equals(source)) {
                             if (TextUtils.isEmpty(mPhoneDialingCode)) {
                                 mPhoneDialingCode = country.getDialingCode();

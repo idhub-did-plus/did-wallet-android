@@ -44,6 +44,9 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return uploadFileEntities;
     }
 
+    public void setDataItem(UploadFileEntity uploadFileEntity){
+        notifyItemChanged(uploadFileEntities.size() - 1, uploadFileEntity);
+    }
     @Override
     public int getItemViewType(int position) {
         int itemCount = getItemCount();
@@ -206,14 +209,18 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public void onClick(View v) {
             if (uploadFileEntities.size() > 0) {
                 UploadFileEntity fileEntity = uploadFileEntities.get(uploadFileEntities.size() - 1);
-                String filePath = fileEntity.getFilePath();
-                String name = fileEntity.getName();
-                String type = fileEntity.getType();
-                //检查前面的选择之后在可以进行之后的新增
-                if (TextUtils.isEmpty(filePath) || TextUtils.isEmpty(name) || TextUtils.isEmpty(type)) {
+                if (!fileEntity.isSubmit) {
                     ToastUtils.showLongToast(mContext.getString(R.string.wallet_upload_file_add_tip));
                     return;
                 }
+//                String filePath = fileEntity.getFilePath();
+//                String name = fileEntity.getName();
+//                String type = fileEntity.getType();
+//                //检查前面的选择之后在可以进行之后的新增
+//                if (TextUtils.isEmpty(filePath) || TextUtils.isEmpty(name) || TextUtils.isEmpty(type)) {
+//                    ToastUtils.showLongToast(mContext.getString(R.string.wallet_upload_file_add_tip));
+//                    return;
+//                }
             }
             uploadFileEntities.add(new UploadFileEntity());
             notifyDataSetChanged();

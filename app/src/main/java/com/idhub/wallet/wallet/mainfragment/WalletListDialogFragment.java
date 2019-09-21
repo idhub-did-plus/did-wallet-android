@@ -1,5 +1,7 @@
 package com.idhub.wallet.wallet.mainfragment;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.WalletManager;
@@ -40,6 +43,9 @@ public class WalletListDialogFragment extends DialogFragment implements View.OnC
             mAddress = arguments.getString("address");
         }
         View view = inflater.inflate(R.layout.wallet_dialog_fragment_wallet_list, container, false);
+        Window window = getDialog().getWindow();
+        if (window != null)
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         initView(view);
         return view;
     }

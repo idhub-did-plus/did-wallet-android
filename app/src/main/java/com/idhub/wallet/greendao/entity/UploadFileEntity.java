@@ -3,6 +3,7 @@ package com.idhub.wallet.greendao.entity;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
 
 @Entity
 public class UploadFileEntity {
@@ -11,6 +12,8 @@ public class UploadFileEntity {
     private String type = "";
     private String name = "";
     private String filePath = "";
+    @Transient
+    public boolean isSubmit;
     @Generated(hash = 1785219618)
     public UploadFileEntity(Long id, String type, String name, String filePath) {
         this.id = id;

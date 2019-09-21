@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.core.app.ActivityCompat;
@@ -18,17 +20,36 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
+import com.idhub.wallet.didhub.WalletInfo;
+import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.UploadFileDbManager;
 import com.idhub.wallet.greendao.entity.UploadFileEntity;
+import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.ToastUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UploadFileActivity extends AppCompatActivity implements View.OnClickListener {
+import java.io.File;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import wallet.idhub.com.clientlib.ApiFactory;
+
+
+public class UploadFileActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
     private UploadFileAdapter mUploadFileAdapter;
     private UploadFileDbManager mUploadFileDbManager;
@@ -36,6 +57,8 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     private List<String> mCheckTypesList = new ArrayList<>();//检查类型是否有重复
     private List<String> mRepeatTypesList = new ArrayList<>();//如果有重复的type进行存储
     private LoadingAndErrorView mLoadingAndErrorView;
+    private UploadFileEntity mUploadFileEntity;
+    private String mPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +132,7 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
                         }
                     }
                     //没有空数据，提交
-                   if (checkNameNotRepeat(datas)){
+                    if (checkNameNotRepeat(datas)) {
                         //重复的四种type给出提示
                         if (mRepeatTypesList.size() > 0) {
                             StringBuilder builder = new StringBuilder();
@@ -119,11 +142,11 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
                             String message = builder.toString() + getString(R.string.wallet_type_repeat_tip);
                             MessageDialogFragment dialogFragment = MessageDialogFragment.getInstance(message, getString(R.string.wallet_confirm));
                             dialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
-                            dialogFragment.setMessagePasswordDialogFragmentListener(()->{
-                                uploadFile(datas);
+                            dialogFragment.setMessagePasswordDialogFragmentListener(() -> {
+                                uploadCheckPassword(datas);
                             });
                         } else {
-                            uploadFile(datas);
+                            uploadCheckPassword(datas);
                         }
                     }
                 }
@@ -158,17 +181,75 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
         return true;
     }
 
-    private void uploadFile(List<UploadFileEntity> datas) {
-        //接口提交成功之后
-        mLoadingAndErrorView.setVisibility(View.VISIBLE);
-        if (mRepeatTypesList.size() > 0) {
-            for (String type : mRepeatTypesList) {
-                mUploadFileDbManager.deleteByType(type);
-            }
+    private void uploadCheckPassword(List<UploadFileEntity> datas) {
+        mUploadFileEntity = datas.get(0);
+        if (TextUtils.isEmpty(mPassword)) {
+            InputDialogFragment instance = InputDialogFragment.getInstance("send", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
+            instance.show(getSupportFragmentManager(), "input_dialog_fragment");
+            instance.setInputDialogFragmentListener(this);
+        } else {
+            uploadFile();
         }
-        mUploadFileDbManager.insertListData(datas,operation ->{
-            boolean completed = operation.isCompleted();
-            mLoadingAndErrorView.setVisibility(View.GONE);
+    }
+
+    private void uploadFile() {
+        //弹框
+        boolean isSubmit = mUploadFileEntity.isSubmit;
+        if (isSubmit) {
+            ToastUtils.showShortToast(getString(R.string.wallet_already_upload_success));
+            return;
+        }
+        mLoadingAndErrorView.setVisibility(View.VISIBLE);
+        WalletKeystore defaultKeystore = WalletManager.getDefaultKeystore();
+        IDHubCredentialProvider.setDefaultCredentials(new WalletInfo(defaultKeystore).exportPrivateKey(mPassword));
+        File file = new File(mUploadFileEntity.getFilePath());
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+
+        String defaultAddress = NumericUtil.prependHexPrefix(defaultKeystore.getAddress());
+        ApiFactory.getArchiveStorage().uploadMaterial(defaultAddress, mUploadFileEntity.getType(), mUploadFileEntity.getName(), filePart).enqueue(new Callback<MagicResponse>() {
+            @Override
+            public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
+                MagicResponse magicResponse = response.body();
+                if (magicResponse != null && magicResponse.isSuccess()) {
+                    //接口提交成功之后
+                    mUploadFileEntity.isSubmit = true;
+                    mUploadFileAdapter.setDataItem(mUploadFileEntity);
+                    if (mRepeatTypesList.size() > 0) {
+                        for (String type : mRepeatTypesList) {
+                            mUploadFileDbManager.deleteByType(type);
+                        }
+                    }
+                    mUploadFileDbManager.insertData(mUploadFileEntity, operation -> {
+                        boolean completed = operation.isCompleted();
+
+                    });
+                    ToastUtils.showShortToast(getString(R.string.wallet_upload_success));
+                    Log.e("LYW", "onResponse: " + magicResponse.getMessage() + magicResponse.isSuccess());
+                    mLoadingAndErrorView.setVisibility(View.GONE);
+                } else {
+                    if (magicResponse != null)
+                        Log.e("LYW", "onResponse: " + magicResponse.getMessage());
+                    else
+                        Log.e("LYW", "onResponse: null");
+                    ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));
+                    mLoadingAndErrorView.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MagicResponse> call, Throwable t) {
+                Log.e("LYW", "onFailure: " + t.getMessage());
+                t.printStackTrace();
+                ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));
+                mLoadingAndErrorView.setVisibility(View.GONE);
+            }
         });
+    }
+
+    @Override
+    public void inputConfirm(String data, String source) {
+        //password
+        mPassword = data;
+        uploadFile();
     }
 }
