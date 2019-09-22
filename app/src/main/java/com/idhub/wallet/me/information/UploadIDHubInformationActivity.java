@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.idhub.wallet.common.country.Country;
 import com.idhub.wallet.common.country.CountryPickerCallbacks;
 import com.idhub.wallet.common.country.CountryPickerDialog;
 import com.idhub.wallet.common.date.DatePicker;
+import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.WalletInfo;
@@ -45,6 +47,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+
+import io.reactivex.observers.DisposableObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -105,43 +109,41 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         }
 
         mUploadIDHubInfoDbManager = new UploadIDHubInfoDbManager();
-        mUploadIDHubInfoDbManager.queryById(1, new AsyncOperationListener() {
-            @Override
-            public void onAsyncOperationCompleted(AsyncOperation operation) {
-                mIdHubInfoEntity = (UploadIDHubInfoEntity) operation.getResult();
-                if (mIdHubInfoEntity != null) {
-                    mFirstNameView.setValue(mIdHubInfoEntity.getFirstName());
-                    mLastNameView.setValue(mIdHubInfoEntity.getLastName());
-                    mGenderView.setInformation(mIdHubInfoEntity.getGender());
-                    mBirthdayView.setInformation(mIdHubInfoEntity.getBirthday());
-                    mNationalityView.setInformation(mIdHubInfoEntity.getCountry());
-                    mCountryOfResidenceView.setInformation(mIdHubInfoEntity.getResidenceCountry());
-                    mIdNumberView.setValue(mIdHubInfoEntity.getIdcardNumber());
-                    mPassportNumberView.setValue(mIdHubInfoEntity.getPassportNumber());
-                    mPhoneNumberView.setText(mIdHubInfoEntity.getPhone());
-                    if (mIsLocalzh) {
-                        mAddressDetailView.setValue(mIdHubInfoEntity.getStreet());
-                    } else {
-                        mStreetView.setValue(mIdHubInfoEntity.getStreet());
-                        mMiddleNameView.setValue(mIdHubInfoEntity.getMiddleName());
-                    }
-                    mAddressCountryView.setInformation(mIdHubInfoEntity.getAddressCountry());
-                    mPostalCodeView.setValue(mIdHubInfoEntity.getPostalCode());
-                    mCityView.setValue(mIdHubInfoEntity.getCity());
-                    mStateView.setValue(mIdHubInfoEntity.getState());
-                    mNeighborhoodView.setValue(mIdHubInfoEntity.getNeighborhood());
-
-                    mTaxIdView.setValue(mIdHubInfoEntity.getTaxNumber());
-                    mSSNView.setValue(mIdHubInfoEntity.getSsnNumber());
-                    mEmailView.setValue(mIdHubInfoEntity.getEmail());
-                    mPhoneDialingCodeView.setText("+"+mIdHubInfoEntity.getPhoneDialingCode());
-                    mCountryIsoCode = mIdHubInfoEntity.getCountryIsoCode();
-                    mResidenceCountryIsoCode = mIdHubInfoEntity.getResidenceCountryIsoCode();
-                    mAddressCountryCode = mIdHubInfoEntity.getAddressCountryCode();
+        mUploadIDHubInfoDbManager.queryById(1, operation -> {
+            mIdHubInfoEntity = (UploadIDHubInfoEntity) operation.getResult();
+            if (mIdHubInfoEntity != null) {
+                mFirstNameView.setValue(mIdHubInfoEntity.getFirstName());
+                mLastNameView.setValue(mIdHubInfoEntity.getLastName());
+                mGenderView.setInformation(mIdHubInfoEntity.getGender());
+                mBirthdayView.setInformation(mIdHubInfoEntity.getBirthday());
+                mNationalityView.setInformation(mIdHubInfoEntity.getCountry());
+                mCountryOfResidenceView.setInformation(mIdHubInfoEntity.getResidenceCountry());
+                mIdNumberView.setValue(mIdHubInfoEntity.getIdcardNumber());
+                mPassportNumberView.setValue(mIdHubInfoEntity.getPassportNumber());
+                mPhoneNumberView.setText(mIdHubInfoEntity.getPhone());
+                if (mIsLocalzh) {
+                    mAddressDetailView.setValue(mIdHubInfoEntity.getStreet());
+                } else {
+                    mStreetView.setValue(mIdHubInfoEntity.getStreet());
+                    mMiddleNameView.setValue(mIdHubInfoEntity.getMiddleName());
                 }
+                mAddressCountryView.setInformation(mIdHubInfoEntity.getAddressCountry());
+                mPostalCodeView.setValue(mIdHubInfoEntity.getPostalCode());
+                mCityView.setValue(mIdHubInfoEntity.getCity());
+                mStateView.setValue(mIdHubInfoEntity.getState());
+                mNeighborhoodView.setValue(mIdHubInfoEntity.getNeighborhood());
+
+                mTaxIdView.setValue(mIdHubInfoEntity.getTaxNumber());
+                mSSNView.setValue(mIdHubInfoEntity.getSsnNumber());
+                mEmailView.setValue(mIdHubInfoEntity.getEmail());
+                mPhoneDialingCodeView.setText("+"+mIdHubInfoEntity.getPhoneDialingCode());
+                mCountryIsoCode = mIdHubInfoEntity.getCountryIsoCode();
+                mResidenceCountryIsoCode = mIdHubInfoEntity.getResidenceCountryIsoCode();
+                mAddressCountryCode = mIdHubInfoEntity.getAddressCountryCode();
             }
         });
     }
+
 
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
@@ -223,7 +225,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
                 selectNationlity(mCountryOfResidenceView, "residenceCountry");
                 break;
             case R.id.tv_upgrade:
-                submit();
+                inputPasswordDialogShow();
                 break;
             case R.id.tv_phone_dialing_code:
                 selectDialingCode();
@@ -248,8 +250,44 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         });
     }
 
-    private void submit() {
-        mLoadingAndErrorView.onLoading();
+    private void inputPasswordDialogShow() {
+            InputDialogFragment instance = InputDialogFragment.getInstance("idhub_information", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
+            instance.show(getSupportFragmentManager(), "input_dialog_fragment");
+            instance.setInputDialogFragmentListener((data, source) -> {
+                WalletInfo walletInfo = new WalletInfo(WalletManager.getDefaultKeystore());
+                walletInfo.verifyPassword(data, new DisposableObserver<Boolean>() {
+                    @Override
+                    protected void onStart() {
+                        super.onStart();
+                        mLoadingAndErrorView.onLoading();
+                    }
+
+                    @Override
+                    public void onNext(Boolean aBoolean) {
+                        if (aBoolean) {
+                            submit(walletInfo.exportPrivateKey(data));
+                        } else {
+                            ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
+                            mLoadingAndErrorView.onGone();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
+                        mLoadingAndErrorView.onGone();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+            });
+    }
+
+    private void submit(String privateKey) {
         String lastNameViewInputData = mLastNameView.getInputData();
         String firstNameViewInputData = mFirstNameView.getInputData();
         String birthdayViewInformation = mBirthdayView.getInformation();
@@ -416,7 +454,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
 
         identityArchive.setIdentityInfo(identityInfo);
         identityArchive.setBasicInfo(basicInfo);
-        IDHubCredentialProvider.setDefaultCredentials(new WalletInfo(WalletManager.getDefaultKeystore()).exportPrivateKey("123"));
+        IDHubCredentialProvider.setDefaultCredentials(privateKey);
         Call<MagicResponse> call = ApiFactory.getArchiveStorage().storeArchive(identityArchive, WalletManager.getDefaultAddress());
         call.enqueue(new Callback<MagicResponse>() {
             @Override
@@ -424,7 +462,8 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
                 mLoadingAndErrorView.onGone();
                 MagicResponse body = response.body();
                 if (body != null && body.isSuccess()) {
-                    MainActivity.startAction(UploadIDHubInformationActivity.this,"upload_information");
+                    ToastUtils.showShortToast(getString(R.string.wallet_upload_success));
+                    MainActivity.startAction(UploadIDHubInformationActivity.this, "upload_information");
                     finish();
                 } else {
                     ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));

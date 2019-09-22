@@ -287,6 +287,7 @@
     <string name="wallet_apply_for_ing">申请中</string>
     <string name="wallet_vip">vip</string>
     <string name="wallet_have_apply_for">已申请</string>
+    <string name="wallet_submit">提交</string>
     <string name="wallet_no_controllers">没有监管地址</string>
     <string name="wallet_select_item_apply">请选择之后再次尝试申请</string>
     <string name="wallet_have_apply_for_idhub_vip">请先升级成为IdHub会员之后再次尝试申请</string>

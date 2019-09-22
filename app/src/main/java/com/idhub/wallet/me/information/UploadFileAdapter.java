@@ -96,6 +96,15 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {
                 otherViewHolder.mSpinner.setSelection(0);
             }
+            if (uploadFileEntity.isSubmit) {
+                otherViewHolder.mSpinner.setEnabled(false);
+                otherViewHolder.mNameEditView.setFocusable(false);
+                otherViewHolder.mNameEditView.setFocusableInTouchMode(false);
+            } else {
+                otherViewHolder.mSpinner.setEnabled(true);
+                otherViewHolder.mNameEditView.setFocusable(true);
+                otherViewHolder.mNameEditView.setFocusableInTouchMode(true);
+            }
         }
     }
 

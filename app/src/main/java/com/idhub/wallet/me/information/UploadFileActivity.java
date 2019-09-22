@@ -36,10 +36,13 @@ import com.idhub.wallet.utils.ToastUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import java.io.File;
+import java.util.Set;
 
+import io.reactivex.observers.DisposableObserver;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -58,7 +61,8 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     private List<String> mRepeatTypesList = new ArrayList<>();//如果有重复的type进行存储
     private LoadingAndErrorView mLoadingAndErrorView;
     private UploadFileEntity mUploadFileEntity;
-    private String mPassword;
+    private String mPrivateKey;
+    private WalletKeystore mDefaultKeystore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,11 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
                         new String[]{Manifest.permission.CAMERA},
                         100);
             }
+        }
+        mDefaultKeystore = WalletManager.getDefaultKeystore();
+        if (mDefaultKeystore == null) {
+            finish();
+            return;
         }
         initView();
 
@@ -120,16 +129,16 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
             case R.id.tv_upload:
                 //上传
                 List<UploadFileEntity> datas = mUploadFileAdapter.getDatas();
-                if (datas.size() > 0) {
-                    for (UploadFileEntity fileEntity : datas) {
-                        String filePath = fileEntity.getFilePath();
-                        String name = fileEntity.getName();
-                        String type = fileEntity.getType();
-                        //检查所有数据是否有遗漏未填写
-                        if (TextUtils.isEmpty(filePath) || TextUtils.isEmpty(name) || TextUtils.isEmpty(type)) {
-                            ToastUtils.showLongToast(getString(R.string.wallet_upload_file_incomplete_tip));
-                            return;
-                        }
+                int size = datas.size();
+                if (size > 0) {
+                    UploadFileEntity fileEntity = datas.get(size - 1);
+                    String filePath = fileEntity.getFilePath();
+                    String name = fileEntity.getName();
+                    String type = fileEntity.getType();
+                    //检查所有数据是否有遗漏未填写
+                    if (TextUtils.isEmpty(filePath) || TextUtils.isEmpty(name) || TextUtils.isEmpty(type)) {
+                        ToastUtils.showLongToast(getString(R.string.wallet_upload_file_incomplete_tip));
+                        return;
                     }
                     //没有空数据，提交
                     if (checkNameNotRepeat(datas)) {
@@ -159,7 +168,7 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
         //检查type身份证 护照 住址 独一份 。重复的进行记录
         mRepeatTypesList.clear();
         List<String> backupNameList = new ArrayList<>(mCheckNamesList);
-        List<String> backupTypeList = new ArrayList<>();
+        Set<String> backupTypeList = new HashSet<>();
         for (UploadFileEntity data : datas) {
             String name = data.getName();
             if (!backupNameList.contains(name)) {
@@ -169,21 +178,21 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
                 ToastUtils.showLongToast(getString(R.string.wallet_file_name) + name + getString(R.string.wallet_repeat) + getString(R.string.wallet_edit_after_again_upload));
                 return false;
             }
-            String type = data.getType();
-            if (getString(R.string.wallet_id_photo_positive).equals(type) || getString(R.string.wallet_id_photo_negative).equals(type) || getString(R.string.wallet_passport_photo).equals(type) || getString(R.string.wallet_address_proof_document).equals(type)) {
-                if (mCheckTypesList.contains(type)) {
-                    backupTypeList.add(type);
-                }
+        }
+        //检查最后一个上传数据是否包含在唯一上传数据内
+        String type = datas.get(datas.size() -1).getType();
+        if (getString(R.string.wallet_id_photo_positive).equals(type) || getString(R.string.wallet_id_photo_negative).equals(type) || getString(R.string.wallet_passport_photo).equals(type) || getString(R.string.wallet_address_proof_document).equals(type)) {
+            if (mCheckTypesList.contains(type)) {
+                backupTypeList.add(type);
             }
         }
-
         mRepeatTypesList.addAll(backupTypeList);
         return true;
     }
 
     private void uploadCheckPassword(List<UploadFileEntity> datas) {
-        mUploadFileEntity = datas.get(0);
-        if (TextUtils.isEmpty(mPassword)) {
+        mUploadFileEntity = datas.get(datas.size() - 1);
+        if (TextUtils.isEmpty(mPrivateKey)) {
             InputDialogFragment instance = InputDialogFragment.getInstance("send", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
             instance.show(getSupportFragmentManager(), "input_dialog_fragment");
             instance.setInputDialogFragmentListener(this);
@@ -200,12 +209,11 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
             return;
         }
         mLoadingAndErrorView.setVisibility(View.VISIBLE);
-        WalletKeystore defaultKeystore = WalletManager.getDefaultKeystore();
-        IDHubCredentialProvider.setDefaultCredentials(new WalletInfo(defaultKeystore).exportPrivateKey(mPassword));
+        IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
         File file = new File(mUploadFileEntity.getFilePath());
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
 
-        String defaultAddress = NumericUtil.prependHexPrefix(defaultKeystore.getAddress());
+        String defaultAddress = NumericUtil.prependHexPrefix(mDefaultKeystore.getAddress());
         ApiFactory.getArchiveStorage().uploadMaterial(defaultAddress, mUploadFileEntity.getType(), mUploadFileEntity.getName(), filePart).enqueue(new Callback<MagicResponse>() {
             @Override
             public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
@@ -249,7 +257,30 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void inputConfirm(String data, String source) {
         //password
-        mPassword = data;
-        uploadFile();
+        mLoadingAndErrorView.setVisibility(View.VISIBLE);
+        WalletInfo walletInfo = new WalletInfo(mDefaultKeystore);
+        walletInfo.verifyPassword(data, new DisposableObserver<Boolean>() {
+            @Override
+            public void onNext(Boolean aBoolean) {
+                mLoadingAndErrorView.setVisibility(View.GONE);
+                if (aBoolean) {
+                    mPrivateKey = walletInfo.exportPrivateKey(data);
+                    uploadFile();
+                } else {
+                    ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
+                mLoadingAndErrorView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }
