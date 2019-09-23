@@ -1,6 +1,7 @@
 package com.idhub.wallet.common.zxinglib.widget.zing;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -14,10 +15,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
@@ -41,26 +45,30 @@ import java.util.Vector;
  */
 public class MipcaActivityCapture extends BasePhotosActivity implements Callback {
 
-    private              CaptureActivityHandler handler;
-    private              boolean                                                       hasSurface;
-    private              Vector<BarcodeFormat>                                         decodeFormats;
-    private              String                                                        characterSet;
-    public               InactivityTimer        inactivityTimer;
-    private              MediaPlayer                                                   mediaPlayer;
-    private              boolean                                                       playBeep;
-    private static final float                                                         BEEP_VOLUME = 0.10f;
-    private       boolean                                               vibrate;
-    public static String                                                SCAN_RESULT;
-    private       Camera                                                camera;
-    private       CameraManager                                         cameraManager;
-    private       SurfaceView                                           previewView;
-    private       ViewfinderView viewfinderView;
-    private       View                                                  actionBar;
-    public        TextView                                              tv_titile, right_txt;
+    private CaptureActivityHandler handler;
+    private boolean hasSurface;
+    private Vector<BarcodeFormat> decodeFormats;
+    private String characterSet;
+    public InactivityTimer inactivityTimer;
+    private MediaPlayer mediaPlayer;
+    private boolean playBeep;
+    private static final float BEEP_VOLUME = 0.10f;
+    private boolean vibrate;
+    public static String SCAN_RESULT;
+    private Camera camera;
+    private CameraManager cameraManager;
+    private SurfaceView previewView;
+    private ViewfinderView viewfinderView;
+    public TextView tv_titile, right_txt;
 
-    public static void startAction(Context context){
-        Intent intent = new Intent(context,MipcaActivityCapture.class);
-        context.startActivity(intent);
+    public static void startAction(Activity context, int requestCode) {
+        Intent intent = new Intent(context, MipcaActivityCapture.class);
+        context.startActivityForResult(intent, requestCode);
+    }
+
+    public static void startAction(Fragment fragment, int requestCode) {
+        Intent intent = new Intent(fragment.getContext(), MipcaActivityCapture.class);
+        fragment.startActivityForResult(intent, requestCode);
     }
 
     @Override
@@ -75,6 +83,7 @@ public class MipcaActivityCapture extends BasePhotosActivity implements Callback
             }
         }
     }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +100,6 @@ public class MipcaActivityCapture extends BasePhotosActivity implements Callback
     private void init() {
         SCAN_RESULT = null;
         setContentView(R.layout.activity_capture);
-        actionBar=findViewById(R.id.capture_top);
 
         previewView = findViewById(R.id.preview_view);
         viewfinderView = findViewById(R.id.viewfinder_view);
@@ -205,7 +213,9 @@ public class MipcaActivityCapture extends BasePhotosActivity implements Callback
         inactivityTimer.onActivity();
         playBeepSoundAndVibrate();
         SCAN_RESULT = result != null ? result.getText() : "";
-        Log.e("LYW", "handleDecode: " + SCAN_RESULT);
+        Intent intent = new Intent();
+        intent.putExtra("qrcode", SCAN_RESULT);
+        setResult(RESULT_OK, intent);
         finish();
     }
 

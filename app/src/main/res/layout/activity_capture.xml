@@ -21,14 +21,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@mipmap/icon_main_top_bg"
         android:orientation="vertical">
-
-        <View
-            android:id="@+id/capture_top"
-            android:layout_width="0dp"
-            android:layout_height="24dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

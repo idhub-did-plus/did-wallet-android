@@ -1,36 +1,14 @@
 package com.idhub.wallet;
 
-import android.util.Log;
-import android.view.View;
-import com.idhub.wallet.contract.ERC1400;
-import com.idhub.wallet.createmanager.UpgradeActivity;
-import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.net.IDHubCredentialProvider;
 
+
+import com.idhub.wallet.utils.QRcodeAnalysisUtils;
+import com.idhub.wallet.wallet.mainfragment.QRCodeType;
+
+import org.java_websocket.util.Base64;
+import org.json.JSONObject;
 import org.junit.Test;
 
-import org.web3j.abi.datatypes.generated.Bytes32;
-import org.web3j.crypto.Credentials;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.http.HttpService;
-import org.web3j.tuples.generated.Tuple3;
-import org.web3j.tx.gas.DefaultGasProvider;
-import org.web3j.tx.gas.StaticGasProvider;
-import org.web3j.utils.Convert;
-import org.web3j.utils.Numeric;
-
-import java.io.File;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableObserver;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import wallet.idhub.com.clientlib.ApiFactory;
 
 
 /**
@@ -41,6 +19,7 @@ import wallet.idhub.com.clientlib.ApiFactory;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
+        QRcodeAnalysisUtils.handleQRcode("ethereum:0x88e49D95e98F099C031e35caA683b1611Fb49ce3?contractAddress=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&decimal=18&value=0");
 
 //        Web3j mWeb3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
 //        DefaultGasProvider defaultGasProvider = new DefaultGasProvider();
