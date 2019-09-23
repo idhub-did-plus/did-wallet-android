@@ -41,6 +41,7 @@ import wallet.idhub.com.clientlib.ApiFactory;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
+
 //        Web3j mWeb3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
 //        DefaultGasProvider defaultGasProvider = new DefaultGasProvider();
 //        Credentials credentials = Credentials.create("0");

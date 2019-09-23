@@ -173,9 +173,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<IdentityCreatedEventResponse> getIdentityCreatedEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(IDENTITYCREATED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(IDENTITYCREATED_EVENT, transactionReceipt);
         ArrayList<IdentityCreatedEventResponse> responses = new ArrayList<IdentityCreatedEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             IdentityCreatedEventResponse typedResponse = new IdentityCreatedEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -194,7 +194,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, IdentityCreatedEventResponse>() {
             @Override
             public IdentityCreatedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(IDENTITYCREATED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(IDENTITYCREATED_EVENT, log);
                 IdentityCreatedEventResponse typedResponse = new IdentityCreatedEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -216,9 +216,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<AssociatedAddressAddedEventResponse> getAssociatedAddressAddedEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(ASSOCIATEDADDRESSADDED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(ASSOCIATEDADDRESSADDED_EVENT, transactionReceipt);
         ArrayList<AssociatedAddressAddedEventResponse> responses = new ArrayList<AssociatedAddressAddedEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             AssociatedAddressAddedEventResponse typedResponse = new AssociatedAddressAddedEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -235,7 +235,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, AssociatedAddressAddedEventResponse>() {
             @Override
             public AssociatedAddressAddedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(ASSOCIATEDADDRESSADDED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(ASSOCIATEDADDRESSADDED_EVENT, log);
                 AssociatedAddressAddedEventResponse typedResponse = new AssociatedAddressAddedEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -255,9 +255,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<AssociatedAddressRemovedEventResponse> getAssociatedAddressRemovedEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(ASSOCIATEDADDRESSREMOVED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(ASSOCIATEDADDRESSREMOVED_EVENT, transactionReceipt);
         ArrayList<AssociatedAddressRemovedEventResponse> responses = new ArrayList<AssociatedAddressRemovedEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             AssociatedAddressRemovedEventResponse typedResponse = new AssociatedAddressRemovedEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -273,7 +273,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, AssociatedAddressRemovedEventResponse>() {
             @Override
             public AssociatedAddressRemovedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(ASSOCIATEDADDRESSREMOVED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(ASSOCIATEDADDRESSREMOVED_EVENT, log);
                 AssociatedAddressRemovedEventResponse typedResponse = new AssociatedAddressRemovedEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -292,9 +292,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<ProviderAddedEventResponse> getProviderAddedEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(PROVIDERADDED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(PROVIDERADDED_EVENT, transactionReceipt);
         ArrayList<ProviderAddedEventResponse> responses = new ArrayList<ProviderAddedEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             ProviderAddedEventResponse typedResponse = new ProviderAddedEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -310,7 +310,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, ProviderAddedEventResponse>() {
             @Override
             public ProviderAddedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(PROVIDERADDED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(PROVIDERADDED_EVENT, log);
                 ProviderAddedEventResponse typedResponse = new ProviderAddedEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -329,9 +329,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<ProviderRemovedEventResponse> getProviderRemovedEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(PROVIDERREMOVED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(PROVIDERREMOVED_EVENT, transactionReceipt);
         ArrayList<ProviderRemovedEventResponse> responses = new ArrayList<ProviderRemovedEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             ProviderRemovedEventResponse typedResponse = new ProviderRemovedEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -347,7 +347,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, ProviderRemovedEventResponse>() {
             @Override
             public ProviderRemovedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(PROVIDERREMOVED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(PROVIDERREMOVED_EVENT, log);
                 ProviderRemovedEventResponse typedResponse = new ProviderRemovedEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -366,9 +366,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<ResolverAddedEventResponse> getResolverAddedEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RESOLVERADDED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(RESOLVERADDED_EVENT, transactionReceipt);
         ArrayList<ResolverAddedEventResponse> responses = new ArrayList<ResolverAddedEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             ResolverAddedEventResponse typedResponse = new ResolverAddedEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -384,7 +384,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, ResolverAddedEventResponse>() {
             @Override
             public ResolverAddedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RESOLVERADDED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(RESOLVERADDED_EVENT, log);
                 ResolverAddedEventResponse typedResponse = new ResolverAddedEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -403,9 +403,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<ResolverRemovedEventResponse> getResolverRemovedEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RESOLVERREMOVED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(RESOLVERREMOVED_EVENT, transactionReceipt);
         ArrayList<ResolverRemovedEventResponse> responses = new ArrayList<ResolverRemovedEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             ResolverRemovedEventResponse typedResponse = new ResolverRemovedEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -421,7 +421,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, ResolverRemovedEventResponse>() {
             @Override
             public ResolverRemovedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RESOLVERREMOVED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(RESOLVERREMOVED_EVENT, log);
                 ResolverRemovedEventResponse typedResponse = new ResolverRemovedEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -440,9 +440,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<RecoveryAddressChangeTriggeredEventResponse> getRecoveryAddressChangeTriggeredEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RECOVERYADDRESSCHANGETRIGGERED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(RECOVERYADDRESSCHANGETRIGGERED_EVENT, transactionReceipt);
         ArrayList<RecoveryAddressChangeTriggeredEventResponse> responses = new ArrayList<RecoveryAddressChangeTriggeredEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             RecoveryAddressChangeTriggeredEventResponse typedResponse = new RecoveryAddressChangeTriggeredEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -459,7 +459,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, RecoveryAddressChangeTriggeredEventResponse>() {
             @Override
             public RecoveryAddressChangeTriggeredEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RECOVERYADDRESSCHANGETRIGGERED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(RECOVERYADDRESSCHANGETRIGGERED_EVENT, log);
                 RecoveryAddressChangeTriggeredEventResponse typedResponse = new RecoveryAddressChangeTriggeredEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -479,9 +479,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<RecoveryTriggeredEventResponse> getRecoveryTriggeredEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(RECOVERYTRIGGERED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(RECOVERYTRIGGERED_EVENT, transactionReceipt);
         ArrayList<RecoveryTriggeredEventResponse> responses = new ArrayList<RecoveryTriggeredEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             RecoveryTriggeredEventResponse typedResponse = new RecoveryTriggeredEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -497,7 +497,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, RecoveryTriggeredEventResponse>() {
             @Override
             public RecoveryTriggeredEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(RECOVERYTRIGGERED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(RECOVERYTRIGGERED_EVENT, log);
                 RecoveryTriggeredEventResponse typedResponse = new RecoveryTriggeredEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -516,9 +516,9 @@ public class IdentityRegistryInterface extends Contract {
     }
 
     public List<IdentityDestroyedEventResponse> getIdentityDestroyedEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(IDENTITYDESTROYED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(IDENTITYDESTROYED_EVENT, transactionReceipt);
         ArrayList<IdentityDestroyedEventResponse> responses = new ArrayList<IdentityDestroyedEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             IdentityDestroyedEventResponse typedResponse = new IdentityDestroyedEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -534,7 +534,7 @@ public class IdentityRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, IdentityDestroyedEventResponse>() {
             @Override
             public IdentityDestroyedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(IDENTITYDESTROYED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(IDENTITYDESTROYED_EVENT, log);
                 IdentityDestroyedEventResponse typedResponse = new IdentityDestroyedEventResponse();
                 typedResponse.log = log;
                 typedResponse.initiator = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -554,63 +554,63 @@ public class IdentityRegistryInterface extends Contract {
 
     public RemoteCall<Boolean> isSigned(String _address, byte[] messageHash, BigInteger v, byte[] r, byte[] s) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISSIGNED, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(_address), 
-                new org.web3j.abi.datatypes.generated.Bytes32(messageHash), 
-                new org.web3j.abi.datatypes.generated.Uint8(v), 
-                new org.web3j.abi.datatypes.generated.Bytes32(r), 
-                new org.web3j.abi.datatypes.generated.Bytes32(s)), 
+                Arrays.<Type>asList(new Address(_address),
+                new Bytes32(messageHash),
+                new Uint8(v),
+                new Bytes32(r),
+                new Bytes32(s)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
     public RemoteCall<Boolean> identityExists(BigInteger ein) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_IDENTITYEXISTS, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein)), 
+                Arrays.<Type>asList(new Uint256(ein)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
     public RemoteCall<Boolean> hasIdentity(String _address) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_HASIDENTITY, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(_address)), 
+                Arrays.<Type>asList(new Address(_address)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
     public RemoteCall<BigInteger> getEIN(String _address) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETEIN, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(_address)), 
+                Arrays.<Type>asList(new Address(_address)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<Boolean> isAssociatedAddressFor(BigInteger ein, String _address) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISASSOCIATEDADDRESSFOR, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.Address(_address)), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new Address(_address)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
     public RemoteCall<Boolean> isProviderFor(BigInteger ein, String provider) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISPROVIDERFOR, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.Address(provider)), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new Address(provider)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
     public RemoteCall<Boolean> isResolverFor(BigInteger ein, String resolver) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ISRESOLVERFOR, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.Address(resolver)), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new Address(resolver)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bool>() {}));
         return executeRemoteCallSingleValueReturn(function, Boolean.class);
     }
 
     public RemoteCall<Tuple4<String, List<String>, List<String>, List<String>>> getIdentity(BigInteger ein) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETIDENTITY, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein)), 
+                Arrays.<Type>asList(new Uint256(ein)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}, new TypeReference<DynamicArray<Address>>() {}, new TypeReference<DynamicArray<Address>>() {}, new TypeReference<DynamicArray<Address>>() {}));
         return new RemoteCall<Tuple4<String, List<String>, List<String>, List<String>>>(
                 new Callable<Tuple4<String, List<String>, List<String>, List<String>>>() {
@@ -628,62 +628,62 @@ public class IdentityRegistryInterface extends Contract {
 
     public RemoteCall<BigInteger> mapuint8(BigInteger data) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_MAPUINT8, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint8(data)), 
+                Arrays.<Type>asList(new Uint8(data)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint8>() {}));
         return executeRemoteCallSingleValueReturn(function, BigInteger.class);
     }
 
     public RemoteCall<byte[]> mapbytes32(byte[] data) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_MAPBYTES32, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(data)), 
+                Arrays.<Type>asList(new Bytes32(data)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
     public RemoteCall<String> erecover(String recoveryAddress, String associatedAddress, List<String> providers, List<String> resolvers, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ERECOVER, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
-                new org.web3j.abi.datatypes.Address(associatedAddress), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(providers, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(resolvers, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.generated.Uint8(v), 
-                new org.web3j.abi.datatypes.generated.Bytes32(r), 
-                new org.web3j.abi.datatypes.generated.Bytes32(s), 
-                new org.web3j.abi.datatypes.generated.Uint256(timestamp)), 
+                Arrays.<Type>asList(new Address(recoveryAddress),
+                new Address(associatedAddress),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(providers, Address.class)),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(resolvers, Address.class)),
+                new Uint8(v),
+                new Bytes32(r),
+                new Bytes32(s),
+                new Uint256(timestamp)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Address>() {}));
         return executeRemoteCallSingleValueReturn(function, String.class);
     }
 
     public RemoteCall<byte[]> encode(String recoveryAddress, String associatedAddress, List<String> providers, List<String> resolvers, BigInteger timestamp) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_ENCODE, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
-                new org.web3j.abi.datatypes.Address(associatedAddress), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(providers, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(resolvers, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.generated.Uint256(timestamp)), 
+                Arrays.<Type>asList(new Address(recoveryAddress),
+                new Address(associatedAddress),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(providers, Address.class)),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(resolvers, Address.class)),
+                new Uint256(timestamp)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<DynamicBytes>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
 
     public RemoteCall<byte[]> hash(String recoveryAddress, String associatedAddress, List<String> providers, List<String> resolvers, BigInteger timestamp) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_HASH, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
-                new org.web3j.abi.datatypes.Address(associatedAddress), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(providers, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(resolvers, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.generated.Uint256(timestamp)), 
+                Arrays.<Type>asList(new Address(recoveryAddress),
+                new Address(associatedAddress),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(providers, Address.class)),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(resolvers, Address.class)),
+                new Uint256(timestamp)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
@@ -691,13 +691,13 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> createIdentity(String recoveryAddress, List<String> providers, List<String> resolvers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_CREATEIDENTITY, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(providers, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(resolvers, org.web3j.abi.datatypes.Address.class))), 
+                Arrays.<Type>asList(new Address(recoveryAddress),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(providers, Address.class)),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(resolvers, Address.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -705,18 +705,18 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> createIdentityDelegated(String recoveryAddress, String associatedAddress, List<String> providers, List<String> resolvers, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_CREATEIDENTITYDELEGATED, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(recoveryAddress), 
-                new org.web3j.abi.datatypes.Address(associatedAddress), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(providers, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(resolvers, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.generated.Uint8(v), 
-                new org.web3j.abi.datatypes.generated.Bytes32(r), 
-                new org.web3j.abi.datatypes.generated.Bytes32(s), 
-                new org.web3j.abi.datatypes.generated.Uint256(timestamp)), 
+                Arrays.<Type>asList(new Address(recoveryAddress),
+                new Address(associatedAddress),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(providers, Address.class)),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(resolvers, Address.class)),
+                new Uint8(v),
+                new Bytes32(r),
+                new Bytes32(s),
+                new Uint256(timestamp)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -724,12 +724,12 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> addAssociatedAddress(String approvingAddress, String addressToAdd, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDASSOCIATEDADDRESS, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(approvingAddress), 
-                new org.web3j.abi.datatypes.Address(addressToAdd), 
-                new org.web3j.abi.datatypes.generated.Uint8(v), 
-                new org.web3j.abi.datatypes.generated.Bytes32(r), 
-                new org.web3j.abi.datatypes.generated.Bytes32(s), 
-                new org.web3j.abi.datatypes.generated.Uint256(timestamp)), 
+                Arrays.<Type>asList(new Address(approvingAddress),
+                new Address(addressToAdd),
+                new Uint8(v),
+                new Bytes32(r),
+                new Bytes32(s),
+                new Uint256(timestamp)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -737,20 +737,20 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> addAssociatedAddressDelegated(String approvingAddress, String addressToAdd, List<BigInteger> v, List<byte[]> r, List<byte[]> s, List<BigInteger> timestamp) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDASSOCIATEDADDRESSDELEGATED, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(approvingAddress), 
-                new org.web3j.abi.datatypes.Address(addressToAdd), 
-                new org.web3j.abi.datatypes.generated.StaticArray2<org.web3j.abi.datatypes.generated.Uint8>(
-                        org.web3j.abi.datatypes.generated.Uint8.class,
-                        org.web3j.abi.Utils.typeMap(v, org.web3j.abi.datatypes.generated.Uint8.class)), 
-                new org.web3j.abi.datatypes.generated.StaticArray2<org.web3j.abi.datatypes.generated.Bytes32>(
-                        org.web3j.abi.datatypes.generated.Bytes32.class,
-                        org.web3j.abi.Utils.typeMap(r, org.web3j.abi.datatypes.generated.Bytes32.class)), 
-                new org.web3j.abi.datatypes.generated.StaticArray2<org.web3j.abi.datatypes.generated.Bytes32>(
-                        org.web3j.abi.datatypes.generated.Bytes32.class,
-                        org.web3j.abi.Utils.typeMap(s, org.web3j.abi.datatypes.generated.Bytes32.class)), 
-                new org.web3j.abi.datatypes.generated.StaticArray2<org.web3j.abi.datatypes.generated.Uint256>(
-                        org.web3j.abi.datatypes.generated.Uint256.class,
-                        org.web3j.abi.Utils.typeMap(timestamp, org.web3j.abi.datatypes.generated.Uint256.class))), 
+                Arrays.<Type>asList(new Address(approvingAddress),
+                new Address(addressToAdd),
+                new org.web3j.abi.datatypes.generated.StaticArray2<Uint8>(
+                        Uint8.class,
+                        org.web3j.abi.Utils.typeMap(v, Uint8.class)),
+                new org.web3j.abi.datatypes.generated.StaticArray2<Bytes32>(
+                        Bytes32.class,
+                        org.web3j.abi.Utils.typeMap(r, Bytes32.class)),
+                new org.web3j.abi.datatypes.generated.StaticArray2<Bytes32>(
+                        Bytes32.class,
+                        org.web3j.abi.Utils.typeMap(s, Bytes32.class)),
+                new org.web3j.abi.datatypes.generated.StaticArray2<Uint256>(
+                        Uint256.class,
+                        org.web3j.abi.Utils.typeMap(timestamp, Uint256.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -766,11 +766,11 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> removeAssociatedAddressDelegated(String addressToRemove, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVEASSOCIATEDADDRESSDELEGATED, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(addressToRemove), 
-                new org.web3j.abi.datatypes.generated.Uint8(v), 
-                new org.web3j.abi.datatypes.generated.Bytes32(r), 
-                new org.web3j.abi.datatypes.generated.Bytes32(s), 
-                new org.web3j.abi.datatypes.generated.Uint256(timestamp)), 
+                Arrays.<Type>asList(new Address(addressToRemove),
+                new Uint8(v),
+                new Bytes32(r),
+                new Bytes32(s),
+                new Uint256(timestamp)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -778,9 +778,9 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> addProviders(List<String> providers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDPROVIDERS, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(providers, org.web3j.abi.datatypes.Address.class))), 
+                Arrays.<Type>asList(new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(providers, Address.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -788,10 +788,10 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> addProvidersFor(BigInteger ein, List<String> providers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDPROVIDERSFOR, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(providers, org.web3j.abi.datatypes.Address.class))), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(providers, Address.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -799,9 +799,9 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> removeProviders(List<String> providers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVEPROVIDERS, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(providers, org.web3j.abi.datatypes.Address.class))), 
+                Arrays.<Type>asList(new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(providers, Address.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -809,10 +809,10 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> removeProvidersFor(BigInteger ein, List<String> providers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVEPROVIDERSFOR, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(providers, org.web3j.abi.datatypes.Address.class))), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(providers, Address.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -820,9 +820,9 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> addResolvers(List<String> resolvers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDRESOLVERS, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(resolvers, org.web3j.abi.datatypes.Address.class))), 
+                Arrays.<Type>asList(new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(resolvers, Address.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -830,10 +830,10 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> addResolversFor(BigInteger ein, List<String> resolvers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_ADDRESOLVERSFOR, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(resolvers, org.web3j.abi.datatypes.Address.class))), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(resolvers, Address.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -841,9 +841,9 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> removeResolvers(List<String> resolvers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVERESOLVERS, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(resolvers, org.web3j.abi.datatypes.Address.class))), 
+                Arrays.<Type>asList(new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(resolvers, Address.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -851,10 +851,10 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> removeResolversFor(BigInteger ein, List<String> resolvers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVERESOLVERSFOR, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(resolvers, org.web3j.abi.datatypes.Address.class))), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(resolvers, Address.class))),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -862,7 +862,7 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> triggerRecoveryAddressChange(String newRecoveryAddress) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_TRIGGERRECOVERYADDRESSCHANGE, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(newRecoveryAddress)), 
+                Arrays.<Type>asList(new Address(newRecoveryAddress)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -870,8 +870,8 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> triggerRecoveryAddressChangeFor(BigInteger ein, String newRecoveryAddress) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_TRIGGERRECOVERYADDRESSCHANGEFOR, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.Address(newRecoveryAddress)), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new Address(newRecoveryAddress)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -879,12 +879,12 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> triggerRecovery(BigInteger ein, String newAssociatedAddress, BigInteger v, byte[] r, byte[] s, BigInteger timestamp) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_TRIGGERRECOVERY, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.Address(newAssociatedAddress), 
-                new org.web3j.abi.datatypes.generated.Uint8(v), 
-                new org.web3j.abi.datatypes.generated.Bytes32(r), 
-                new org.web3j.abi.datatypes.generated.Bytes32(s), 
-                new org.web3j.abi.datatypes.generated.Uint256(timestamp)), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new Address(newAssociatedAddress),
+                new Uint8(v),
+                new Bytes32(r),
+                new Bytes32(s),
+                new Uint256(timestamp)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -892,14 +892,14 @@ public class IdentityRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> triggerDestruction(BigInteger ein, List<String> firstChunk, List<String> lastChunk, Boolean resetResolvers) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_TRIGGERDESTRUCTION, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Uint256(ein), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(firstChunk, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.DynamicArray<org.web3j.abi.datatypes.Address>(
-                        org.web3j.abi.datatypes.Address.class,
-                        org.web3j.abi.Utils.typeMap(lastChunk, org.web3j.abi.datatypes.Address.class)), 
-                new org.web3j.abi.datatypes.Bool(resetResolvers)), 
+                Arrays.<Type>asList(new Uint256(ein),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(firstChunk, Address.class)),
+                new DynamicArray<Address>(
+                        Address.class,
+                        org.web3j.abi.Utils.typeMap(lastChunk, Address.class)),
+                new Bool(resetResolvers)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }

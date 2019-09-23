@@ -7,6 +7,7 @@ public interface CredentialProvider {
 	Credentials getByAddress(String address);
 	Credentials getDefaultCredentials();
 	String getRecoverAddress();
+	String getDefaultAddress();
 	Web3j web3j();
 	long getLastEndBlockNumber();
 	void storeLastEndBlockNumber(long lebn);

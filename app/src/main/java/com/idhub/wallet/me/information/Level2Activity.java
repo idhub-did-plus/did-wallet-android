@@ -5,26 +5,49 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.TextView;
 
+import com.idhub.magic.common.kvc.entity.ClaimOrder;
+import com.idhub.magic.common.kvc.entity.ClaimType;
+import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.dialog.InputDialogFragment;
+import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
+import com.idhub.wallet.didhub.WalletInfo;
+import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.me.VipStateType;
 import com.idhub.wallet.me.information.view.InformationInputItemView;
+import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.ToastUtils;
 
-public class Level2Activity extends AppCompatActivity implements View.OnClickListener {
+import io.reactivex.observers.DisposableObserver;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import wallet.idhub.com.clientlib.ApiFactory;
+
+public class Level2Activity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
 
     private TextView applyBtn;
+    private WalletKeystore mDefaultKeystore;
+    private LoadingAndErrorView mLoadingAndErrorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level2);
+        mDefaultKeystore = WalletManager.getDefaultKeystore();
+        if (mDefaultKeystore == null) {
+            finish();
+            return;
+        }
         initView();
     }
 
@@ -37,8 +60,10 @@ public class Level2Activity extends AppCompatActivity implements View.OnClickLis
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_idhub_super_vip));
         applyBtn = findViewById(R.id.tv_apply);
+        mLoadingAndErrorView = findViewById(R.id.loading_and_error);
         initData();
     }
+
     private void initData() {
         String state = WalletVipSharedPreferences.getInstance().getIdhubSuperVipState();
         if (VipStateType.NO_APPLY_FOR.equals(state)) {
@@ -65,10 +90,63 @@ public class Level2Activity extends AppCompatActivity implements View.OnClickLis
                     ToastUtils.showShortToast(getString(R.string.wallet_have_apply_for_idhub_vip));
                     return;
                 }
-                instance.setIdhubSuperVipState(VipStateType.APPLY_FOR_ING);
-                initData();
-                WalletVipStateObservable.getInstance().update();
+                InputDialogFragment fragment = InputDialogFragment.getInstance("idhub_vip", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
+                fragment.show(getSupportFragmentManager(), "input_dialog_fragment");
+                fragment.setInputDialogFragmentListener(this);
+
                 break;
         }
+    }
+
+    @Override
+    public void inputConfirm(String data, String source) {
+        mLoadingAndErrorView.onLoading();
+        WalletInfo walletInfo = new WalletInfo(mDefaultKeystore);
+        walletInfo.verifyPassword(data, new DisposableObserver<Boolean>() {
+            @Override
+            public void onNext(Boolean aBoolean) {
+                if (aBoolean) {
+                    //请求，加载进行申请
+                    ClaimOrder claimOrder = new ClaimOrder();
+                    claimOrder.identity =WalletManager.getDefaultAddress();
+                    claimOrder.requestedClaimType = ClaimType.idhub_svip.name();
+                    IDHubCredentialProvider.setDefaultCredentials(walletInfo.exportPrivateKey(data));
+                    ApiFactory.getKycService().order(claimOrder,WalletManager.getDefaultAddress()).enqueue(new Callback<MagicResponse>() {
+                        @Override
+                        public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
+                            MagicResponse body = response.body();
+                            if (body != null && body.isSuccess())  {
+                                WalletVipSharedPreferences.getInstance().setIdhubSuperVipState(VipStateType.APPLY_FOR_ING);
+                                initData();
+                                WalletVipStateObservable.getInstance().update();
+                            }else {
+                                ToastUtils.showShortToast(getString(R.string.wallet_claim_vip_fail));
+                            }
+                            mLoadingAndErrorView.onGone();
+                        }
+
+                        @Override
+                        public void onFailure(Call<MagicResponse> call, Throwable t) {
+                            mLoadingAndErrorView.onGone();
+                            ToastUtils.showShortToast(getString(R.string.wallet_claim_vip_fail));
+                        }
+                    });
+                }else {
+                    mLoadingAndErrorView.onGone();
+                    ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mLoadingAndErrorView.onGone();
+                ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }

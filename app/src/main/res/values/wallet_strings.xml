@@ -179,6 +179,8 @@
     <string name="wallet_upload_fail">上传失败</string>
     <string name="wallet_upload_success">上传成功</string>
     <string name="wallet_already_upload_success">当前添加文件已经上传</string>
+    <string name="wallet_upload_information_again_apply">请上传基本信息之后再次尝试申请</string>
+    <string name="wallet_claim_vip_fail">请求发送失败，请重新申请</string>
 
     //dapp
     <string name="wallet_dapp_search_hint">搜索或输入DApp网址</string>

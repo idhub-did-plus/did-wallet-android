@@ -48,6 +48,8 @@ public class UploadIDHubInfoEntityDao extends AbstractDao<UploadIDHubInfoEntity,
         public final static Property Email = new Property(21, String.class, "email", false, "EMAIL");
         public final static Property ResidenceCountryIsoCode = new Property(22, String.class, "residenceCountryIsoCode", false, "RESIDENCE_COUNTRY_ISO_CODE");
         public final static Property CountryIsoCode = new Property(23, String.class, "countryIsoCode", false, "COUNTRY_ISO_CODE");
+        public final static Property HighAssets = new Property(24, boolean.class, "highAssets", false, "HIGH_ASSETS");
+        public final static Property HighIncome = new Property(25, boolean.class, "highIncome", false, "HIGH_INCOME");
     }
 
 
@@ -86,7 +88,9 @@ public class UploadIDHubInfoEntityDao extends AbstractDao<UploadIDHubInfoEntity,
                 "\"PHONE_DIALING_CODE\" TEXT," + // 20: phoneDialingCode
                 "\"EMAIL\" TEXT," + // 21: email
                 "\"RESIDENCE_COUNTRY_ISO_CODE\" TEXT," + // 22: residenceCountryIsoCode
-                "\"COUNTRY_ISO_CODE\" TEXT);"); // 23: countryIsoCode
+                "\"COUNTRY_ISO_CODE\" TEXT," + // 23: countryIsoCode
+                "\"HIGH_ASSETS\" INTEGER NOT NULL ," + // 24: highAssets
+                "\"HIGH_INCOME\" INTEGER NOT NULL );"); // 25: highIncome
     }
 
     /** Drops the underlying database table. */
@@ -218,6 +222,8 @@ public class UploadIDHubInfoEntityDao extends AbstractDao<UploadIDHubInfoEntity,
         if (countryIsoCode != null) {
             stmt.bindString(24, countryIsoCode);
         }
+        stmt.bindLong(25, entity.getHighAssets() ? 1L: 0L);
+        stmt.bindLong(26, entity.getHighIncome() ? 1L: 0L);
     }
 
     @Override
@@ -343,6 +349,8 @@ public class UploadIDHubInfoEntityDao extends AbstractDao<UploadIDHubInfoEntity,
         if (countryIsoCode != null) {
             stmt.bindString(24, countryIsoCode);
         }
+        stmt.bindLong(25, entity.getHighAssets() ? 1L: 0L);
+        stmt.bindLong(26, entity.getHighIncome() ? 1L: 0L);
     }
 
     @Override
@@ -376,7 +384,9 @@ public class UploadIDHubInfoEntityDao extends AbstractDao<UploadIDHubInfoEntity,
             cursor.isNull(offset + 20) ? null : cursor.getString(offset + 20), // phoneDialingCode
             cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21), // email
             cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22), // residenceCountryIsoCode
-            cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23) // countryIsoCode
+            cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23), // countryIsoCode
+            cursor.getShort(offset + 24) != 0, // highAssets
+            cursor.getShort(offset + 25) != 0 // highIncome
         );
         return entity;
     }
@@ -407,6 +417,8 @@ public class UploadIDHubInfoEntityDao extends AbstractDao<UploadIDHubInfoEntity,
         entity.setEmail(cursor.isNull(offset + 21) ? null : cursor.getString(offset + 21));
         entity.setResidenceCountryIsoCode(cursor.isNull(offset + 22) ? null : cursor.getString(offset + 22));
         entity.setCountryIsoCode(cursor.isNull(offset + 23) ? null : cursor.getString(offset + 23));
+        entity.setHighAssets(cursor.getShort(offset + 24) != 0);
+        entity.setHighIncome(cursor.getShort(offset + 25) != 0);
      }
     
     @Override

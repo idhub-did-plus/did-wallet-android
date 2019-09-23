@@ -11,13 +11,18 @@ import wallet.idhub.com.clientlib.interfaces.CredentialProvider;
 
 public class IDHubCredentialProvider implements CredentialProvider {
 
-//    private static Web3j mWeb3j = Web3j.build(new HttpService(C.API_BASE));
+    //    private static Web3j mWeb3j = Web3j.build(new HttpService(C.API_BASE));
     private static Web3j mWeb3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
     private static Credentials client;
     private static String sRecoverAddress;
+    private static String sDefaultAddress;
 
     public static void setDefaultCredentials(String privateKey) {
         client = Credentials.create(privateKey);
+    }
+
+    public static void setsDefaultAddress(String defaultAddress) {
+        sDefaultAddress = defaultAddress;
     }
 
     public static void setRecoverAddress(String recoverAddress) {
@@ -39,6 +44,11 @@ public class IDHubCredentialProvider implements CredentialProvider {
     @Override
     public String getRecoverAddress() {
         return sRecoverAddress;
+    }
+
+    @Override
+    public String getDefaultAddress() {
+        return sDefaultAddress;
     }
 
 

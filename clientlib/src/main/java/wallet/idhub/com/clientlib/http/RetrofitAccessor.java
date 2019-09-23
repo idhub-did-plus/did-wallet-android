@@ -77,7 +77,7 @@ public class RetrofitAccessor {
 		}).build();
 		
 		
-		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.105:8080")
+		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.16.58.38:8080")
 				.addConverterFactory(JacksonConverterFactory.create(mapper)).client(client).build();
 
 		identityStorage = retrofit.create(IdentityStorage.class);

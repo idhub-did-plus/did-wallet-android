@@ -81,9 +81,9 @@ public class EthereumClaimsRegistryInterface extends Contract {
     }
 
     public List<ClaimSetEventResponse> getClaimSetEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(CLAIMSET_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(CLAIMSET_EVENT, transactionReceipt);
         ArrayList<ClaimSetEventResponse> responses = new ArrayList<ClaimSetEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             ClaimSetEventResponse typedResponse = new ClaimSetEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.issuer = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -100,7 +100,7 @@ public class EthereumClaimsRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, ClaimSetEventResponse>() {
             @Override
             public ClaimSetEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(CLAIMSET_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(CLAIMSET_EVENT, log);
                 ClaimSetEventResponse typedResponse = new ClaimSetEventResponse();
                 typedResponse.log = log;
                 typedResponse.issuer = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -120,9 +120,9 @@ public class EthereumClaimsRegistryInterface extends Contract {
     }
 
     public List<ClaimRemovedEventResponse> getClaimRemovedEvents(TransactionReceipt transactionReceipt) {
-        List<Contract.EventValuesWithLog> valueList = extractEventParametersWithLog(CLAIMREMOVED_EVENT, transactionReceipt);
+        List<EventValuesWithLog> valueList = extractEventParametersWithLog(CLAIMREMOVED_EVENT, transactionReceipt);
         ArrayList<ClaimRemovedEventResponse> responses = new ArrayList<ClaimRemovedEventResponse>(valueList.size());
-        for (Contract.EventValuesWithLog eventValues : valueList) {
+        for (EventValuesWithLog eventValues : valueList) {
             ClaimRemovedEventResponse typedResponse = new ClaimRemovedEventResponse();
             typedResponse.log = eventValues.getLog();
             typedResponse.issuer = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -138,7 +138,7 @@ public class EthereumClaimsRegistryInterface extends Contract {
         return web3j.ethLogFlowable(filter).map(new Function<Log, ClaimRemovedEventResponse>() {
             @Override
             public ClaimRemovedEventResponse apply(Log log) {
-                Contract.EventValuesWithLog eventValues = extractEventParametersWithLog(CLAIMREMOVED_EVENT, log);
+                EventValuesWithLog eventValues = extractEventParametersWithLog(CLAIMREMOVED_EVENT, log);
                 ClaimRemovedEventResponse typedResponse = new ClaimRemovedEventResponse();
                 typedResponse.log = log;
                 typedResponse.issuer = (String) eventValues.getIndexedValues().get(0).getValue();
@@ -159,9 +159,9 @@ public class EthereumClaimsRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> setClaim(String subject, byte[] key, byte[] value) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_SETCLAIM, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(subject), 
-                new org.web3j.abi.datatypes.generated.Bytes32(key), 
-                new org.web3j.abi.datatypes.generated.Bytes32(value)), 
+                Arrays.<Type>asList(new Address(subject),
+                new Bytes32(key),
+                new Bytes32(value)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
@@ -169,17 +169,17 @@ public class EthereumClaimsRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> setSelfClaim(byte[] key, byte[] value) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_SETSELFCLAIM, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.generated.Bytes32(key), 
-                new org.web3j.abi.datatypes.generated.Bytes32(value)), 
+                Arrays.<Type>asList(new Bytes32(key),
+                new Bytes32(value)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }
 
     public RemoteCall<byte[]> getClaim(String issuer, String subject, byte[] key) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(FUNC_GETCLAIM, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(issuer), 
-                new org.web3j.abi.datatypes.Address(subject), 
-                new org.web3j.abi.datatypes.generated.Bytes32(key)), 
+                Arrays.<Type>asList(new Address(issuer),
+                new Address(subject),
+                new Bytes32(key)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Bytes32>() {}));
         return executeRemoteCallSingleValueReturn(function, byte[].class);
     }
@@ -187,9 +187,9 @@ public class EthereumClaimsRegistryInterface extends Contract {
     public RemoteCall<TransactionReceipt> removeClaim(String issuer, String subject, byte[] key) {
         final org.web3j.abi.datatypes.Function function = new org.web3j.abi.datatypes.Function(
                 FUNC_REMOVECLAIM, 
-                Arrays.<Type>asList(new org.web3j.abi.datatypes.Address(issuer), 
-                new org.web3j.abi.datatypes.Address(subject), 
-                new org.web3j.abi.datatypes.generated.Bytes32(key)), 
+                Arrays.<Type>asList(new Address(issuer),
+                new Address(subject),
+                new Bytes32(key)),
                 Collections.<TypeReference<?>>emptyList());
         return executeRemoteCallTransaction(function);
     }

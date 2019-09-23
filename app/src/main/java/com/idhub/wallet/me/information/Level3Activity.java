@@ -4,61 +4,62 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.idhub.magic.common.kvc.entity.ClaimOrder;
+import com.idhub.magic.common.kvc.entity.ClaimType;
 import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.ustorage.entity.BuyerType;
 import com.idhub.magic.common.ustorage.entity.FinancialProfile;
 import com.idhub.magic.common.ustorage.entity.IdentityArchive;
+import com.idhub.magic.common.ustorage.entity.InvestorType;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.dialog.InputDialogFragment;
+import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
+import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.UploadIDHubInfoDbManager;
+import com.idhub.wallet.greendao.entity.UploadIDHubInfoEntity;
 import com.idhub.wallet.me.VipStateType;
 import com.idhub.wallet.me.information.view.InformationInputItemView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.ToastUtils;
 
+import io.reactivex.observers.DisposableObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import wallet.idhub.com.clientlib.ApiFactory;
 
-public class Level3Activity extends AppCompatActivity implements View.OnClickListener {
+public class Level3Activity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
     private TextView applyBtn;
     private RadioGroup mRadioGroup;
     private TextView mIdhubVip;
-    private String HIGH_INCOME = "high_income";
-    private String HIGH_ASSETS = "high_assets";
+    private WalletKeystore mDefaultKeystore;
+    private LoadingAndErrorView mLoadingAndErrorView;
+    private String mPrivateKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level3);
+        mDefaultKeystore = WalletManager.getDefaultKeystore();
+        if (mDefaultKeystore == null) {
+            finish();
+            return;
+        }
         initView();
-        IdentityArchive archive = new IdentityArchive();
-        FinancialProfile financialProfile = new FinancialProfile();
-        financialProfile.highIncome = true;
-        archive.setFinancialProfile(financialProfile);
-        IDHubCredentialProvider.setDefaultCredentials(new WalletInfo(WalletManager.getDefaultKeystore()).exportPrivateKey("123"));
-        String defaultAddress = WalletManager.getDefaultAddress();
-        ApiFactory.getArchiveStorage().storeArchive(archive, defaultAddress).enqueue(new Callback<MagicResponse>() {
-            @Override
-            public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
-                Log.e("LYW", "onResponse: " + response.body().isSuccess() );
-            }
-
-            @Override
-            public void onFailure(Call<MagicResponse> call, Throwable t) {
-
-            }
-        });
     }
 
     public static void startAction(Context context) {
@@ -72,13 +73,13 @@ public class Level3Activity extends AppCompatActivity implements View.OnClickLis
         mIdhubVip = findViewById(R.id.tv_vip);
         applyBtn = findViewById(R.id.tv_apply);
         mRadioGroup = findViewById(R.id.qualified_investor_condition);
+        mLoadingAndErrorView = findViewById(R.id.loading_and_error);
         initData();
     }
 
     private void initData() {
         String state = WalletVipSharedPreferences.getInstance().getQualifiedInvestorVipState();
-        String content = "";
-
+        String content = WalletVipSharedPreferences.getInstance().getQualifiedInvestorVipContent();
         if (VipStateType.NO_APPLY_FOR.equals(state)) {
             if (TextUtils.isEmpty(content)){
                 applyBtn.setText(getString(R.string.wallet_submit));
@@ -99,14 +100,13 @@ public class Level3Activity extends AppCompatActivity implements View.OnClickLis
             applyBtn.setBackgroundResource(R.drawable.wallet_shape_button_grey);
             setApplyContent(content);
         }
-
     }
 
     private void setApplyContent(String content) {
         mIdhubVip.setVisibility(View.VISIBLE);
-        if (HIGH_INCOME.equals(content)) {
+        if (InvestorType.highIncome.name().equals(content)) {
             mIdhubVip.setText(getString(R.string.wallet_qualified_investor_condition_first));
-        } else if (HIGH_ASSETS.equals(content)) {
+        } else if (InvestorType.highAssets.name().equals(content)) {
             mIdhubVip.setText(getString(R.string.wallet_qualified_investor_condition_second));
         }
         mRadioGroup.setVisibility(View.GONE);
@@ -117,25 +117,117 @@ public class Level3Activity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_apply:
-
-
-                //请求，加载进行申请
-                int checkedRadioButtonId = mRadioGroup.getCheckedRadioButtonId();
-                Log.e("LYW", "onClick: " +checkedRadioButtonId );
-                String type = "";
-                if (checkedRadioButtonId == R.id.qualified_investor_condition_first) {
-                    type = HIGH_INCOME;
-                } else if (checkedRadioButtonId == R.id.qualified_investor_condition_second) {
-                    type = HIGH_ASSETS;
-                }else {
-                    ToastUtils.showShortToast(getString(R.string.wallet_select_item_apply));
+                WalletVipSharedPreferences instance = WalletVipSharedPreferences.getInstance();
+                String idhubVipState = instance.getIdhubVipState();
+                if (!VipStateType.HAVE_APPLY_FOR.equals(idhubVipState)) {
+                    ToastUtils.showShortToast(getString(R.string.wallet_have_apply_for_idhub_vip));
                     return;
                 }
-                WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipContent(type);
-                WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipState(VipStateType.APPLY_FOR_ING);
-                initData();
-                WalletVipStateObservable.getInstance().update();
+                if (TextUtils.isEmpty(mPrivateKey)) {
+                    //输入密码
+                    InputDialogFragment fragment = InputDialogFragment.getInstance("idhub_vip", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
+                    fragment.show(getSupportFragmentManager(), "input_dialog_fragment");
+                    fragment.setInputDialogFragmentListener(this);
+                } else {
+                    applyClaim();
+                }
                 break;
+        }
+    }
+
+    @Override
+    public void inputConfirm(String data, String source) {
+        mLoadingAndErrorView.onLoading();
+        WalletInfo walletInfo = new WalletInfo(mDefaultKeystore);
+        walletInfo.verifyPassword(data, new DisposableObserver<Boolean>() {
+            @Override
+            public void onNext(Boolean aBoolean) {
+                mLoadingAndErrorView.onGone();
+                if (aBoolean) {
+                    mPrivateKey = walletInfo.exportPrivateKey(data);
+                    applyClaim();
+                }else {
+                    ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mLoadingAndErrorView.onGone();
+                ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    private void applyClaim() {
+        mLoadingAndErrorView.onLoading();
+        if (applyBtn.getText().toString().equals(getString(R.string.wallet_submit))) {
+            //提交数据
+            int checkedRadioButtonId = mRadioGroup.getCheckedRadioButtonId();
+            Log.e("LYW", "onClick: " +checkedRadioButtonId );
+            FinancialProfile profile = new FinancialProfile();
+            if (checkedRadioButtonId == R.id.qualified_investor_condition_first) {
+                profile.investorType = InvestorType.highIncome.name();
+            } else if (checkedRadioButtonId == R.id.qualified_investor_condition_second) {
+                profile.investorType = InvestorType.highAssets.name();
+            }else {
+                mLoadingAndErrorView.onGone();
+                ToastUtils.showShortToast(getString(R.string.wallet_select_item_apply));
+                return;
+            }
+            IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
+            ApiFactory.getArchiveStorage().storeFinancialProfile(profile, NumericUtil.prependHexPrefix(mDefaultKeystore.getAddress())).enqueue(new Callback<MagicResponse>() {
+                @Override
+                public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
+                    mLoadingAndErrorView.onGone();
+                    MagicResponse body = response.body();
+                    if (body != null && body.isSuccess()) {
+                        WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipContent(profile.investorType);
+                        initData();
+                        Log.e("LYW", "onResponse: " + body.getMessage());
+                    } else {
+                        ToastUtils.showShortToast(getString(R.string.wallet_claim_vip_fail));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<MagicResponse> call, Throwable t) {
+                    mLoadingAndErrorView.onGone();
+                    ToastUtils.showShortToast(getString(R.string.wallet_claim_vip_fail));
+                }
+            });
+        }else {
+            //申请
+            ClaimOrder claimOrder = new ClaimOrder();
+            claimOrder.identity = NumericUtil.prependHexPrefix(mDefaultKeystore.getAddress());
+            claimOrder.requestedClaimType = ClaimType.qualified_investor.name();
+            IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
+            ApiFactory.getKycService().order(claimOrder,claimOrder.identity).enqueue(new Callback<MagicResponse>() {
+                @Override
+                public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
+                    MagicResponse body = response.body();
+                    if (body != null && body.isSuccess())  {
+                        WalletVipSharedPreferences.getInstance().setIdhubVipState(VipStateType.APPLY_FOR_ING);
+                        initData();
+                        WalletVipStateObservable.getInstance().update();
+                    }else {
+                        ToastUtils.showShortToast(getString(R.string.wallet_claim_vip_fail));
+                    }
+                    mLoadingAndErrorView.onGone();
+                }
+
+                @Override
+                public void onFailure(Call<MagicResponse> call, Throwable t) {
+                    mLoadingAndErrorView.onGone();
+                    ToastUtils.showShortToast(getString(R.string.wallet_claim_vip_fail));
+                }
+            });
         }
     }
 }

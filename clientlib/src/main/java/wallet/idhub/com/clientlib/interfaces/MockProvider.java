@@ -40,6 +40,11 @@ public class MockProvider implements CredentialProvider {
 	}
 
 	@Override
+	public String getDefaultAddress() {
+		return null;
+	}
+
+	@Override
 	public long getLastEndBlockNumber() {
 		// TODO Auto-generated method stub
 		return 0;

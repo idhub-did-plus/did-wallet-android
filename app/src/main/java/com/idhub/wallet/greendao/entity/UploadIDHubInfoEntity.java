@@ -34,10 +34,11 @@ public class UploadIDHubInfoEntity {
     private String residenceCountryIsoCode ="";
     private String countryIsoCode ="";
 
+    private boolean highAssets =false;
+    private boolean highIncome =false;
 
 
-
-    @Generated(hash = 154892847)
+    @Generated(hash = 859305568)
     public UploadIDHubInfoEntity(Long id, String firstName, String middleName,
             String lastName, String gender, String birthday, String country,
             String residenceCountry, String idcardNumber, String passportNumber,
@@ -45,7 +46,7 @@ public class UploadIDHubInfoEntity {
             String addressCountry, String addressCountryCode, String postalCode,
             String neighborhood, String city, String state, String phone,
             String phoneDialingCode, String email, String residenceCountryIsoCode,
-            String countryIsoCode) {
+            String countryIsoCode, boolean highAssets, boolean highIncome) {
         this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -70,6 +71,8 @@ public class UploadIDHubInfoEntity {
         this.email = email;
         this.residenceCountryIsoCode = residenceCountryIsoCode;
         this.countryIsoCode = countryIsoCode;
+        this.highAssets = highAssets;
+        this.highIncome = highIncome;
     }
     @Generated(hash = 1575712821)
     public UploadIDHubInfoEntity() {
@@ -239,5 +242,17 @@ public class UploadIDHubInfoEntity {
 
     public void setAddressCountryCode(String addressCountryCode) {
         this.addressCountryCode = addressCountryCode;
+    }
+    public boolean getHighAssets() {
+        return this.highAssets;
+    }
+    public void setHighAssets(boolean highAssets) {
+        this.highAssets = highAssets;
+    }
+    public boolean getHighIncome() {
+        return this.highIncome;
+    }
+    public void setHighIncome(boolean highIncome) {
+        this.highIncome = highIncome;
     }
 }

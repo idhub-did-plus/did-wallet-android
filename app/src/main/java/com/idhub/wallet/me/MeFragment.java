@@ -1,12 +1,8 @@
 package com.idhub.wallet.me;
 
-
-import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
@@ -17,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.magic.common.event.MagicEvent;
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
@@ -24,9 +21,7 @@ import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
-import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.me.information.Level1Activity;
 import com.idhub.wallet.me.information.Level2Activity;
@@ -36,16 +31,16 @@ import com.idhub.wallet.me.information.Level5Activity;
 import com.idhub.wallet.me.view.MeBottomItemView;
 import com.idhub.wallet.me.view.MeTopView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
-import com.idhub.wallet.utils.ToastUtils;
 
+import org.java_websocket.util.Base64;
 import org.web3j.crypto.Credentials;
 
 import java.lang.ref.WeakReference;
 import java.math.BigInteger;
-import java.util.Observable;
 import java.util.Observer;
 
 import wallet.idhub.com.clientlib.ApiFactory;
+import wallet.idhub.com.clientlib.event.EventListener;
 import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
 import wallet.idhub.com.clientlib.interfaces.Identity;
 import wallet.idhub.com.clientlib.interfaces.ResultListener;
@@ -93,6 +88,31 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         mStComplianceInvestorView.setName(getString(R.string.wallet_st_compliance_investor));
         //查询 会员状态
         initVipState();
+        requestNetData();
+    }
+
+    private void requestNetData() {
+        IDHubCredentialProvider.setsDefaultAddress(WalletManager.getDefaultAddress());
+        ApiFactory.getEventListenerService().listen(new EventListener() {
+            @Override
+            public void onEvent(MagicEvent e) {
+                String event = e.event;
+                String eventClass = e.eventClass;
+                String eventType = e.eventType;
+                Log.e("LYW", "onEvent: " + event + " " + eventClass + " " + eventType);
+//                try {
+
+//                    Class type = Class.forName(e.eventClass);
+//                    String encoded = e.event;
+//                    byte[] json = Base64.decode(encoded);
+//                    Object entity = mapper.readValue(json, type);
+
+//                } catch (Exception e1) {
+//                    // TODO Auto-generated catch block
+//                    e1.printStackTrace();
+//                }
+            }
+        });
     }
 
     private void initVipState() {

@@ -30,7 +30,7 @@ public class WalletVipSharedPreferences {
     }
 
     public String getIdhubVipState() {
-        return sharedPreferences.getString(WALLET_IDHHUB_VIP_STATE, VipStateType.HAVE_APPLY_FOR);
+        return sharedPreferences.getString(WALLET_IDHHUB_VIP_STATE, VipStateType.NO_APPLY_FOR);
     }
 
     public void setIdhubVipState(String state) {
