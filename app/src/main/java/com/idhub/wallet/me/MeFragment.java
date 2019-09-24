@@ -32,6 +32,8 @@ import com.idhub.wallet.me.view.MeBottomItemView;
 import com.idhub.wallet.me.view.MeTopView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.web3j.crypto.Credentials;
 
 import java.lang.ref.WeakReference;
@@ -84,6 +86,14 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         mStComplianceInvestorView.setName(getString(R.string.wallet_st_compliance_investor));
         //查询 会员状态
         initVipState();
+        try {
+            JSONObject jsonObject = new JSONObject("\"{\\\"@context\\\":[\\\"https://w3id.org/credentials/v1\\\",\\\"https://idhub.com/credentials/v1\\\"],\\\"type\\\":[\\\"Credential\\\"],\\\"claim\\\":{\\\"id\\\":\\\"did:erc1056:did:erc1056:0xe3bf9307c560d75f577522b48b1dd1759f155997\\\",\\\"claimType\\\":\\\"idhub_vip\\\",\\\"country\\\":\\\"AD\\\",\\\"jurisdiction\\\":\\\"unknown\\\"},\\\"issued\\\":\\\"2019-09-24\\\",\\\"issuer\\\":\\\"did:erc1056:0x458b6862cac349a47658ef7251f22054ffa0d4ed\\\",\\\"expires\\\":\\\"2019-11-23\\\",\\\"signature\\\":{\\\"created\\\":\\\"2019-09-24\\\",\\\"creator\\\":\\\"did:erc1056:0x458b6862cac349a47658ef7251f22054ffa0d4ed\\\",\\\"nonce\\\":\\\"56e04336-2492-4653-b32c-40eb46536878\\\",\\\"domain\\\":null,\\\"type\\\":\\\"ES256\\\",\\\"signatureValue\\\":\\\"MEcCIMvRASICkaBGNbA3ipmu9F0pn54eaMrHwKdDZCxfVzHeAiBqYjqgNxwCdvwFLrOmIIjyStE23O4u5WwxlOUuMud+TgIBHA==\\\"}}\"");
+            JSONObject claim = jsonObject.getJSONObject("claim");
+            String claimType = claim.getString("claimType");
+            Log.e("LYW", "initData: " +claim );
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         requestNetData();
     }
 
@@ -111,6 +121,8 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                 String event = e.event;
                 String eventClass = e.eventClass;
                 String eventType = e.eventType;
+                if (eventType.equals("claim_issued_event")) {
+                }
                 Log.e("LYW", "onEvent: " + event + " " + eventClass + " " + eventType);
 //                try {
 

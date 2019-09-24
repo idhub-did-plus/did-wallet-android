@@ -28,6 +28,12 @@ public class MockProvider implements CredentialProvider {
 		// TODO Auto-generated method stub
 		return client;
 	}
+
+	@Override
+	public String getDefaultAddress() {
+		return null;
+	}
+
 	@Override
 	public Web3j web3j() {
 		// TODO Auto-generated method stub

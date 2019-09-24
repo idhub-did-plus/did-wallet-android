@@ -46,7 +46,7 @@ public class IDHubCredentialProvider implements CredentialProvider {
         return sRecoverAddress;
     }
 
-
+    @Override
     public String getDefaultAddress() {
         return sDefaultAddress;
     }

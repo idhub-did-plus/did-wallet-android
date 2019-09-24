@@ -27,7 +27,7 @@ public class EventFetcher implements EventListenerService {
 	ScheduledExecutorService pool;
 	EventListener listener;
 	private EventFetcher() {
-		final String identity = ProviderFactory.getProvider().getDefaultCredentials().getAddress();
+		final String identity = ProviderFactory.getProvider().getDefaultAddress();
 		EventService eventService = RetrofitAccessor.getInstance().getEventService();
 		pool = Executors.newScheduledThreadPool(1);
 		pool.scheduleAtFixedRate(() -> {
