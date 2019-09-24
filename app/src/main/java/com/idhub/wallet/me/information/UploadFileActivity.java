@@ -39,7 +39,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import java.io.File;
 import java.util.Set;
 
 import io.reactivex.observers.DisposableObserver;
@@ -49,7 +48,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import wallet.idhub.com.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.ApiFactory;
 
 
 public class UploadFileActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {

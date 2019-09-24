@@ -13,7 +13,6 @@ import android.os.Message;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 
@@ -29,7 +28,6 @@ import com.idhub.wallet.createmanager.walletcreate.MnemonicBackupHintActivity;
 import com.idhub.wallet.didhub.RecoverAddress;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.MnemonicUtil;
@@ -47,8 +45,8 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import wallet.idhub.com.clientlib.ApiFactory;
-import wallet.idhub.com.clientlib.interfaces.Listen;
+import com.idhub.magic.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.interfaces.Listen;
 
 public class UpgradeActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 

@@ -4,9 +4,7 @@ import android.content.Context;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,28 +12,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.idhub.magic.common.contracts.IdentityRegistryInterface;
-import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
-import com.idhub.wallet.didhub.WalletInfo;
-import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.me.information.UploadFileActivity;
 import com.idhub.wallet.me.information.UploadInformationTypeActivity;
-import com.idhub.wallet.net.IDHubCredentialProvider;
-
-import java.io.File;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import wallet.idhub.com.clientlib.ApiFactory;
 
 public class MeTopView extends ConstraintLayout implements View.OnClickListener {
 

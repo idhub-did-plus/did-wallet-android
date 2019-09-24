@@ -20,8 +20,6 @@ import com.idhub.wallet.createmanager.walletimport.ImportWalletTopView;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.model.Wallet;
-import com.idhub.wallet.didhub.util.BIP44Util;
-import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
 import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
@@ -38,7 +36,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import wallet.idhub.com.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.ApiFactory;
 
 import static com.idhub.wallet.createmanager.walletimport.ImportWalletActivity.IMPORT;
 import static com.idhub.wallet.createmanager.walletimport.ImportWalletActivity.IMPORT_EQUAL_ASSOCIATION;

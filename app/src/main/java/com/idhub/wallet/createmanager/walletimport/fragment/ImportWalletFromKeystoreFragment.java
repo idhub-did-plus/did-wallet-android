@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.idhub.wallet.createmanager.walletimport.ImportWalletTopView;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.model.Wallet;
-import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
 import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
@@ -34,12 +32,11 @@ import org.web3j.crypto.Credentials;
 import java.math.BigInteger;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import wallet.idhub.com.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.ApiFactory;
 
 import static com.idhub.wallet.createmanager.walletimport.ImportWalletActivity.*;
 

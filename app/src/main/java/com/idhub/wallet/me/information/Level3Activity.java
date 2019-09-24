@@ -14,9 +14,7 @@ import android.widget.TextView;
 import com.idhub.magic.common.kvc.entity.ClaimOrder;
 import com.idhub.magic.common.kvc.entity.ClaimType;
 import com.idhub.magic.common.parameter.MagicResponse;
-import com.idhub.magic.common.ustorage.entity.BuyerType;
 import com.idhub.magic.common.ustorage.entity.FinancialProfile;
-import com.idhub.magic.common.ustorage.entity.IdentityArchive;
 import com.idhub.magic.common.ustorage.entity.InvestorType;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
@@ -28,10 +26,7 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.UploadIDHubInfoDbManager;
-import com.idhub.wallet.greendao.entity.UploadIDHubInfoEntity;
 import com.idhub.wallet.me.VipStateType;
-import com.idhub.wallet.me.information.view.InformationInputItemView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.ToastUtils;
 
@@ -39,7 +34,7 @@ import io.reactivex.observers.DisposableObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import wallet.idhub.com.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.ApiFactory;
 
 public class Level3Activity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 

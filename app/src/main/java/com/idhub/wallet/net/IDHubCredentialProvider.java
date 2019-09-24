@@ -1,14 +1,11 @@
 package com.idhub.wallet.net;
 
 import com.idhub.wallet.common.sharepreference.BlockNumbersSharedPreferences;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
-import com.idhub.wallet.common.walletobservable.WalletNodeSelectedObservable;
 
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.http.HttpService;
 
-import wallet.idhub.com.clientlib.interfaces.CredentialProvider;
+import com.idhub.magic.clientlib.interfaces.CredentialProvider;
 
 
 public class IDHubCredentialProvider implements CredentialProvider {
@@ -49,7 +46,7 @@ public class IDHubCredentialProvider implements CredentialProvider {
         return sRecoverAddress;
     }
 
-    @Override
+
     public String getDefaultAddress() {
         return sDefaultAddress;
     }

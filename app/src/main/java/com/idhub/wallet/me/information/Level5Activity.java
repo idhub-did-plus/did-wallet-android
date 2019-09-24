@@ -31,7 +31,7 @@ import io.reactivex.observers.DisposableObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import wallet.idhub.com.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.ApiFactory;
 
 public class Level5Activity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
     private TextView applyBtn;

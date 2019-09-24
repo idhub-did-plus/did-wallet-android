@@ -32,18 +32,14 @@ import com.idhub.wallet.me.view.MeBottomItemView;
 import com.idhub.wallet.me.view.MeTopView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 
-import org.java_websocket.util.Base64;
 import org.web3j.crypto.Credentials;
 
 import java.lang.ref.WeakReference;
 import java.math.BigInteger;
 import java.util.Observer;
 
-import wallet.idhub.com.clientlib.ApiFactory;
-import wallet.idhub.com.clientlib.event.EventListener;
-import wallet.idhub.com.clientlib.interfaces.ExceptionListener;
-import wallet.idhub.com.clientlib.interfaces.Identity;
-import wallet.idhub.com.clientlib.interfaces.ResultListener;
+import com.idhub.magic.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.event.EventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -92,7 +88,23 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
     }
 
     private void requestNetData() {
-        IDHubCredentialProvider.setsDefaultAddress(WalletManager.getDefaultAddress());
+        String defaultAddress = WalletManager.getDefaultAddress();
+        if (TextUtils.isEmpty(defaultAddress)) {
+            defaultAddress = WalletManager.getCurrentKeyStore().getAddress();
+        }
+        IDHubCredentialProvider.setsDefaultAddress(defaultAddress);
+//        EventService eventService = RetrofitAccessor.getInstance().getEventService();
+//        eventService.queryEvents(defaultAddress).enqueue(new Callback<MagicResponse<List<MagicEvent>>>() {
+//            @Override
+//            public void onResponse(Call<MagicResponse<List<MagicEvent>>> call, Response<MagicResponse<List<MagicEvent>>> response) {
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MagicResponse<List<MagicEvent>>> call, Throwable t) {
+//
+//            }
+//        });
         ApiFactory.getEventListenerService().listen(new EventListener() {
             @Override
             public void onEvent(MagicEvent e) {

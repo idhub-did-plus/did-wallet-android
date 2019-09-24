@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,10 +13,6 @@ import com.idhub.magic.common.kvc.entity.ClaimOrder;
 import com.idhub.magic.common.kvc.entity.ClaimType;
 import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.country.Country;
-import com.idhub.wallet.common.country.CountryPickerCallbacks;
-import com.idhub.wallet.common.country.CountryPickerDialog;
-import com.idhub.wallet.common.date.DatePicker;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
@@ -29,20 +24,14 @@ import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.greendao.UploadIDHubInfoDbManager;
 import com.idhub.wallet.greendao.entity.UploadIDHubInfoEntity;
 import com.idhub.wallet.me.VipStateType;
-import com.idhub.wallet.me.information.view.InformationInputItemView;
-import com.idhub.wallet.me.information.view.InformationSelectItemView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.ToastUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import io.reactivex.observers.DisposableObserver;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import wallet.idhub.com.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.ApiFactory;
 
 public class Level1Activity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 

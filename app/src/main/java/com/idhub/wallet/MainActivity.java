@@ -8,7 +8,6 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
@@ -32,9 +31,9 @@ import java.util.List;
 
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;
-import wallet.idhub.com.clientlib.ApiFactory;
-import wallet.idhub.com.clientlib.interfaces.IncomingListener;
-import wallet.idhub.com.clientlib.interfaces.IncomingService;
+import com.idhub.magic.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.interfaces.IncomingListener;
+import com.idhub.magic.clientlib.interfaces.IncomingService;
 
 public class MainActivity extends AppCompatActivity {
 
