@@ -1,6 +1,8 @@
 package com.idhub.wallet.net;
 
 import com.idhub.wallet.common.sharepreference.BlockNumbersSharedPreferences;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.common.walletobservable.WalletNodeSelectedObservable;
 
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
@@ -12,7 +14,8 @@ import wallet.idhub.com.clientlib.interfaces.CredentialProvider;
 public class IDHubCredentialProvider implements CredentialProvider {
 
     //    private static Web3j mWeb3j = Web3j.build(new HttpService(C.API_BASE));
-    private static Web3j mWeb3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
+
+
     private static Credentials client;
     private static String sRecoverAddress;
     private static String sDefaultAddress;
@@ -54,7 +57,7 @@ public class IDHubCredentialProvider implements CredentialProvider {
 
     @Override
     public Web3j web3j() {
-        return mWeb3j;
+        return Web3Api.mWeb3j;
     }
 
     @Override

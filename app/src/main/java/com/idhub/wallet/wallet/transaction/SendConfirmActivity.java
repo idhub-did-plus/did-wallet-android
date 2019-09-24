@@ -5,7 +5,6 @@ import android.os.Parcelable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -25,7 +24,6 @@ import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
 import com.idhub.wallet.net.parameter.EthTransactionParam;
-import com.idhub.wallet.network.Web3jSubscriber;
 import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
 

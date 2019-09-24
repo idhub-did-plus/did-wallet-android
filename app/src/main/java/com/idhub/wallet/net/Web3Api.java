@@ -19,7 +19,6 @@ import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
 import com.idhub.wallet.net.parameter.EthTransactionParam;
-import com.idhub.wallet.network.Web3jSubscriber;
 import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.LogUtils;
 
@@ -48,6 +47,7 @@ import java.util.List;
 import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 
+import io.api.etherscan.model.EthNetwork;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -55,24 +55,28 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
+import wallet.idhub.com.clientlib.etherscan.Etherscan;
 
 
 public class Web3Api {
-    private static Web3j mWeb3j;
+    public static Web3j mWeb3j;
+    public static String sNode;
+    public static EthNetwork ethNetwork;
 
     static {
         initWeb3();
-        WalletNodeSelectedObservable.getInstance().addObserver(new Observer() {
-            @Override
-            public void update(java.util.Observable o, Object arg) {
-                initWeb3();
-            }
-        });
+        WalletNodeSelectedObservable.getInstance().addObserver((o, arg) -> initWeb3());
     }
 
     private static void initWeb3() {
-        String apiBase = WalletOtherInfoSharpreference.getInstance().getNode();
-        mWeb3j = Web3j.build(new HttpService(apiBase));
+        sNode = WalletOtherInfoSharpreference.getInstance().getNode();
+        if (sNode.equals(WalletNodeManager.ROPSTEN)) {
+            ethNetwork = EthNetwork.ROPSTEN;
+        } else {
+            ethNetwork = EthNetwork.MAINNET;
+        }
+        ((Etherscan)Etherscan.getInstance()).setCurrentApi(ethNetwork);
+        mWeb3j = Web3j.build(new HttpService(sNode));
     }
 
     public static void searchERC1400Controllers(String contractAddress, DisposableSubscriber<List> observer) {

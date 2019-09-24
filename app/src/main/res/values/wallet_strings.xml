@@ -333,4 +333,11 @@
     <string name="wallet_default_password_false">默认地址密码输入错误</string>
     <string name="wallet_association_password_false">关联地址密码输入错误</string>
     <string name="wallet_upgrade_association_false">关联地址升级失败</string>
+
+
+
+    //scanCode
+    <string name="wallet_login_fail">登陆失败</string>
+    <string name="wallet_not_found_assets">钱包下找不到此资产</string>
+
 </resources>

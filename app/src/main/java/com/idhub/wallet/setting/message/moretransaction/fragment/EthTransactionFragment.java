@@ -15,11 +15,13 @@ import android.widget.TextView;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.wallet.net.Web3Api;
+import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.setting.message.moretransaction.EthTransactionMessageAdapter;
 import com.idhub.wallet.setting.message.moretransaction.MoreTransactionMessageActivity;
 import com.idhub.wallet.setting.message.moretransaction.TransactionObservable;
-import com.idhub.wallet.net.C;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
 import java.util.Observer;
 
 import io.api.etherscan.core.impl.EtherScanApi;
+import io.api.etherscan.model.EthNetwork;
 import io.api.etherscan.model.Tx;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -50,7 +53,7 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
     private static final int mOffset = 3;
     private boolean hasNextPage;
     private String mAddress;
-    private EtherScanApi mApi = new EtherScanApi(C.ROPSTEN);
+    private EtherScanApi etherScanApi = new EtherScanApi(Web3Api.ethNetwork);
 
     public EthTransactionFragment() {
         // Required empty public constructor
@@ -94,7 +97,7 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
 
     private void loadData() {
         Observable.create((ObservableOnSubscribe<List<Tx>>) emitter -> {
-            List<Tx> txs = mApi.account().txs(mAddress, 0, MAX_END_BLOCK, String.valueOf(mPage), mOffset);
+            List<Tx> txs = etherScanApi.account().txs(mAddress, 0, MAX_END_BLOCK, String.valueOf(mPage), mOffset);
             emitter.onNext(txs);
             emitter.onComplete();
         })

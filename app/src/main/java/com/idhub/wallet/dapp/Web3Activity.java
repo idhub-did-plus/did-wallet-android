@@ -20,6 +20,7 @@ import com.idhub.wallet.BuildConfig;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.dapp.entity.Address;
 import com.idhub.wallet.dapp.entity.Message;
@@ -38,7 +39,8 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.transaction.EthereumSign;
 import com.idhub.wallet.didhub.transaction.EthereumTransaction;
-import com.idhub.wallet.net.C;
+import com.idhub.wallet.net.Web3Api;
+import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.math.BigInteger;
@@ -59,8 +61,8 @@ public class Web3Activity extends AppCompatActivity implements OnSignMessageList
     private final String SIGN_TRANSACTION = "SignTransaction";
     private Message<String> mCurrentSignMessage;
     private Transaction mCurrentTransaction;
-    private String mChainID = "1";
-    private String mRpcUrl = C.API_BASE;
+    private String mChainID = "3";
+    private String mRpcUrl = Web3Api.sNode;
     private TitleLayout mTitleLayout;
 
     @Override
@@ -78,6 +80,11 @@ public class Web3Activity extends AppCompatActivity implements OnSignMessageList
     }
 
     private void initData() {
+        if (mRpcUrl.equals(WalletNodeManager.MAINNET)) {
+            mChainID = "1";
+        }else {
+            mChainID = "3";
+        }
         mAddress = WalletManager.getCurrentKeyStore().getAddress();
         mWeb3View.loadUrl(mUrlStr);
         mWeb3View.requestFocus();

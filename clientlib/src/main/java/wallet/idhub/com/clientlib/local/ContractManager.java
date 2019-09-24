@@ -1,6 +1,8 @@
 package wallet.idhub.com.clientlib.local;
 
 
+import android.util.Log;
+
 import java.math.BigDecimal;
 
 import org.slf4j.Logger;
@@ -37,7 +39,7 @@ public class ContractManager {
 
    static{
     	Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
-        
+       Log.e("LYW", "static initializer: " +credentials.getAddress() );
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface,
                 web3j,

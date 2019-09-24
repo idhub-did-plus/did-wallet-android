@@ -1,5 +1,7 @@
 package wallet.idhub.com.clientlib.etherscan;
 
+import android.util.Log;
+
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +62,7 @@ public class Etherscan implements IncomingService {
 	IncomingListener<Tx> txlistener;
 	IncomingListener<TxToken> transferlistener;
 	
-	EthNetwork current = EthNetwork.MAINNET;
+	EthNetwork current = EthNetwork.ROPSTEN;
 
 	@Override
 	public void setCurrentNetwork(EthNetwork c) {
@@ -107,7 +109,11 @@ public class Etherscan implements IncomingService {
 		});
 
 	}
+	public void setCurrentApi(EthNetwork ethNetwork){
+		current = ethNetwork;
+	}
 	EtherScanApi api() {
+		Log.e("LYW", "api:111 " + current.name() );
 		return this.apis.get(current);
 	}
 	void once() throws Exception {

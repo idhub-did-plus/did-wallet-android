@@ -1,6 +1,5 @@
-package com.idhub.wallet.network;
+package com.idhub.wallet.net;
 
-import com.idhub.wallet.network.exception.NetworkException;
 import com.idhub.wallet.utils.LogUtils;
 
 import io.reactivex.subscribers.DisposableSubscriber;
@@ -13,8 +12,7 @@ public class Web3jSubscriber<T> extends DisposableSubscriber<T> {
 
     @Override
     public void onError(Throwable t) {
-        NetworkException networkException = new NetworkException(t);
-        String message = networkException.getMessage();
+        String message = t.getMessage();
         LogUtils.e("did", message);
     }
 

@@ -21,6 +21,10 @@ public class AssetsModel implements Parcelable {
     private String type;
     @Transient
     public byte[] partition;
+    @Transient
+    public String value;
+    @Transient
+    public String toAddress;
 
     public AssetsModel() {
     }

@@ -39,6 +39,7 @@ import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.wallet.utils.QRcodeAnalysisUtils;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.mainfragment.view.WalletFragmentBottomView;
 import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
@@ -172,10 +173,8 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 String qrcode = data.getStringExtra("qrcode");
-                Log.e("LYW", "onActivityResult: " + qrcode);
                 handleQrCodeStr(qrcode);
             }
-
         }
     }
 
@@ -188,21 +187,23 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
             FragmentManager fragmentManager = ((AppCompatActivity) this.getContext()).getSupportFragmentManager();
             instance.show(fragmentManager, "input_dialog_fragment");
             instance.setInputDialogFragmentListener(this);
+        }else {
+            ToastUtils.showLongToast(qrcode);
+//            QRcodeAnalysisUtils.handleQRcode(getContext(),qrcode);
         }
     }
 
-    private String signJWTLogin(String qrcode, WalletInfo walletInfo, String password) throws JSONException, IOException {
+    private Response signJWTLogin(String qrcode, WalletInfo walletInfo, String password) throws JSONException, IOException {
+        //jwt 将base64解析，添加json字段Base64编码payload ，编码Base64 json  jwthead格式 ，head.payload 进行签名消息signMessage
+        //Base64编码签名消息  head.payload.signMessage  进行http请求发送最终数据
         String jwtStr = qrcode.substring(QRCodeType.IDHUB_LOGIN_HEADER.length());
-        Log.e("LYW", "signJWTLogin: " + jwtStr);
         String decode = new String(Base64.decode(jwtStr, Base64.URL_SAFE | Base64.NO_WRAP));
-        Log.e("LYW", "signJWTLogin: " + decode);
         JSONObject jsonObject = null;
         jsonObject = new JSONObject(decode);
         long l = System.currentTimeMillis() / 1000 + 30;
         jsonObject.put("exp", l);
         jsonObject.put("iss", NumericUtil.prependHexPrefix(walletInfo.getAddress()));
         String middleJson = jsonObject.toString();
-        Log.e("LYW", "signJWTLogin: " + middleJson);
         JSONObject startJsonObject = new JSONObject();
         startJsonObject.put("alg", "ES256k");
         startJsonObject.put("typ", "JWT");
@@ -212,31 +213,23 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         System.out.println(message);
         //签名消息
         String sign = EthereumSign.sign(message, walletInfo.exportPrivateKey(password));
-        Log.e("LYW", "signJWTLogin:sign " + sign);
         byte[] signBytes = NumericUtil.hexToBytes(sign);
         String url = jsonObject.optString("rdt");
         String signMessage = message + "." + Base64.encodeToString(signBytes, Base64.URL_SAFE | Base64.NO_WRAP);
-        Log.e("LYW", "signJWTLogin: " + signMessage);
 
         OkHttpClient okHttpClient = new OkHttpClient();
-        MediaType mediaType = MediaType.parse("text/plain");
+        MediaType mediaType = MediaType.parse("application/json");
         //创建RequestBody对象，将参数按照指定的MediaType封装
-        RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
+        JSONObject jwtSendJson = new JSONObject();
+        jwtSendJson.put("jwt", signMessage);
+        RequestBody requestBody = RequestBody.create(mediaType, jwtSendJson.toString());
         Request request = new Request
                 .Builder()
                 .post(requestBody)//Post请求的参数传递
                 .url(url)
                 .build();
-
         Response response = okHttpClient.newCall(request).execute();
-        ResponseBody body = response.body();
-        if (body != null) {
-            String result = body.string();
-            body.close();
-            return result;
-        } else {
-            return "";
-        }
+        return response;
     }
 
     @Override
@@ -281,34 +274,33 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     public void inputConfirm(String data, String source) {
         if ("idhub_login".equals(source)) {
             mLoadingAndErrorView.onLoading();
-            io.reactivex.Observable.create(new ObservableOnSubscribe<String>() {
-                @Override
-                public void subscribe(ObservableEmitter<String> emitter) throws Exception {
-                    WalletKeystore walletKeystore = WalletManager.getDefaultKeystore();
-                    if (walletKeystore == null) {
-                        walletKeystore = WalletManager.getCurrentKeyStore();
-                    }
-                    WalletInfo walletInfo = new WalletInfo(walletKeystore);
-                    boolean b = walletInfo.verifyPassword(data);
-                    if (b) {
-                        String result = signJWTLogin(mIdhubLoginCode, walletInfo, data);
-                        emitter.onNext(result);
-                        emitter.onComplete();
-                    } else {
-                        emitter.onError(new Throwable(getString(R.string.wallet_input_password_false)));
-                    }
+            io.reactivex.Observable.create((ObservableOnSubscribe<Response>) emitter -> {
+                WalletKeystore walletKeystore = WalletManager.getDefaultKeystore();
+                if (walletKeystore == null) {
+                    walletKeystore = WalletManager.getCurrentKeyStore();
                 }
-            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<String>() {
+                WalletInfo walletInfo = new WalletInfo(walletKeystore);
+                boolean b = walletInfo.verifyPassword(data);
+                if (b) {
+                    Response result = signJWTLogin(mIdhubLoginCode, walletInfo, data);
+                    emitter.onNext(result);
+                    emitter.onComplete();
+                } else {
+                    emitter.onError(new Throwable(getString(R.string.wallet_input_password_false)));
+                }
+            }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<Response>() {
                 @Override
-                public void onNext(String s) {
+                public void onNext(Response s) {
                     mLoadingAndErrorView.onGone();
-                    Log.e("LYW", "onNext: " + s );
+                    if (s.code() != 200) {
+                        ToastUtils.showLongToast(getString(R.string.wallet_login_fail));
+                    }
                 }
 
                 @Override
                 public void onError(Throwable e) {
                     mLoadingAndErrorView.onGone();
-                    ToastUtils.showShortToast(e.getMessage());
+                    ToastUtils.showLongToast(e.getMessage());
                 }
 
                 @Override

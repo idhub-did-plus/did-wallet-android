@@ -2,6 +2,8 @@ package com.idhub.wallet;
 
 
 
+import android.util.Log;
+
 import com.idhub.wallet.utils.QRcodeAnalysisUtils;
 import com.idhub.wallet.wallet.mainfragment.QRCodeType;
 
@@ -19,7 +21,7 @@ import org.junit.Test;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        QRcodeAnalysisUtils.handleQRcode("ethereum:0x88e49D95e98F099C031e35caA683b1611Fb49ce3?contractAddress=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&decimal=18&value=0");
+//        QRcodeAnalysisUtils.handleQRcode("ethereum:0x88e49D95e98F099C031e35caA683b1611Fb49ce3?contractAddress=0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359&decimal=18&value=0");
 
 //        Web3j mWeb3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
 //        DefaultGasProvider defaultGasProvider = new DefaultGasProvider();
