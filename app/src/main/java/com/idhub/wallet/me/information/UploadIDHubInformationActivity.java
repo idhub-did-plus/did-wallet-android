@@ -94,11 +94,8 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_upload_idhub_information);
         mDefaultKeystore = WalletManager.getDefaultKeystore();
         if (mDefaultKeystore == null) {
-            mDefaultKeystore = WalletManager.getCurrentKeyStore();
-            if (mDefaultKeystore == null) {
-                finish();
-                return;
-            }
+            finish();
+            return;
         }
         initView();
         initData();

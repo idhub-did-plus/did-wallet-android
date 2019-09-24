@@ -87,6 +87,7 @@
     <string name="wallet_gasPrice_not_empty">gas价格不能为空</string>
     <string name="wallet_gasLimit_not_empty">gas限制不能为空</string>
     <string name="wallet_upgrade_tip">升级聚合身份之后才能进行多地址管理，请您前去升级身份之后再次尝试创建</string>
+    <string name="wallet_upload_upgrade_tip">升级聚合身份之后才能上传身份信息，请您前去升级身份之后再次尝试创建</string>
     <string name="wallet_go_upgrade">去升级</string>
     <string name="wallet_upgrade">升级</string>
     <string name="wallet_upgrade_error">升级失败</string>
