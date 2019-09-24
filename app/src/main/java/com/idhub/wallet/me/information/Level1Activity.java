@@ -58,8 +58,11 @@ public class Level1Activity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_level1);
         mDefaultKeystore = WalletManager.getDefaultKeystore();
         if (mDefaultKeystore == null) {
-            finish();
-            return;
+            mDefaultKeystore = WalletManager.getCurrentKeyStore();
+            if (mDefaultKeystore == null) {
+                finish();
+                return;
+            }
         }
         UploadIDHubInfoDbManager uploadIDHubInfoDbManager = new UploadIDHubInfoDbManager();
         uploadIDHubInfoDbManager.queryById(1, operation -> {

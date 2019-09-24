@@ -20,7 +20,8 @@ public class MoreMessageFragmentPagerAdapter extends FragmentPagerAdapter {
     public MoreMessageFragmentPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         mContext = context;
-        mItems = new String[]{context.getResources().getString(R.string.wallet_ETH), context.getResources().getString(R.string.wallet_ERC20),context.getString(R.string.wallet_ST)};
+//        mItems = new String[]{context.getResources().getString(R.string.wallet_ETH), context.getResources().getString(R.string.wallet_ERC20),context.getString(R.string.wallet_ST)};
+        mItems = new String[]{context.getResources().getString(R.string.wallet_ETH), context.getResources().getString(R.string.wallet_ERC20)};
     }
 
     @Override

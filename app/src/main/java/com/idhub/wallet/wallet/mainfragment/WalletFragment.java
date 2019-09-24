@@ -70,7 +70,7 @@ import okhttp3.ResponseBody;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WalletFragment extends MainBaseFragment implements View.OnClickListener, Observer, WalletListDialogFragment.WalletListSelectItemListener, InputDialogFragment.InputDialogFragmentListener {
+public class WalletFragment extends MainBaseFragment implements View.OnClickListener, WalletListDialogFragment.WalletListSelectItemListener, InputDialogFragment.InputDialogFragmentListener {
 
     private WalletItemView mWalletItem;
 
@@ -79,6 +79,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
 
     private Observer nodeObervable = (o, arg) -> searchAssetmodelData();
     private Observer addAssetsOberver = (o, arg) -> searchAssetmodelData();
+    private Observer selectWalletObsever = (o, arg) ->  initData();
     private LoadingAndErrorView mLoadingAndErrorView;
     private String mIdhubLoginCode;
 
@@ -94,7 +95,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         View view = inflater.inflate(R.layout.wallet_fragment_wallet, container, false);
         initView(view);
         initData();
-        WalletSelectedObservable.getInstance().addObserver(this);
+        WalletSelectedObservable.getInstance().addObserver(selectWalletObsever);
         WalletAddAssetsObservable.getInstance().addObserver(addAssetsOberver);
         WalletNodeSelectedObservable.getInstance().addObserver(nodeObervable);
         return view;
@@ -250,16 +251,12 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        WalletSelectedObservable.getInstance().deleteObserver(this);
+        WalletSelectedObservable.getInstance().deleteObserver(selectWalletObsever);
         WalletNodeSelectedObservable.getInstance().deleteObserver(nodeObervable);
         WalletAddAssetsObservable.getInstance().deleteObserver(addAssetsOberver);
 
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        initData();
-    }
 
 
     @Override

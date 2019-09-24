@@ -32,4 +32,8 @@
 
     <color name="wallet_cancel_red">#db393a</color>
 
+
+    //main create wallet
+    <color name="wallet_create_wallet_text_black">#000000</color>
+    <color name="wallet_create_wallet_text_gray">#cccccc</color>
 </resources>

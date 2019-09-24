@@ -77,8 +77,11 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
         }
         mDefaultKeystore = WalletManager.getDefaultKeystore();
         if (mDefaultKeystore == null) {
-            finish();
-            return;
+            mDefaultKeystore = WalletManager.getCurrentKeyStore();
+            if (mDefaultKeystore == null) {
+                finish();
+                return;
+            }
         }
         initView();
 

@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
             WalletUpgradeObservable.getInstance().update();
         } else if ("transaction".equals(data)) {
             WalletAddAssetsObservable.getInstance().update();
+        } else if ("add".equals(data)) {
+            WalletSelectedObservable.getInstance().update();
         }
     }
 

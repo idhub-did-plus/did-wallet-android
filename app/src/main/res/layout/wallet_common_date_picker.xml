@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="请选择时间"
+            android:text="@string/wallet_select_date"
             android:textColor="@color/wallet_black"
             android:textSize="20sp" />
 
@@ -73,7 +73,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="年"
+                android:text="@string/wallet_year"
                 android:textColor="@color/wallet_black"
                 android:textSize="18sp" />
 
@@ -88,7 +88,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="月"
+                android:text="@string/wallet_month"
                 android:textColor="@color/wallet_black"
                 android:textSize="18sp" />
 
@@ -104,7 +104,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="日"
+                android:text="@string/wallet_date"
                 android:textColor="@color/wallet_black"
                 android:textSize="18sp" />
 
@@ -120,7 +120,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="时"
+                android:text="@string/wallet_hour"
                 android:textColor="@color/wallet_black"
                 android:textSize="18sp" />
 
@@ -136,7 +136,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="分"
+                android:text="@string/wallet_minute"
                 android:textColor="@color/wallet_black"
                 android:textSize="18sp" />
 

@@ -30,6 +30,7 @@ import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.greendao.UploadIDHubInfoDbManager;
 import com.idhub.wallet.greendao.entity.UploadIDHubInfoEntity;
 import com.idhub.wallet.me.information.view.InformationInputItemView;
@@ -85,11 +86,20 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
     private boolean mIsLocalzh;
     private String mAddressCountryCode;
     private LoadingAndErrorView mLoadingAndErrorView;
+    private WalletKeystore mDefaultKeystore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_idhub_information);
+        mDefaultKeystore = WalletManager.getDefaultKeystore();
+        if (mDefaultKeystore == null) {
+            mDefaultKeystore = WalletManager.getCurrentKeyStore();
+            if (mDefaultKeystore == null) {
+                finish();
+                return;
+            }
+        }
         initView();
         initData();
 
@@ -254,7 +264,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
             InputDialogFragment instance = InputDialogFragment.getInstance("idhub_information", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
             instance.show(getSupportFragmentManager(), "input_dialog_fragment");
             instance.setInputDialogFragmentListener((data, source) -> {
-                WalletInfo walletInfo = new WalletInfo(WalletManager.getDefaultKeystore());
+                WalletInfo walletInfo = new WalletInfo(mDefaultKeystore);
                 walletInfo.verifyPassword(data, new DisposableObserver<Boolean>() {
                     @Override
                     protected void onStart() {

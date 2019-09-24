@@ -51,8 +51,11 @@ public class Level4Activity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_level4);
         mDefaultKeystore = WalletManager.getDefaultKeystore();
         if (mDefaultKeystore == null) {
-            finish();
-            return;
+            mDefaultKeystore = WalletManager.getCurrentKeyStore();
+            if (mDefaultKeystore == null) {
+                finish();
+                return;
+            }
         }
         initView();
     }

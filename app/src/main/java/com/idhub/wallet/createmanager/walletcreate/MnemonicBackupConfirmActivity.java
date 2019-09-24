@@ -128,6 +128,9 @@ public class MnemonicBackupConfirmActivity extends AppCompatActivity implements 
 
     private void checkSuccess() {
         List<String> confirmDatas = mMnemonicConfirmAdapter.getSurplusDatas();
+        if (confirmDatas.size() <= 0) {
+            return;
+        }
         boolean isSuccess = true;
         for (int i = 0; i < confirmDatas.size(); i++) {
             if (!mCodes.get(i).equals(confirmDatas.get(i))) {
