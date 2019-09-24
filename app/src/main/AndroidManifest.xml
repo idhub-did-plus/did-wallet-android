@@ -76,6 +76,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".splash.SplashActivity"
+            android:theme="@style/WalletSplashTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

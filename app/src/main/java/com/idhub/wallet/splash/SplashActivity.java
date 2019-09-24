@@ -8,6 +8,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
@@ -15,6 +17,16 @@ import com.idhub.wallet.utils.ToastUtils;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                MainActivity.startAction(SplashActivity.this,"SplashActivity");
+                finish();
+            }
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +35,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void init() {
+        handler.sendEmptyMessageDelayed(1,2000);
         //init , scan wallet keystores
-        MainActivity.startAction(SplashActivity.this,"SplashActivity");
-        finish();
+
     }
 
     private void checkReadPhonePremission() {

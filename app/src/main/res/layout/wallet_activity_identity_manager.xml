@@ -94,7 +94,7 @@
         android:id="@+id/tv_main_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="94dp"
         android:gravity="center"
         android:text="@string/wallet_main_create_wallet_tip"
         android:textColor="@color/wallet_create_wallet_text_black"

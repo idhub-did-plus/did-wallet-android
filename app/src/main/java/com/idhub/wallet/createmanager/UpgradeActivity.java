@@ -69,14 +69,14 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
                     IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
                     idHubMessageEntity.setTime(DateUtils.getCurrentDate());
                     idHubMessageEntity.setType(IdHubMessageType.UPGRADE_1484_IDENTITY);
-                    String associatedAddress = identityCreatedEventResponse.associatedAddress;
+                    String associatedAddress = WalletManager.getKeyStore(mData).getAddress();
                     idHubMessageEntity.setAddress(associatedAddress);
                     idHubMessageEntity.setEin(ein.toString());
-                    idHubMessageEntity.setRecoverAddress(identityCreatedEventResponse.recoveryAddress);
+                    idHubMessageEntity.setRecoverAddress(mRecoverAddressStr);
                     idHubMessageEntity.setDefaultAddress(associatedAddress);
                     new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
                     //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
-                    WalletOtherInfoSharpreference.getInstance().setRecoverAddress(identityCreatedEventResponse.recoveryAddress);
+                    WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoverAddressStr);
                     WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
                     WalletKeystore keyStore = WalletManager.getKeyStore(mData);
                     Wallet wallet = keyStore.getWallet();

@@ -21,17 +21,18 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.SelectUploadFileTypeDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.me.information.view.InformationInputItemView;
 import com.idhub.wallet.utils.ToastUtils;
 
-public class UploadUserBasicInfoActivity extends AppCompatActivity implements View.OnClickListener, SelectUploadFileTypeDialogFragment.SelectUploadFileTypeDialogFragmentListener {
+public class UploadUserBasicInfoActivity extends BaseActivity implements View.OnClickListener, SelectUploadFileTypeDialogFragment.SelectUploadFileTypeDialogFragmentListener {
 
     private ImageView mUserHeaderView;
-    private InformationInputItemView mUserNameView;
-    private InformationInputItemView mUserNickNameView;
+    private UserBasicInfoItemView mUserNameView;
+    private UserBasicInfoItemView mUserNickNameView;
     private String mUserHeadPath;
     private View mUploadView;
     private LoadingAndErrorView mLoadingAndErrorView;
@@ -41,6 +42,7 @@ public class UploadUserBasicInfoActivity extends AppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_activity_upload_user_basic_info);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,
@@ -60,9 +62,9 @@ public class UploadUserBasicInfoActivity extends AppCompatActivity implements Vi
         mUserHeaderView = findViewById(R.id.iv_user_head);
         mUserHeaderView.setOnClickListener(this);
         mUserNameView = findViewById(R.id.user_name);
-        mUserNameView.setData(getString(R.string.wallet_user_name),getString(R.string.wallet_input_user_name));
+        mUserNameView.setData(getString(R.string.wallet_input_user_name));
         mUserNickNameView = findViewById(R.id.user_nick_name);
-        mUserNickNameView.setData(getString(R.string.wallet_user_signature),getString(R.string.wallet_input_user_signature));
+        mUserNickNameView.setData(getString(R.string.wallet_user_signature));
         mUploadView = findViewById(R.id.tv_upload);
         mUploadView.setOnClickListener(this);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);

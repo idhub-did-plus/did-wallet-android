@@ -36,4 +36,6 @@
     //main create wallet
     <color name="wallet_create_wallet_text_black">#000000</color>
     <color name="wallet_create_wallet_text_gray">#cccccc</color>
+    <color name="wallet_create_wallet_hint">#d5d5d5</color>
+    <color name="wallet_user_basic_info_btn">#5cc9eb</color>
 </resources>

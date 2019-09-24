@@ -92,7 +92,7 @@
     <string name="wallet_upgrade">升级</string>
     <string name="wallet_upgrade_error">升级失败</string>
     <string name="wallet_profile">profile</string>
-    <string name="wallet_commit">提交</string>
+    <string name="wallet_commit">提  交</string>
     <string name="wallet_select_birthday">点击选择生日</string>
     <string name="wallet_upload">上传</string>
     <string name="wallet_take_photo">拍照</string>
@@ -348,5 +348,6 @@
     <string name="wallet_not_found_assets">钱包下找不到此资产</string>
 
     //main create wallet
-    <string name="wallet_main_create_wallet_tip">请选择当前您进入IDHub的身份</string>
+    <string name="wallet_main_create_wallet_tip">请选择当前您建立身份的方式</string>
+    <string name="wallet_welcome_to_did_world">欢迎来到DID世界</string>
 </resources>
