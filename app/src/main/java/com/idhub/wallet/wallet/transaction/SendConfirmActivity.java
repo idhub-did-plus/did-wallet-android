@@ -130,7 +130,7 @@ public class SendConfirmActivity extends AppCompatActivity implements View.OnCli
             InputGasDialogFragment inputGasDialogFragment = InputGasDialogFragment.getInstance(mGasPrice, mGasLimit);
             inputGasDialogFragment.show(getSupportFragmentManager(), "input_gas_dialog_fragment");
         } else if (v == mConfirmView) {
-            InputDialogFragment instance = InputDialogFragment.getInstance("send", getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT);
+            InputDialogFragment instance = InputDialogFragment.getInstance("send", getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
             instance.show(getSupportFragmentManager(), "input_dialog_fragment");
             instance.setInputDialogFragmentListener(this);
         }

@@ -192,7 +192,7 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
     private void uploadCheckPassword(List<UploadFileEntity> datas) {
         mUploadFileEntity = datas.get(datas.size() - 1);
         if (TextUtils.isEmpty(mPrivateKey)) {
-            InputDialogFragment instance = InputDialogFragment.getInstance("send", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
+            InputDialogFragment instance = InputDialogFragment.getInstance("send", getString(R.string.wallet_default_address_password),InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
             instance.show(getSupportFragmentManager(), "input_dialog_fragment");
             instance.setInputDialogFragmentListener(this);
         } else {

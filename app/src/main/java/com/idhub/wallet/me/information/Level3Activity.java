@@ -123,7 +123,7 @@ public class Level3Activity extends AppCompatActivity implements View.OnClickLis
                 }
                 if (TextUtils.isEmpty(mPrivateKey)) {
                     //输入密码
-                    InputDialogFragment fragment = InputDialogFragment.getInstance("idhub_vip", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
+                    InputDialogFragment fragment = InputDialogFragment.getInstance("idhub_vip", getString(R.string.wallet_default_address_password),InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     fragment.show(getSupportFragmentManager(), "input_dialog_fragment");
                     fragment.setInputDialogFragmentListener(this);
                 } else {

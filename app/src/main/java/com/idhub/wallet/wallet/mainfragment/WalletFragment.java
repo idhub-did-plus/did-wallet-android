@@ -184,7 +184,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
             //login
             //输入密码
             mIdhubLoginCode = qrcode;
-            InputDialogFragment instance = InputDialogFragment.getInstance("idhub_login", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
+            InputDialogFragment instance = InputDialogFragment.getInstance("idhub_login", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
             FragmentManager fragmentManager = ((AppCompatActivity) this.getContext()).getSupportFragmentManager();
             instance.show(fragmentManager, "input_dialog_fragment");
             instance.setInputDialogFragmentListener(this);

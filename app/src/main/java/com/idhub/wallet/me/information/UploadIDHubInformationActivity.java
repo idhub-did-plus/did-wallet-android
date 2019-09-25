@@ -253,7 +253,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
     }
 
     private void inputPasswordDialogShow() {
-            InputDialogFragment instance = InputDialogFragment.getInstance("idhub_information", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
+            InputDialogFragment instance = InputDialogFragment.getInstance("idhub_information", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
             instance.show(getSupportFragmentManager(), "input_dialog_fragment");
             instance.setInputDialogFragmentListener((data, source) -> {
                 WalletInfo walletInfo = new WalletInfo(mDefaultKeystore);

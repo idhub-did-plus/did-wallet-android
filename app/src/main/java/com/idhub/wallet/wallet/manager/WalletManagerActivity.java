@@ -167,7 +167,7 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
     }
 
     private void showPasswordDialog(String data) {
-        InputDialogFragment instance = InputDialogFragment.getInstance(data, getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT);
+        InputDialogFragment instance = InputDialogFragment.getInstance(data, getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
         instance.show(getSupportFragmentManager(), "input_dialog_fragment");
         instance.setInputDialogFragmentListener(this);
     }

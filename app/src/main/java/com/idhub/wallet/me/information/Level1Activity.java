@@ -98,7 +98,7 @@ public class Level1Activity extends AppCompatActivity implements View.OnClickLis
                     return;
                 }
                 //输入密码
-                InputDialogFragment instance = InputDialogFragment.getInstance("idhub_vip", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT);
+                InputDialogFragment instance = InputDialogFragment.getInstance("idhub_vip", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 instance.show(getSupportFragmentManager(), "input_dialog_fragment");
                 instance.setInputDialogFragmentListener(this);
                 break;

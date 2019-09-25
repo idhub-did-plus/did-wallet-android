@@ -169,7 +169,7 @@ public class UpgradeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void inputVerifyPassword() {
-        InputDialogFragment instance = InputDialogFragment.getInstance("upgrade", getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT);
+        InputDialogFragment instance = InputDialogFragment.getInstance("upgrade", getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
         instance.show(getSupportFragmentManager(), "input_dialog_fragment");
         instance.setInputDialogFragmentListener(this);
     }
