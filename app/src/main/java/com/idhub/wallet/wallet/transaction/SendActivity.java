@@ -79,14 +79,13 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void handleQrCodeStr(String qrcode) {
-        Log.e("LYW", "handleQrCodeStr: " +qrcode);
-        String address = "";
+        String address;
         if (qrcode.startsWith(QRCodeType.ETHERUM_TRANSACTION)) {
              address = qrcode.substring(QRCodeType.ETHERUM_TRANSACTION.length(), qrcode.indexOf("?"));
+        }else {
+            address = qrcode;
         }
-        Log.e("LYW", "handleQrCodeStr:address " +address);
         boolean validAddress = ETHAddressValidator.isValidAddress(address);
-        Log.e("LYW", "handleQrCodeStr:validAddress " +validAddress);
         if (validAddress) {
             mAddressView.setText(address);
         }else {
