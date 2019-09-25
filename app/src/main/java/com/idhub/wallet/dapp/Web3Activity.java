@@ -41,6 +41,7 @@ import com.idhub.wallet.didhub.transaction.EthereumSign;
 import com.idhub.wallet.didhub.transaction.EthereumTransaction;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.math.BigInteger;
@@ -286,19 +287,19 @@ public class Web3Activity extends AppCompatActivity implements OnSignMessageList
                 new BigInteger(String.valueOf(mCurrentTransaction.gasLimit)),
                 mCurrentTransaction.recipient.toString(), mCurrentTransaction.value, "")
                 .signTransaction(mChainID, walletInfo.exportPrivateKey(data)).getSignedTx();
-        Log.e("LYW", "onNext:SIGN_TRANSACTION_SUCCESS " + signedTx);
+        LogUtils.e("did", "onNext:SIGN_TRANSACTION_SUCCESS " + signedTx);
         mWeb3View.onSignTransactionSuccessful(mCurrentTransaction,signedTx);
     }
 
     private void signMessage(WalletInfo walletInfo, String data) {
         String sign = EthereumSign.sign(mCurrentSignMessage.value, walletInfo.exportPrivateKey(data));
-        Log.e("LYW", "onNext:SIGN_SUCCESS " + sign);
+        LogUtils.e("did", "onNext:SIGN_SUCCESS " + sign);
         mWeb3View.onSignMessageSuccessful(mCurrentSignMessage, sign);
     }
 
     private void signPersonalMessage(WalletInfo walletInfo, String data) {
         String sign = EthereumSign.personalSign(mCurrentSignMessage.value,walletInfo.exportPrivateKey(data));
-        Log.e("LYW", "onNext:SIGN_PERSONAL_SUCCESS " + sign);
+        LogUtils.e("did", "onNext:SIGN_PERSONAL_SUCCESS " + sign);
         mWeb3View.onSignPersonalMessageSuccessful(mCurrentSignMessage, sign);
     }
 

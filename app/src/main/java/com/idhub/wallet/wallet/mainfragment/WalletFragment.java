@@ -19,9 +19,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
+import com.idhub.wallet.common.dialog.SignMessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
@@ -70,7 +72,7 @@ import okhttp3.ResponseBody;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WalletFragment extends MainBaseFragment implements View.OnClickListener, WalletListDialogFragment.WalletListSelectItemListener, InputDialogFragment.InputDialogFragmentListener {
+public class WalletFragment extends MainBaseFragment implements View.OnClickListener, WalletListDialogFragment.WalletListSelectItemListener, SignMessageDialogFragment.SignMessageDialogFragmentListener {
 
     private WalletItemView mWalletItem;
 
@@ -79,9 +81,10 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
 
     private Observer nodeObervable = (o, arg) -> searchAssetmodelData();
     private Observer addAssetsOberver = (o, arg) -> searchAssetmodelData();
-    private Observer selectWalletObsever = (o, arg) ->  initData();
+    private Observer selectWalletObsever = (o, arg) -> initData();
     private LoadingAndErrorView mLoadingAndErrorView;
-    private String mIdhubLoginCode;
+    private JSONObject mIdHubLoginJwtJsonObject;
+    private String signMessage;
 
     public WalletFragment() {
         // Required empty public constructor
@@ -182,51 +185,68 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     private void handleQrCodeStr(String qrcode) {
         if (qrcode.startsWith(QRCodeType.IDHUB_LOGIN_HEADER)) {
             //login
-            //输入密码
-            mIdhubLoginCode = qrcode;
-            InputDialogFragment instance = InputDialogFragment.getInstance("idhub_login", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            FragmentManager fragmentManager = ((AppCompatActivity) this.getContext()).getSupportFragmentManager();
-            instance.show(fragmentManager, "input_dialog_fragment");
-            instance.setInputDialogFragmentListener(this);
-        }else {
+            //先解析url和rdt域名是否一致
+            String jwtCode = new String(Base64.decode(qrcode.substring(QRCodeType.IDHUB_LOGIN_HEADER.length()), Base64.URL_SAFE | Base64.NO_WRAP));
+            try {
+                mIdHubLoginJwtJsonObject = new JSONObject(jwtCode);
+                String url = mIdHubLoginJwtJsonObject.getString("url");
+                String rdtUrl = mIdHubLoginJwtJsonObject.getString("rdt");
+                String urlSub = url.substring(0, url.lastIndexOf(":"));
+                String rdtUrlSub = rdtUrl.substring(0, rdtUrl.lastIndexOf(":"));
+                if (!rdtUrlSub.contains(urlSub)) {
+                    ToastUtils.showLongToast(getString(R.string.wallet_login_code_fail));
+                    return;
+                }
+                WalletKeystore walletKeystore = WalletManager.getDefaultKeystore();
+                if (walletKeystore == null) {
+                    walletKeystore = WalletManager.getCurrentKeyStore();
+                }
+                WalletInfo walletInfo = new WalletInfo(walletKeystore);
+                long l = System.currentTimeMillis() / 1000 + 30;
+                mIdHubLoginJwtJsonObject.put("exp", l);
+                mIdHubLoginJwtJsonObject.put("iss", NumericUtil.prependHexPrefix(walletInfo.getAddress()));
+                String middleJson = mIdHubLoginJwtJsonObject.toString();
+                JSONObject startJsonObject = new JSONObject();
+                startJsonObject.put("alg", "ES256k");
+                startJsonObject.put("typ", "JWT");
+                String payload = Base64.encodeToString(middleJson.getBytes(), Base64.URL_SAFE | Base64.NO_WRAP);
+                String head = Base64.encodeToString(startJsonObject.toString().getBytes(), Base64.URL_SAFE | Base64.NO_WRAP);
+                signMessage = head + "." + payload;
+//                String tipContent = getString(R.string.wallet_login_sign_tip) +" "+ url;
+                String signTitle = getString(R.string.wallet_login_sign_message);
+                Log.e("LYW", "handleQrCodeStr:signMessage "  + signMessage);
+//                Log.e("LYW", "handleQrCodeStr:tipContent "  + tipContent);
+                Log.e("LYW", "handleQrCodeStr:signTitle " +signTitle);
+                SignMessageDialogFragment fragment = SignMessageDialogFragment.getInstance(getString(R.string.wallet_login_sign_tip),url, signTitle, signMessage);
+                AppCompatActivity context = (AppCompatActivity) getContext();
+                fragment.show(context.getSupportFragmentManager(),"sign_message_dialog_fragment");
+                fragment.setSignMessageListener(this);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
             ToastUtils.showLongToast(qrcode);
         }
     }
 
-    private Response signJWTLogin(String qrcode, WalletInfo walletInfo, String password) throws JSONException, IOException {
+    private Response signJWTLogin(WalletInfo walletInfo, String password) throws JSONException, IOException {
         //jwt 将base64解析，添加json字段Base64编码payload ，编码Base64 json  jwthead格式 ，head.payload 进行签名消息signMessage
         //Base64编码签名消息  head.payload.signMessage  进行http请求发送最终数据
-        String jwtStr = qrcode.substring(QRCodeType.IDHUB_LOGIN_HEADER.length());
-        String decode = new String(Base64.decode(jwtStr, Base64.URL_SAFE | Base64.NO_WRAP));
-        JSONObject jsonObject = null;
-        jsonObject = new JSONObject(decode);
-        long l = System.currentTimeMillis() / 1000 + 30;
-        jsonObject.put("exp", l);
-        jsonObject.put("iss", NumericUtil.prependHexPrefix(walletInfo.getAddress()));
-        String middleJson = jsonObject.toString();
-        JSONObject startJsonObject = new JSONObject();
-        startJsonObject.put("alg", "ES256k");
-        startJsonObject.put("typ", "JWT");
-        String payload = Base64.encodeToString(middleJson.getBytes(), Base64.URL_SAFE | Base64.NO_WRAP);
-        String head = Base64.encodeToString(startJsonObject.toString().getBytes(), Base64.URL_SAFE | Base64.NO_WRAP);
-        String message = head + "." + payload;
-        System.out.println(message);
         //签名消息
-        String sign = EthereumSign.sign(message, walletInfo.exportPrivateKey(password));
+        String sign = EthereumSign.sign(signMessage, walletInfo.exportPrivateKey(password));
         byte[] signBytes = NumericUtil.hexToBytes(sign);
-        String url = jsonObject.optString("rdt");
-        String signMessage = message + "." + Base64.encodeToString(signBytes, Base64.URL_SAFE | Base64.NO_WRAP);
-
+        String rdtUrl = mIdHubLoginJwtJsonObject.optString("rdt");
+        String jwtSignMessage = signMessage + "." + Base64.encodeToString(signBytes, Base64.URL_SAFE | Base64.NO_WRAP);
         OkHttpClient okHttpClient = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json");
         //创建RequestBody对象，将参数按照指定的MediaType封装
         JSONObject jwtSendJson = new JSONObject();
-        jwtSendJson.put("jwt", signMessage);
+        jwtSendJson.put("jwt", jwtSignMessage);
         RequestBody requestBody = RequestBody.create(mediaType, jwtSendJson.toString());
         Request request = new Request
                 .Builder()
                 .post(requestBody)//Post请求的参数传递
-                .url(url)
+                .url(rdtUrl)
                 .build();
         Response response = okHttpClient.newCall(request).execute();
         return response;
@@ -257,7 +277,6 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     }
 
 
-
     @Override
     public void selectItem(String id) {
         //selectWallet
@@ -267,8 +286,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     }
 
     @Override
-    public void inputConfirm(String data, String source) {
-        if ("idhub_login".equals(source)) {
+    public void inputConfirm(String password) {
             mLoadingAndErrorView.onLoading();
             io.reactivex.Observable.create((ObservableOnSubscribe<Response>) emitter -> {
                 WalletKeystore walletKeystore = WalletManager.getDefaultKeystore();
@@ -276,9 +294,9 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
                     walletKeystore = WalletManager.getCurrentKeyStore();
                 }
                 WalletInfo walletInfo = new WalletInfo(walletKeystore);
-                boolean b = walletInfo.verifyPassword(data);
+                boolean b = walletInfo.verifyPassword(password);
                 if (b) {
-                    Response result = signJWTLogin(mIdhubLoginCode, walletInfo, data);
+                    Response result = signJWTLogin( walletInfo, password);
                     emitter.onNext(result);
                     emitter.onComplete();
                 } else {
@@ -304,6 +322,5 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
 
                 }
             });
-        }
     }
 }

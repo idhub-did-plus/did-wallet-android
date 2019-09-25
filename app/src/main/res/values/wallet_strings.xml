@@ -349,6 +349,10 @@
     //scanCode
     <string name="wallet_login_fail">登陆失败</string>
     <string name="wallet_not_found_assets">钱包下找不到此资产</string>
+    <string name="wallet_login_code_fail">此网站有风险</string>
+    <string name="wallet_login_tip">提示</string>
+    <string name="wallet_login_sign_message">签名消息将在30秒后过期，您将要签名的消息为</string>
+    <string name="wallet_login_sign_tip">签名此消息可能会产生危险影响，请保证仅对完全信任的网站签名消息。此消息用于使用DID登陆第三方网站，请核实您要登录的网站网址为</string>
 
     //main create wallet
     <string name="wallet_main_create_wallet_tip">请选择当前您建立身份的方式</string>
