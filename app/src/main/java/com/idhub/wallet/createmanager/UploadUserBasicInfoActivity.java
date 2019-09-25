@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -31,8 +32,8 @@ import com.idhub.wallet.utils.ToastUtils;
 public class UploadUserBasicInfoActivity extends BaseActivity implements View.OnClickListener, SelectUploadFileTypeDialogFragment.SelectUploadFileTypeDialogFragmentListener {
 
     private ImageView mUserHeaderView;
-    private UserBasicInfoItemView mUserNameView;
-    private UserBasicInfoItemView mUserNickNameView;
+    private EditText mUserNameView;
+    private EditText mUserNickNameView;
     private String mUserHeadPath;
     private View mUploadView;
     private LoadingAndErrorView mLoadingAndErrorView;
@@ -62,9 +63,9 @@ public class UploadUserBasicInfoActivity extends BaseActivity implements View.On
         mUserHeaderView = findViewById(R.id.iv_user_head);
         mUserHeaderView.setOnClickListener(this);
         mUserNameView = findViewById(R.id.user_name);
-        mUserNameView.setData(getString(R.string.wallet_input_user_name));
+        mUserNameView.setHint(getString(R.string.wallet_input_user_name));
         mUserNickNameView = findViewById(R.id.user_nick_name);
-        mUserNickNameView.setData(getString(R.string.wallet_user_signature));
+        mUserNickNameView.setHint(getString(R.string.wallet_user_signature));
         mUploadView = findViewById(R.id.tv_upload);
         mUploadView.setOnClickListener(this);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
@@ -81,12 +82,12 @@ public class UploadUserBasicInfoActivity extends BaseActivity implements View.On
                 ToastUtils.showShortToast(getString(R.string.wallet_not_empty_user_head));
                 return;
             }
-            String userName = mUserNameView.getInputData();
+            String userName = mUserNameView.getText().toString();
             if (TextUtils.isEmpty(userName)) {
                 ToastUtils.showShortToast(getString(R.string.wallet_not_empty_user_name));
                 return;
             }
-            String userSignature = mUserNickNameView.getInputData();
+            String userSignature = mUserNickNameView.getText().toString();
             if (TextUtils.isEmpty(userSignature)) {
                 ToastUtils.showShortToast(getString(R.string.wallet_not_empty_user_signature));
                 return;

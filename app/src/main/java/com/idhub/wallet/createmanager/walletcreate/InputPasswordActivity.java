@@ -5,12 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.DidHubIdentify;
@@ -24,9 +29,6 @@ import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
 import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
-
-import org.greenrobot.greendao.async.AsyncOperation;
-import org.greenrobot.greendao.async.AsyncOperationListener;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -48,6 +50,14 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_activity_input_password);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            View decorView = getWindow().getDecorView();
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.WHITE);
+        }
         initView();
         Intent intent = getIntent();
         mIsSave = intent.getBooleanExtra("isSave", true);
@@ -58,9 +68,13 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
         titleLayout.setTitle(getString(R.string.wallet_create_wallet));
         findViewById(R.id.tv_create).setOnClickListener(this);
         mWalletName = findViewById(R.id.et_wallet_name);
+        mWalletName.setHint(getString(R.string.wallet_wallet_name));
         mPassword = findViewById(R.id.et_password);
+        mPassword.setHint(getString(R.string.wallet_password));
         mPasswordRepeat = findViewById(R.id.et_password_again);
+        mPasswordRepeat.setHint(getString(R.string.wallet_password_again));
         mPasswordHint = findViewById(R.id.et_password_tip);
+        mPasswordHint.setHint(getString(R.string.wallet_password_tip));
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
     }
 
