@@ -190,7 +190,6 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
             instance.setInputDialogFragmentListener(this);
         }else {
             ToastUtils.showLongToast(qrcode);
-//            QRcodeAnalysisUtils.handleQRcode(getContext(),qrcode);
         }
     }
 

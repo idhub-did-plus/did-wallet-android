@@ -38,6 +38,8 @@ public class MeBottomItemView extends ConstraintLayout {
             mStateView.setText(getContext().getString(R.string.wallet_apply_for_ing));
         } else if (VipStateType.HAVE_APPLY_FOR.equals(state)) {
             mStateView.setText(getContext().getString(R.string.wallet_vip));
+        } else if (VipStateType.REFUSED_APPLY_FOR.equals(state)) {
+            mStateView.setText(getContext().getString(R.string.wallet_refused_apply));
         }
     }
 

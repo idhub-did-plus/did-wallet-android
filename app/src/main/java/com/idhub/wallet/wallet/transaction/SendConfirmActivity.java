@@ -213,8 +213,7 @@ public class SendConfirmActivity extends AppCompatActivity implements View.OnCli
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("LYW", "onError: " +e.getMessage());
-                        ToastUtils.showShortToast(getString(R.string.wallet_transaction_fail) + e.getMessage());
+                        ToastUtils.showLongToast(getString(R.string.wallet_transaction_fail) +" "+ e.getMessage());
                         mLoadingAndErrorView.setVisibility(View.GONE);
 
                     }

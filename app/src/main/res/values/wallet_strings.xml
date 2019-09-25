@@ -293,8 +293,10 @@
     <string name="wallet_idhub_super_vip">idHub超级会员</string>
     <string name="wallet_no_appply_for">未申请</string>
     <string name="wallet_apply_for">申请</string>
+    <string name="wallet_again_apply_for">重新申请</string>
     <string name="wallet_apply_for_ing">申请中</string>
     <string name="wallet_vip">vip</string>
+    <string name="wallet_refused_apply">拒绝申请</string>
     <string name="wallet_have_apply_for">已申请</string>
     <string name="wallet_submit">提交</string>
     <string name="wallet_no_controllers">没有监管地址</string>
@@ -331,6 +333,7 @@
     //transaction
     <string name="wallet_transaction_fail">交易失败</string>
     <string name="wallet_transaction_success">交易发送成功</string>
+    <string name="wallet_no_transaction">禁止转账，错误消息</string>
 
     //associationAddress
     <string name="wallet_default_address_password">请输入默认地址密码</string>

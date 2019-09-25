@@ -97,6 +97,11 @@ public class Level3Activity extends AppCompatActivity implements View.OnClickLis
             applyBtn.setText(getString(R.string.wallet_have_apply_for));
             applyBtn.setBackgroundResource(R.drawable.wallet_shape_button_grey);
             setApplyContent(content);
+        }else if (VipStateType.REFUSED_APPLY_FOR.equals(state)) {
+            applyBtn.setText(getString(R.string.wallet_again_apply_for));
+            applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
+            applyBtn.setOnClickListener(this);
+            setApplyContent(content);
         }
     }
 
@@ -168,7 +173,6 @@ public class Level3Activity extends AppCompatActivity implements View.OnClickLis
         if (applyBtn.getText().toString().equals(getString(R.string.wallet_submit))) {
             //提交数据
             int checkedRadioButtonId = mRadioGroup.getCheckedRadioButtonId();
-            Log.e("LYW", "onClick: " +checkedRadioButtonId );
             FinancialProfile profile = new FinancialProfile();
             if (checkedRadioButtonId == R.id.qualified_investor_condition_first) {
                 profile.investorType = InvestorType.highIncome.name();
@@ -211,7 +215,7 @@ public class Level3Activity extends AppCompatActivity implements View.OnClickLis
                 public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
                     MagicResponse body = response.body();
                     if (body != null && body.isSuccess())  {
-                        WalletVipSharedPreferences.getInstance().setIdhubVipState(VipStateType.APPLY_FOR_ING);
+                        WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipState(VipStateType.APPLY_FOR_ING);
                         initData();
                         WalletVipStateObservable.getInstance().update();
                     }else {

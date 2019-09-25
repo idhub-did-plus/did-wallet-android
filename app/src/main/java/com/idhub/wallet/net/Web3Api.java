@@ -238,16 +238,19 @@ public class Web3Api {
 
             Tuple3<byte[], byte[], byte[]> send = erc1400.canTransferByPartition(param.paratition, param.fromAddress, param.toAddress, decimal.toBigInteger(), param.data).send();
             byte[] value1 = send.getValue1();
-            Log.e("LYW", "sendERC1400Transaction: " + Numeric.toHexString(value1));
-            byte[] value3 = send.getValue3();
-            Log.e("LYW", "sendERC1400Transaction: " + Numeric.toHexString(value3));
+            String s = Numeric.toHexString(value1);
+            Log.e("LYW", "sendERC1400Transaction: " + s);
             //判断
-            //交易
-            TransactionReceipt transactionReceipt = erc1400.transferByPartition(param.paratition, param.toAddress, decimal.toBigInteger(), param.data).send();
-            List<ERC1400.TransferByPartitionEventResponse> transferByPartitionEvents = erc1400.getTransferByPartitionEvents(transactionReceipt);
-            ERC1400.TransferByPartitionEventResponse transferByPartitionEventResponse = transferByPartitionEvents.get(0);
-            emitter.onNext(transferByPartitionEventResponse);
-            emitter.onComplete();
+            if ("0xa2".equals(s)) {
+                //交易
+                TransactionReceipt transactionReceipt = erc1400.transferByPartition(param.paratition, param.toAddress, decimal.toBigInteger(), param.data).send();
+                List<ERC1400.TransferByPartitionEventResponse> transferByPartitionEvents = erc1400.getTransferByPartitionEvents(transactionReceipt);
+                ERC1400.TransferByPartitionEventResponse transferByPartitionEventResponse = transferByPartitionEvents.get(0);
+                emitter.onNext(transferByPartitionEventResponse);
+                emitter.onComplete();
+            }else {
+                emitter.onError(new Throwable(App.getInstance().getString(R.string.wallet_no_transaction)+ s));
+            }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(web3jSubscriber);
     }
 

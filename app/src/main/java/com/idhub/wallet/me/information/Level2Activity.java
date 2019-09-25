@@ -69,6 +69,7 @@ public class Level2Activity extends AppCompatActivity implements View.OnClickLis
         String state = WalletVipSharedPreferences.getInstance().getIdhubSuperVipState();
         if (VipStateType.NO_APPLY_FOR.equals(state)) {
             applyBtn.setText(getString(R.string.wallet_apply_for));
+            applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
             applyBtn.setOnClickListener(this);
         } else if (VipStateType.APPLY_FOR_ING.equals(state)) {
             applyBtn.setText(getString(R.string.wallet_apply_for_ing));
@@ -76,6 +77,10 @@ public class Level2Activity extends AppCompatActivity implements View.OnClickLis
         } else if (VipStateType.HAVE_APPLY_FOR.equals(state)) {
             applyBtn.setText(getString(R.string.wallet_have_apply_for));
             applyBtn.setBackgroundResource(R.drawable.wallet_shape_button_grey);
+        }else if (VipStateType.REFUSED_APPLY_FOR.equals(state)) {
+            applyBtn.setText(getString(R.string.wallet_again_apply_for));
+            applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
+            applyBtn.setOnClickListener(this);
         }
     }
 

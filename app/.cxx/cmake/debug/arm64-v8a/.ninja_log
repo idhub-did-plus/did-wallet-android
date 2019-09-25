@@ -5,3 +5,9 @@
 987	1285	0	../../../../build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	4f52c0cb026c4326
 8	1156	0	CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o	fb81abeb20f7454f
 1156	1356	0	../../../../build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	4f52c0cb026c4326
+5	534	0	CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o	fb81abeb20f7454f
+534	884	0	../../../../build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	4f52c0cb026c4326
+13	1065	0	CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o	fb81abeb20f7454f
+1065	1251	0	../../../../build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	4f52c0cb026c4326
+6	938	0	CMakeFiles/native-lib.dir/src/main/cpp/native-lib.cpp.o	fb81abeb20f7454f
+938	1110	0	../../../../build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	4f52c0cb026c4326

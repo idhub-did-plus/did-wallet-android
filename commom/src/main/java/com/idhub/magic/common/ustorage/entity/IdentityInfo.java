@@ -24,9 +24,7 @@ public class IdentityInfo {
 	String residenceCountry;
 	
 	String idcardNumber;
-	String idcardImage;
 	String passportNumber;
-	String passportImage;
 	String phoneNumber;
 	String gender;
 
@@ -37,16 +35,11 @@ public class IdentityInfo {
 		return country;
 	}
 	
-	public String getIdcardImage() {
-		return idcardImage;
-	}
+
 	public String getIdcardNumber() {
 		return idcardNumber;
 	}
-	
-	public String getPassportImage() {
-		return passportImage;
-	}
+
 	public String getPassportNumber() {
 		return passportNumber;
 	}
@@ -59,10 +52,7 @@ public class IdentityInfo {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
-	public void setIdcardImage(String idcardImage) {
-		this.idcardImage = idcardImage;
-	}
+
 	public void setIdcardNumber(String idcardNumber) {
 		this.idcardNumber = idcardNumber;
 	}
@@ -79,9 +69,7 @@ public class IdentityInfo {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	public void setPassportImage(String passportImage) {
-		this.passportImage = passportImage;
-	}
+
 	public void setPassportNumber(String passportNumber) {
 		this.passportNumber = passportNumber;
 	}

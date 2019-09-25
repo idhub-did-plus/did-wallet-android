@@ -83,8 +83,6 @@ public class Level4Activity extends AppCompatActivity implements View.OnClickLis
                 applyBtn.setOnClickListener(this);
                 setApplyContent(content);
             }
-            applyBtn.setText(getString(R.string.wallet_apply_for));
-            applyBtn.setOnClickListener(this);
         } else if (VipStateType.APPLY_FOR_ING.equals(state)) {
             applyBtn.setText(getString(R.string.wallet_apply_for_ing));
             setApplyContent(content);
@@ -93,6 +91,11 @@ public class Level4Activity extends AppCompatActivity implements View.OnClickLis
             setApplyContent(content);
             applyBtn.setText(getString(R.string.wallet_have_apply_for));
             applyBtn.setBackgroundResource(R.drawable.wallet_shape_button_grey);
+        }else if (VipStateType.REFUSED_APPLY_FOR.equals(state)) {
+            applyBtn.setText(getString(R.string.wallet_again_apply_for));
+            applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
+            applyBtn.setOnClickListener(this);
+            setApplyContent(content);
         }
     }
     private void setApplyContent(String content){
@@ -118,7 +121,6 @@ public class Level4Activity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_apply:
-
                 WalletVipSharedPreferences instance = WalletVipSharedPreferences.getInstance();
                 String idhubVipState = instance.getIdhubVipState();
                 if (!VipStateType.HAVE_APPLY_FOR.equals(idhubVipState)) {

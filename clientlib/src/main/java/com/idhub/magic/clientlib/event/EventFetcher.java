@@ -1,5 +1,7 @@
 package com.idhub.magic.clientlib.event;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
@@ -40,6 +42,7 @@ public class EventFetcher implements EventListenerService {
 						listener.onEvent(e);
 				}
 			} catch (IOException e1) {
+				Log.e("did", "EventFetcher: " +e1.getMessage());
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}

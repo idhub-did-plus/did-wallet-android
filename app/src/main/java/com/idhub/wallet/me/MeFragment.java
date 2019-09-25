@@ -1,5 +1,6 @@
 package com.idhub.wallet.me;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,7 +14,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.magic.clientlib.http.RetrofitAccessor;
 import com.idhub.magic.common.event.MagicEvent;
+import com.idhub.magic.common.kvc.entity.ClaimType;
+import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
@@ -38,10 +42,18 @@ import org.web3j.crypto.Credentials;
 
 import java.lang.ref.WeakReference;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Observer;
 
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.event.EventListener;
+import com.idhub.wallet.utils.LogUtils;
+import com.idhub.wallet.utils.ToastUtils;
+import com.subgraph.orchid.events.EventHandler;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +72,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
     private Observer observer = (o, arg) -> initVipState();
     private Observer upgradeObserver = (o, arg) -> loadData();
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    private Handler eventHandler = new EventListenerHandler();
     public MeFragment() {
         // Required empty public constructor
     }
@@ -86,14 +98,6 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         mStComplianceInvestorView.setName(getString(R.string.wallet_st_compliance_investor));
         //查询 会员状态
         initVipState();
-        try {
-            JSONObject jsonObject = new JSONObject("\"{\\\"@context\\\":[\\\"https://w3id.org/credentials/v1\\\",\\\"https://idhub.com/credentials/v1\\\"],\\\"type\\\":[\\\"Credential\\\"],\\\"claim\\\":{\\\"id\\\":\\\"did:erc1056:did:erc1056:0xe3bf9307c560d75f577522b48b1dd1759f155997\\\",\\\"claimType\\\":\\\"idhub_vip\\\",\\\"country\\\":\\\"AD\\\",\\\"jurisdiction\\\":\\\"unknown\\\"},\\\"issued\\\":\\\"2019-09-24\\\",\\\"issuer\\\":\\\"did:erc1056:0x458b6862cac349a47658ef7251f22054ffa0d4ed\\\",\\\"expires\\\":\\\"2019-11-23\\\",\\\"signature\\\":{\\\"created\\\":\\\"2019-09-24\\\",\\\"creator\\\":\\\"did:erc1056:0x458b6862cac349a47658ef7251f22054ffa0d4ed\\\",\\\"nonce\\\":\\\"56e04336-2492-4653-b32c-40eb46536878\\\",\\\"domain\\\":null,\\\"type\\\":\\\"ES256\\\",\\\"signatureValue\\\":\\\"MEcCIMvRASICkaBGNbA3ipmu9F0pn54eaMrHwKdDZCxfVzHeAiBqYjqgNxwCdvwFLrOmIIjyStE23O4u5WwxlOUuMud+TgIBHA==\\\"}}\"");
-            JSONObject claim = jsonObject.getJSONObject("claim");
-            String claimType = claim.getString("claimType");
-            Log.e("LYW", "initData: " +claim );
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         requestNetData();
     }
 
@@ -103,39 +107,11 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
             defaultAddress = WalletManager.getCurrentKeyStore().getAddress();
         }
         IDHubCredentialProvider.setsDefaultAddress(defaultAddress);
-//        EventService eventService = RetrofitAccessor.getInstance().getEventService();
-//        eventService.queryEvents(defaultAddress).enqueue(new Callback<MagicResponse<List<MagicEvent>>>() {
-//            @Override
-//            public void onResponse(Call<MagicResponse<List<MagicEvent>>> call, Response<MagicResponse<List<MagicEvent>>> response) {
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MagicResponse<List<MagicEvent>>> call, Throwable t) {
-//
-//            }
-//        });
-        ApiFactory.getEventListenerService().listen(new EventListener() {
-            @Override
-            public void onEvent(MagicEvent e) {
-                String event = e.event;
-                String eventClass = e.eventClass;
-                String eventType = e.eventType;
-                if (eventType.equals("claim_issued_event")) {
-                }
-                Log.e("LYW", "onEvent: " + event + " " + eventClass + " " + eventType);
-//                try {
-
-//                    Class type = Class.forName(e.eventClass);
-//                    String encoded = e.event;
-//                    byte[] json = Base64.decode(encoded);
-//                    Object entity = mapper.readValue(json, type);
-
-//                } catch (Exception e1) {
-//                    // TODO Auto-generated catch block
-//                    e1.printStackTrace();
-//                }
-            }
+        ApiFactory.getEventListenerService().listen(e -> {
+            Message obtain = Message.obtain();
+            obtain.what = 1;
+            obtain.obj = e;
+            eventHandler.sendMessage(obtain);
         });
     }
 
@@ -167,6 +143,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         mStComplianceInvestorView.setOnClickListener(this);
 
     }
+
     @Override
     public void onClick(View v) {
         if (v == mIDHubVipView) {
@@ -181,6 +158,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
             Level5Activity.startAction(getContext());
         }
     }
+
     @Override
     protected void loadData() {
         //ein
@@ -258,7 +236,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         }, 1500);
     }
 
-    private static class NetHandler extends Handler{
+    private static class NetHandler extends Handler {
         private final WeakReference<Fragment> mFragmentReference;
 
         private NetHandler(Fragment fragment) {
@@ -270,7 +248,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
             super.handleMessage(msg);
             Fragment fragment = mFragmentReference.get();
             if ((fragment instanceof MeFragment)) {
-                MeFragment  meFragment = (MeFragment)fragment;
+                MeFragment meFragment = (MeFragment) fragment;
                 switch (msg.what) {
                     case 1:
                         Log.e("LYW", "handleMessage: 1");
@@ -299,6 +277,73 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         }
     }
 
+    private class EventListenerHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                MagicEvent magicEvent = (MagicEvent) msg.obj;
+                String event = magicEvent.event;
+                String eventClass = magicEvent.eventClass;
+                String eventType = magicEvent.eventType;
+                if (eventType.equals("claim_issued_event")) {
+                    JSONObject jsonObject = null;
+                    try {
+                        String replace = event.replace("\\", "");
+                        String s = replace.substring(replace.indexOf("{"), replace.lastIndexOf("}")+1);
+                        jsonObject = new JSONObject(s);
+                        JSONObject claim = jsonObject.getJSONObject("claim");
+                        String claimType = claim.getString("claimType");
+                        if (ClaimType.idhub_vip.name().equals(claimType)) {
+                            Log.e("LYW", "requestNetData: " + claimType);
+                            WalletVipSharedPreferences.getInstance().setIdhubVipState(VipStateType.HAVE_APPLY_FOR);
+                            WalletVipSharedPreferences.getInstance().setIdHubVipClaim(event);
+                        } else if (ClaimType.idhub_svip.name().equals(claimType)) {
+                            Log.e("LYW", "requestNetData: " + claimType);
+                            WalletVipSharedPreferences.getInstance().setIdhubSuperVipState(VipStateType.HAVE_APPLY_FOR);
+                            WalletVipSharedPreferences.getInstance().setIdHubSVipClaim(event);
+                        } else if (ClaimType.qualified_investor.name().equals(claimType)) {
+                            Log.e("LYW", "requestNetData: " + claimType);
+                            WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipState(VipStateType.HAVE_APPLY_FOR);
+                            WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipClaim(event);
+                        } else if (ClaimType.qualified_buyer.name().equals(claimType)) {
+                            Log.e("LYW", "requestNetData: " + claimType);
+                            WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipState(VipStateType.HAVE_APPLY_FOR);
+                            WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipClaim(event);
+                        } else if (ClaimType.investor_compliance.name().equals(claimType)) {
+                            Log.e("LYW", "requestNetData: " + claimType);
+                            WalletVipSharedPreferences.getInstance().setComplianceInvestorVipState(VipStateType.HAVE_APPLY_FOR);
+                            WalletVipSharedPreferences.getInstance().setComplianceInvestorVipClaim(event);
+                        }
+                        WalletVipStateObservable.getInstance().update();
+                    } catch (JSONException ex) {
+                        LogUtils.e("did", "requestNetData:message "+ ex.getMessage());
+                        ex.printStackTrace();
+                    }
+                } else if (eventType.equals("claim_refused_event")) {
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(event);
+                        String claimType = jsonObject.getString("claimType");
+                        if (ClaimType.idhub_vip.name().equals(claimType)) {
+                            WalletVipSharedPreferences.getInstance().setIdhubVipState(VipStateType.REFUSED_APPLY_FOR);
+                        } else if (ClaimType.idhub_svip.name().equals(claimType)) {
+                            WalletVipSharedPreferences.getInstance().setIdhubSuperVipState(VipStateType.REFUSED_APPLY_FOR);
+                        } else if (ClaimType.qualified_investor.name().equals(claimType)) {
+                            WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipState(VipStateType.REFUSED_APPLY_FOR);
+                        }else if (ClaimType.qualified_buyer.name().equals(claimType)){
+                            WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipState(VipStateType.REFUSED_APPLY_FOR);
+                        } else if (ClaimType.investor_compliance.name().equals(claimType)) {
+                            WalletVipSharedPreferences.getInstance().setComplianceInvestorVipState(VipStateType.REFUSED_APPLY_FOR);
+                        }
+                        WalletVipStateObservable.getInstance().update();
+                    } catch (JSONException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

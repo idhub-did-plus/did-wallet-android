@@ -71,6 +71,7 @@ public class Level5Activity extends AppCompatActivity implements View.OnClickLis
         String state = WalletVipSharedPreferences.getInstance().getComplianceInvestorVipState();
         if (VipStateType.NO_APPLY_FOR.equals(state)) {
             applyBtn.setText(getString(R.string.wallet_apply_for));
+            applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
             applyBtn.setOnClickListener(this);
         } else if (VipStateType.APPLY_FOR_ING.equals(state)) {
             applyBtn.setText(getString(R.string.wallet_apply_for_ing));
@@ -78,6 +79,10 @@ public class Level5Activity extends AppCompatActivity implements View.OnClickLis
         } else if (VipStateType.HAVE_APPLY_FOR.equals(state)) {
             applyBtn.setText(getString(R.string.wallet_have_apply_for));
             applyBtn.setBackgroundResource(R.drawable.wallet_shape_button_grey);
+        }else if (VipStateType.REFUSED_APPLY_FOR.equals(state)) {
+            applyBtn.setText(getString(R.string.wallet_again_apply_for));
+            applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
+            applyBtn.setOnClickListener(this);
         }
     }
 
@@ -108,7 +113,7 @@ public class Level5Activity extends AppCompatActivity implements View.OnClickLis
     private void applyClaim(String privateKey) {
         ClaimOrder claimOrder = new ClaimOrder();
         claimOrder.identity = NumericUtil.prependHexPrefix(mDefaultKeystore.getAddress());
-        claimOrder.requestedClaimType = ClaimType.qualified_buyer.name();
+        claimOrder.requestedClaimType = ClaimType.investor_compliance.name();
         IDHubCredentialProvider.setDefaultCredentials(privateKey);
         ApiFactory.getKycService().order(claimOrder,claimOrder.identity).enqueue(new Callback<MagicResponse>() {
             @Override

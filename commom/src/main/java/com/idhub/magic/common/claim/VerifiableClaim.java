@@ -23,23 +23,34 @@ public class VerifiableClaim {
 	    "signatureValue" : "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..LuQEd67YJH8auxrU7_SGeCW77tPOmd2CAR41MxG_gSkHbQVOiWtMshtY71AGRgCUu5EVkOHNHLDU4EWSLaPCGOApoEc4TPn2srOi3DyDYZkgPRlUiGGNiy8bBk8Gfli_7qFA053wtAdHNf0VGVrXn0QBxSd7PSN5g2g0CM6TKJWp96WmhwdXAWgpqAhK8qe9tIXORr2TZB4ANR9bCtlcTk8haJawbLda2DHtPY_zSJqAaXzr7qC_vqa2jYRQgS65UA2dsm4du-ajVProniyV1p6Iu82coqDQPELW30hEXyintNRMjK8e_6z-wEsNpUH5ir_H97ciX60vV7e7nKjDRQ"
 	  }*/
 	String id;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	List<String> context = new ArrayList<String>();
 	String type;
 	Claim claim = new Claim();
+	String subject;
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 	String issuer;
 	String issued;
+	String expires;
+	public String getExpires() {
+		return expires;
+	}
+	public void setExpires(String expires) {
+		this.expires = expires;
+	}
 	Signature signature = new Signature();
 	public Claim getClaim() {
 		return claim;
 	}
 	public List<String> getContext() {
 		return context;
+	}
+	public String getId() {
+		return id;
 	}
 	public String getIssued() {
 		return issued;
@@ -58,6 +69,9 @@ public class VerifiableClaim {
 	}
 	public void setContext(List<String> context) {
 		this.context = context;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public void setIssued(String issued) {
 		this.issued = issued;
