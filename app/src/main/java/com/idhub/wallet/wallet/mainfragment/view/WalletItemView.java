@@ -18,6 +18,9 @@ import com.idhub.wallet.utils.StringUtils;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 
+import org.web3j.crypto.Keys;
+import org.web3j.protocol.Web3j;
+
 public class WalletItemView extends ConstraintLayout implements View.OnClickListener {
 
     private TextView mNameTv;
@@ -46,7 +49,7 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
     public void setData(WalletKeystore keyStore) {
         this.mKeyStore = keyStore;
         mNameTv.setText(keyStore.getWallet().getName());
-        mAddressTv.setText(NumericUtil.prependHexPrefix(keyStore.getAddress()));
+        mAddressTv.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));
         boolean isgl = keyStore.getWallet().isAssociate();
         if (isgl) {
             mAssociatedAddress.setText(getContext().getString(R.string.wallet_associated_address));

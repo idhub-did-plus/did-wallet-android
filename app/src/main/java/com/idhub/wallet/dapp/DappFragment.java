@@ -20,7 +20,7 @@ import com.idhub.wallet.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DappFragment extends MainBaseFragment implements View.OnClickListener {
+public class DappFragment extends MainBaseFragment {
 
 
     private EditText mUrlEdit;
@@ -36,18 +36,15 @@ public class DappFragment extends MainBaseFragment implements View.OnClickListen
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.wallet_fragment_dapp, container, false);
         mUrlEdit = view.findViewById(R.id.et_dapp_url);
-        mUrlEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    String url = mUrlEdit.getText().toString();
-                    if (!TextUtils.isEmpty(url)){
-                        Web3Activity.startAction(getContext(), url);
-                        return true;
-                    }
+        mUrlEdit.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                String url = mUrlEdit.getText().toString();
+                if (!TextUtils.isEmpty(url)){
+                    Web3Activity.startAction(getContext(), url);
+                    return true;
                 }
-                return false;
             }
+            return false;
         });
         return view;
     }
@@ -55,14 +52,5 @@ public class DappFragment extends MainBaseFragment implements View.OnClickListen
     @Override
     protected void loadData() {
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.et_dapp_url:
-                Web3Activity.startAction(getContext(), "https://danfinlay.github.io/js-eth-personal-sign-examples/");
-                break;
-        }
     }
 }

@@ -19,6 +19,8 @@ import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.me.information.UploadInformationTypeActivity;
 
+import org.web3j.crypto.Keys;
+
 import java.math.BigInteger;
 
 public class MeTopView extends ConstraintLayout implements View.OnClickListener {
@@ -51,7 +53,7 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
 
     public void setRecoverAddress(String recoverAddress) {
         setRecoverAddressViewVisible(VISIBLE);
-        mRecoverAddressView.setText(getContext().getString(R.string.wallet_recovery_address)+":" + recoverAddress);
+        mRecoverAddressView.setText(getContext().getString(R.string.wallet_recovery_address)+":" + Keys.toChecksumAddress(recoverAddress));
     }
 
     public void setEIN1484(String ein) {

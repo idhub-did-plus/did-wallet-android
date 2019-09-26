@@ -21,6 +21,8 @@ import com.idhub.wallet.utils.QRCodeEncoder;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 
+import org.web3j.crypto.Keys;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -51,7 +53,7 @@ public class ReceiveActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initData() {
         mNameView.setText(mAssetsModel.getName());
-        mAddressView.setText(mAssetsModel.getAddress());
+        mAddressView.setText(Keys.toChecksumAddress(mAssetsModel.getAddress()));
         updateQRCode();
     }
 
