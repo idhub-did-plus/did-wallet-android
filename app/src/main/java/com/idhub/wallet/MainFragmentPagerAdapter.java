@@ -17,7 +17,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         mContext = context;
         mItems = new String[]{context.getResources().getString(R.string.wallet_me), context.getResources().getString(R.string.wallet_wallet),
-               context.getResources().getString(R.string.wallet_dapp),context.getResources().getString(R.string.wallet_history)};
+               context.getResources().getString(R.string.wallet_dapp),context.getResources().getString(R.string.wallet_setting)};
     }
 
     @Override

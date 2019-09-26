@@ -16,11 +16,15 @@ import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.me.information.UploadInformationTypeActivity;
+
+import java.math.BigInteger;
 
 public class MeTopView extends ConstraintLayout implements View.OnClickListener {
 
     private TextView mRecoverAddressView;
+    private TextView mEINIdentityView;
     private TextView mEINView;
 
     public MeTopView(Context context, AttributeSet attrs) {
@@ -41,26 +45,29 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
         mRecoverAddressView = findViewById(R.id.tv_recover_address);
 
         findViewById(R.id.upload_file).setOnClickListener(this);
-        mEINView = findViewById(R.id.tv_ein_number);
+        mEINIdentityView = findViewById(R.id.tv_ein_number);
+        mEINView = findViewById(R.id.tv_ein);
     }
 
     public void setRecoverAddress(String recoverAddress) {
         setRecoverAddressViewVisible(VISIBLE);
-        mRecoverAddressView.setText("recoverAddress:" + recoverAddress);
+        mRecoverAddressView.setText(getContext().getString(R.string.wallet_recovery_address)+":" + recoverAddress);
     }
 
     public void setEIN1484(String ein) {
         setEINVisible(View.VISIBLE);
-        mEINView.setText("did:erc1484:" + DeployedContractAddress.IdentityRegistryInterface + ":" + ein);
+        mEINView.setText(getContext().getString(R.string.wallet_ein)+":"+ein);
+        mEINIdentityView.setText("did:erc1484:" + DeployedContractAddress.IdentityRegistryInterface + ":" + NumericUtil.bigIntegerToHexWithZeroPadded(new BigInteger(ein), 64));
     }
 
     public void setEIN1056(String address) {
         setEINVisible(View.VISIBLE);
-        mEINView.setText("did:erc1056:" + DeployedContractAddress.EthereumDIDRegistryInterface + ":" + address);
+        mEINView.setText(getContext().getString(R.string.wallet_ein)+":0");
+        mEINIdentityView.setText("did:erc1056:" + DeployedContractAddress.EthereumDIDRegistryInterface + ":" + address);
     }
 
     public void setEINVisible(int visibility){
-        mEINView.setVisibility(visibility);
+        mEINIdentityView.setVisibility(visibility);
     }
 
     public void setRecoverAddressViewVisible(int visibility){

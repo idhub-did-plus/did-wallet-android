@@ -55,15 +55,17 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
         if (integer != null)
             mTokenIcon.setImageResource(integer);
         mTokenName.setText(symble);
-        mContractName.setText(assetsModel.getMainContractAddress());
+
         //查询设置
         String node = WalletOtherInfoSharpreference.getInstance().getNode();
         AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
         if (WalletNodeManager.ROPSTEN.equals(node)) {
             String ropstenContractAddress = assetsModel.getRopstenContractAddress();
+            mContractName.setText(ropstenContractAddress);
             assetsModelDbManager.queryByRopstenContractAddressKey(ropstenContractAddress, this);
         } else if (WalletNodeManager.MAINNET.equals(node)) {
             String mainContractAddress = assetsModel.getMainContractAddress();
+            mContractName.setText(mainContractAddress);
             assetsModelDbManager.queryByMainContractAddressKey(mainContractAddress, this);
         }
     }

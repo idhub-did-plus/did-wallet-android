@@ -386,54 +386,56 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         address.setPostalCode(postalCode);
         ArrayList<AddressElement> elements = new ArrayList<>();
         if (mIsLocalzh) {
+            name.setFirstName(lastNameViewInputData);
+            name.setLastName(firstNameViewInputData);
             AddressElement addressCountryElement = new AddressElement();
-            addressCountryElement.name = "国家";
+            addressCountryElement.name = getString(R.string.wallet_address_country);
             addressCountryElement.value = mAddressCountryCode;
             elements.add(addressCountryElement);
 
             AddressElement addressCityElement = new AddressElement();
-            addressCityElement.name = "省份";
+            addressCityElement.name = getString(R.string.wallet_city);
             addressCityElement.value = city;
             elements.add(addressCityElement);
 
             AddressElement addressStateElement = new AddressElement();
-            addressStateElement.name = "城市";
+            addressStateElement.name = getString(R.string.wallet_state);
             addressStateElement.value = state;
             elements.add(addressStateElement);
 
             AddressElement addressNeighborhoodElement = new AddressElement();
-            addressNeighborhoodElement.name = "区县";
+            addressNeighborhoodElement.name = getString(R.string.wallet_neighborhood);
             addressNeighborhoodElement.value = neighborhood;
             elements.add(addressNeighborhoodElement);
 
             AddressElement addressDetailElement = new AddressElement();
-            addressDetailElement.name = "详细地址";
+            addressDetailElement.name = getString(R.string.wallet_address_detail);
             addressDetailElement.value = addressDetail;
             elements.add(addressDetailElement);
 
         } else {
             AddressElement addressDetailElement = new AddressElement();
-            addressDetailElement.name = "street";
+            addressDetailElement.name = getString(R.string.wallet_street);
             addressDetailElement.value = street;
             elements.add(addressDetailElement);
 
             AddressElement addressCountryElement = new AddressElement();
-            addressCountryElement.name = "country";
+            addressCountryElement.name = getString(R.string.wallet_address_country);
             addressCountryElement.value = mAddressCountryCode;
             elements.add(addressCountryElement);
 
             AddressElement addressCityElement = new AddressElement();
-            addressCityElement.name = "city";
+            addressCityElement.name = getString(R.string.wallet_city);
             addressCityElement.value = city;
             elements.add(addressCityElement);
 
             AddressElement addressStateElement = new AddressElement();
-            addressStateElement.name = "state";
+            addressStateElement.name = getString(R.string.wallet_state);
             addressStateElement.value = state;
             elements.add(addressStateElement);
 
             AddressElement addressNeighborhoodElement = new AddressElement();
-            addressNeighborhoodElement.name = "neighborhood";
+            addressNeighborhoodElement.name = getString(R.string.wallet_neighborhood);
             addressNeighborhoodElement.value = neighborhood;
             elements.add(addressNeighborhoodElement);
         }

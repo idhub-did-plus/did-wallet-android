@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">idhub</string>
+    <string name="app_name">IDHUB</string>
     <string name="wallet_me">我的</string>
     <string name="wallet_wallet">钱包</string>
     <string name="wallet_dapp">Dapp</string>
     <string name="wallet_history">历史</string>
+    <string name="wallet_setting">设置</string>
     <string name="wallet_identity_create">创建身份</string>
     <string name="wallet_identity_recovery">恢复身份</string>
     <string name="wallet_identity_import">导入身份</string>
@@ -133,7 +134,6 @@
     <string name="wallet_input_user_name">请输入用户名</string>
     <string name="wallet_not_empty_user_name">用户名不能为空</string>
     <string name="wallet_user_signature">个性签名</string>
-    <string name="wallet_input_user_signature">请输入个性签名</string>
     <string name="wallet_not_empty_user_signature">个性签名不能为空</string>
     <string name="wallet_upload_user_information">上传基本信息</string>
     <string name="wallet_upload_file_add_tip">添加文件上传之后才可以继续添加需要上传的文件</string>
@@ -191,7 +191,7 @@
     <string name="wallet_minute">分</string>
 
     //dapp
-    <string name="wallet_dapp_search_hint">搜索或输入DApp网址</string>
+    <string name="wallet_dapp_search_hint">输入DApp网址</string>
     <string name="wallet_dialog_title_sign_message">签署消息</string>
     <string name="wallet_dialog_approve">同意</string>
     <string name="wallet_dialog_reject">拒绝</string>
@@ -242,7 +242,7 @@
     //notification
     <string name="wallet_transaction_notification_content_title">收到一笔交易</string>
     <string name="wallet_transaction_notification_content_text_etn">ETH交易</string>
-    <string name="wallet_transaction_notification_content_text_contract">合约交易</string>
+    <string name="wallet_transaction_notification_content_text_contract">ERC20交易</string>
     <string name="wallet_channel_name">交易</string>
     <string name="wallet_channel_description">交易详情</string>
     <string name="wallet_more_detail">更多详情</string>
@@ -292,10 +292,10 @@
     //me
     <string name="wallet_idhub_vip">idHub会员</string>
     <string name="wallet_idhub_super_vip">idHub超级会员</string>
-    <string name="wallet_no_appply_for">未申请</string>
+    <string name="wallet_no_appply_for">立即申请</string>
     <string name="wallet_apply_for">申请</string>
     <string name="wallet_again_apply_for">重新申请</string>
-    <string name="wallet_apply_for_ing">申请中</string>
+    <string name="wallet_apply_for_ing">审核中</string>
     <string name="wallet_vip">vip</string>
     <string name="wallet_refused_apply">拒绝申请</string>
     <string name="wallet_have_apply_for">已申请</string>
@@ -306,18 +306,18 @@
     <string name="wallet_have_apply_for_qualified_investor_vip">请先升级成为合格投资人之后再次尝试申请</string>
     <string name="wallet_have_apply_for_qualified_purchaser_vip">请先升级成为合格购买人之后再次尝试申请</string>
     <string name="wallet_idhub_vip_content">IDHub基于区块链技术的去中心化数字身份将身份控制权收回到个人手中，为用户塑造完整、可信的自主身份，构建以用户为主导的数字身份管理和应用平台，以及安全、自主、可信的身份管理机制。</string>
-    <string name="wallet_idhub_super_vip_content">IDHub建立在开放原则之上，通过区块链技术，对个人身份的有效性、真实性、唯一性进行合理验证，力求将身份控制权由第三方信息服务机构重新收回到个人手中，为用户塑造完整、可信的自主身份，构建以用户为主导的数字身份管理和应用平台，以及安全、自主、可信的身份管理机制，并为用户在证券通政领域提供合规检查及认证服务。</string>
+    <string name="wallet_idhub_super_vip_content">IDHub建立在开放原则之上，通过区块链技术，对个人身份的有效性、真实性、唯一性进行合理验证，力求将身份控制权由第三方信息服务机构重新收回到个人手中，为用户塑造完整、可信的自主身份，构建以用户为主导的数字身份管理和应用平台，以及安全、自主、可信的身份管理机制，并为用户在证券通证领域提供合规检查及认证服务。</string>
 
-    <string name="wallet_compliance_investor_vip_content">1、同时成为ST合格投资人和合格购买人之后即为证券通政合规投资者
-2、成为ST合规投资者之后可参与STO申购及证券通政交易
-3、ST合规投资者仍要受到证券通政发行区域的法律限制
-4、不同司法管辖区的证券通政合规投资者的权利不同，详情参考具体的证券通政细节</string>
+    <string name="wallet_compliance_investor_vip_content">1、同时成为ST合格投资人和合格购买人之后即为证券通证合规投资者
+2、成为ST合规投资者之后可参与STO申购及证券通证交易
+3、ST合规投资者仍要受到证券通证发行区域的法律限制
+4、不同司法管辖区的证券通证合规投资者的权利不同，详情参考具体的证券通证细节</string>
 
     //upgrade
     <string name="wallet_upgrade_hint">用户提示:
 1、用户默认身份采用ERC1056协议，只允许进行单地址管理。
 2、用户可以升级为聚合身份采用ERC1484协议，只有升级为聚合身份之后才可以进行多地址管理，原有地址被设置为默认地址。
-3、用户调用ERC1484合约升级身份，需要用户默认地址有足够的ETH余额支付以太坊交易燃料（gad）。
+3、用户调用ERC1484合约升级身份，需要用户默认地址有足够的ETH余额支付以太坊交易燃料（gas）。
 4、用户升级为聚合身份之后，可以自由选择将地址添加为聚合身份的关联地址。
 5、每个地址只可以关联一个聚合身份，每个聚合身份拥有一个恢复地址。
 6、恢复地址应当采用冷钱包形式存储，此应用不会存储任何和恢复地址相关的备份信息，请务必注意。

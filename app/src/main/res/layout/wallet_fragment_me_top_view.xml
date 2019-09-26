@@ -49,7 +49,7 @@
         android:id="@+id/tv_recover_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         tools:text="recoverAddress:"
         android:textColor="@color/wallet_white"
         android:singleLine="true"
@@ -58,25 +58,38 @@
         android:textSize="13sp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/iv_head"
-        app:layout_constraintTop_toBottomOf="@id/iv_head" />
+        app:layout_constraintTop_toBottomOf="@id/tv_ein_number" />
 
     <TextView
         android:id="@+id/tv_ein_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:singleLine="true"
         android:layout_marginRight="12dp"
-        android:layout_marginBottom="20dp"
         tools:text="EIN:"
         android:ellipsize="middle"
         android:textColor="@color/wallet_white"
         android:textSize="13sp"
         app:layout_constraintRight_toLeftOf="@id/upload_file"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/iv_head"
+        app:layout_constraintTop_toBottomOf="@id/iv_head" />
+    <TextView
+        android:id="@+id/tv_ein"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        tools:text="EIN:"
+        android:textColor="@color/wallet_white"
+        android:singleLine="true"
+        android:ellipsize="middle"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="13sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/iv_head"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_recover_address" />
-
     <TextView
         android:id="@+id/upload_file"
         android:layout_width="wrap_content"

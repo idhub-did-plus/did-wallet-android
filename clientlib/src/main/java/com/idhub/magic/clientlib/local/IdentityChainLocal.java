@@ -45,7 +45,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
                         l.result(bigInteger);
                     }
                 }).exceptionally(transactionReceipt -> {
-                    el.error("error!");
+                    el.error(transactionReceipt.getMessage());
 
                     return null;
                 });

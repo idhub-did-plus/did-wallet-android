@@ -174,6 +174,7 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
                 backupNameList.add(name);
             } else {
                 //name重复
+                //TODO
                 ToastUtils.showLongToast(getString(R.string.wallet_file_name) + name + getString(R.string.wallet_repeat) + getString(R.string.wallet_edit_after_again_upload));
                 return false;
             }

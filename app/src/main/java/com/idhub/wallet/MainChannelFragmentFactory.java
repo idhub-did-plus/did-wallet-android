@@ -18,7 +18,7 @@ public class MainChannelFragmentFactory {
             return new WalletFragment();
         } else if (context.getResources().getString(R.string.wallet_dapp).equals(title)) {
             return new DappFragment();
-        } else if (context.getResources().getString(R.string.wallet_history).equals(title)) {
+        } else if (context.getResources().getString(R.string.wallet_setting).equals(title)) {
             return new SettingFragment();
         } else {
             return new MeFragment();

@@ -223,7 +223,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
     }
 
     private void setEIN1484View(String ein) {
-        mTopView.setEIN1484(NumericUtil.bigIntegerToHexWithZeroPadded(new BigInteger(ein), 64));
+        mTopView.setEIN1484(ein);
     }
 
     @Override
@@ -251,24 +251,19 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                 MeFragment meFragment = (MeFragment) fragment;
                 switch (msg.what) {
                     case 1:
-                        Log.e("LYW", "handleMessage: 1");
                         String ein = ((String) msg.obj);
                         meFragment.setEIN1484View(ein);
                         meFragment.setRecoverAddress(ein);
                         break;
                     case 2:
-                        Log.e("LYW", "handleMessage: 2");
                         meFragment.mTopView.setEINVisible(View.INVISIBLE);
                         meFragment.setRecoverAddress("");
                         break;
                     case 3:
-                        Log.e("LYW", "handleMessage: 3");
                         String recoveryAddress = ((String) msg.obj);
                         meFragment.mTopView.setRecoverAddress(recoveryAddress);
                         break;
                     case 4:
-                        Log.e("LYW", "handleMessage: 4");
-
                         meFragment.mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
                         break;
                 }
@@ -295,23 +290,18 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                         JSONObject claim = jsonObject.getJSONObject("claim");
                         String claimType = claim.getString("claimType");
                         if (ClaimType.idhub_vip.name().equals(claimType)) {
-                            Log.e("LYW", "requestNetData: " + claimType);
                             WalletVipSharedPreferences.getInstance().setIdhubVipState(VipStateType.HAVE_APPLY_FOR);
                             WalletVipSharedPreferences.getInstance().setIdHubVipClaim(event);
                         } else if (ClaimType.idhub_svip.name().equals(claimType)) {
-                            Log.e("LYW", "requestNetData: " + claimType);
                             WalletVipSharedPreferences.getInstance().setIdhubSuperVipState(VipStateType.HAVE_APPLY_FOR);
                             WalletVipSharedPreferences.getInstance().setIdHubSVipClaim(event);
                         } else if (ClaimType.qualified_investor.name().equals(claimType)) {
-                            Log.e("LYW", "requestNetData: " + claimType);
                             WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipState(VipStateType.HAVE_APPLY_FOR);
                             WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipClaim(event);
                         } else if (ClaimType.qualified_buyer.name().equals(claimType)) {
-                            Log.e("LYW", "requestNetData: " + claimType);
                             WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipState(VipStateType.HAVE_APPLY_FOR);
                             WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipClaim(event);
                         } else if (ClaimType.investor_compliance.name().equals(claimType)) {
-                            Log.e("LYW", "requestNetData: " + claimType);
                             WalletVipSharedPreferences.getInstance().setComplianceInvestorVipState(VipStateType.HAVE_APPLY_FOR);
                             WalletVipSharedPreferences.getInstance().setComplianceInvestorVipClaim(event);
                         }
