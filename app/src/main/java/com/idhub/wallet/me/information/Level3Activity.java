@@ -192,7 +192,6 @@ public class Level3Activity extends AppCompatActivity implements View.OnClickLis
                     if (body != null && body.isSuccess()) {
                         WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipContent(profile.investorType);
                         initData();
-                        Log.e("LYW", "onResponse: " + body.getMessage());
                     } else {
                         ToastUtils.showShortToast(getString(R.string.wallet_claim_vip_fail));
                     }

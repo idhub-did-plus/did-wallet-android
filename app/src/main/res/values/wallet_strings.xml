@@ -348,7 +348,7 @@
 
 
     //scanCode
-    <string name="wallet_login_fail">登陆失败</string>
+    <string name="wallet_login_fail">失败</string>
     <string name="wallet_not_found_assets">钱包下找不到此资产</string>
     <string name="wallet_login_code_fail">此网站有风险</string>
     <string name="wallet_login_tip">提示</string>
