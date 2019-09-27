@@ -113,7 +113,7 @@ public class Level5Activity extends AppCompatActivity implements View.OnClickLis
     private void applyClaim(String privateKey) {
         ClaimOrder claimOrder = new ClaimOrder();
         claimOrder.identity = NumericUtil.prependHexPrefix(mDefaultKeystore.getAddress());
-        claimOrder.requestedClaimType = ClaimType.investor_compliance.name();
+        claimOrder.requestedClaimType = ClaimType.ST_Compliant_Investor.name();
         IDHubCredentialProvider.setDefaultCredentials(privateKey);
         ApiFactory.getKycService().order(claimOrder,claimOrder.identity).enqueue(new Callback<MagicResponse>() {
             @Override

@@ -33,6 +33,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.zxinglib.ui.BasePhotosActivity;
+import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.io.IOException;
@@ -213,6 +214,7 @@ public class MipcaActivityCapture extends BasePhotosActivity implements Callback
         inactivityTimer.onActivity();
         playBeepSoundAndVibrate();
         SCAN_RESULT = result != null ? result.getText() : "";
+        LogUtils.e("did", "handleDecode:qrcode " + SCAN_RESULT );
         Intent intent = new Intent();
         intent.putExtra("qrcode", SCAN_RESULT);
         setResult(RESULT_OK, intent);

@@ -20,6 +20,8 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.utils.ToastUtils;
 
+import org.web3j.crypto.Keys;
+
 public class AddAssociationAddressDialogFragment extends DialogFragment implements View.OnClickListener {
 
     private AddAssociationAddressDialogFragmentListener addAssociationAddressDialogFragmentListener;
@@ -69,9 +71,9 @@ public class AddAssociationAddressDialogFragment extends DialogFragment implemen
         mDefaultPsdEditView = view.findViewById(R.id.et_default_password);
         mAssociationPsdEditView = view.findViewById(R.id.et_password);
         TextView defaultAddressView = view.findViewById(R.id.default_address);
-        defaultAddressView.setText(NumericUtil.prependHexPrefix(defaultAddress));
+        defaultAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(defaultAddress)));
         TextView associationAddressView = view.findViewById(R.id.associated_address);
-        associationAddressView.setText(NumericUtil.prependHexPrefix(associationAddress));
+        associationAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(associationAddress)));
         return view;
     }
 

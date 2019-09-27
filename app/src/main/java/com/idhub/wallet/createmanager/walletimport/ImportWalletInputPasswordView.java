@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.utils.ToastUtils;
+import com.idhub.wallet.utils.ValidatorUtil;
 
 public class ImportWalletInputPasswordView extends ConstraintLayout {
 
@@ -36,6 +37,9 @@ public class ImportWalletInputPasswordView extends ConstraintLayout {
         if (TextUtils.isEmpty(password)) {
             ToastUtils.showShortToast(getContext().getString(R.string.wallet_no_empty_password));
             return false;
+        }
+        if (!ValidatorUtil.isPassword(password)) {
+            ToastUtils.showLongToast(getContext().getString(R.string.wallet_password_length));
         }
         if (TextUtils.isEmpty(repeatPassword)) {
             ToastUtils.showShortToast(getContext().getString(R.string.wallet_no_empty_repeat_password));

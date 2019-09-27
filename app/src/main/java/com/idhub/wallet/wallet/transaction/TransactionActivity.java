@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.wallet.token.PartitionEntity;
@@ -56,8 +57,12 @@ public class TransactionActivity extends AppCompatActivity implements View.OnCli
         String s = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance));
         String symbol = mAssetsModel.getSymbol();
         balanceAndName.setText(s + " " + symbol);
-        mAssetsModel.setAddress(WalletManager.getAddress());
-    }
+        WalletKeystore currentKeyStore = WalletManager.getCurrentKeyStore();
+        if (currentKeyStore != null) {
+            String address = currentKeyStore.getAddress();
+            mAssetsModel.setAddress(address);
+        }
+}
 
     public static void srartAction(Context context, AssetsModel assetsModel) {
         Intent intent = new Intent(context, TransactionActivity.class);

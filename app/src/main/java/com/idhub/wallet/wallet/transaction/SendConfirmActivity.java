@@ -27,6 +27,7 @@ import com.idhub.wallet.net.parameter.EthTransactionParam;
 import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
 
+import org.web3j.crypto.Keys;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 
@@ -69,7 +70,7 @@ public class SendConfirmActivity extends AppCompatActivity implements View.OnCli
         mToAddressView.setText(mToAddress);
         if (mAssetsModel != null) {
             mSendAmountView.setText(mAmount + " " + mAssetsModel.getSymbol());
-            mFromAddressView.setText(mAssetsModel.getAddress());
+            mFromAddressView.setText(Keys.toChecksumAddress(mAssetsModel.getAddress()));
         }
         mGasPrice = WalletTransactionSharpreference.getInstance().getGasPrice();
         String type = mAssetsModel.getType();

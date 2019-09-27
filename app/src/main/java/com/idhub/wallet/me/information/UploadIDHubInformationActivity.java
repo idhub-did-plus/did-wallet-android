@@ -163,39 +163,39 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
         mBirthdayView.setData(getString(R.string.wallet_birthday), getString(R.string.wallet_please_select) + getString(R.string.wallet_birthday));
         mBirthdayView.setOnClickListener(this);
         mNationalityView = findViewById(R.id.nationality);
-        mNationalityView.setData(getString(R.string.wallet_country), getString(R.string.wallet_please_select) + getString(R.string.wallet_country));
+        mNationalityView.setData(getString(R.string.wallet_country), getString(R.string.wallet_please_select) );
         mNationalityView.setOnClickListener(this);
         mCountryOfResidenceView = findViewById(R.id.country_of_residence);
-        mCountryOfResidenceView.setData(getString(R.string.wallet_residence_country), getString(R.string.wallet_please_select) + getString(R.string.wallet_residence_country));
+        mCountryOfResidenceView.setData(getString(R.string.wallet_residence_country), getString(R.string.wallet_please_select));
         mCountryOfResidenceView.setOnClickListener(this);
 
         mIdNumberView = findViewById(R.id.id_number);
-        mIdNumberView.setData(getString(R.string.wallet_id_number), getString(R.string.wallet_please_input) + getString(R.string.wallet_id_number));
+        mIdNumberView.setData(getString(R.string.wallet_id_number), getString(R.string.wallet_please_input) );
         mPassportNumberView = findViewById(R.id.passport_number);
-        mPassportNumberView.setData(getString(R.string.wallet_passport_number), getString(R.string.wallet_please_input) + getString(R.string.wallet_passport_number));
+        mPassportNumberView.setData(getString(R.string.wallet_passport_number), getString(R.string.wallet_please_input));
         mPhoneNumberView = findViewById(R.id.et_phone_number);
         mPhoneDialingCodeView = findViewById(R.id.tv_phone_dialing_code);
         mPhoneDialingCodeView.setOnClickListener(this);
         TextView phoneNumberView = findViewById(R.id.tv_phone_number);
         phoneNumberView.setText(getString(R.string.wallet_phone_number));
-        mPhoneNumberView.setHint(getString(R.string.wallet_please_input) + getString(R.string.wallet_phone_number));
+        mPhoneNumberView.setHint(getString(R.string.wallet_please_input) +" "+ getString(R.string.wallet_phone_number));
 
         mTaxIdView = findViewById(R.id.tax_id);
-        mTaxIdView.setData(getString(R.string.wallet_tax_number), getString(R.string.wallet_please_input) + getString(R.string.wallet_tax_number));
+        mTaxIdView.setData(getString(R.string.wallet_tax_number), getString(R.string.wallet_please_input) +" "+ getString(R.string.wallet_tax_number));
         mSSNView = findViewById(R.id.ssn);
-        mSSNView.setData(getString(R.string.wallet_ssn_number), getString(R.string.wallet_please_input) + getString(R.string.wallet_ssn_number));
+        mSSNView.setData(getString(R.string.wallet_ssn_number), getString(R.string.wallet_please_input)+" " + getString(R.string.wallet_ssn_number));
 
         mStreetView = findViewById(R.id.street);
-        mStreetView.setData(getString(R.string.wallet_street), getString(R.string.wallet_please_input) + getString(R.string.wallet_street));
+        mStreetView.setData(getString(R.string.wallet_street), getString(R.string.wallet_street_hint));
         mAddressCountryView = findViewById(R.id.address_country);
         mAddressCountryView.setOnClickListener(this);
         mAddressCountryView.setData(getString(R.string.wallet_address_country), getString(R.string.wallet_address_country_hint));
         mPostalCodeView = findViewById(R.id.postal_code);
-        mPostalCodeView.setData(getString(R.string.wallet_postal_code), getString(R.string.wallet_please_input) + getString(R.string.wallet_postal_code));
+        mPostalCodeView.setData(getString(R.string.wallet_postal_code), getString(R.string.wallet_please_input) +" "+ getString(R.string.wallet_postal_code));
         mCityView = findViewById(R.id.city);
-        mCityView.setData(getString(R.string.wallet_city), getString(R.string.wallet_please_input) + getString(R.string.wallet_city));
+        mCityView.setData(getString(R.string.wallet_city), getString(R.string.wallet_please_input) +" "+ getString(R.string.wallet_city));
         mStateView = findViewById(R.id.state);
-        mStateView.setData(getString(R.string.wallet_state), getString(R.string.wallet_please_input) + getString(R.string.wallet_state));
+        mStateView.setData(getString(R.string.wallet_state), getString(R.string.wallet_please_input) +" "+ getString(R.string.wallet_state));
         mNeighborhoodView = findViewById(R.id.neighborhood);
         mNeighborhoodView.setData(getString(R.string.wallet_neighborhood), getString(R.string.wallet_please_input) + getString(R.string.wallet_neighborhood));
         mAddressDetailView = findViewById(R.id.address_detail);
@@ -203,7 +203,7 @@ public class UploadIDHubInformationActivity extends AppCompatActivity implements
 
 
         mEmailView = findViewById(R.id.email);
-        mEmailView.setData(getString(R.string.wallet_email), getString(R.string.wallet_please_input) + getString(R.string.wallet_email));
+        mEmailView.setData(getString(R.string.wallet_email), getString(R.string.wallet_please_input) +" "+ getString(R.string.wallet_email));
         findViewById(R.id.tv_upgrade).setOnClickListener(this);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
     }

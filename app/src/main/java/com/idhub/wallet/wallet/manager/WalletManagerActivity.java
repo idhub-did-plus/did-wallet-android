@@ -51,6 +51,8 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import com.idhub.magic.clientlib.ApiFactory;
 
+import org.web3j.crypto.Keys;
+
 public class WalletManagerActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener, MessageDialogFragment.MessageDialogFragmentListener, AddAssociationAddressDialogFragment.AddAssociationAddressDialogFragmentListener {
 
     private WalletManagerItemView mExportPasswordHint;
@@ -115,7 +117,7 @@ public class WalletManagerActivity extends AppCompatActivity implements View.OnC
     private void initData() {
         WalletKeystore keyStore = WalletManager.getKeyStore(mID);
         mWalletNameView.setText(keyStore.getWallet().getName());
-        mWalletAddressView.setText(NumericUtil.prependHexPrefix(keyStore.getAddress()));
+        mWalletAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));
         if (keyStore instanceof DidHubKeyStore) {
             mExportMnemonic.setVisibility(View.GONE);
         } else if (keyStore instanceof DidHubMnemonicKeyStore) {

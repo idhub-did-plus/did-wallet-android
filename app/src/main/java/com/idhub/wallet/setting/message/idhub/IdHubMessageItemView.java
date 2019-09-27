@@ -16,6 +16,8 @@ import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
 import com.idhub.wallet.setting.TransactionDetailActivity;
 
+import org.web3j.crypto.Keys;
+
 import java.math.BigInteger;
 
 public class IdHubMessageItemView extends ConstraintLayout {
@@ -51,7 +53,7 @@ public class IdHubMessageItemView extends ConstraintLayout {
 
     public void setData(IdHubMessageEntity idHubMessageEntity) {
         String address = idHubMessageEntity.getAddress();
-        mAddressView.setText(address);
+        mAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(address)));
         String type = idHubMessageEntity.getType();
         switch (type) {
             case IdHubMessageType.CREATE_1056_Identity:
@@ -79,7 +81,7 @@ public class IdHubMessageItemView extends ConstraintLayout {
         if (!TextUtils.isEmpty(defaultAddress)) {
             mDefaultAddressView.setVisibility(VISIBLE);
             mDefaultAddressNameView.setVisibility(VISIBLE);
-            mDefaultAddressView.setText(defaultAddress);
+            mDefaultAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(defaultAddress)));
         } else {
             mDefaultAddressView.setVisibility(GONE);
             mDefaultAddressNameView.setVisibility(GONE);
@@ -88,7 +90,7 @@ public class IdHubMessageItemView extends ConstraintLayout {
         if (!TextUtils.isEmpty(recoverAddress)) {
             mRecoverAddressView.setVisibility(VISIBLE);
             mRecoverAddressNameView.setVisibility(VISIBLE);
-            mRecoverAddressView.setText(recoverAddress);
+            mRecoverAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(recoverAddress)));
         } else {
             mRecoverAddressView.setVisibility(GONE);
             mRecoverAddressNameView.setVisibility(GONE);

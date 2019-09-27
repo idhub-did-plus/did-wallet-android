@@ -13,6 +13,8 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
 import com.idhub.wallet.setting.TransactionDetailActivity;
 
+import org.web3j.crypto.Keys;
+
 import java.math.BigInteger;
 
 public class TransactionMessageItemView extends ConstraintLayout implements View.OnClickListener {
@@ -54,8 +56,8 @@ public class TransactionMessageItemView extends ConstraintLayout implements View
         }
         String timeStamp = transactionRecordEntity.getTimeStamp();
         mTimeView.setText(timeStamp);
-        mFromAddressView.setText(transactionRecordEntity.getFrom());
-        mToAddressView.setText(transactionRecordEntity.getTo());
+        mFromAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(transactionRecordEntity.getFrom())));
+        mToAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(transactionRecordEntity.getTo())));
     }
 
     @Override

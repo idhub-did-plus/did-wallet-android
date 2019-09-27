@@ -3,7 +3,7 @@
     <string-array name="identity_file_spinner">
         <item>ID front</item>
         <item>ID back</item>
-        <item>Passport </item>
+        <item>Passport</item>
         <item>Bank balance statement</item>
         <item>Bank statement</item>
         <item>Assets Assessment documents from specialist Agencies</item>

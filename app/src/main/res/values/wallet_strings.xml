@@ -100,15 +100,15 @@
     <string name="wallet_take_photo">拍照</string>
     <string name="wallet_picture">相册</string>
     <string name="wallet_file">文件</string>
-    <string name="wallet_qualified_investor">合格投资人</string>
-    <string name="wallet_qualified_purchaser">合格购买人</string>
-    <string name="wallet_st_compliance_investor">合规投资者</string>
+    <string name="wallet_qualified_investor">SEC合格投资人</string>
+    <string name="wallet_qualified_purchaser">SEC合格购买人</string>
+    <string name="wallet_st_compliance_investor">ST合规投资者</string>
     <string name="wallet_qualified_investor_condition_first">连续三年年收入超过20万美金，或与配偶一起超过30万。（需要上传图片或PDF格式的银行流水）</string>
     <string name="wallet_qualified_investor_condition_second">价值超过1百万美金（除自住房之外）。（上传图片或PDF格式的资产证明/负债证明，如果国籍或居住国任一为美国需要上传税表）</string>
     <string name="wallet_qualified_purchaser_condition_first">投资经历总额超过500万美金的自然人</string>
     <string name="wallet_qualified_purchaser_condition_second">家庭实体定义未涵盖的信托并且不是为了获得合伙权益而形成的信托，受托人或其他授权对信托作出决定的人，以及每个委托人为信托，自然人，家庭实体提供资产的另一人</string>
     <string name="wallet_qualified_purchaser_condition_third">自然人，公司，合伙企业，协会，股份公司，信托，基金或其他有组织的团体，无论是否成立，代表他/她/她自己的帐户或其他合格购买者的帐户，（i）总计拥有和投资的全权委托人，投资不少于25000000美元;及（ii）该实体证券的每个实益拥有人均为合格买方的实体</string>
-    <string name="wallet_qualified_purchaser_condition_fourth">知识渊博的员工</string>
+    <string name="wallet_qualified_purchaser_condition_fourth">1940 ACT第3(c)(5)条所定义的“有相关知识的雇员”</string>
     <string name="back">返回</string>
     <string name="picture_edit">编辑</string>
     <string name="sure">确定</string>
@@ -268,7 +268,7 @@
     <string name="wallet_no_empty_private_key">私钥不能为空</string>
     <string name="wallet_has_wallet">钱包地址已经存在</string>
     <string name="wallet_other_identify_wallet">该钱包已经升级不同数字身份</string>
-
+    <string name="wallet_street_hint">(Include house number, street name and apartment number)</string>
 
     <string name="wallet_no_empty_wallet_name">钱包名不能为空</string>
 
@@ -291,8 +291,8 @@
     <string name="wallet_balance">余额</string>
 
     //me
-    <string name="wallet_idhub_vip">idHub会员</string>
-    <string name="wallet_idhub_super_vip">idHub超级会员</string>
+    <string name="wallet_idhub_vip">IDHub会员</string>
+    <string name="wallet_idhub_super_vip">IDHub超级会员</string>
     <string name="wallet_no_appply_for">立即申请</string>
     <string name="wallet_apply_for">申请</string>
     <string name="wallet_again_apply_for">重新申请</string>
@@ -359,4 +359,7 @@
     //main create wallet
     <string name="wallet_main_create_wallet_tip">请选择当前您建立身份的方式</string>
     <string name="wallet_welcome_to_did_world">欢迎来到DID世界</string>
+
+    //未翻译
+    <string name="wallet_file_size_20">文件必须小于20MB</string>
 </resources>

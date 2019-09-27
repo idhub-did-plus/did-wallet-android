@@ -282,53 +282,50 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                 String eventClass = magicEvent.eventClass;
                 String eventType = magicEvent.eventType;
                 if (eventType.equals("claim_issued_event")) {
-                    JSONObject jsonObject = null;
-                    try {
-                        String replace = event.replace("\\", "");
-                        String s = replace.substring(replace.indexOf("{"), replace.lastIndexOf("}")+1);
-                        jsonObject = new JSONObject(s);
-                        JSONObject claim = jsonObject.getJSONObject("claim");
-                        String claimType = claim.getString("claimType");
-                        if (ClaimType.idhub_vip.name().equals(claimType)) {
-                            WalletVipSharedPreferences.getInstance().setIdhubVipState(VipStateType.HAVE_APPLY_FOR);
-                            WalletVipSharedPreferences.getInstance().setIdHubVipClaim(event);
-                        } else if (ClaimType.idhub_svip.name().equals(claimType)) {
-                            WalletVipSharedPreferences.getInstance().setIdhubSuperVipState(VipStateType.HAVE_APPLY_FOR);
-                            WalletVipSharedPreferences.getInstance().setIdHubSVipClaim(event);
-                        } else if (ClaimType.qualified_investor.name().equals(claimType)) {
-                            WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipState(VipStateType.HAVE_APPLY_FOR);
-                            WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipClaim(event);
-                        } else if (ClaimType.qualified_buyer.name().equals(claimType)) {
-                            WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipState(VipStateType.HAVE_APPLY_FOR);
-                            WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipClaim(event);
-                        } else if (ClaimType.investor_compliance.name().equals(claimType)) {
-                            WalletVipSharedPreferences.getInstance().setComplianceInvestorVipState(VipStateType.HAVE_APPLY_FOR);
-                            WalletVipSharedPreferences.getInstance().setComplianceInvestorVipClaim(event);
-                        }
-                        WalletVipStateObservable.getInstance().update();
-                    } catch (JSONException ex) {
-                        LogUtils.e("did", "requestNetData:message "+ ex.getMessage());
-                        ex.printStackTrace();
-                    }
-                } else if (eventType.equals("claim_refused_event")) {
-                    JSONObject jsonObject = null;
-                    try {
-                        jsonObject = new JSONObject(event);
-                        String claimType = jsonObject.getString("claimType");
-                        if (ClaimType.idhub_vip.name().equals(claimType)) {
+                    if (event.startsWith("refused")){
+                        String[] events = event.split("@");
+                        String claimType = events[1];
+                        if (ClaimType.IDHub_VIP.name().equals(claimType)) {
                             WalletVipSharedPreferences.getInstance().setIdhubVipState(VipStateType.REFUSED_APPLY_FOR);
-                        } else if (ClaimType.idhub_svip.name().equals(claimType)) {
+                        } else if (ClaimType.IDHub_SVIP.name().equals(claimType)) {
                             WalletVipSharedPreferences.getInstance().setIdhubSuperVipState(VipStateType.REFUSED_APPLY_FOR);
-                        } else if (ClaimType.qualified_investor.name().equals(claimType)) {
+                        } else if (ClaimType.SEC_Accredited_Investor.name().equals(claimType)) {
                             WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipState(VipStateType.REFUSED_APPLY_FOR);
-                        }else if (ClaimType.qualified_buyer.name().equals(claimType)){
+                        }else if (ClaimType.SEC_Accredited_Purchaser.name().equals(claimType)){
                             WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipState(VipStateType.REFUSED_APPLY_FOR);
-                        } else if (ClaimType.investor_compliance.name().equals(claimType)) {
+                        } else if (ClaimType.ST_Compliant_Investor.name().equals(claimType)) {
                             WalletVipSharedPreferences.getInstance().setComplianceInvestorVipState(VipStateType.REFUSED_APPLY_FOR);
                         }
                         WalletVipStateObservable.getInstance().update();
-                    } catch (JSONException ex) {
-                        ex.printStackTrace();
+                    }else {
+                        JSONObject jsonObject = null;
+                        try {
+                            String replace = event.replace("\\", "");
+                            String s = replace.substring(replace.indexOf("{"), replace.lastIndexOf("}")+1);
+                            jsonObject = new JSONObject(s);
+                            JSONObject claim = jsonObject.getJSONObject("claim");
+                            String claimType = claim.getString("claimType");
+                            if (ClaimType.IDHub_VIP.name().equals(claimType)) {
+                                WalletVipSharedPreferences.getInstance().setIdhubVipState(VipStateType.HAVE_APPLY_FOR);
+                                WalletVipSharedPreferences.getInstance().setIdHubVipClaim(event);
+                            } else if (ClaimType.IDHub_SVIP.name().equals(claimType)) {
+                                WalletVipSharedPreferences.getInstance().setIdhubSuperVipState(VipStateType.HAVE_APPLY_FOR);
+                                WalletVipSharedPreferences.getInstance().setIdHubSVipClaim(event);
+                            } else if (ClaimType.SEC_Accredited_Investor.name().equals(claimType)) {
+                                WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipState(VipStateType.HAVE_APPLY_FOR);
+                                WalletVipSharedPreferences.getInstance().setQualifiedInvestorVipClaim(event);
+                            } else if (ClaimType.SEC_Accredited_Purchaser.name().equals(claimType)) {
+                                WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipState(VipStateType.HAVE_APPLY_FOR);
+                                WalletVipSharedPreferences.getInstance().setQualifiedPurchaserVipClaim(event);
+                            } else if (ClaimType.ST_Compliant_Investor.name().equals(claimType)) {
+                                WalletVipSharedPreferences.getInstance().setComplianceInvestorVipState(VipStateType.HAVE_APPLY_FOR);
+                                WalletVipSharedPreferences.getInstance().setComplianceInvestorVipClaim(event);
+                            }
+                            WalletVipStateObservable.getInstance().update();
+                        } catch (JSONException ex) {
+                            LogUtils.e("did", "requestNetData:message "+ ex.getMessage());
+                            ex.printStackTrace();
+                        }
                     }
                 }
             }

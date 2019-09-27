@@ -81,7 +81,11 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
     private void handleQrCodeStr(String qrcode) {
         String address;
         if (qrcode.startsWith(QRCodeType.ETHERUM_TRANSACTION)) {
-             address = qrcode.substring(QRCodeType.ETHERUM_TRANSACTION.length(), qrcode.indexOf("?"));
+            if (qrcode.contains("?")) {
+                address = qrcode.substring(QRCodeType.ETHERUM_TRANSACTION.length(), qrcode.indexOf("?"));
+            }else {
+                address = qrcode.substring(QRCodeType.ETHERUM_TRANSACTION.length());
+            }
         }else {
             address = qrcode;
         }

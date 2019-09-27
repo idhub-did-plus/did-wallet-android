@@ -185,7 +185,7 @@ public class Level4Activity extends AppCompatActivity implements View.OnClickLis
             //申请
             ClaimOrder claimOrder = new ClaimOrder();
             claimOrder.identity = NumericUtil.prependHexPrefix(mDefaultKeystore.getAddress());
-            claimOrder.requestedClaimType = ClaimType.qualified_buyer.name();
+            claimOrder.requestedClaimType = ClaimType.SEC_Accredited_Purchaser.name();
             IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
             ApiFactory.getKycService().order(claimOrder,claimOrder.identity).enqueue(new Callback<MagicResponse>() {
                 @Override

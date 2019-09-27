@@ -1,6 +1,7 @@
 package com.idhub.wallet.didhub;
 
 import android.os.Environment;
+import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -260,9 +261,11 @@ public class WalletManager {
 
     public static WalletKeystore getCurrentKeyStore() {
         String selectedId = WalletOtherInfoSharpreference.getInstance().getSelectedId();
+        Log.e("LYW", "getCurrentKeyStore:1 " + selectedId );
         mCurrentDidHubKeyStore = keystoreMap.get(selectedId);
         if (mCurrentDidHubKeyStore == null && keystoreMap.size() > 0) {
             String key = keystoreMap.keySet().iterator().next();
+            Log.e("LYW", "getCurrentKeyStore:2 " + key );
             mCurrentDidHubKeyStore = keystoreMap.get(key);
             WalletOtherInfoSharpreference.getInstance().setSelectedId(mCurrentDidHubKeyStore.getId());
         }

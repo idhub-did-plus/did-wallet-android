@@ -32,6 +32,7 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.UploadFileDbManager;
 import com.idhub.wallet.greendao.entity.UploadFileEntity;
 import com.idhub.wallet.net.IDHubCredentialProvider;
+import com.idhub.wallet.utils.FileUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.io.File;
@@ -208,13 +209,19 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
             ToastUtils.showShortToast(getString(R.string.wallet_already_upload_success));
             return;
         }
+        File file = new File(mUploadFileEntity.getFilePath());
+        double fileSize = FileUtils.FormetMBFileSize(FileUtils.getFileSize(file));
+        Log.e("LYW", "uploadFile: " +fileSize );
+        if (fileSize > 20) {
+            ToastUtils.showShortToast(getString(R.string.wallet_file_size_20));
+            return;
+        }
         mLoadingAndErrorView.setVisibility(View.VISIBLE);
         IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
-        File file = new File(mUploadFileEntity.getFilePath());
         MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
 
         String defaultAddress = NumericUtil.prependHexPrefix(mDefaultKeystore.getAddress());
-        ApiFactory.getArchiveStorage().uploadMaterial(defaultAddress, mUploadFileEntity.getType(), mUploadFileEntity.getName(), filePart).enqueue(new Callback<MagicResponse>() {
+        ApiFactory.getArchiveStorage().uploadMaterial(defaultAddress, FileType.fileTypes.get(mUploadFileEntity.getType()), mUploadFileEntity.getName(), filePart).enqueue(new Callback<MagicResponse>() {
             @Override
             public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
                 MagicResponse magicResponse = response.body();
@@ -232,13 +239,8 @@ public class UploadFileActivity extends AppCompatActivity implements View.OnClic
 
                     });
                     ToastUtils.showShortToast(getString(R.string.wallet_upload_success));
-                    Log.e("LYW", "onResponse: " + magicResponse.getMessage() + magicResponse.isSuccess());
                     mLoadingAndErrorView.setVisibility(View.GONE);
                 } else {
-                    if (magicResponse != null)
-                        Log.e("LYW", "onResponse: " + magicResponse.getMessage());
-                    else
-                        Log.e("LYW", "onResponse: null");
                     ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));
                     mLoadingAndErrorView.setVisibility(View.GONE);
                 }

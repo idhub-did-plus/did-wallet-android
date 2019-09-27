@@ -122,7 +122,7 @@ public class Level1Activity extends AppCompatActivity implements View.OnClickLis
                     //请求，加载进行申请
                     ClaimOrder claimOrder = new ClaimOrder();
                     claimOrder.identity =WalletManager.getDefaultAddress();
-                    claimOrder.requestedClaimType = ClaimType.idhub_vip.name();
+                    claimOrder.requestedClaimType = ClaimType.IDHub_VIP.name();
                     IDHubCredentialProvider.setDefaultCredentials(walletInfo.exportPrivateKey(data));
                     ApiFactory.getKycService().order(claimOrder,WalletManager.getDefaultAddress()).enqueue(new Callback<MagicResponse>() {
                         @Override
