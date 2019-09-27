@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="identity_file_spinner">
-        <item>身份证件正面照片</item>
-        <item>身份证件反面照片</item>
-        <item>护照照片</item>
-        <item>银行余额证明文件</item>
-        <item>银行流水文件</item>
-        <item>评估机构的评估文件</item>
-        <item>CFA净资产证明文件</item>
-        <item>税表文件</item>
-        <item>征信报告</item>
-        <item>住址证明文件</item>
-        <item>非自住房的房产证明</item>
+        <item>ID front</item>
+        <item>ID back</item>
+        <item>Passport </item>
+        <item>Bank balance statement</item>
+        <item>Bank statement</item>
+        <item>Assets Assessment documents from specialist Agencies</item>
+        <item>CFA statement Assets-based Verification document</item>
+        <item>Tax report</item>
+        <item>Credit report</item>
+        <item>Address proof</item>
+        <item>Real estate assets other than primary residence</item>
     </string-array>
 </resources>

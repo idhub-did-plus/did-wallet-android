@@ -26,7 +26,7 @@
     <string name="wallet_backup_hint_first_2">如果你的手机丢失、被盗、损坏，助记词将可以回复你的资产</string>
     <string name="wallet_backup_hint_two_1">妥善保管至隔离网络的安全地方</string>
     <string name="wallet_backup_hint_two_2">请勿将助记词在联网环境下分享和存储，比如邮件、相册、社交应用</string>
-    <string name="wallet_backup_preview_hint">请准备抄写并安全备份助记词</string>
+    <string name="wallet_backup_preview_hint">请按顺序选择助记词，确保备份正确</string>
     <string name="wallet_backup_confirm_hint">请按顺序点击助记词，以确认您正确备份</string>
     <string name="wallet_next">下一步</string>
     <string name="wallet_finish">完成</string>
@@ -46,7 +46,7 @@
     <string name="wallet_private_key">私钥</string>
     <string name="wallet_please_input_password">请输入密码</string>
     <string name="wallet_offline_save">离线保存</string>
-    <string name="wallet_offline_save_tip">切勿保存至邮箱、笔记本、网盘、聊天工具等，非常危险</string>
+    <string name="wallet_offline_save_tip">切勿保存至邮箱、云存储、记事本、聊天工具等，非常危险</string>
     <string name="wallet_do_not_use_network_transmission">请勿使用网络传输</string>
     <string name="wallet_do_not_use_network_transmission_tip">请勿通过网络工具传输，一旦被黑客获取将造成不可挽回的资产损失。建议离线设备通过扫二维码方式传输。</string>
     <string name="wallet_password_manager_tool_save">密码管理工具保存</string>
@@ -136,9 +136,9 @@
     <string name="wallet_user_signature">个性签名</string>
     <string name="wallet_not_empty_user_signature">个性签名不能为空</string>
     <string name="wallet_upload_user_information">上传基本信息</string>
-    <string name="wallet_upload_file_add_tip">添加文件上传之后才可以继续添加需要上传的文件</string>
+    <string name="wallet_upload_file_add_tip">请先完成上传该文件才可继续添加新文件</string>
     <string name="wallet_upload_file_incomplete_tip">上传信息未填写完整，请检查并补充完整之后再次上传</string>
-    <string name="wallet_repeat">重复</string>
+    <string name="wallet_repeat">文件名重复</string>
     <string name="wallet_edit_after_again_upload">请修改之后再次上传</string>
     <string name="wallet_id_photo_positive">身份证件正面照片</string>
     <string name="wallet_id_photo_negative">身份证件反面照片</string>
@@ -261,6 +261,7 @@
     <string name="wallet_repeat_password">重复输入密码</string>
     <string name="wallet_no_empty_keystore">Keystore不能为空</string>
     <string name="wallet_no_empty_password">密码不能为空</string>
+    <string name="wallet_password_length">密码不少于八位字符</string>
     <string name="wallet_no_empty_repeat_password">重复密码不能为空</string>
     <string name="wallet_no_equal_password">两次密码不一致</string>
     <string name="wallet_no_empty_mnemonic">助记词不能为空</string>
@@ -317,7 +318,7 @@
     <string name="wallet_upgrade_hint">用户提示:
 1、用户默认身份采用ERC1056协议，只允许进行单地址管理。
 2、用户可以升级为聚合身份采用ERC1484协议，只有升级为聚合身份之后才可以进行多地址管理，原有地址被设置为默认地址。
-3、用户调用ERC1484合约升级身份，需要用户默认地址有足够的ETH余额支付以太坊交易燃料（gas）。
+3、当用户要调用ERC1484合约升级身份，需要用户默认地址有足够的ETH余额支付以太坊交易燃料（gas）。
 4、用户升级为聚合身份之后，可以自由选择将地址添加为聚合身份的关联地址。
 5、每个地址只可以关联一个聚合身份，每个聚合身份拥有一个恢复地址。
 6、恢复地址应当采用冷钱包形式存储，此应用不会存储任何和恢复地址相关的备份信息，请务必注意。

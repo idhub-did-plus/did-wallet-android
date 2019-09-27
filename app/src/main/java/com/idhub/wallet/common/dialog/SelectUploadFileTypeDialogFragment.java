@@ -134,7 +134,7 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
             try {
                 startActivityForResult(Intent.createChooser(intent, "Choose File"), REQUEST_SELECT_FILE_CODE);
             } catch (ActivityNotFoundException e) {
-                ToastUtils.showShortToast(getString(R.string.wallet_file_manager_not_found));
+                ToastUtils.showShortToast(e.getMessage());
             }
         }
     }

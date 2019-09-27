@@ -1,32 +1,396 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">IDHUB</string>
-    <string name="wallet_me">Me</string>
-    <string name="wallet_wallet">Wallet</string>
-    <string name="wallet_dapp">Dapp</string>
-    <string name="wallet_history">History</string>
-    <string name="wallet_setting">Setting</string>
-    <string name="wallet_identity_create">create</string>
-    <string name="wallet_identity_recovery">recover</string>
-    <string name="wallet_identity_import">import</string>
-    <string name="wallet_back">back</string>
+    <!--    <string name="app_name">IDHUB</string>-->
+    <!--    <string name="wallet_me">Me</string>-->
+    <!--    <string name="wallet_wallet">Wallet</string>-->
+    <!--    <string name="wallet_dapp">Dapp</string>-->
+    <!--    <string name="wallet_history">History</string>-->
+    <!--    <string name="wallet_setting">Setting</string>-->
+    <!--    <string name="wallet_identity_create">create</string>-->
+    <!--    <string name="wallet_identity_recovery">recover</string>-->
+    <!--    <string name="wallet_identity_import">import</string>-->
+    <!--    <string name="wallet_back">back</string>-->
 
-    //me
-    <string name="wallet_qualified_purchaser_condition_first">A natural person (including any person who holds a joint, community property, or other similar shared ownership interest in an issuer that is excepted under Section (c)(7) of the 1940 Act with that person’s qualified purchaser spouse) who owns not less than $5,000,000 in investments as defined by the Securities and Exchange Commission.</string>
-    <string name="wallet_qualified_purchaser_condition_second">A trust that is not covered by clause the family entity definition and that was not formed for the specific purpose of acquiring the Partnership Interest offered, as to which the trustee or other person authorized to make decisions with respect to the trust, and each settlor of the other person who has contributed assets to the trust, a natural person, family entity.</string>
-    <string name="wallet_qualified_purchaser_condition_third">A natural person, a corporation, partnership, association, joint stock company, trust, fund or other organized group of persons, whether incorporated or not, acting for his/her/its own account or the account of other qualified purchasers, (i) who in the aggregate owns and invests on a discretionary basis, not less than $25,000,000 in investments and (ii) An entity in which each of the beneficial owners of the entity’s securities is a qualified purchaser, as that term is defined in the 1940 Act.</string>
-    <string name="wallet_qualified_purchaser_condition_fourth">A “knowledgeable employee,” as defined for purposes of Section 3(c)(5) under the 1940 Act.</string>
+    <!--    //me-->
+    <!--    <string name="wallet_qualified_purchaser_condition_first">A natural person (including any person who holds a joint, community property, or other similar shared ownership interest in an issuer that is excepted under Section (c)(7) of the 1940 Act with that person’s qualified purchaser spouse) who owns not less than $5,000,000 in investments as defined by the Securities and Exchange Commission.</string>-->
+    <!--    <string name="wallet_qualified_purchaser_condition_second">A trust that is not covered by clause the family entity definition and that was not formed for the specific purpose of acquiring the Partnership Interest offered, as to which the trustee or other person authorized to make decisions with respect to the trust, and each settlor of the other person who has contributed assets to the trust, a natural person, family entity.</string>-->
+    <!--    <string name="wallet_qualified_purchaser_condition_third">A natural person, a corporation, partnership, association, joint stock company, trust, fund or other organized group of persons, whether incorporated or not, acting for his/her/its own account or the account of other qualified purchasers, (i) who in the aggregate owns and invests on a discretionary basis, not less than $25,000,000 in investments and (ii) An entity in which each of the beneficial owners of the entity’s securities is a qualified purchaser, as that term is defined in the 1940 Act.</string>-->
+    <!--    <string name="wallet_qualified_purchaser_condition_fourth">A “knowledgeable employee,” as defined for purposes of Section 3(c)(5) under the 1940 Act.</string>-->
 
 
-    //information
-    <string name="wallet_middle_name">middle name</string>
-    <string name="wallet_street">Street</string>
-    <string name="wallet_street_hint">(Include house number, street name and apartment number)</string>
-    <string name="wallet_address_country">Country</string>
-    <string name="wallet_postal_code">Zip/Postal Code</string>
-    <string name="wallet_city">City</string>
-    <string name="wallet_state">State</string>
-    <string name="wallet_neighborhood">Neighborhood</string>
-    <string name="wallet_gender_boy">male</string>
-    <string name="wallet_gender_girl">female</string>
+    <!--    //information-->
+    <!--    <string name="wallet_middle_name">middle name</string>-->
+    <!--    <string name="wallet_street">Street</string>-->
+    <!--    <string name="wallet_street_hint">(Include house number, street name and apartment number)</string>-->
+    <!--    <string name="wallet_address_country">Country</string>-->
+    <!--    <string name="wallet_postal_code">Zip/Postal Code</string>-->
+    <!--    <string name="wallet_city">City</string>-->
+    <!--    <string name="wallet_state">State</string>-->
+    <!--    <string name="wallet_neighborhood">Neighborhood</string>-->
+    <!--    <string name="wallet_gender_boy">male</string>-->
+    <!--    <string name="wallet_gender_girl">female</string>-->
+
+        <string name="app_name">IDHUB</string>
+        <string name="wallet_me">My Profile</string>
+        <string name="wallet_wallet">Wallet</string>
+        <string name="wallet_dapp">Dapp</string>
+        <string name="wallet_history">History</string>
+        <string name="wallet_setting">Setting</string>
+        <string name="wallet_identity_create">Create Identity</string>
+        <string name="wallet_identity_recovery">Recover Identity</string>
+        <string name="wallet_identity_import">Import Identity</string>
+        <string name="wallet_back">Back</string>
+        <string name="wallet_password_warning_top">Password Strength is critical to guard your wallet.</string>
+        <string name="wallet_password_warning_bottom">We can’t recover the password, please backup cautiously</string>
+        <string name="wallet_wallet_name">Wallet Name</string>
+        <string name="wallet_password">Password</string>
+        <string name="wallet_password_again">Repeat Password</string>
+        <string name="wallet_password_tip">Password Hint</string>
+        <string name="wallet_create">Create</string>
+        <string name="wallet_create_btn">Create</string>
+        <string name="wallet_create_wallet">Create Wallet</string>
+        <string name="wallet_backup_hint">Backup Tips</string>
+        <string name="wallet_backup_mnemonic">Backup Mnemonic</string>
+        <string name="wallet_offline_manager">Offline Storage</string>
+        <string name="wallet_backup_hint_top">Obtaining Mnemonic equals owning all assets</string>
+        <string name="wallet_backup_hint_first_1">Please write down the Mnemonic</string>
+        <string name="wallet_backup_hint_first_2">If your phone is lost, stolen, damaged, the Mnemonic will be able to recover your assets</string>
+        <string name="wallet_backup_hint_two_1">Please save it in a secure place, isolated from the Internet</string>
+        <string name="wallet_backup_hint_two_2">Please do not share or store the Mnemonic in a network environment, such as email, albums, social apps and others</string>
+        <string name="wallet_backup_preview_hint">Please select the mnemonic in order to ensure the backup is correct</string>
+        <string name="wallet_backup_confirm_hint">Please select Mnemonic Phrase in correct order.</string>
+        <string name="wallet_next">Next</string>
+        <string name="wallet_finish">Done</string>
+        <string name="wallet_assets">Assets</string>
+        <string name="wallet_wallet_select">Select Wallet</string>
+        <string name="wallet_wallet_manager">Manage Wallets</string>
+        <string name="wallet_import">Import</string>
+        <string name="wallet_cancel">Cancel</string>
+        <string name="wallet_confirm">Confirm</string>
+        <string name="wallet_manager">Manage</string>
+        <string name="wallet_export_mnemonic">Export Mnemonic Phrase</string>
+        <string name="wallet_export_password_hint">Password Hint</string>
+        <string name="wallet_export_keystore">Export Keystore</string>
+        <string name="wallet_keystore">Keystore</string>
+        <string name="wallet_QR_code">QR Code</string>
+        <string name="wallet_export_private_key">Export Private Key</string>
+        <string name="wallet_private_key">Private Key</string>
+        <string name="wallet_please_input_password">Please enter your password</string>
+        <string name="wallet_offline_save">Save Offline</string>
+        <string name="wallet_offline_save_tip">Please refrain from saving any important information on Email/Cloud Storage/Notepad/IM tools etc， it may jeopardize the security of assets.</string>
+        <string name="wallet_do_not_use_network_transmission">Please do not transfer via the Internet</string>
+        <string name="wallet_do_not_use_network_transmission_tip">Do not transfer through Internet tools as prevent attacks by hackers, resulting in irreversible loss of assets. It is recommended to execute a transaction by scanning the wallet’s QR Code offline.</string>
+        <string name="wallet_password_manager_tool_save">Utilise Password Management Tools</string>
+        <string name="wallet_password_manager_tool_save_tip">It is recommended to use professional password management tools to store and manage password</string>
+        <string name="wallet_copy_keystore">Copy Keystore</string>
+        <string name="wallet_copy_private_key">Copy Private Key</string>
+        <string name="wallet_copy_address_success">Copied</string>
+        <string name="wallet_scanning_only">Direct Scan only</string>
+        <string name="wallet_use_in_safe_environment">Use in a secured environment</string>
+        <string name="wallet_use_in_safe_environment_tip">Forbidden to save/screenshot/take photos of the QR code, please scan the QR Code under secured environment to import wallet</string>
+        <string name="wallet_scanning_only_tip">Please ensure that no one is monitoring before using as it may result in irreversible loss of assets.</string>
+        <string name="wallet_show_QR_code">Display QR Code</string>
+        <string name="wallet_main_asserts_manager">Displayed assets</string>
+        <string name="wallet_my_asserts_manager">All my assets</string>
+        <string name="wallet_hot_asserts">Popular assets</string>
+        <string name="wallet_send">Transfer</string>
+        <string name="wallet_send_confirm">Confirmation</string>
+        <string name="wallet_receive">Receive</string>
+        <string name="wallet_change_assets">Switch Assets</string>
+        <string name="wallet_designated_amount">Amount</string>
+        <string name="wallet_mnemonic_order_error">Incorrect order of Mnemonic Phrase, please recheck.</string>
+        <string name="network_not_avail">No Internet, please check your cellular setting</string>
+        <string name="network_error">Error！</string>
+        <string name="network_timeout">Network request timeout</string>
+        <string name="wallet_transaction">Transfer</string>
+        <string name="wallet_input_amount">Input Amount</string>
+        <string name="wallet_receive_address">To</string>
+        <string name="wallet_input_address">Please enter Ethereum address</string>
+        <string name="wallet_gas_amount">Miner Fee</string>
+        <string name="wallet_gas_price">(Gwei) Gas</string>
+        <string name="wallet_gas_limit">Gas Limit</string>
+        <string name="wallet_input_gas_limit">Input Gas Limit</string>
+        <string name="wallet_input_gas_price">Input Gas Price</string>
+        <string name="wallet_send_amount_not_empty">Transfer Amount cannot be empty</string>
+        <string name="wallet_send_address_not_empty">Transfer Address cannot be empty</string>
+        <string name="wallet_send_address_false">Transfer Address is incorrect</string>
+        <string name="wallet_input_password_false">Password is incorrect</string>
+        <string name="wallet_please_input">Input</string>
+        <string name="wallet_please_select">Please select</string>
+        <string name="wallet_gasPrice_not_empty">Gas Price cannot be empty</string>
+        <string name="wallet_gasLimit_not_empty">Gas Limit cannot be empty</string>
+        <string name="wallet_upgrade_tip">Upgrade to Aggregated Digital Identity to enable multi address management. Please upgrade and try again later.</string>
+        <string name="wallet_upload_upgrade_tip">Upgrade to Aggregated Digital Identity to upload Identity Information. Please upgrade and try again later.</string>
+        <string name="wallet_go_upgrade">Upgrade</string>
+        <string name="wallet_upgrade">Upgrade</string>
+        <string name="wallet_upgrade_error">Upgrade failed</string>
+        <string name="wallet_profile">profile</string>
+        <string name="wallet_commit">Submit</string>
+        <string name="wallet_select_birthday">Select Birth Date</string>
+        <string name="wallet_upload">Upload</string>
+        <string name="wallet_take_photo">Take Photo</string>
+        <string name="wallet_picture">Album</string>
+        <string name="wallet_file">File</string>
+        <string name="wallet_qualified_investor">Accredited Investor</string>
+        <string name="wallet_qualified_purchaser">Qualified Purchaser</string>
+        <string name="wallet_st_compliance_investor">Complaint Investor</string>
+        <string name="wallet_qualified_investor_condition_first">Any individual who had an income in excess of US$200,000 in each of the two most recent years or joint income with that person’s spouse in excess of US$300,000 in each of those years and reasonably expects to reach the same income level in the current year.</string>
+        <string name="wallet_qualified_investor_condition_second">Any individual whose net worth, or joint net worth with that person’s spouse, at the time of his or her purchase of an Interest, exceeds US$1,000,000. As used herein, “net worth” means the excess of total assets at fair market value, including homes (but excluding the value of the undersigned’s primary residence), home furnishings and automobiles, over total liabilities.</string>
+        <string name="wallet_qualified_purchaser_condition_first">A natural person (including any person who holds a joint, community property, or other similar shared ownership interest in an issuer that is excepted under Section (c)(7) of the 1940 Act with that person’s qualified purchaser spouse) who owns not less than $5,000,000 in investments as defined by the Securities and Exchange Commission.</string>
+        <string name="wallet_qualified_purchaser_condition_second">A trust that is not covered by clause the family entity definition and that was not formed for the specific purpose of acquiring the Partnership Interest offered, as to which the trustee or other person authorized to make decisions with respect to the trust, and each settlor of the other person who has contributed assets to the trust, a natural person, family entity.</string>
+        <string name="wallet_qualified_purchaser_condition_third">A natural person, a corporation, partnership, association, joint stock company, trust, fund or other organized group of persons, whether incorporated or not, acting for his/her/its own account or the account of other qualified purchasers, (i) who in the aggregate owns and invests on a discretionary basis, not less than $25,000,000 in investments and (ii) An entity in which each of the beneficial owners of the entity’s securities is a qualified purchaser, as that term is defined in the 1940 Act.</string>
+        <string name="wallet_qualified_purchaser_condition_fourth">A “knowledgeable employee,” as defined for purposes of Section 3(c)(5) under the 1940 Act.</string>
+        <string name="back">Back</string>
+        <string name="picture_edit">Edit</string>
+        <string name="sure">Confirm</string>
+        <string name="crop__wait" translatable="false">Loading...</string>
+        <string name="crop__saving" translatable="false">Loading...</string>
+        <string name="scan">Scan</string>
+        <string name="photo_album">Album</string>
+        <string name="scan_device_zing">Align QR Code within frame to scan</string>
+        <string name="scan_camera_permission">Unable to access to camera</string>
+        <string name="wallet_upgrade_associated_address">Upgrade to associated address</string>
+        <string name="wallet_associated_address">associated address</string>
+        <string name="wallet_delete">delete</string>
+        <string name="wallet_wallet_delete">Please enter password  Caution! This operation cannot be revoked!</string>
+
+        //information
+        <string name="wallet_select_upload_file_type">Please select file type</string>
+        <string name="wallet_please_input_file_name">Please enter verification file name</string>
+        <string name="wallet_file_name">Verification file name：</string>
+        <string name="wallet_upload_file">Upload file</string>
+        <string name="wallet_file_manager_not_found">file manager</string>
+        <string name="wallet_not_empty_user_head">profile picture cannot be empty</string>
+        <string name="wallet_user_name">Username</string>
+        <string name="wallet_input_user_name">Enter Username</string>
+        <string name="wallet_not_empty_user_name">username cannot be empty</string>
+        <string name="wallet_user_signature">Signature</string>
+        <string name="wallet_not_empty_user_signature">What’s up</string>
+        <string name="wallet_upload_user_information">Upload Basic Information</string>
+        <string name="wallet_upload_file_add_tip">Upload the file first before select another</string>
+        <string name="wallet_upload_file_incomplete_tip">This upload cannot be completed, please fill in the blanks</string>
+        <string name="wallet_repeat">file name repeated</string>
+        <string name="wallet_edit_after_again_upload">please change the name and upload again</string>
+        <string name="wallet_id_photo_positive">ID front</string>
+        <string name="wallet_id_photo_negative">ID back</string>
+        <string name="wallet_passport_photo">passport</string>
+        <string name="wallet_bank_balance_document">Bank balance statement</string>
+        <string name="wallet_bank_flow_file">Bank statement</string>
+        <string name="wallet_evaluation_agency_is_assessment_document">Assets Assessment documents from specialist Agencies</string>
+        <string name="wallet_cfa_net_assets_certification_document">CFA statement Assets-based Verification document</string>
+        <string name="wallet_tax_document">Tax report</string>
+        <string name="wallet_credit_report">credit report</string>
+        <string name="wallet_address_proof_document">address proof</string>
+        <string name="wallet_property_certificate_for_non_self_occupied_housing">Real estate assets other than primary residence</string>
+        <string name="wallet_type_repeat_tip">上传数据只保留一份审核，确定上传将覆盖之前提交过数据，是否继续上传？</string>
+
+        <string name="wallet_id_hub_information_title">Auth Info</string>
+        <string name="wallet_first_name">Last Name</string>
+        <string name="wallet_middle_name">Middle Name</string>
+        <string name="wallet_last_name">First Name</string>
+        <string name="wallet_gender">Gender</string>
+        <string name="wallet_birthday">Birth Date</string>
+        <string name="wallet_country">Nationality</string>
+        <string name="wallet_residence_country">Country of Residence</string>
+        <string name="wallet_id_number">ID Number</string>
+        <string name="wallet_passport_number">Passport Number</string>
+        <string name="wallet_phone_number">Cell Number</string>
+        <string name="wallet_tax_number">Tax ID</string>
+        <string name="wallet_ssn_number">Social Security Number</string>
+        <string name="wallet_street">Street</string>
+        <string name="wallet_address_country_hint">Same as country of residence</string>
+        <string name="wallet_street_hint">(Include house number, street name and apartment number)</string>
+        <string name="wallet_address_country">Country</string>
+        <string name="wallet_postal_code">Zip/Postal Code</string>
+        <string name="wallet_city">City</string>
+        <string name="wallet_state">State</string>
+        <string name="wallet_neighborhood">Neighborhood</string>
+
+        <string name="wallet_email">Email</string>
+        <string name="wallet_gender_boy">Male</string>
+        <string name="wallet_gender_girl">Female</string>
+        <string name="wallet_upload_fail">Upload failed</string>
+        <string name="wallet_upload_success">Upload successfully</string>
+        <string name="wallet_already_upload_success">The currently added file has been uploaded</string>
+        <string name="wallet_upload_information_again_apply">Please upload basic information and try again later</string>
+        <string name="wallet_claim_vip_fail">Request failed to send, please reapply</string>
+        <string name="wallet_select_date">Please select date</string>
+        <string name="wallet_year">year</string>
+        <string name="wallet_month">month</string>
+        <string name="wallet_date">date</string>
+        <string name="wallet_hour">hour</string>
+        <string name="wallet_minute">minutes</string>
+
+        //dapp
+        <string name="wallet_dapp_search_hint">Input dapp url</string>
+        <string name="wallet_dialog_title_sign_message">Signature Notification</string>
+        <string name="wallet_dialog_approve">Accept</string>
+        <string name="wallet_dialog_reject">Reject</string>
+        <string name="wallet_transaction_value">Transaction Price</string>
+        <string name="wallet_message_to_sign">Message</string>
+        <string name="wallet_signer_address">Signer Address</string>
+        <string name="walet_requester_url">Request Url</string>
+        <string name="wallet_dialog_title_sign_transaction">Sign</string>
+
+        //setting
+        <string name="wallet_user_agreement">User Agreement</string>
+        <string name="wallet_about_we">About us</string>
+        <string name="wallet_setting_title">Setting</string>
+        <string name="wallet_node_setup">Node Settings</string>
+        <string name="wallet_node_select">Node Select</string>
+        <string name="wallet_save">Save</string>
+
+
+        //history
+        <string name="wallet_message_center">Message center</string>
+        <string name="wallet_message_transaction">Transaction Notice</string>
+        <string name="wallet_message_idhub">System Messages</string>
+        <string name="wallet_message_empty">No Message</string>
+        <string name="wallet_message_transaction_empty">No Notice</string>
+        <string name="wallet_sent">Send</string>
+        <string name="wallet_received">Receive</string>
+        <string name="wallet_ETH">ETH</string>
+        <string name="wallet_more_data">More</string>
+        <string name="wallet_ERC20">ERC20</string>
+        <string name="wallet_ST">ST</string>
+        <string name="wallet_no_data">All content is displayed</string>
+        <string name="wallet_transaction_detail_title">Transaction Detail</string>
+        <string name="wallet_recovery_address">Recovery Address</string>
+        <string name="wallet_wallet_address">Wallet Address</string>
+        <string name="wallet_default_address">Default Address</string>
+        <string name="wallet_ein">EIN</string>
+        <string name="wallet_create_1056_identity">Create 1056 identity</string>
+        <string name="wallet_upgrade_1484_identity">Upgrade to 1484 identity</string>
+        <string name="wallet_import_1056_identity">Import 1056 identity</string>
+        <string name="wallet_import_1484_identity">Import 1484 identity</string>
+        <string name="wallet_upgrade_association_identity">Upgrade associated address</string>
+        <string name="wallet_recovery_identity">Recover Identity</string>
+
+        //importWallet
+        <string name="wallet_import_wallt">Import Wallet</string>
+        <string name="wallet_mnemonic">Mnemonic phrase</string>
+
+        //notification
+        <string name="wallet_transaction_notification_content_title">Receive a transaction</string>
+        <string name="wallet_transaction_notification_content_text_etn">ETH transaction</string>
+        <string name="wallet_transaction_notification_content_text_contract">ERC20 transaction</string>
+        <string name="wallet_channel_name">Transaction</string>
+        <string name="wallet_channel_description">Transaction details</string>
+        <string name="wallet_more_detail">More</string>
+
+
+        //import wallet
+        <string name="wallet_import_wallet_from_keystore_tip">Copy and paste Ethereum official wallet’s keystore to the input field, or scan the QR Code generated with Keystore’s information to import.</string>
+        <string name="wallet_edit_keystore_tip">Keystore content</string>
+        <string name="wallet_import_wallet_from_mnemonic_tip">You can reset the password while importing the Mnemonic Phrase</string>
+        <string name="wallet_edit_mnemonic_tip">Please separate each Mnemonic Phrase with a space</string>
+        <string name="wallet_import_wallet_from_private_key_tip">Input the Private Key, or scan QR Code generated with Private Key to import. Please pay attention to case sensitivity.</string>
+        <string name="wallet_edit_private_key_tip">Enter Private Key</string>
+        <string name="wallet_begin_import">Start importing</string>
+        <string name="wallet_set_password">Set password</string>
+        <string name="wallet_wallet_password">Wallet Password</string>
+        <string name="wallet_repeat_password">Repeat password</string>
+        <string name="wallet_no_empty_keystore">Keystore cannot empty</string>
+        <string name="wallet_no_empty_password">Password cannot be empty</string>
+        <string name="wallet_no_empty_repeat_password">Repeat password cannot be empty</string>
+        <string name="wallet_no_equal_password">Entered passwords inconsistent</string>
+        <string name="wallet_no_empty_mnemonic">Mnemonic Phrase cannot be empty</string>
+        <string name="wallet_no_empty_private_key">Mnemonic Phrase cannot be empty</string>
+        <string name="wallet_has_wallet">Wallet address exists</string>
+        <string name="wallet_other_identify_wallet">The wallet imported has been upgraded to different DID</string>
+
+
+        <string name="wallet_no_empty_wallet_name">wallet name cannot be empty</string>
+
+        //assets
+        <string name="wallet_assets_add_success">asset add successfully</string>
+        <string name="wallet_assets_unkonw">asset not found</string>
+        <string name="wallet_assets_address_fail">invalid address</string>
+        <string name="wallet_assets_add_fail">asset add failed</string>
+        <string name="wallet_assets_has">asset exists</string>
+        <string name="wallet_add_assets">add asset</string>
+        <string name="wallet_input_contract_address">input token contract address</string>
+        <string name="wallet_view_detail">More detail</string>
+        <string name="wallet_partition">Select partition</string>
+        <string name="wallet_detail">details</string>
+        <string name="wallet_total_supply">Total issuance amount</string>
+        <string name="wallet_total_name">Name</string>
+        <string name="wallet_symbol">Symbol</string>
+        <string name="wallet_operate">Operator Address</string>
+        <string name="wallet_controller">Controller Address</string>
+        <string name="wallet_balance">Balance</string>
+
+        //me
+        <string name="wallet_idhub_vip">IDHub VIP</string>
+        <string name="wallet_idhub_super_vip">IDHub SVIP</string>
+        <string name="wallet_no_appply_for">Apply Now</string>
+        <string name="wallet_apply_for">Apply</string>
+        <string name="wallet_again_apply_for">Reapply</string>
+        <string name="wallet_apply_for_ing">pending approval</string>
+        <string name="wallet_vip">vip</string>
+        <string name="wallet_refused_apply">declined</string>
+        <string name="wallet_have_apply_for">applied</string>
+        <string name="wallet_submit">submit</string>
+        <string name="wallet_no_controllers">controller address unavailable</string>
+        <string name="wallet_select_item_apply">Please select at least one applicable situation</string>
+        <string name="wallet_have_apply_for_idhub_vip">please upgrade to IDHub vip and try again later</string>
+        <string name="wallet_have_apply_for_qualified_investor_vip">please upgrade to accredited investor and try again later</string>
+        <string name="wallet_have_apply_for_qualified_purchaser_vip">please upgrade to qualified purchaser and try again later</string>
+        <string name="wallet_idhub_vip_content">IDHub is a decentralized identity platform which serves as an entrance to digital society. IDHub will empower user to reclaim their control of identity from service providers. Our vision is to realize sovereignty, security, and privacy and link identity to digital assets.</string>
+        <string name="wallet_idhub_super_vip_content">IDHub is a decentralized identity platform which serves as an entrance to digital society. IDHub will empower user to reclaim their control of identity from service providers. Our vision is to realize sovereignty, security, and privacy and link identity to digital assets.</string>
+
+        <string name="wallet_compliance_investor_vip_content">1、ST complaint investor: apply and approved for both accredited investor and qualified purchaser
+2、only ST complaint investor can partipate in ST Issuance Subscription and secondary transaction
+3、ST compliance investors are still subject to the securities ST issuance area of the legal restrictions
+4、 ST complaint investor may have different rights in different jurisdictions. Please refer to specific securities regulatory for more details</string>
+
+        //upgrade
+        <string name="wallet_upgrade_hint">User Tips:
+            1、The user’s default identity adopts ERC1056 protocol, which only allows single-address management.
+2、Users can upgrade to aggregated identity using ERC1484 protocol, and then the multi-address management function will be enabled. The original address is set as the default address.
+3、while call the ERC 1484 Protocol to upgrade identity, user must have enough eth in the address to pay for the transaction gas.
+4、After upgrading to an aggregated identity,  user can add any valid address as the associated address of the aggregated identity.
+5、Each address can only be associated with one aggregated identity , and each aggregated identity has a recovery address.
+6、The recovery address should be stored in a cold wallet. This app does not store any backup information related to the recovery address. Please be aware.
+7、The recovery address can help you regain control of your aggregated identity if your wallet is stolen or accidentally lost. Redownload the app and click the "recover identity" button to go to the recovery page.
+8、If your recovery address is maliciously misappropriated, please contact customer service immediately.
+        </string>
+
+
+        //recoveryIdentity
+        <string name="wallet_input_ein_recovery_identity">Input EIN recover</string>
+        <string name="wallet_please_input_content">Enter content</string>
+        <string name="wallet_recovery_identity_fail">Identity recovery failed</string>
+        <string name="wallet_recovery_identity_from_mnemonic_tip">please enter Mnemonic Phrase to recover your identity</string>
+
+        //transaction
+        <string name="wallet_transaction_fail">transaction failed</string>
+        <string name="wallet_transaction_success">transaction sent successfully</string>
+        <string name="wallet_no_transaction">transaction limited, error message</string>
+
+        //associationAddress
+        <string name="wallet_default_address_password">input default address password</string>
+        <string name="wallet_association_address_password">input associated address password</string>
+        <string name="wallet_default_password_empty">default address password cannot be empty</string>
+        <string name="wallet_association_password_empty">associated address password cannot be empty</string>
+        <string name="wallet_default_password_false">default address password is incorrect</string>
+        <string name="wallet_association_password_false">associated address password is incorrect</string>
+        <string name="wallet_upgrade_association_false">associated address upgrade failed</string>
+
+
+        //scanCode
+        <string name="wallet_login_fail">login failed</string>
+        <string name="wallet_not_found_assets">no selected assets under this wallet</string>
+        <string name="wallet_login_code_fail">WARNING! This website has been reported as unsafe</string>
+        <string name="wallet_login_tip">Tips</string>
+        <string name="wallet_login_sign_message">The signature message expires in 30 seconds, Message you need to sign:</string>
+        <string name="wallet_login_sign_tip">Signing this message is unsecure. Please make sure you sign the message only for fully trusted sites.This message is displayed when using DID to login to the third-party website, please verify that the website address:</string>
+
+        //main create wallet
+        <string name="wallet_main_create_wallet_tip">Please select a way to start</string>
+        <string name="wallet_welcome_to_did_world">Welcome to DID world</string>
+
+    <string name="wallet_password_length">Password at least 8 characters</string>
+
+
 </resources>

@@ -23,11 +23,13 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.model.MnemonicAndPath;
+import com.idhub.wallet.didhub.util.Validator;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
 import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
 import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
+import com.idhub.wallet.utils.ValidatorUtil;
 
 
 import io.reactivex.Observable;
@@ -107,6 +109,11 @@ public class InputPasswordActivity extends AppCompatActivity implements View.OnC
             ToastUtils.showShortToast(getString(R.string.wallet_no_empty_password));
             return;
         }
+        if (!ValidatorUtil.isPassword(password)) {
+            ToastUtils.showShortToast(getString(R.string.wallet_password_length));
+            return;
+        }
+
         if (TextUtils.isEmpty(passwordRepeat)) {
             ToastUtils.showShortToast(getString(R.string.wallet_no_empty_repeat_password));
             return;

@@ -8,6 +8,12 @@ public class ValidatorUtil {
     public static boolean isEmail(String email) {
         return Pattern.matches(REGEX_EMAIL, email);
     }
+    public static boolean isPassword(String password) {
+        if (password.length() < 8) {
+            return false;
+        }
+        return true;
+    }
 
     //    /**
 //     * 验证中国手机号
