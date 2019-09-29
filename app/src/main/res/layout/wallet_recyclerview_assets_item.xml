@@ -9,23 +9,24 @@
         android:id="@+id/tv_assets_icon"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginLeft="45dp"
-        android:layout_marginTop="26dp"
-        android:layout_marginBottom="26dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:src="@mipmap/wallet_eth_icon"
+        android:layout_marginRight="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/tv_assets_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_assets_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="83dp"
         android:textColor="@color/wallet_text_grey"
-        android:textSize="18sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_assets_icon"
-        app:layout_constraintLeft_toRightOf="@id/tv_assets_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_assets_icon"
         tools:text="ETH" />
 
@@ -34,13 +35,12 @@
         android:id="@+id/tv_assets_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="36dp"
-        android:textColor="@color/wallet_black"
-        android:textSize="25sp"
+        android:layout_marginRight="55dp"
+        android:textColor="@color/wallet_input_password_text_gray"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_assets_name"
         android:text="-" />
 
 <!--    <TextView-->

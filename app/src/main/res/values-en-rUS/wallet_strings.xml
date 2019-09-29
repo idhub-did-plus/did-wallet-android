@@ -392,5 +392,6 @@
 
     <string name="wallet_password_length">Password at least 8 characters</string>
 
+    <string name="wallet_vip_my_medal">Verifiable Claims</string>
 
 </resources>

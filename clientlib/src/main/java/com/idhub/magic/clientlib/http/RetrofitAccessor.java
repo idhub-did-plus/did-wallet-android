@@ -80,7 +80,7 @@ public class RetrofitAccessor {
 		}).build();
 		
 		
-		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.16.58.38:8080")
+		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://api.hosting.idhub.network")
 				.addConverterFactory(JacksonConverterFactory.create(mapper)).client(client).build();
 
 		identityStorage = retrofit.create(IdentityStorage.class);

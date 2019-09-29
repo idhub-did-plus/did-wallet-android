@@ -20,6 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:includeFontPadding="false"
         android:gravity="center"
         tools:text="合规投sshavjhasjahsdgdas资者"
         android:textColor="@color/wallet_black"
