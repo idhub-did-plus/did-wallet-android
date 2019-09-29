@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/WalletAppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".createmanager.walletrecover.WalletIdentityRecoveryActivity"></activity>
+        <activity
+            android:name=".setting.SettingsActivity"/>
+        <activity android:name=".createmanager.walletrecover.WalletIdentityRecoveryActivity" />
         <activity android:name=".setting.AboutWeActivity" />
         <activity android:name=".wallet.token.Erc1400DetailActivity" />
         <activity android:name=".setting.NodeSettingActivity" />
@@ -76,8 +78,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".splash.SplashActivity"
-            android:theme="@style/WalletSplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/WalletSplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

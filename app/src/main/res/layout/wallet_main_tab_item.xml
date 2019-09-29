@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/tab_image"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/wallet_me_icon" />
+
+    <TextView
+        android:id="@+id/tab_name"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        tools:text="@string/wallet_me" />
+</LinearLayout>

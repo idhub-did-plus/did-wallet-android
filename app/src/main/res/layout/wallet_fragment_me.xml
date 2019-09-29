@@ -13,89 +13,104 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_view">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <ImageView
+                    android:id="@+id/vip_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@mipmap/wallet_me_vip_icon"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/upload"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/wallet_upload_icon"
+                    app:layout_constraintRight_toLeftOf="@id/qrcode_scan"
+                    app:layout_constraintTop_toTopOf="@id/vip_icon" />
+
+                <ImageView
+                    android:id="@+id/qrcode_scan"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@mipmap/wallet_qrcode_scan"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/vip_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wallet_vip_my_medal"
+                    android:textColor="@color/wallet_black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@id/vip_icon"
+                    app:layout_constraintLeft_toRightOf="@id/vip_icon"
+                    app:layout_constraintTop_toTopOf="@id/vip_icon" />
+
                 <include
                     android:id="@+id/id_hub_vip"
                     layout="@layout/wallet_fragment_me_level_item_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginBottom="20dp"
-                    app:layout_goneMarginBottom="10dp" />
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintLeft_toLeftOf="@id/qualified_investor"
+                    app:layout_constraintTop_toBottomOf="@id/vip_icon" />
 
                 <include
                     android:id="@+id/id_hub_super_vip"
                     layout="@layout/wallet_fragment_me_level_item_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginBottom="20dp"
-                    app:layout_goneMarginBottom="10dp" />
+                    app:layout_constraintLeft_toLeftOf="@id/qualified_purchaser"
+                    app:layout_constraintTop_toTopOf="@id/id_hub_vip" />
 
                 <include
                     android:id="@+id/qualified_investor"
                     layout="@layout/wallet_fragment_me_level_item_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginBottom="20dp"
-                    app:layout_goneMarginBottom="10dp" />
+                    android:layout_marginLeft="25dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="@id/qualified_purchaser"
+                    app:layout_constraintTop_toBottomOf="@id/id_hub_vip" />
 
                 <include
                     android:id="@+id/qualified_purchaser"
                     layout="@layout/wallet_fragment_me_level_item_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginBottom="20dp"
-                    app:layout_goneMarginBottom="10dp" />
+                    app:layout_constraintLeft_toRightOf="@id/qualified_investor"
+                    app:layout_constraintRight_toLeftOf="@id/st_compliance_investor"
+                    app:layout_constraintTop_toTopOf="@id/qualified_investor" />
 
                 <include
                     android:id="@+id/st_compliance_investor"
                     layout="@layout/wallet_fragment_me_level_item_view"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="12dp"
-                    android:layout_marginBottom="20dp"
-                    app:layout_goneMarginBottom="10dp" />
+                    android:layout_marginRight="25dp"
+                    app:layout_constraintLeft_toRightOf="@id/qualified_purchaser"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/qualified_investor" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include
-        android:id="@+id/top_view"
-        layout="@layout/wallet_fragment_me_top_view"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_margin="12dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
-
-    <include
-        android:id="@+id/title"
-        layout="@layout/wallet_common_title_layout"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

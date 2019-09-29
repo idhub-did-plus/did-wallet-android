@@ -18,6 +18,7 @@ import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.QRCodeEncoder;
+import com.idhub.wallet.utils.StringUtils;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 
@@ -101,6 +102,7 @@ public class ReceiveActivity extends AppCompatActivity implements View.OnClickLi
         titleLayout.setTitle(getString(R.string.wallet_receive));
         mNameView = findViewById(R.id.name);
         mAddressView = findViewById(R.id.address);
+        mAddressView.setOnClickListener(this);
         mAmountView = findViewById(R.id.amount);
         mQrCodeView = findViewById(R.id.qr_code);
         findViewById(R.id.tv_designated_Amount).setOnClickListener(this);
@@ -128,6 +130,11 @@ public class ReceiveActivity extends AppCompatActivity implements View.OnClickLi
                 InputDialogFragment dialogFragment = InputDialogFragment.getInstance("receive", getString(R.string.wallet_input_amount), InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 dialogFragment.show(getSupportFragmentManager(), "input_dialog_fragment");
                 dialogFragment.setInputDialogFragmentListener(this);
+                break;
+            case R.id.address:
+                String s = mAddressView.getText().toString();
+                StringUtils.copy(this, s);
+                ToastUtils.showShortToast(getString(R.string.wallet_copy_address_success));
                 break;
         }
     }

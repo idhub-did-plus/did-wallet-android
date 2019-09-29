@@ -2,32 +2,43 @@
 <com.idhub.wallet.me.view.MeBottomItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/wallet_shape_wallet_card">
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/iv_vip_icon"
+        android:src="@mipmap/wallet_idhub_svip_success"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/tv_level_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="15dp"
-        tools:text="合规投资者"
-        android:textColor="@color/wallet_white"
+        android:gravity="center"
+        tools:text="合规投sshavjhasjahsdgdas资者"
+        android:textColor="@color/wallet_black"
         android:textSize="17sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@id/iv_vip_icon"
+        app:layout_constraintRight_toRightOf="@id/iv_vip_icon"
+        app:layout_constraintTop_toBottomOf="@id/iv_vip_icon" />
 
     <TextView
         android:id="@+id/tv_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="18dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         tools:text="未认证"
-        android:textColor="@color/wallet_white"
+        android:textColor="@color/wallet_create_wallet_hint"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@id/tv_level_name"
         app:layout_constraintLeft_toLeftOf="@id/tv_level_name"
         app:layout_constraintTop_toBottomOf="@id/tv_level_name" />
 

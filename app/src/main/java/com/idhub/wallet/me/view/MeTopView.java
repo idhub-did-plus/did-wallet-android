@@ -18,6 +18,7 @@ import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.me.information.UploadInformationTypeActivity;
+import com.idhub.wallet.setting.SettingsActivity;
 
 import org.web3j.crypto.Keys;
 
@@ -43,10 +44,8 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
         name.setText(userBasicInfo.name);
         TextView singature = findViewById(R.id.tv_signature);
         singature.setText(userBasicInfo.signature);
-
+        findViewById(R.id.iv_setting).setOnClickListener(this);
         mRecoverAddressView = findViewById(R.id.tv_recover_address);
-
-        findViewById(R.id.upload_file).setOnClickListener(this);
         mEINIdentityView = findViewById(R.id.tv_ein_number);
         mEINView = findViewById(R.id.tv_ein);
     }
@@ -78,11 +77,9 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.upload_file:
-
-                UploadInformationTypeActivity.startAction(getContext());
+        switch (v.getId()) {
+            case R.id.iv_setting:
+                SettingsActivity.startAction(getContext());
                 break;
         }
     }

@@ -7,6 +7,28 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <include
+        android:id="@+id/top_view"
+        layout="@layout/wallet_fragment_me_top_view"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabIndicatorHeight="3dp"
+        app:tabIndicatorColor="@color/wallet_main_tab_color_select"
+       />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/wallet_line_gray" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
@@ -14,20 +36,14 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <View
+    <include
+        android:id="@+id/loading_and_error"
+        layout="@layout/wallet_common_loading_and_error"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/wallet_line_gray" />
-
-    <com.idhub.wallet.common.tablayout.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="6dp"
-        app:tabRippleColor="@android:color/transparent"
-        app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        app:wallet_tabSelectedTextColor="@color/wallet_blue"
-        app:wallet_tabTextColor="@color/wallet_text_grey"
-        app:wallet_tabTextSize="14sp" />
-
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </LinearLayout>

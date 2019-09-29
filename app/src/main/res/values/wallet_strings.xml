@@ -362,4 +362,5 @@
 
     //未翻译
     <string name="wallet_file_size_20">文件必须小于20MB</string>
+    <string name="wallet_vip_my_medal">我的勋章</string>
 </resources>

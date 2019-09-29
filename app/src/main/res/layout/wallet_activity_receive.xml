@@ -44,7 +44,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="12dp"
+            android:drawablePadding="5dp"
             android:textColor="@color/wallet_white"
+            android:drawableRight="@mipmap/wallet_address_copy"
             android:textSize="12dp"
             tools:text="0xA69eB82e584bD2EdBcD792CcdAAF2de607b2e8Ab" />
     </LinearLayout>

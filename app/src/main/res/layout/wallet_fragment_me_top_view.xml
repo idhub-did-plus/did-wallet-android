@@ -4,27 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/wallet_shape_wallet_card">
+    android:background="@mipmap/wallet_main_top_background">
 
     <ImageView
         android:id="@+id/iv_head"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:src="@mipmap/wallet_default_head"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/iv_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/wallet_main_setting"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_head" />
+
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="12dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@id/iv_head"
         app:layout_constraintLeft_toRightOf="@id/iv_head"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/iv_setting"
         app:layout_constraintTop_toTopOf="@id/iv_head">
 
         <TextView
@@ -44,63 +53,47 @@
             tools:text="Idhub did plus" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_ein"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="12dp"
+        android:ellipsize="middle"
+        android:singleLine="true"
+        android:textColor="@color/wallet_white"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="@id/iv_head"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_head"
+        tools:text="EIN:" />
 
     <TextView
         android:id="@+id/tv_recover_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        tools:text="recoverAddress:"
-        android:textColor="@color/wallet_white"
-        android:singleLine="true"
         android:ellipsize="middle"
-        android:layout_marginRight="12dp"
+        android:singleLine="true"
+        android:textColor="@color/wallet_white"
         android:textSize="13sp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/iv_head"
-        app:layout_constraintTop_toBottomOf="@id/tv_ein_number" />
+        app:layout_constraintRight_toRightOf="@id/tv_ein"
+        app:layout_constraintTop_toBottomOf="@id/tv_ein"
+        tools:text="recoverAddress:" />
 
     <TextView
         android:id="@+id/tv_ein_number"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:singleLine="true"
-        android:layout_marginRight="12dp"
-        tools:text="EIN:"
-        android:ellipsize="middle"
-        android:textColor="@color/wallet_white"
-        android:textSize="13sp"
-        app:layout_constraintRight_toLeftOf="@id/upload_file"
-        app:layout_constraintLeft_toLeftOf="@id/iv_head"
-        app:layout_constraintTop_toBottomOf="@id/iv_head" />
-    <TextView
-        android:id="@+id/tv_ein"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        tools:text="EIN:"
-        android:textColor="@color/wallet_white"
-        android:singleLine="true"
         android:ellipsize="middle"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="20dp"
+        android:singleLine="true"
+        android:textColor="@color/wallet_white"
         android:textSize="13sp"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/iv_head"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_recover_address" />
-    <TextView
-        android:id="@+id/upload_file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/wallet_background_stroke_orange"
-        android:padding="5dp"
-        android:text="@string/wallet_upload"
-        android:textColor="@color/wallet_orange"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="@id/tv_ein"
+        app:layout_constraintTop_toBottomOf="@id/tv_recover_address"
+        tools:text="erc1484::" />
+
 </com.idhub.wallet.me.view.MeTopView>

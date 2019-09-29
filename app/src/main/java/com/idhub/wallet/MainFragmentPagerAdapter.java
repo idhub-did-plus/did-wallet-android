@@ -13,11 +13,10 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
     private Fragment mCurrentFragment;
     private Context mContext;
 
-    public MainFragmentPagerAdapter(FragmentManager fm, Context context) {
+    public MainFragmentPagerAdapter(FragmentManager fm, Context context,String[] strings) {
         super(fm);
         mContext = context;
-        mItems = new String[]{context.getResources().getString(R.string.wallet_me), context.getResources().getString(R.string.wallet_wallet),
-               context.getResources().getString(R.string.wallet_dapp),context.getResources().getString(R.string.wallet_setting)};
+        mItems = strings;
     }
 
     @Override
@@ -42,6 +41,7 @@ public class MainFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
+
         return mItems[position];
     }
 

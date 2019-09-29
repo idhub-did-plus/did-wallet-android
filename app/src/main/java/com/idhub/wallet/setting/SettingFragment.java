@@ -24,7 +24,6 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,7 +35,6 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
         view.findViewById(R.id.about_we).setOnClickListener(this);
         TitleLayout titleLayout = view.findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_setting_title));
-        titleLayout.setBackImgVisible(View.INVISIBLE);
         return view;
     }
 

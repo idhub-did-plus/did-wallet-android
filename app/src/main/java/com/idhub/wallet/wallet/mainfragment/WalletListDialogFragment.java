@@ -99,6 +99,6 @@ public class WalletListDialogFragment extends DialogFragment implements View.OnC
     }
 
     public interface WalletListSelectItemListener{
-        void selectItem(String address);
+        void selectItem(String id);
     }
 }

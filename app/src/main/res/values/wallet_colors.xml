@@ -39,4 +39,7 @@
     <color name="wallet_create_wallet_hint">#d5d5d5</color>
     <color name="wallet_user_basic_info_btn">#5cc9eb</color>
     <color name="wallet_input_password_text_gray">#8d8d8d</color>
+    <color name="wallet_main_tab_color_select">#15b9d7</color>
+    <color name="wallet_main_tab_color_normal">#b5b5b5</color>
+    <color name="wallet_main_address">#687aa5</color>
 </resources>
