@@ -111,7 +111,9 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
-        init();
+        if (!init()) {
+            return;
+        }
         setContentView(R.layout.wallet_activity_main);
         initView();
         initData();
@@ -123,14 +125,14 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         context.startActivity(intent);
     }
 
-    private void init() {
+    private boolean init() {
         // 检查钱包数
         WalletManager.scanWallets();
         int walletNum = WalletManager.getWalletNum();
         if (walletNum <= 0) {
             IdentityManagerActivity.startAction(this);
             finish();
-            return;
+            return false;
         }
         //检查是否上传头像和名字
         UserBasicInfoEntity userBasicInfo = UserBasicInfoSharpreference.getInstance().getUserBasicInfo();
@@ -138,7 +140,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             //检查姓名是否为空，为空则去填写，不为空meFragment加载
             UploadUserBasicInfoActivity.startAction(this);
             finish();
-            return;
+            return false;
         }
         List<String> accounts = new ArrayList<>();
         for (WalletKeystore value : WalletManager.getWalletKeystores().values()) {
@@ -185,6 +187,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             }
         });
 
+        return true;
     }
 
     @Override

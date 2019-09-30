@@ -14,7 +14,7 @@
         android:layout_marginTop="40dp"
         android:src="@mipmap/wallet_default_head"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="25dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,7 +72,7 @@
         <TextView
             android:id="@+id/tv_signature"
             android:layout_width="match_parent"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:textColor="@color/wallet_white"
             android:textSize="13sp"
@@ -83,7 +83,7 @@
             android:id="@+id/tv_recover_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:ellipsize="middle"
             android:singleLine="true"
             android:textColor="@color/wallet_white"
@@ -97,7 +97,7 @@
             android:id="@+id/tv_ein_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:ellipsize="middle"
             android:singleLine="true"
