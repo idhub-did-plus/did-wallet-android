@@ -2,13 +2,20 @@ package com.idhub.wallet;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.DisplayMetrics;
+
 import androidx.multidex.MultiDex;
 import androidx.multidex.MultiDexApplication;
 
 import com.idhub.wallet.greendao.DbUpdateHelper;
 import com.idhub.wallet.greendao.db.DaoMaster;
 import com.idhub.wallet.greendao.db.DaoSession;
+import com.idhub.wallet.utils.LocalUtils;
+
+import java.util.Locale;
 
 public class App extends Application {
     private static App mApp;

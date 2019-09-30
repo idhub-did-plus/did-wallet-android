@@ -32,6 +32,7 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
         view.findViewById(R.id.history_message).setOnClickListener(this);
         view.findViewById(R.id.wallet_manager).setOnClickListener(this);
         view.findViewById(R.id.node_setup).setOnClickListener(this);
+        view.findViewById(R.id.language).setOnClickListener(this);
         view.findViewById(R.id.about_we).setOnClickListener(this);
         TitleLayout titleLayout = view.findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_setting_title));
@@ -57,6 +58,9 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
                 break;
             case R.id.about_we:
 
+                break;
+            case R.id.language:
+                LanguagesActivity.startAction(getContext());
                 break;
         }
     }

@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +46,9 @@ import com.idhub.wallet.greendao.TransactionRecordDbManager;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
 import com.idhub.wallet.me.view.MeTopView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
+import com.idhub.wallet.setting.LanguagesActivity;
 import com.idhub.wallet.setting.NotificationUtils;
+import com.idhub.wallet.utils.LocalUtils;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.mainfragment.QRCodeType;
 import com.idhub.wallet.wallet.mainfragment.WalletFragment;
@@ -53,6 +58,7 @@ import java.lang.ref.WeakReference;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;
@@ -89,6 +95,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             R.drawable.wallet_wallet_selected,
             R.drawable.wallet_dapp_selected
     };
+    private long mFirstTime;
 
     private String[] mItems;
     private JSONObject mIdHubLoginJwtJsonObject;
@@ -98,6 +105,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocalUtils.updateLocale(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View decorView = getWindow().getDecorView();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -517,5 +525,17 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        long secondTime = System.currentTimeMillis();
+        if (secondTime - mFirstTime > 2000) {
+            ToastUtils.showShortToast(getString(R.string.wallet_main_back_double_click));
+            mFirstTime = secondTime;
+        } else {
+            super.onBackPressed();
+        }
     }
 }

@@ -206,6 +206,7 @@
     <string name="wallet_about_we">关于我们</string>
     <string name="wallet_setting_title">设置</string>
     <string name="wallet_node_setup">节点设置</string>
+    <string name="wallet_language">语言设置</string>
     <string name="wallet_node_select">节点选择</string>
     <string name="wallet_save">保存</string>
 
@@ -363,4 +364,6 @@
     //未翻译
     <string name="wallet_file_size_20">文件必须小于20MB</string>
     <string name="wallet_vip_my_medal">我的勋章</string>
+    <string name="wallet_main_back_double_click">再按一次返回键关闭程序</string>
+
 </resources>

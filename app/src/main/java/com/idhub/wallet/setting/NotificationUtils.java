@@ -35,8 +35,8 @@ public class NotificationUtils {
             notificationManager.createNotificationChannel(channel);
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.wallet_ic_launcher)
-                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.wallet_ic_launcher))
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                 .setContentTitle(context.getString(R.string.wallet_transaction_notification_content_title))
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText("fromAddress：" + transactionRecordEntity.getFrom() + " \n"
