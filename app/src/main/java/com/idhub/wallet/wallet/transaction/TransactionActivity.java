@@ -8,19 +8,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.wallet.wallet.assets.AssetsType;
 import com.idhub.wallet.wallet.token.PartitionEntity;
 
 import java.math.BigInteger;
 
-public class TransactionActivity extends AppCompatActivity implements View.OnClickListener {
+public class TransactionActivity extends BaseActivity implements View.OnClickListener {
 
     private AssetsModel mAssetsModel;
     private PartitionEntity partitionEntity;
@@ -43,6 +46,10 @@ public class TransactionActivity extends AppCompatActivity implements View.OnCli
     private void init() {
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_transaction));
+        ImageView iconView = findViewById(R.id.coin_icon);
+        Integer integer = AssetsType.assetsMipmap.get(mAssetsModel.getSymbol());
+        if (integer != null)
+            iconView.setImageResource(integer);
         findViewById(R.id.receive).setOnClickListener(this);
         findViewById(R.id.send).setOnClickListener(this);
         TextView balanceAndName = findViewById(R.id.balance_and_name);

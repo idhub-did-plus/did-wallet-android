@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletTransactionSharpreference;
@@ -36,7 +37,7 @@ import java.math.BigInteger;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.subscribers.DisposableSubscriber;
 
-public class SendConfirmActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener,InputGasDialogFragment.InputGasDialogFragmentListener {
+public class SendConfirmActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener,InputGasDialogFragment.InputGasDialogFragmentListener {
 
     private TextView mSendAmountView;
     private TextView mFromAddressView;

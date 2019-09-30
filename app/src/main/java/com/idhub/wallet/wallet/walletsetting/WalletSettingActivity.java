@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
@@ -28,7 +29,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-public class WalletSettingActivity extends AppCompatActivity implements MessageDialogFragment.MessageDialogFragmentListener {
+public class WalletSettingActivity extends BaseActivity implements MessageDialogFragment.MessageDialogFragmentListener {
 
     private View view;
     private SelectAddWalletWayPopupWindow mSelectAddWalletWayPopupWindow;

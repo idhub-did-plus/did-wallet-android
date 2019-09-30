@@ -14,7 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.didhub.util.NumericUtil;
@@ -25,7 +27,7 @@ import com.idhub.wallet.wallet.mainfragment.QRCodeType;
 
 import java.math.BigInteger;
 
-public class SendActivity extends AppCompatActivity implements View.OnClickListener {
+public class SendActivity extends BaseActivity implements View.OnClickListener {
 
     private AssetsModel mAssetsModel;
     private TextView mNameView;
@@ -49,7 +51,7 @@ public class SendActivity extends AppCompatActivity implements View.OnClickListe
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_send));
         titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_qrcode_scan, () -> {
-            MipcaActivityCapture.startAction(this, 100);
+            QrCodeActivity.startAction(this, 100);
         });
         mNameView = findViewById(R.id.name);
         mBalanceView = findViewById(R.id.balance);

@@ -26,6 +26,7 @@ import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
+import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
@@ -163,7 +164,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         } else if (mUploadView == v) {
             UploadInformationTypeActivity.startAction(getContext());
         } else if (v == mQRCodeView) {
-            MipcaActivityCapture.startAction(getActivity(), 100);
+            QrCodeActivity.startAction(getActivity(),100);
         }
     }
 

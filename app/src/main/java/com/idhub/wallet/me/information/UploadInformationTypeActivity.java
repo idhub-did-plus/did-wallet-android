@@ -8,12 +8,13 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 
-public class UploadInformationTypeActivity extends AppCompatActivity implements View.OnClickListener, MessageDialogFragment.MessageDialogFragmentListener {
+public class UploadInformationTypeActivity extends BaseActivity implements View.OnClickListener, MessageDialogFragment.MessageDialogFragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

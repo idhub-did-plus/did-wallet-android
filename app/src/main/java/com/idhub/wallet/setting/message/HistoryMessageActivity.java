@@ -8,11 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.setting.message.moretransaction.MoreTransactionMessageActivity;
 
-public class HistoryMessageActivity extends AppCompatActivity {
+public class HistoryMessageActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class HistoryMessageActivity extends AppCompatActivity {
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_message_center));
-        titleLayout.setFirstTextAndClickCallBack("查看更多", new TitleLayout.OnImageClickCallbackListener() {
+        titleLayout.setFirstTextAndClickCallBack(getString(R.string.wallet_more_detail), new TitleLayout.OnImageClickCallbackListener() {
             @Override
             public void onImageClick() {
                 MoreTransactionMessageActivity.startAction(HistoryMessageActivity.this);

@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 
-public class AboutWeActivity extends AppCompatActivity {
+public class AboutWeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

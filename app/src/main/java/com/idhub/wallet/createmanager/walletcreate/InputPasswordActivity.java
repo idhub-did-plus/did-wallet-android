@@ -38,7 +38,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class InputPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class InputPasswordActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText mPassword;
     private EditText mPasswordRepeat;

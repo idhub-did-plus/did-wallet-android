@@ -1,6 +1,5 @@
 package com.idhub.wallet.dapp;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +17,7 @@ import android.widget.ProgressBar;
 
 import com.idhub.wallet.BuildConfig;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
@@ -48,7 +48,7 @@ import java.math.BigInteger;
 
 import io.reactivex.observers.DisposableObserver;
 
-public class Web3Activity extends AppCompatActivity implements OnSignMessageListener, OnSignPersonalMessageListener, OnSignTransactionListener, OnSignTypedMessageListener, View.OnClickListener, DappBrowserSwipeInterface, InputDialogFragment.InputDialogFragmentListener {
+public class Web3Activity extends BaseActivity implements OnSignMessageListener, OnSignPersonalMessageListener, OnSignTransactionListener, OnSignTypedMessageListener, View.OnClickListener, DappBrowserSwipeInterface, InputDialogFragment.InputDialogFragmentListener {
 
     private Web3View mWeb3View;
     private String mUrlStr;

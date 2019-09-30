@@ -9,10 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.title.TitleLayout;
 
-public class ImportWalletActivity extends AppCompatActivity {
+public class ImportWalletActivity extends BaseActivity {
     public static final String IMPORT = "import";
     public static final String NO_IMPORT_EQUAL_ADDRESS = "no_import_equal_address";
     public static final String IMPORT_FIRST_ASSOCIATION = "import_first_association";

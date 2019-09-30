@@ -14,6 +14,7 @@ import com.idhub.magic.common.kvc.entity.ClaimOrder;
 import com.idhub.magic.common.kvc.entity.ClaimType;
 import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
@@ -33,7 +34,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import com.idhub.magic.clientlib.ApiFactory;
 
-public class Level5Activity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
+public class Level5Activity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
     private TextView applyBtn;
     private LoadingAndErrorView mLoadingAndErrorView;
     private WalletKeystore mDefaultKeystore;

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
@@ -32,7 +33,7 @@ import java.util.List;
 
 import io.reactivex.observers.DisposableObserver;
 
-public class TokenManagerActivity extends AppCompatActivity implements TokenManagerAdapter.AssetsManagerListener {
+public class TokenManagerActivity extends BaseActivity implements TokenManagerAdapter.AssetsManagerListener {
 
     private LoadingAndErrorView mLoadingAndErrorView;
 

@@ -10,7 +10,6 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.jokar.multilanguages.library.MultiLanguage;
 import com.google.android.material.tabs.TabLayout;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.SignMessageDialogFragment;
@@ -46,7 +45,6 @@ import com.idhub.wallet.greendao.TransactionRecordDbManager;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
 import com.idhub.wallet.me.view.MeTopView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
-import com.idhub.wallet.setting.LanguagesActivity;
 import com.idhub.wallet.setting.NotificationUtils;
 import com.idhub.wallet.utils.LocalUtils;
 import com.idhub.wallet.utils.ToastUtils;
@@ -58,7 +56,6 @@ import java.lang.ref.WeakReference;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;
@@ -96,16 +93,22 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             R.drawable.wallet_dapp_selected
     };
     private long mFirstTime;
-
     private String[] mItems;
     private JSONObject mIdHubLoginJwtJsonObject;
     private String signMessage;
     private LoadingAndErrorView mLoadingAndErrorView;
 
     @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocalUtils.setLocal(newBase));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LocalUtils.updateLocale(this);
+        Configuration config = getResources().getConfiguration();
+        Log.e("LYW", "onCreate: " + config.locale.getLanguage());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View decorView = getWindow().getDecorView();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -118,6 +121,12 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         setContentView(R.layout.wallet_activity_main);
         initView();
         initData();
+    }
+
+    public static void reStart(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     private void init() {
@@ -215,7 +224,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
 
     private void initView() {
         mTopView = findViewById(R.id.top_view);
-        mLoadingAndErrorView =findViewById(R.id.loading_and_error);
+        mLoadingAndErrorView = findViewById(R.id.loading_and_error);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -281,6 +290,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         img_title.setImageResource(tabIconsPressed[tab.getPosition()]);
 
     }
+
     private void setupTabIcons(TabLayout tabLayout) {
         tabLayout.getTabAt(0).setCustomView(getTabView(0));
         tabLayout.getTabAt(1).setCustomView(getTabView(1));
@@ -449,8 +459,8 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
                 String head = Base64.encodeToString(startJsonObject.toString().getBytes(), Base64.URL_SAFE | Base64.NO_WRAP);
                 signMessage = head + "." + payload;
                 String signTitle = getString(R.string.wallet_login_sign_message);
-                SignMessageDialogFragment fragment = SignMessageDialogFragment.getInstance(getString(R.string.wallet_login_sign_tip),url, signTitle, signMessage);
-                fragment.show(getSupportFragmentManager(),"sign_message_dialog_fragment");
+                SignMessageDialogFragment fragment = SignMessageDialogFragment.getInstance(getString(R.string.wallet_login_sign_tip), url, signTitle, signMessage);
+                fragment.show(getSupportFragmentManager(), "sign_message_dialog_fragment");
                 fragment.setSignMessageListener(this);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -494,7 +504,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             WalletInfo walletInfo = new WalletInfo(walletKeystore);
             boolean b = walletInfo.verifyPassword(password);
             if (b) {
-                Response result = signJWTLogin( walletInfo, password);
+                Response result = signJWTLogin(walletInfo, password);
                 emitter.onNext(result);
                 emitter.onComplete();
             } else {
@@ -521,6 +531,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             }
         });
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

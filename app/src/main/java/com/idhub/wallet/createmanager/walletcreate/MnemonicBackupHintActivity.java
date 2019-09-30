@@ -9,8 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 
-public class MnemonicBackupHintActivity extends AppCompatActivity implements View.OnClickListener {
+public class MnemonicBackupHintActivity extends BaseActivity implements View.OnClickListener {
 
     private String mMnemonic;
 

@@ -13,9 +13,10 @@ import android.os.Message;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.utils.ToastUtils;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     private Handler handler = new Handler() {
         @Override

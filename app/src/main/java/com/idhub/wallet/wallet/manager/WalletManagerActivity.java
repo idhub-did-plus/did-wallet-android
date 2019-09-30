@@ -19,6 +19,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
@@ -53,7 +54,7 @@ import com.idhub.magic.clientlib.ApiFactory;
 
 import org.web3j.crypto.Keys;
 
-public class WalletManagerActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener, MessageDialogFragment.MessageDialogFragmentListener, AddAssociationAddressDialogFragment.AddAssociationAddressDialogFragmentListener {
+public class WalletManagerActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener, MessageDialogFragment.MessageDialogFragmentListener, AddAssociationAddressDialogFragment.AddAssociationAddressDialogFragmentListener {
 
     private WalletManagerItemView mExportPasswordHint;
     private WalletManagerItemView mExportMnemonic;

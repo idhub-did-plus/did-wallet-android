@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
+import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
@@ -91,7 +92,7 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
         int id = v.getId();
         switch (id) {
             case R.id.qr_code:
-                MipcaActivityCapture.startAction(((Activity) getContext()), 100);
+                QrCodeActivity.startAction(((Activity) getContext()), 100);
                 break;
             case R.id.wallet_manage:
             case R.id.upgrade_icon:

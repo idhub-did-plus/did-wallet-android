@@ -9,13 +9,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletNodeSelectedObservable;
 
 import java.util.List;
 
-public class NodeSettingActivity extends AppCompatActivity {
+public class NodeSettingActivity extends BaseActivity {
 
     private NodeSettingAdapter mAdapter;
 

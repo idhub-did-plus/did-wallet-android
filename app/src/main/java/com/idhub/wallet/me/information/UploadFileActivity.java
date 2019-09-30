@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
@@ -52,7 +53,7 @@ import retrofit2.Response;
 import com.idhub.magic.clientlib.ApiFactory;
 
 
-public class UploadFileActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
+public class UploadFileActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
     private UploadFileAdapter mUploadFileAdapter;
     private UploadFileDbManager mUploadFileDbManager;

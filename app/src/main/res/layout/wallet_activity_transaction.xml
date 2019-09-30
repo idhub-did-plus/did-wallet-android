@@ -17,8 +17,8 @@
 
     <ImageView
         android:id="@+id/coin_icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginTop="30dp"
         android:src="@mipmap/wallet_eth_icon"
         app:layout_constraintLeft_toLeftOf="parent"

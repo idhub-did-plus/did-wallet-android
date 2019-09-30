@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.greendao.entity.AssetsModel;
@@ -23,7 +24,7 @@ import java.util.List;
 
 import io.reactivex.subscribers.DisposableSubscriber;
 
-public class Erc1400DetailActivity extends AppCompatActivity {
+public class Erc1400DetailActivity extends BaseActivity {
 
     private AssetsModel mAssetsModel;
     private PartitionAdapter adapter;

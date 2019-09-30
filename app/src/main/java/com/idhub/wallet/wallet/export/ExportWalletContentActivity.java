@@ -8,9 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.title.TitleLayout;
 
-public class ExportWalletContentActivity extends AppCompatActivity {
+public class ExportWalletContentActivity extends BaseActivity {
 
 
     @Override

@@ -17,6 +17,7 @@ import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
@@ -46,7 +47,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import com.idhub.magic.clientlib.ApiFactory;
 
-public class WalletIdentityRecoveryActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
+public class WalletIdentityRecoveryActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
     private LoadingAndErrorView mLoadingAndErrorView;
     private ImportWalletTopView mTopView;

@@ -10,13 +10,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
 
 import java.math.BigInteger;
 
-public class TransactionDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class TransactionDetailActivity extends BaseActivity implements View.OnClickListener {
 
     private TransactionRecordEntity mTransactionRecordEntity;
 

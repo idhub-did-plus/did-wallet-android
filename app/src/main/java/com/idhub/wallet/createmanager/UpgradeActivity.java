@@ -20,6 +20,7 @@ import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
@@ -48,7 +49,7 @@ import io.reactivex.schedulers.Schedulers;
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.interfaces.Listen;
 
-public class UpgradeActivity extends AppCompatActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
+public class UpgradeActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
     private String mData;
     private String mRecoverAddressStr;

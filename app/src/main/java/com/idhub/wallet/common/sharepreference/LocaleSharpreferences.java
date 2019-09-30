@@ -3,6 +3,7 @@ package com.idhub.wallet.common.sharepreference;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
 import com.idhub.wallet.App;
 
 import java.util.Locale;
@@ -31,6 +32,6 @@ public class LocaleSharpreferences {
 
     public boolean setLocalLanguage(String language) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
-     return    edit.putString(WALLET_BLOCK_NUMBERS, language).commit();
+     return edit.putString(WALLET_BLOCK_NUMBERS, language).commit();
     }
 }

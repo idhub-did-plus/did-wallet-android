@@ -20,6 +20,7 @@ import com.idhub.magic.common.ustorage.entity.component.AddressElement;
 import com.idhub.magic.common.ustorage.entity.component.Name;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.country.Country;
 import com.idhub.wallet.common.country.CountryPickerCallbacks;
 import com.idhub.wallet.common.country.CountryPickerDialog;
@@ -50,7 +51,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import com.idhub.magic.clientlib.ApiFactory;
 
-public class UploadIDHubInformationActivity extends AppCompatActivity implements View.OnClickListener {
+public class UploadIDHubInformationActivity extends BaseActivity implements View.OnClickListener {
 
     private InformationInputItemView mLastNameView;
     private InformationSelectItemView mGenderView;

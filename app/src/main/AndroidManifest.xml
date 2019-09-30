@@ -10,7 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/WalletAppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".setting.LanguagesActivity"></activity>
+        <activity android:name=".common.zxinglib.QrCodeActivity">
+        </activity>
+        <activity android:name=".setting.LanguagesActivity" />
         <activity android:name=".setting.SettingsActivity" />
         <activity android:name=".createmanager.walletrecover.WalletIdentityRecoveryActivity" />
         <activity android:name=".setting.AboutWeActivity" />
@@ -101,7 +103,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

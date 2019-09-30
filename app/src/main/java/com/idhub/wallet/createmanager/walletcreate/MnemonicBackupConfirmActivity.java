@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.flowlayout.FlowLayout;
 import com.idhub.wallet.common.flowlayout.TagAdapter;
 import com.idhub.wallet.common.flowlayout.TagFlowLayout;
@@ -19,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class MnemonicBackupConfirmActivity extends AppCompatActivity implements View.OnClickListener {
+public class MnemonicBackupConfirmActivity extends BaseActivity implements View.OnClickListener {
 
     private String mMnemonic;
     private TagFlowLayout mTagFlowMnemonicConfirmLayout;

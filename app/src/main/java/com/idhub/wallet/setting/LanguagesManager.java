@@ -1,16 +1,14 @@
 package com.idhub.wallet.setting;
 
-import com.idhub.wallet.App;
-import com.idhub.wallet.R;
-
-import java.util.HashMap;
+import com.google.gson.Gson;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class LanguagesManager {
-    public static Map<String, String> languages = new HashMap<>();
+    public static Map<String, String> languages = new LinkedHashMap<>();
     static {
         languages.put(Locale.ENGLISH.toLanguageTag(), "English");
-        languages.put(Locale.CHINA.toLanguageTag(), "简体中文");
+        languages.put(Locale.CHINESE.toLanguageTag(), "简体中文");
     }
 }
