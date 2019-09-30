@@ -8,9 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.multidex.MultiDex;
 
 
-import com.github.jokar.multilanguages.library.LanguageLocalListener;
-import com.github.jokar.multilanguages.library.MultiLanguage;
-import com.idhub.wallet.common.sharepreference.LocaleSharpreferences;
 import com.idhub.wallet.greendao.DbUpdateHelper;
 import com.idhub.wallet.greendao.db.DaoMaster;
 import com.idhub.wallet.greendao.db.DaoSession;
