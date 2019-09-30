@@ -48,8 +48,7 @@ public class LanguagesActivity extends BaseActivity {
             String node = mAdapter.getNode();
             for (String s : languagesMap.keySet()) {
                 if (node.equals(languagesMap.get(s))) {
-                    LocaleSharpreferences.getInstance().setLocalLanguage(s);
-
+                    LocaleSharpreferences.getInstance(LanguagesActivity.this).setLocalLanguage(s);
                     Intent intent = new Intent(LanguagesActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
@@ -57,7 +56,7 @@ public class LanguagesActivity extends BaseActivity {
             }
             finish();
         });
-        String language = LocaleSharpreferences.getInstance().getLocalLanguage();
+        String language = LocaleSharpreferences.getInstance(this).getLocalLanguage();
         String selectPath = languagesMap.get(language);
         RecyclerView recyclerView = findViewById(R.id.language_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

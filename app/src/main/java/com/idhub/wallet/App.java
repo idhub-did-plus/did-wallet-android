@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import androidx.multidex.MultiDex;
 
@@ -11,6 +12,7 @@ import androidx.multidex.MultiDex;
 import com.idhub.wallet.greendao.DbUpdateHelper;
 import com.idhub.wallet.greendao.db.DaoMaster;
 import com.idhub.wallet.greendao.db.DaoSession;
+import com.idhub.wallet.utils.LocalUtils;
 
 public class App extends Application {
     private static App mApp;
@@ -21,6 +23,13 @@ public class App extends Application {
         super.onCreate();
         mApp = this;
         initGreenDao();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // 当切换横竖屏是 重置语言
+        LocalUtils.setApplicationLanguage(getApplicationContext());
     }
 
     @Override

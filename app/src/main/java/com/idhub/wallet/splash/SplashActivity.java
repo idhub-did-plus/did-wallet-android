@@ -14,6 +14,7 @@ import android.os.Message;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
+import com.idhub.wallet.utils.LocalUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 public class SplashActivity extends BaseActivity {
@@ -32,6 +33,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_activity_splash);
+        LocalUtils.setApplicationLanguage(SplashActivity.this);
         checkReadPhonePremission();
     }
 

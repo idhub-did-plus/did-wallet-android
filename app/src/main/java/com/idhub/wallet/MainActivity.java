@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -55,6 +56,7 @@ import java.lang.ref.WeakReference;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;
@@ -98,16 +100,9 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     private LoadingAndErrorView mLoadingAndErrorView;
 
     @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(LocalUtils.setLocal(newBase));
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocalUtils.updateLocale(this);
-        Configuration config = getResources().getConfiguration();
-        Log.e("LYW", "onCreate: " + config.locale.getLanguage());
+        LocalUtils.setApplicationLanguage(MainActivity.this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View decorView = getWindow().getDecorView();
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
