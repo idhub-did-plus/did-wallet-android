@@ -336,24 +336,24 @@
     <string name="wallet_have_apply_for_idhub_vip">please upgrade to IDHub vip and try again later</string>
     <string name="wallet_have_apply_for_qualified_investor_vip">please upgrade to accredited investor and try again later</string>
     <string name="wallet_have_apply_for_qualified_purchaser_vip">please upgrade to qualified purchaser and try again later</string>
-    <string name="wallet_idhub_vip_content">IDHub is a decentralized identity platform which serves as an entrance to digital society. IDHub will empower user to reclaim their control of identity from service providers. Our vision is to realize sovereignty, security, and privacy and link identity to digital assets.</string>
-    <string name="wallet_idhub_super_vip_content">IDHub is a decentralized identity platform which serves as an entrance to digital society. IDHub will empower user to reclaim their control of identity from service providers. Our vision is to realize sovereignty, security, and privacy and link identity to digital assets.</string>
+    <string name="wallet_idhub_vip_content">1.IDHub is a decentralized identity platform which serves as an entrance to digital society. IDHub will empower user to reclaim their control of identity from service providers. Our vision is to realize sovereignty, security, and privacy and link identity to digital assets.</string>
+    <string name="wallet_idhub_super_vip_content">1.IDHub is a decentralized identity platform which serves as an entrance to digital society. IDHub will empower user to reclaim their control of identity from service providers. Our vision is to realize sovereignty, security, and privacy and link identity to digital assets.</string>
 
-    <string name="wallet_compliance_investor_vip_content">1、ST complaint investor: apply and approved for both accredited investor and qualified purchaser
-2、only ST complaint investor can partipate in ST Issuance Subscription and secondary transaction
-3、ST compliance investors are still subject to the securities ST issuance area of the legal restrictions
-4、 ST complaint investor may have different rights in different jurisdictions. Please refer to specific securities regulatory for more details</string>
+    <string name="wallet_compliance_investor_vip_content">1、ST complaint investor: apply and approved for both accredited investor and qualified purchaser\n
+2、only ST complaint investor can partipate in ST Issuance Subscription and secondary transaction\n
+3、ST compliance investors are still subject to the securities ST issuance area of the legal restrictions\n
+4、 ST complaint investor may have different rights in different jurisdictions. Please refer to specific securities regulatory for more details\n</string>
 
     //upgrade
-    <string name="wallet_upgrade_hint">User Tips:
-            1、The user’s default identity adopts ERC1056 protocol, which only allows single-address management.
-2、Users can upgrade to aggregated identity using ERC1484 protocol, and then the multi-address management function will be enabled. The original address is set as the default address.
-3、while call the ERC 1484 Protocol to upgrade identity, user must have enough eth in the address to pay for the transaction gas.
-4、After upgrading to an aggregated identity,  user can add any valid address as the associated address of the aggregated identity.
-5、Each address can only be associated with one aggregated identity , and each aggregated identity has a recovery address.
-6、The recovery address should be stored in a cold wallet. This app does not store any backup information related to the recovery address. Please be aware.
-7、The recovery address can help you regain control of your aggregated identity if your wallet is stolen or accidentally lost. Redownload the app and click the "recover identity" button to go to the recovery page.
-8、If your recovery address is maliciously misappropriated, please contact customer service immediately.
+    <string name="wallet_upgrade_hint">User Tips:\n
+            1、The user’s default identity adopts ERC1056 protocol, which only allows single-address management.\n
+2、Users can upgrade to aggregated identity using ERC1484 protocol, and then the multi-address management function will be enabled. The original address is set as the default address.\n
+3、while call the ERC 1484 Protocol to upgrade identity, user must have enough eth in the address to pay for the transaction gas.\n
+4、After upgrading to an aggregated identity,  user can add any valid address as the associated address of the aggregated identity.\n
+5、Each address can only be associated with one aggregated identity , and each aggregated identity has a recovery address.\n
+6、The recovery address should be stored in a cold wallet. This app does not store any backup information related to the recovery address. Please be aware.\n
+7、The recovery address can help you regain control of your aggregated identity if your wallet is stolen or accidentally lost. Redownload the app and click the "recover identity" button to go to the recovery page.\n
+8、If your recovery address is maliciously misappropriated, please contact customer service immediately.\n
         </string>
 
 
