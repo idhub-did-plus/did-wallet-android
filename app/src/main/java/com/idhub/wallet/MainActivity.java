@@ -60,6 +60,8 @@ import java.util.Locale;
 
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -323,26 +325,63 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             //先获取sp里是否有存储，没有则进行网络请求
             String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
             if (TextUtils.isEmpty(ein)) {
-                Credentials credentials = Credentials.create("0");
-                BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
-                IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
-                ApiFactory.getIdentityChainLocal().getEIN(defaultAddress).listen(aLong -> {
-                    String einStr = aLong.toString();
-                    WalletOtherInfoSharpreference.getInstance().setEIN(einStr);
-                    Message message = Message.obtain();
-                    message.what = 1;
-                    message.obj = einStr;
-                    handler.sendMessage(message);
-                }, s -> {
-                    Message message = Message.obtain();
-                    message.what = 2;
-                    handler.sendMessage(message);
-                });
+                checkHasIdentity(defaultAddress);
             } else {
                 setEIN1484View(ein);
                 setRecoverAddress(ein);
             }
         }
+    }
+
+    private void getEIN(String defaultAddress) {
+        Credentials credentials = Credentials.create("0");
+        BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
+        IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
+        ApiFactory.getIdentityChainLocal().getEIN(defaultAddress).listen(aLong -> {
+            String einStr = aLong.toString();
+            WalletOtherInfoSharpreference.getInstance().setEIN(einStr);
+            Message message = Message.obtain();
+            message.what = 1;
+            message.obj = einStr;
+            handler.sendMessage(message);
+        }, s -> {
+            Message message = Message.obtain();
+            message.what = 2;
+            handler.sendMessage(message);
+        });
+    }
+
+
+    private void checkHasIdentity(String defaultAddress) {
+        Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
+            Credentials credentials = Credentials.create("0");
+            BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
+            IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
+            Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(defaultAddress);
+            emitter.onNext(hasIdentity);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<Boolean>() {
+            @Override
+            public void onNext(Boolean aBoolean) {
+                if (aBoolean) {
+                    getEIN(defaultAddress);
+                }else {
+                    mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
+                    mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
     }
 
     private void setRecoverAddress(String ein) {
