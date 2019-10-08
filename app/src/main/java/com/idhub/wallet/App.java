@@ -13,6 +13,7 @@ import com.idhub.wallet.greendao.DbUpdateHelper;
 import com.idhub.wallet.greendao.db.DaoMaster;
 import com.idhub.wallet.greendao.db.DaoSession;
 import com.idhub.wallet.utils.LocalUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class App extends Application {
     private static App mApp;
@@ -22,6 +23,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
+        CrashReport.initCrashReport(getApplicationContext(), "39f296dd6b", true);
         initGreenDao();
     }
 

@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,9 +21,11 @@ import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.wallet.wallet.assets.AssetsType;
 import com.idhub.wallet.wallet.mainfragment.QRCodeType;
 
 import java.math.BigInteger;
@@ -56,6 +59,9 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         mNameView = findViewById(R.id.name);
         mBalanceView = findViewById(R.id.balance);
         mAmountView = findViewById(R.id.input_amount);
+        if (AssetsDefaultType.ERC1400.equals(mAssetsModel.getType())) {
+            mAmountView.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
         mAddressView = findViewById(R.id.input_address);
         mNameView.setText(mAssetsModel.getSymbol());
         mBalanceView.setText("余额：" + NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(mAssetsModel.getBalance())) + "" + mAssetsModel.getSymbol());

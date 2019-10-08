@@ -107,8 +107,8 @@ public class Web3Api {
     public static void searchERC1400ContractAddress(String contractAddress, DisposableObserver<AssetsModel> observer) {
         DefaultGasProvider defaultGasProvider = new DefaultGasProvider();
         Credentials credentials = Credentials.create("0");
-        ERC1400 erc1400 = ERC1400.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
         Observable.create((ObservableOnSubscribe<AssetsModel>) emitter -> {
+            ERC1400 erc1400 = ERC1400.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
             List list = erc1400.totalPartitions().send();
             String name = erc1400.name().send();
             BigInteger decimal = erc1400.decimals().send();
@@ -140,10 +140,10 @@ public class Web3Api {
     public static void searchERC20ContractAddressAssets(String contractAddress, DisposableObserver<AssetsModel> observer) {
         DefaultGasProvider defaultGasProvider = new DefaultGasProvider();
         Credentials credentials = Credentials.create("0");
-        EIP20Interface ierc20 = EIP20Interface.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
         Observable.create(new ObservableOnSubscribe<AssetsModel>() {
             @Override
             public void subscribe(ObservableEmitter<AssetsModel> emitter) throws Exception {
+                EIP20Interface ierc20 = EIP20Interface.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
                 AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
                 String node = WalletOtherInfoSharpreference.getInstance().getNode();
                 //过滤 存储对应ropsten或mainnet上的contractAddress

@@ -40,6 +40,7 @@ public class ImportWalletInputPasswordView extends ConstraintLayout {
         }
         if (!ValidatorUtil.isPassword(password)) {
             ToastUtils.showLongToast(getContext().getString(R.string.wallet_password_length));
+            return false;
         }
         if (TextUtils.isEmpty(repeatPassword)) {
             ToastUtils.showShortToast(getContext().getString(R.string.wallet_no_empty_repeat_password));

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
@@ -89,10 +91,13 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
             @Override
             public void onNext(AssetsModel assetsModel) {
                 ToastUtils.showShortToast(getString(R.string.wallet_assets_add_success));
+                WalletAddAssetsObservable.getInstance().update();
             }
 
             @Override
             public void onError(Throwable e) {
+                e.printStackTrace();
+                Log.e("LYW2", "onError: " + e.getMessage());
                 String message = e.getMessage();
                 if (message != null)
                     ToastUtils.showShortToast(getString(R.string.wallet_assets_add_fail) + " " + message);
@@ -117,10 +122,13 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
             @Override
             public void onNext(AssetsModel assetsModel) {
                 ToastUtils.showShortToast(getString(R.string.wallet_assets_add_success));
+                WalletAddAssetsObservable.getInstance().update();
             }
 
             @Override
             public void onError(Throwable e) {
+                e.printStackTrace();
+                Log.e("LYW1", "onError: " + e.getMessage());
                 Web3Api.searchERC20ContractAddressAssets(contractAddress,erc20observer);
             }
 

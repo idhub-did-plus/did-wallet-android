@@ -126,6 +126,7 @@ public class WalletManagerActivity extends BaseActivity implements View.OnClickL
         }
         if (keyStore.getWallet().isAssociate()) {
             mAssociatedAddress.setVisibility(View.GONE);
+            mDelete.setVisibility(View.GONE);
         }
     }
 

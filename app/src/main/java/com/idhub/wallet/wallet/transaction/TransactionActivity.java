@@ -67,7 +67,7 @@ public class TransactionActivity extends BaseActivity implements View.OnClickLis
         WalletKeystore currentKeyStore = WalletManager.getCurrentKeyStore();
         if (currentKeyStore != null) {
             String address = currentKeyStore.getAddress();
-            mAssetsModel.setAddress(address);
+            mAssetsModel.setAddress(NumericUtil.prependHexPrefix(address));
         }
 }
 
