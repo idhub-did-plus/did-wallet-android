@@ -63,6 +63,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 case 1:
                     IdentityRegistryInterface.IdentityCreatedEventResponse identityCreatedEventResponse = (IdentityRegistryInterface.IdentityCreatedEventResponse) msg.obj;
                     BigInteger ein = identityCreatedEventResponse.ein;
+                    Log.e("LYW", "onNext:upgrade ein " + ein );
                     //升级1484success
                     //升级成功存储数据库
                     IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
@@ -89,14 +90,14 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                             String initiator = identityInitializedEventResponse.initiator;
                             String indeitity = identityInitializedEventResponse.indeitity;
                             BigInteger ein1 = identityInitializedEventResponse.ein;
-                            Log.e("LYW", "onNext: " + indeitity +"  "+ initiator+"  " +ein1 );
+                            Log.e("LYW", "onNext:initialize " + indeitity +"  "+ initiator+"  " +ein1 );
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             mLoadingAndErrorView.setVisibility(View.GONE);
                             MainActivity.startAction(UpgradeActivity.this, "upgrade");
-                            Log.e("LYW", "onError: " +e.getMessage() );
+                            Log.e("LYW", "onError:initialize " +e.getMessage() );
                         }
 
                         @Override
