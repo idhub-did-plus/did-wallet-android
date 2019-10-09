@@ -26,19 +26,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
+import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.SignMessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
+import com.idhub.wallet.common.sharepreference.UpgradeInitializeSharedpreferences;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.createmanager.IdentityManagerActivity;
+import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
+import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.transaction.EthereumSign;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.TransactionRecordDbManager;
@@ -75,6 +79,7 @@ import okhttp3.Response;
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.interfaces.IncomingListener;
 import com.idhub.magic.clientlib.interfaces.IncomingService;
+import com.tencent.bugly.beta.Beta;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,6 +122,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             return;
         }
         setContentView(R.layout.wallet_activity_main);
+//        Beta.checkUpgrade();
         initView();
         initData();
     }
@@ -331,6 +337,28 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
                 setRecoverAddress(ein);
             }
         }
+        //解决升级身份成功本地未记录的情况，
+        if (UpgradeInitializeSharedpreferences.getInstance().getIsUpgradeAction() && TextUtils.isEmpty(defaultAddress)) {
+            checkHasIdentity(defaultAddress);
+        }
+        //解决initialize失败的情况
+        if (!UpgradeInitializeSharedpreferences.getInstance().getUpgradeInitializeIsSuccess() && !TextUtils.isEmpty(defaultAddress)) {
+            ApiFactory.getIdentityChainLocal().initialize(defaultAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
+                @Override
+                public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
+                    UpgradeInitializeSharedpreferences.getInstance().setUpgradeInitializeIsSuccess(true);
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onComplete() {
+                }
+            });
+        }
     }
 
     private void getEIN(String defaultAddress) {
@@ -363,9 +391,27 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<Boolean>() {
             @Override
             public void onNext(Boolean aBoolean) {
+                WalletKeystore defaultKeystore = WalletManager.getDefaultKeystore();
+                if (defaultKeystore == null) {
+                    defaultKeystore = WalletManager.getCurrentKeyStore();
+                }
                 if (aBoolean) {
+                    Wallet wallet = defaultKeystore.getWallet();
+                    if (!wallet.isDefaultAddress()) {
+                        wallet.setAssociate(true);
+                        wallet.setDefaultAddress(true);
+                        WalletManager.flushWallet(defaultKeystore, true);
+                        WalletSelectedObservable.getInstance().update();
+                    }
                     getEIN(defaultAddress);
                 }else {
+                    Wallet wallet = defaultKeystore.getWallet();
+                    if (wallet.isDefaultAddress()) {
+                        wallet.setAssociate(false);
+                        wallet.setDefaultAddress(false);
+                        WalletManager.flushWallet(defaultKeystore, true);
+                        WalletSelectedObservable.getInstance().update();
+                    }
                     mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
                     mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
                 }

@@ -16,6 +16,7 @@ public interface IdentityChain {
 
 	public Listen<BigInteger> getEIN(String associate);
 	public Listen<Identity> getIdentity(long ein);
+	public Identity getIdentitySync(long ein) throws Exception;
 
 	BigInteger getEINSync(String associate) throws Exception;
 	Boolean hasIdentity(String address) throws Exception;

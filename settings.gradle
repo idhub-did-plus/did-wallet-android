@@ -1,1 +1,1 @@
-include ':app', ':commom', 'clientlib', ':etherscan'
+include ':app', ':commom', 'clientlib', ':etherscan', ':module_update'

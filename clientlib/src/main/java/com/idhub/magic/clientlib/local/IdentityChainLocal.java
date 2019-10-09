@@ -1,6 +1,8 @@
 package com.idhub.magic.clientlib.local;
 
 
+import android.text.TextUtils;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +80,13 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
     }
 
     @Override
+    public Identity getIdentitySync(long ein) throws Exception {
+        Tuple4<String, List<String>, List<String>, List<String>> send = ContractManager
+                .getRegistry1484().getIdentity(BigInteger.valueOf(ein)).send();
+        return new Identity(send.getValue1(), send.getValue2(), send.getValue3(), send.getValue4());
+    }
+
+    @Override
     public BigInteger getEINSync(String associate) throws Exception {
         return ContractManager.getRegistry1484().getEIN(associate).send();
     }
@@ -111,20 +120,20 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
             @Override
             public void listen(ResultListener listener, ExceptionListener el) {
                 data.thenAccept(transactionReceipt -> {
-                    List<IdentityCreatedEventResponse> es = ContractManager.getRegistry1484()
-                            .getIdentityCreatedEvents(transactionReceipt);
-                    listener.result(es.get(0));
-
+                    if (TextUtils.isEmpty(transactionReceipt.getTransactionHash())) {
+                        CrashReport.postCatchedException(new Throwable("升级身份hash null"));
+                        el.error("");
+                    }else {
+                        List<IdentityCreatedEventResponse> es = ContractManager.getRegistry1484()
+                                .getIdentityCreatedEvents(transactionReceipt);
+                        listener.result(es.get(0));
+                    }
                 }).exceptionally(transactionReceipt -> {
-                    CrashReport.postCatchedException(transactionReceipt);
                     el.error(transactionReceipt.getMessage());
                     return null;
                 });
-
             }
-
         };
-
     }
 
     @Override

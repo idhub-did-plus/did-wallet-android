@@ -4,18 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 
+import com.idhub.magic.clientlib.interfaces.Identity;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import com.idhub.wallet.MainActivity;
@@ -23,6 +24,7 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
+import com.idhub.wallet.common.sharepreference.UpgradeInitializeSharedpreferences;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.createmanager.walletcreate.MnemonicBackupHintActivity;
@@ -41,18 +43,23 @@ import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.interfaces.Listen;
-import com.tencent.bugly.crashreport.CrashReport;
+
+import org.web3j.abi.datatypes.Bool;
 
 public class UpgradeActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
-    private String mData;
     private String mRecoverAddressStr;
     private LoadingAndErrorView mLoadingAndErrorView;
     private String mPwd;
@@ -64,21 +71,22 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 case 1:
                     String associatedAddress = (String) msg.obj;
                     //调用1056的initialize
-                    Log.e("LYW", "handleMessage:begininitialize "  );
+                    Log.e("LYW", "handleMessage:begininitialize ");
                     ApiFactory.getIdentityChainLocal().initialize(associatedAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
                         @Override
                         public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
                             String initiator = identityInitializedEventResponse.initiator;
                             String indeitity = identityInitializedEventResponse.indeitity;
                             BigInteger ein1 = identityInitializedEventResponse.ein;
-                            Log.e("LYW", "onNext:initialize " + indeitity +"  "+ initiator+"  " +ein1 );
+                            UpgradeInitializeSharedpreferences.getInstance().setUpgradeInitializeIsSuccess(true);
+                            Log.e("LYW", "onNext:initialize " + indeitity + "  " + initiator + "  " + ein1);
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             mLoadingAndErrorView.setVisibility(View.GONE);
                             MainActivity.startAction(UpgradeActivity.this, "upgrade");
-                            Log.e("LYW", "onError:initialize " +e.getMessage() );
+                            Log.e("LYW", "onError:initialize " + e.getMessage());
                         }
 
                         @Override
@@ -87,8 +95,6 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                             mLoadingAndErrorView.setVisibility(View.GONE);
                         }
                     });
-
-
                     break;
                 case 2:
                     mLoadingAndErrorView.setVisibility(View.GONE);
@@ -98,7 +104,10 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
             }
         }
     };
+
     private TextView mUpgradeView;
+    private String mMnemonicStrs;
+    private WalletKeystore mWalletKeystore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +118,8 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initData() {
-        mData = getIntent().getStringExtra("data");
+        String data = getIntent().getStringExtra("data");
+        mWalletKeystore = WalletManager.getKeyStore(data);
     }
 
     public static void startAction(Context context, String id) {
@@ -146,26 +156,37 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
         switch (id) {
             case R.id.tv_upgrade:
                 //身份升级需要先验证输入用户密码
-                inputVerifyPassword();
+                if (TextUtils.isEmpty(mMnemonicStrs)) {
+                    inputVerifyPassword();
+                } else {
+                    if (UpgradeInitializeSharedpreferences.getInstance().getIsUpgradeAction()) {
+                        checkHasIdentity();
+                    }else {
+                        MnemonicBackupHintActivity.startActionforResult(this, mMnemonicStrs, 100);
+                    }
+                }
                 break;
         }
     }
 
     private void inputVerifyPassword() {
-        InputDialogFragment instance = InputDialogFragment.getInstance("upgrade", getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        InputDialogFragment instance = InputDialogFragment.getInstance("upgrade", getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         instance.show(getSupportFragmentManager(), "input_dialog_fragment");
         instance.setInputDialogFragmentListener(this);
     }
 
     private void createRecoverAddressAndMnemonic() {
-        List<String> mnemonicCodes = MnemonicUtil.randomMnemonicCodes();
-        RecoverAddress recoverAddress = new RecoverAddress(mnemonicCodes);
-        mRecoverAddressStr = NumericUtil.prependHexPrefix(recoverAddress.getAddress());
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < mnemonicCodes.size(); i++) {
-            stringBuilder.append(mnemonicCodes.get(i)).append(" ");
+        if (TextUtils.isEmpty(mMnemonicStrs)) {
+            List<String> mnemonicCodes = MnemonicUtil.randomMnemonicCodes();
+            RecoverAddress recoverAddress = new RecoverAddress(mnemonicCodes);
+            mRecoverAddressStr = NumericUtil.prependHexPrefix(recoverAddress.getAddress());
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < mnemonicCodes.size(); i++) {
+                stringBuilder.append(mnemonicCodes.get(i)).append(" ");
+            }
+            mMnemonicStrs = stringBuilder.toString();
         }
-        MnemonicBackupHintActivity.startActionforResult(this, stringBuilder.toString(), 100);
+        MnemonicBackupHintActivity.startActionforResult(this, mMnemonicStrs, 100);
     }
 
     @Override
@@ -173,21 +194,23 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
             mLoadingAndErrorView.setVisibility(View.VISIBLE);
-            WalletInfo walletInfo = new WalletInfo(WalletManager.getKeyStore(mData));
+            //设置记录用户升级的操作
+            UpgradeInitializeSharedpreferences.getInstance().setUpgradeAction(true);
+            //upgrade
+            WalletInfo walletInfo = new WalletInfo(mWalletKeystore);
             String privateKey = walletInfo.exportPrivateKey(mPwd);
             IDHubCredentialProvider.setDefaultCredentials(privateKey);
             IDHubCredentialProvider.setRecoverAddress(mRecoverAddressStr);
             Listen<IdentityRegistryInterface.IdentityCreatedEventResponse> identity = ApiFactory.getIdentityChainLocal().createIdentity();
-            //error
             identity.listen(identityCreatedEventResponse -> {
                 BigInteger ein = identityCreatedEventResponse.ein;
-                Log.e("LYW", "onNext:upgrade ein " + ein );
+                Log.e("LYW", "onNext:upgrade ein " + ein);
                 //升级1484success
                 //升级成功存储数据库
                 IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
                 idHubMessageEntity.setTime(DateUtils.getCurrentDate());
                 idHubMessageEntity.setType(IdHubMessageType.UPGRADE_1484_IDENTITY);
-                String associatedAddress = WalletManager.getKeyStore(mData).getAddress();
+                String associatedAddress = mWalletKeystore.getAddress();
                 idHubMessageEntity.setAddress(associatedAddress);
                 idHubMessageEntity.setEin(ein.toString());
                 idHubMessageEntity.setRecoverAddress(mRecoverAddressStr);
@@ -196,7 +219,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
                 WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoverAddressStr);
                 WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
-                WalletKeystore keyStore = WalletManager.getKeyStore(mData);
+                WalletKeystore keyStore = mWalletKeystore;
                 Wallet wallet = keyStore.getWallet();
                 wallet.setAssociate(true);
                 wallet.setDefaultAddress(true);
@@ -214,13 +237,12 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 messageError.obj = message;
                 handler.sendMessage(messageError);
             });
-
         }
     }
 
     @Override
     public void inputConfirm(String data, String source) {
-        WalletInfo walletInfo = new WalletInfo(WalletManager.getKeyStore(mData));
+        WalletInfo walletInfo = new WalletInfo(mWalletKeystore);
         walletInfo.verifyPassword(data, new DisposableObserver<Boolean>() {
             @Override
             protected void onStart() {
@@ -233,8 +255,13 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 if (aBoolean) {
                     mPwd = data;
                     mLoadingAndErrorView.setVisibility(View.GONE);
-                    //生成恢复地址recoverAddress和助记词。助记词备份完之后提交create 成功之后保存recoverAddress
-                    createRecoverAddressAndMnemonic();
+                    boolean isUpgradeAction = UpgradeInitializeSharedpreferences.getInstance().getIsUpgradeAction();
+                    if (isUpgradeAction) {
+                        checkHasIdentity();
+                    } else {
+                        //生成恢复地址recoverAddress和助记词。助记词备份完之后提交create 成功之后保存recoverAddress
+                        createRecoverAddressAndMnemonic();
+                    }
                 } else {
                     mLoadingAndErrorView.setVisibility(View.GONE);
                     ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
@@ -252,5 +279,75 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 mLoadingAndErrorView.setVisibility(View.GONE);
             }
         });
+    }
+
+    //考虑到异常退出类的情况，已经升级身份本地没有记录
+    private void checkHasIdentity() {
+        Log.e("LYW", "checkHasIdentity: check" );
+        String address = mWalletKeystore.getAddress();
+        Observable.create(new ObservableOnSubscribe<List<String>>() {
+            @Override
+            public void subscribe(ObservableEmitter<List<String>> emitter) throws Exception {
+                IDHubCredentialProvider.setDefaultCredentials(new WalletInfo(mWalletKeystore).exportPrivateKey(mPwd));
+                Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(address);
+                if (hasIdentity) {
+                    String ein = ApiFactory.getIdentityChainLocal().getEINSync(address).toString();
+                    Identity identity = ApiFactory.getIdentityChainLocal().getIdentitySync(Long.parseLong(ein));
+                    ArrayList<String> strs = new ArrayList<>();
+                    strs.add(ein);
+                    strs.add(identity.getRecoveryAddress());
+                    emitter.onNext(strs);
+                } else {
+                    emitter.onError(null);
+                }
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe(new DisposableObserver<List<String>>() {
+
+            @Override
+            protected void onStart() {
+                super.onStart();
+                mLoadingAndErrorView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onNext(List<String> list) {
+                mLoadingAndErrorView.setVisibility(View.GONE);
+                String ein = list.get(0);
+                String recoverAddress = list.get(1);
+                Log.e("LYW", "onNext:upgrade ein " + ein);
+                //升级1484success
+                //升级成功存储数据库
+                IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
+                idHubMessageEntity.setTime(DateUtils.getCurrentDate());
+                idHubMessageEntity.setType(IdHubMessageType.UPGRADE_1484_IDENTITY);
+                idHubMessageEntity.setAddress(address);
+                idHubMessageEntity.setEin(ein.toString());
+                idHubMessageEntity.setRecoverAddress(recoverAddress);
+                idHubMessageEntity.setDefaultAddress(address);
+                new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
+                //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
+                WalletOtherInfoSharpreference.getInstance().setRecoverAddress(recoverAddress);
+                WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
+                WalletKeystore keyStore = mWalletKeystore;
+                Wallet wallet = keyStore.getWallet();
+                wallet.setAssociate(true);
+                wallet.setDefaultAddress(true);
+                WalletManager.flushWallet(keyStore, true);
+                MainActivity.startAction(UpgradeActivity.this, "upgrade");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mLoadingAndErrorView.setVisibility(View.GONE);
+                createRecoverAddressAndMnemonic();
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import androidx.multidex.MultiDex;
 
 
+import com.dreame.apk_update.ApkUpdate;
 import com.idhub.wallet.greendao.DbUpdateHelper;
 import com.idhub.wallet.greendao.db.DaoMaster;
 import com.idhub.wallet.greendao.db.DaoSession;
@@ -23,7 +24,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
-        CrashReport.initCrashReport(getApplicationContext(), "39f296dd6b", true);
+        ApkUpdate.initBugly(getApplicationContext());
         initGreenDao();
     }
 

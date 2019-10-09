@@ -239,14 +239,13 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onNext(EthSendTransaction ethSendTransaction) {
-                        CrashReport.postCatchedException(new Throwable(ethSendTransaction.getTransactionHash()));
                         String transactionHash = ethSendTransaction.getTransactionHash();
-                        Log.e("LYW", "onNext: " + transactionHash);
                         if (transactionHash != null) {
                             ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
                             MainActivity.startAction(SendConfirmActivity.this, "transaction");
                             mLoadingAndErrorView.setVisibility(View.GONE);
                         }else {
+                            CrashReport.postCatchedException(new Throwable("交易内容为空"));
                             ToastUtils.showShortToast(getString(R.string.wallet_transaction_fail) );
                         }
                     }

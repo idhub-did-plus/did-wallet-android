@@ -242,13 +242,10 @@ public class Web3Api {
             StaticGasProvider staticGasProvider = new StaticGasProvider(new BigInteger(param.gasPrice), new BigInteger(param.gasLimit));
             ERC1400 erc1400 = ERC1400.load(param.contratAddress, mWeb3j, credentials, staticGasProvider);
             BigDecimal decimal = NumericUtil.valueFormatByDecimal(param.value, Integer.valueOf(param.decimals));
-            Log.e("LYW", "sendERC1400Transaction: " + decimal.toBigInteger());
-            Log.e("LYW", "sendERC1400Transaction: paratition " + Numeric.toHexString(param.paratition) + " fromAddress  " + param.fromAddress + " toAddress " + param.toAddress + "  value " + decimal.toBigInteger());
 
             Tuple3<byte[], byte[], byte[]> send = erc1400.canTransferByPartition(param.paratition, param.fromAddress, param.toAddress, decimal.toBigInteger(), param.data).send();
             byte[] value1 = send.getValue1();
             String s = Numeric.toHexString(value1);
-            Log.e("LYW", "sendERC1400Transaction: " + s);
             //判断
             if ("0xa2".equals(s)) {
                 //交易

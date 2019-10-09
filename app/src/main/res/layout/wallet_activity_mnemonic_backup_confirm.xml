@@ -63,7 +63,7 @@
     <com.idhub.wallet.common.flowlayout.TagFlowLayout
         android:id="@+id/mnemonic_confirm"
         android:layout_width="0dp"
-        android:layout_height="130dp"
+        android:layout_height="150dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="30dp"

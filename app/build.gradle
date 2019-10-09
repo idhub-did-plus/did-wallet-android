@@ -67,4 +67,5 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     implementation 'com.github.TrustWallet:trust-web3-provider:0.2.1'
     implementation project(path: ':clientlib')
+    implementation project(path: ':module_update')
 }
