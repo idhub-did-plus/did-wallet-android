@@ -34,6 +34,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     api 'com.squareup.retrofit2:converter-jackson:2.0.0'
+    api 'com.tencent.bugly:crashreport:latest.release'
     api project(path: ':etherscan')
     api project(path: ':commom')
 

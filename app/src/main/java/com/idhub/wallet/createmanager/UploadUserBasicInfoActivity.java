@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.idhub.wallet.MainActivity;
@@ -121,7 +122,7 @@ public class UploadUserBasicInfoActivity extends BaseActivity implements View.On
     @Override
     public void selectFileResult(String path, String source) {
         mUserHeadPath = path;
-        Glide.with(this).load(path).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(mUserHeaderView);
+        Glide.with(this).load(path).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(mUserHeaderView);
         mDialogFragment.dismiss();
     }
 

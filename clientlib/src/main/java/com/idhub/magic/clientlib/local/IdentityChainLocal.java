@@ -28,6 +28,7 @@ import com.idhub.magic.clientlib.interfaces.Listen;
 import com.idhub.magic.clientlib.interfaces.ResultListener;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface.IdentityCreatedEventResponse;
 import com.idhub.magic.common.service.DeployedContractAddress;
+import com.tencent.bugly.crashreport.CrashReport;
 
 
 public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
@@ -115,6 +116,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
                     listener.result(es.get(0));
 
                 }).exceptionally(transactionReceipt -> {
+                    CrashReport.postCatchedException(transactionReceipt);
                     el.error(transactionReceipt.getMessage());
                     return null;
                 });

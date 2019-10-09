@@ -3,19 +3,23 @@ package com.idhub.wallet.common.dialog;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
 import androidx.annotation.NonNull;
@@ -43,6 +47,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static com.idhub.wallet.common.zxinglib.widget.crop.Crop.REQUEST_PICK;
 
@@ -145,18 +150,38 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
         if (requestCode == REQUEST_PICK && resultCode == Activity.RESULT_OK) {
             if (SOURCE_USER_BASIC_INFO.equals(mSource)) {
                 beginCrop(data.getData());
-            }else {
+            } else {
                 FILE_PATH = getRealFilePath(data.getData());
+                int i = readPictureDegree(FILE_PATH);
+                Log.e("LYW", "onActivityResult: " + i );
+                if (i != 0) {
+                    getBitmapToPath(FILE_PATH);
+                }
             }
+
             if (mUploadFileTypeDialogFragmentListener != null)
                 mUploadFileTypeDialogFragmentListener.selectFileResult(FILE_PATH, mSource);
-        } else if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA &&  resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA && resultCode == Activity.RESULT_OK) {
             if (fileUri != null) {
-                beginCrop(fileUri);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    try {
+                        InputStream inputStream = getContext().getContentResolver().openInputStream(fileUri);
+                        inputStreamToFile(inputStream);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    int i = readPictureDegree(FILE_PATH);
+                    Log.e("LYW", "onActivityResult: " + i );
+                    if (i != 0) {
+                        getBitmapToPath(FILE_PATH);
+                    }
+                } else {
+                    beginCrop(fileUri);
+                }
             }
             if (mUploadFileTypeDialogFragmentListener != null)
                 mUploadFileTypeDialogFragmentListener.selectFileResult(FILE_PATH, mSource);
-        } else if (requestCode == Crop.REQUEST_CROP &&  resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == Crop.REQUEST_CROP && resultCode == Activity.RESULT_OK) {
             getBitmapToPath(headIcon);
             if (mUploadFileTypeDialogFragmentListener != null)
                 mUploadFileTypeDialogFragmentListener.selectFileResult(FILE_PATH, mSource);
@@ -170,6 +195,9 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
     private void init() {
         if (!mTempDir.exists()) {
             mTempDir.mkdirs();
+        }
+        if (!mImagesDir.exists()) {
+            mImagesDir.mkdirs();
         }
     }
 
@@ -197,8 +225,11 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
     public void getBitmapToPath(String path) {
         bitmapRecycle();
         bitmap = getLoacalBitmap(path);
-        if (bitmap != null)
+        if (bitmap != null) {
+            int i = readPictureDegree(path);
+            bitmap = rotateBitmap(bitmap, i);
             bitmapToFile(imageZoom());
+        }
 //        bitmap = rotateBitmap(bitmap, readPictureDegree(Constant.FILE_PATH));
     }
 
@@ -210,6 +241,24 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
         System.gc();
     }
 
+    private void inputStreamToFile(InputStream inputStream) {
+        File file = new File(mImagesDir, mImageName);
+        try {
+            int index;
+            byte[] bytes = new byte[1024];
+            FileOutputStream downloadFile = new FileOutputStream(file);
+            while ((index = inputStream.read(bytes)) != -1) {
+                downloadFile.write(bytes, 0, index);
+                downloadFile.flush();
+            }
+            downloadFile.close();
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FILE_PATH = file.getPath();
+    }
+
     private void bitmapToFile(ByteArrayOutputStream byteArrayOutputStream) {
         File file = new File(mImagesDir, mImageName);
         try {
@@ -218,6 +267,7 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
                 fos.write(byteArrayOutputStream.toByteArray());
                 fos.flush();
                 fos.close();
+                byteArrayOutputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -300,34 +350,156 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
         startActivityForResult(intent, REQUEST_CODE_CAPTURE_CAMEIA);
     }
 
+    /**
+     * 读取图片属性：旋转的角度
+     *
+     * @param path 图片绝对路径
+     * @return degree旋转的角度
+     */
+    private int readPictureDegree(String path) {
+        int degree = 0;
+        try {
+            ExifInterface exifInterface = new ExifInterface(path);
+            int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    degree = 90;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    degree = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    degree = 270;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return degree;
+        }
+        return degree;
+    }
+
+    /**
+     * 旋转图片，使图片保持正确的方向。
+     *
+     * @param bitmap  原始图片
+     * @param degrees 原始图片的角度
+     * @return Bitmap 旋转后的图片
+     */
+    private Bitmap rotateBitmap(Bitmap bitmap, int degrees) {
+        if (degrees == 0 || null == bitmap) {
+            return bitmap;
+        }
+        Matrix matrix = new Matrix();
+        matrix.setRotate(degrees, bitmap.getWidth() / 2, bitmap.getHeight() / 2);
+        Bitmap bmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        if (null != bitmap) {
+            bitmap.recycle();
+        }
+        return bmp;
+    }
+
+
     private String getRealFilePath(Uri uri) {
         if (null == uri) return null;
         final String scheme = uri.getScheme();
         String data = null;
         if (scheme == null)
             data = uri.getPath();
-        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-            data = uri.getPath();
-        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-            String path = uri.getPath();
-            if (path.contains("/camera-photos/"))
-                data = uri.getPath().replace("/camera-photos/", SDcardUtil.getSdcardPath());//"/storage/emulated/0/"
-            else {
-                Cursor cursor = null;
-                try {
-                    String[] proj = {MediaStore.Images.Media.DATA};
-                    cursor = getContext().getContentResolver().query(uri, proj, null, null, null);
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    cursor.moveToFirst();
-                    data = cursor.getString(column_index);
-                } finally {
-                    if (cursor != null) {
-                        cursor.close();
-                    }
+            // DocumentProvider
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(getContext(), uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
+
+            }
+            // DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(getContext(), contentUri, null, null);
+            }
+            // MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{
+                        split[1]
+                };
+
+                return getDataColumn(getContext(), contentUri, selection, selectionArgs);
             }
         }
-        return data;
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+
+            // Return the remote address
+            if (isGooglePhotosUri(uri))
+                return uri.getLastPathSegment();
+
+            return getDataColumn(getContext(), uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return "";
+    }
+
+
+    private static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
+        Cursor cursor = null;
+        final String column = MediaStore.Images.Media.DATA;
+        final String[] projection = {column};
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+    private static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    private static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
     public interface SelectUploadFileTypeDialogFragmentListener {

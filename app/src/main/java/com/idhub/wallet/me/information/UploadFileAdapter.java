@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.SelectUploadFileTypeDialogFragment;
 import com.idhub.wallet.greendao.entity.UploadFileEntity;
@@ -79,7 +80,7 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             String filePath = uploadFileEntity.getFilePath();
             if (filePath.endsWith("jpg") || filePath.endsWith("jpeg") || filePath.endsWith("png")) {
                 otherViewHolder.mFileImage.setVisibility(View.VISIBLE);
-                Glide.with(mContext).load(filePath).into(otherViewHolder.mFileImage);
+                Glide.with(mContext).load(filePath).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(otherViewHolder.mFileImage);
             } else {
                 otherViewHolder.mFileImage.setVisibility(View.GONE);
             }
@@ -195,7 +196,7 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
             if (path.endsWith("jpg") || path.endsWith("jpeg") || path.endsWith("png")) {
                 mFileImage.setVisibility(View.VISIBLE);
-                Glide.with(mContext).load(path).into(mFileImage);
+                Glide.with(mContext).load(path).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).into(mFileImage);
             } else {
                 mFileImage.setVisibility(View.GONE);
             }

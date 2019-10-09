@@ -52,6 +52,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
+
 import com.idhub.magic.clientlib.etherscan.Etherscan;
 
 
@@ -72,7 +73,7 @@ public class Web3Api {
         } else {
             ethNetwork = EthNetwork.MAINNET;
         }
-        ((Etherscan)Etherscan.getInstance()).setCurrentApi(ethNetwork);
+        ((Etherscan) Etherscan.getInstance()).setCurrentApi(ethNetwork);
         mWeb3j = Web3j.build(new HttpService(sNode));
     }
 
@@ -188,7 +189,7 @@ public class Web3Api {
                 .subscribe(observer);
     }
 
-    public static void sendETHTransaction(EthTransactionParam param,DisposableObserver<EthSendTransaction> observer) {
+    public static void sendETHTransaction(EthTransactionParam param, DisposableObserver<EthSendTransaction> observer) {
         Observable.create((ObservableOnSubscribe<EthSendTransaction>) emitter -> {
             EthGetTransactionCount send = mWeb3j.ethGetTransactionCount(param.fromAddress, DefaultBlockParameterName.LATEST).send();//获取noce
             BigInteger transactionCount = send.getTransactionCount();
@@ -200,26 +201,34 @@ public class Web3Api {
             emitter.onNext(ethSendTransaction);
             emitter.onComplete();
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
-
-
     }
 
     public static void getGasPrice() {
         //交易默认请求。保存在sharepreference。请求成功更新sharepreference。
-        EthGasPrice ethGasPrice = null;
-        try {
-            ethGasPrice = mWeb3j.ethGasPrice().sendAsync().get();
-            BigInteger gasPrice = ethGasPrice.getGasPrice();
-            WalletTransactionSharpreference.getInstance().setGasPrice(String.valueOf(gasPrice));
-            LogUtils.e("did", "gasPrice  " + String.valueOf(gasPrice));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        Observable.create((ObservableOnSubscribe<EthGasPrice>) emitter -> {
+            EthGasPrice ethGasPrice = mWeb3j.ethGasPrice().send();
+            emitter.onNext(ethGasPrice);
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<EthGasPrice>() {
+            @Override
+            public void onNext(EthGasPrice ethGasPrice) {
+                BigInteger gasPrice = ethGasPrice.getGasPrice();
+                WalletTransactionSharpreference.getInstance().setGasPrice(String.valueOf(gasPrice));
+                LogUtils.e("did", "gasPrice  " + String.valueOf(gasPrice));
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
-    public static void sendERC20Transaction(String password,String decimals, String contractAddress, String gasPrice, String gasLimit, String toAddress, String value, DisposableSubscriber<TransactionReceipt> web3jSubscriber) {
+    public static void sendERC20Transaction(String password, String decimals, String contractAddress, String gasPrice, String gasLimit, String toAddress, String value, DisposableSubscriber<TransactionReceipt> web3jSubscriber) {
         Credentials credentials = getCredentials(password);
         StaticGasProvider staticGasProvider = new StaticGasProvider(new BigInteger(gasPrice), new BigInteger(gasLimit));
         EIP20Interface ierc20 = EIP20Interface.load(contractAddress, mWeb3j, credentials, staticGasProvider);
@@ -227,14 +236,14 @@ public class Web3Api {
         ierc20.transfer(toAddress, value1.toBigInteger()).flowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(web3jSubscriber);
     }
 
-    public static void sendERC1400Transaction(ERC1400TransactionParam param,DisposableObserver<ERC1400.TransferByPartitionEventResponse> web3jSubscriber){
+    public static void sendERC1400Transaction(ERC1400TransactionParam param, DisposableObserver<ERC1400.TransferByPartitionEventResponse> web3jSubscriber) {
         Observable.create((ObservableOnSubscribe<ERC1400.TransferByPartitionEventResponse>) emitter -> {
             Credentials credentials = getCredentials(param.password);
             StaticGasProvider staticGasProvider = new StaticGasProvider(new BigInteger(param.gasPrice), new BigInteger(param.gasLimit));
             ERC1400 erc1400 = ERC1400.load(param.contratAddress, mWeb3j, credentials, staticGasProvider);
             BigDecimal decimal = NumericUtil.valueFormatByDecimal(param.value, Integer.valueOf(param.decimals));
-            Log.e("LYW", "sendERC1400Transaction: " +decimal.toBigInteger());
-            Log.e("LYW", "sendERC1400Transaction: paratition " +Numeric.toHexString( param.paratition) + " fromAddress  " + param.fromAddress + " toAddress " + param.toAddress + "  value " + decimal.toBigInteger());
+            Log.e("LYW", "sendERC1400Transaction: " + decimal.toBigInteger());
+            Log.e("LYW", "sendERC1400Transaction: paratition " + Numeric.toHexString(param.paratition) + " fromAddress  " + param.fromAddress + " toAddress " + param.toAddress + "  value " + decimal.toBigInteger());
 
             Tuple3<byte[], byte[], byte[]> send = erc1400.canTransferByPartition(param.paratition, param.fromAddress, param.toAddress, decimal.toBigInteger(), param.data).send();
             byte[] value1 = send.getValue1();
@@ -248,8 +257,8 @@ public class Web3Api {
                 ERC1400.TransferByPartitionEventResponse transferByPartitionEventResponse = transferByPartitionEvents.get(0);
                 emitter.onNext(transferByPartitionEventResponse);
                 emitter.onComplete();
-            }else {
-                emitter.onError(new Throwable(App.getInstance().getString(R.string.wallet_no_transaction)+ s));
+            } else {
+                emitter.onError(new Throwable(App.getInstance().getString(R.string.wallet_no_transaction) + s));
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(web3jSubscriber);
     }

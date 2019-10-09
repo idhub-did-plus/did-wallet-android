@@ -27,6 +27,7 @@ import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
 import com.idhub.wallet.net.parameter.EthTransactionParam;
 import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.web3j.crypto.Keys;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
@@ -186,6 +187,8 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onNext(TransactionReceipt o) {
+                        Log.e("LYW", "onNext: "+ o.getTransactionHash() );
+                        CrashReport.postCatchedException(new Throwable(o.getTransactionHash()));
                         ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
                         MainActivity.startAction(SendConfirmActivity.this,"transaction");
                         mLoadingAndErrorView.setVisibility(View.GONE);
@@ -236,9 +239,16 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onNext(EthSendTransaction ethSendTransaction) {
-                        ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
-                        MainActivity.startAction(SendConfirmActivity.this, "transaction");
-                        mLoadingAndErrorView.setVisibility(View.GONE);
+                        CrashReport.postCatchedException(new Throwable(ethSendTransaction.getTransactionHash()));
+                        String transactionHash = ethSendTransaction.getTransactionHash();
+                        Log.e("LYW", "onNext: " + transactionHash);
+                        if (transactionHash != null) {
+                            ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
+                            MainActivity.startAction(SendConfirmActivity.this, "transaction");
+                            mLoadingAndErrorView.setVisibility(View.GONE);
+                        }else {
+                            ToastUtils.showShortToast(getString(R.string.wallet_transaction_fail) );
+                        }
                     }
 
                     @Override

@@ -48,6 +48,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.interfaces.Listen;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class UpgradeActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
@@ -61,29 +62,9 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    IdentityRegistryInterface.IdentityCreatedEventResponse identityCreatedEventResponse = (IdentityRegistryInterface.IdentityCreatedEventResponse) msg.obj;
-                    BigInteger ein = identityCreatedEventResponse.ein;
-                    Log.e("LYW", "onNext:upgrade ein " + ein );
-                    //升级1484success
-                    //升级成功存储数据库
-                    IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
-                    idHubMessageEntity.setTime(DateUtils.getCurrentDate());
-                    idHubMessageEntity.setType(IdHubMessageType.UPGRADE_1484_IDENTITY);
-                    String associatedAddress = WalletManager.getKeyStore(mData).getAddress();
-                    idHubMessageEntity.setAddress(associatedAddress);
-                    idHubMessageEntity.setEin(ein.toString());
-                    idHubMessageEntity.setRecoverAddress(mRecoverAddressStr);
-                    idHubMessageEntity.setDefaultAddress(associatedAddress);
-                    new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
-                    //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
-                    WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoverAddressStr);
-                    WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
-                    WalletKeystore keyStore = WalletManager.getKeyStore(mData);
-                    Wallet wallet = keyStore.getWallet();
-                    wallet.setAssociate(true);
-                    wallet.setDefaultAddress(true);
-                    WalletManager.flushWallet(keyStore, true);
+                    String associatedAddress = (String) msg.obj;
                     //调用1056的initialize
+                    Log.e("LYW", "handleMessage:begininitialize "  );
                     ApiFactory.getIdentityChainLocal().initialize(associatedAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
                         @Override
                         public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
@@ -199,9 +180,31 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
             Listen<IdentityRegistryInterface.IdentityCreatedEventResponse> identity = ApiFactory.getIdentityChainLocal().createIdentity();
             //error
             identity.listen(identityCreatedEventResponse -> {
+                BigInteger ein = identityCreatedEventResponse.ein;
+                Log.e("LYW", "onNext:upgrade ein " + ein );
+                //升级1484success
+                //升级成功存储数据库
+                IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
+                idHubMessageEntity.setTime(DateUtils.getCurrentDate());
+                idHubMessageEntity.setType(IdHubMessageType.UPGRADE_1484_IDENTITY);
+                String associatedAddress = WalletManager.getKeyStore(mData).getAddress();
+                idHubMessageEntity.setAddress(associatedAddress);
+                idHubMessageEntity.setEin(ein.toString());
+                idHubMessageEntity.setRecoverAddress(mRecoverAddressStr);
+                idHubMessageEntity.setDefaultAddress(associatedAddress);
+                new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
+                //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
+                WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoverAddressStr);
+                WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
+                WalletKeystore keyStore = WalletManager.getKeyStore(mData);
+                Wallet wallet = keyStore.getWallet();
+                wallet.setAssociate(true);
+                wallet.setDefaultAddress(true);
+                WalletManager.flushWallet(keyStore, true);
+
                 Message message = Message.obtain();
                 message.what = 1;
-                message.obj = identityCreatedEventResponse;
+                message.obj = associatedAddress;
                 handler.sendMessage(message);
 
             }, message -> {
