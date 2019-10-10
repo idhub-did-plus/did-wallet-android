@@ -338,27 +338,33 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             }
         }
         //解决升级身份成功本地未记录的情况，
-        if (UpgradeInitializeSharedpreferences.getInstance().getIsUpgradeAction() && TextUtils.isEmpty(defaultAddress)) {
+        boolean isUpgradeAction = UpgradeInitializeSharedpreferences.getInstance().getIsUpgradeAction();
+        if (isUpgradeAction && TextUtils.isEmpty(defaultAddress)) {
+            defaultAddress = WalletManager.getCurrentKeyStore().getAddress();
             checkHasIdentity(defaultAddress);
         }
-        //解决initialize失败的情况
-        if (!UpgradeInitializeSharedpreferences.getInstance().getUpgradeInitializeIsSuccess() && !TextUtils.isEmpty(defaultAddress)) {
-            ApiFactory.getIdentityChainLocal().initialize(defaultAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
-                @Override
-                public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
-                    UpgradeInitializeSharedpreferences.getInstance().setUpgradeInitializeIsSuccess(true);
-                }
 
-                @Override
-                public void onError(Throwable e) {
+//        //解决initialize失败的情况 需要默认地址发交易
+//        if (!UpgradeInitializeSharedpreferences.getInstance().getUpgradeInitializeIsSuccess() && !TextUtils.isEmpty(WalletManager.getDefaultAddress())) {
+//            ApiFactory.getIdentityChainLocal().initialize(defaultAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
+//                @Override
+//                public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
+//                    Log.e("LYW", "onNext:ini success "  );
+//                    UpgradeInitializeSharedpreferences.getInstance().setUpgradeInitializeIsSuccess(true);
+//                }
+//
+//                @Override
+//                public void onError(Throwable e) {
+//                    Log.e("LYW", "onNext:ini false "  );
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//                }
+//            });
+//        }
 
-                }
 
-                @Override
-                public void onComplete() {
-                }
-            });
-        }
     }
 
     private void getEIN(String defaultAddress) {
@@ -419,7 +425,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
 
             @Override
             public void onError(Throwable e) {
-
+                Log.e("LYW", "onNext:checkHasIdentityonError " + e.getMessage() );
             }
 
             @Override
