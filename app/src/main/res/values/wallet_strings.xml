@@ -367,5 +367,8 @@
     <string name="wallet_main_back_double_click">再按一次返回键关闭程序</string>
     <string name="wallet_chinese">简体中文</string>
     <string name="wallet_english">English</string>
+    <string name="wallet_create_error">创建失败</string>
+    <string name="wallet_create_QR_code_failed">生成二维码失败</string>
+    <string name="wallet_web_site">http://www.idhub.network/cn/</string>
 
 </resources>

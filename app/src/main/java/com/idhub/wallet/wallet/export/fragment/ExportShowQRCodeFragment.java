@@ -48,7 +48,7 @@ public class ExportShowQRCodeFragment extends Fragment implements View.OnClickLi
         }
         View view = inflater.inflate(R.layout.wallet_fragment_show_qrcode, container, false);
         mQRCode = view.findViewById(R.id.wallet_QR_code);
-        view.findViewById(R.id.wallet_show).setOnClickListener(this);
+//        view.findViewById(R.id.wallet_show).setOnClickListener(this);
         setQRCode();
         return view;
     }
@@ -84,11 +84,6 @@ public class ExportShowQRCodeFragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.wallet_show:
-                //show QRcode
-                break;
-        }
+
     }
 }

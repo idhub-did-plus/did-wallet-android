@@ -18,8 +18,16 @@ android {
         }
     }
     buildTypes {
+//        debug{
+//            minifyEnabled true //开启混淆
+//            zipAlignEnabled true //压缩优化
+//            shrinkResources true //移除无用的资源
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
         release {
-            minifyEnabled false
+            minifyEnabled true //开启混淆
+            zipAlignEnabled true //压缩优化
+            shrinkResources true //移除无用的资源
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -37,6 +45,12 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/LGPL2.1'
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 greendao {
@@ -57,8 +71,6 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'org.bitcoinj:bitcoinj-core:0.14.7'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'com.google.code.gson:gson:2.8.5'

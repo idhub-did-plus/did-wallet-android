@@ -3,7 +3,6 @@ package com.idhub.wallet.didhub.model;
 public class Wallet  {
 
      boolean associate;//是否关联地址
-     String identifer;//身份标识符
      String name;
      String passwordHint;
      long timestamp;
@@ -36,14 +35,6 @@ public class Wallet  {
         this.associate = associate;
     }
 
-    public String getIdentifer() {
-        return identifer;
-    }
-
-    public void setIdentifer(String identifer) {
-        this.identifer = identifer;
-    }
-
     public String getName() {
         return name;
     }
@@ -64,7 +55,6 @@ public class Wallet  {
     public String toString() {
         return "Wallet{" +
                 "associate=" + associate +
-                ", identifer='" + identifer + '\'' +
                 ", name='" + name + '\'' +
                 ", passwordHint='" + passwordHint + '\'' +
                 ", timestamp=" + timestamp +

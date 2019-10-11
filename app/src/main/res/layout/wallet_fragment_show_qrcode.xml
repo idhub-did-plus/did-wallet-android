@@ -52,23 +52,22 @@
 
     <ImageView
         android:id="@+id/wallet_QR_code"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        android:src="@mipmap/wallet_eth_icon" />
+        android:layout_gravity="center" />
 
-    <TextView
-        android:id="@+id/wallet_show"
-        style="@style/WalletCommonButton"
-        android:layout_width="wrap_content"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:layout_marginBottom="20dp"
-        android:paddingBottom="8dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="38dp"
-        android:text="@string/wallet_show_QR_code" />
+<!--    <TextView-->
+<!--        android:id="@+id/wallet_show"-->
+<!--        style="@style/WalletCommonButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:paddingLeft="12dp"-->
+<!--        android:paddingRight="12dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:paddingTop="8dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:paddingBottom="8dp"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="38dp"-->
+<!--        android:text="@string/wallet_show_QR_code" />-->
 </LinearLayout>

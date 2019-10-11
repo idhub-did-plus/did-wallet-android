@@ -64,11 +64,13 @@ public class WalletManager {
     }
 
     private static void writeToFile(WalletKeystore keyStore, File destination) {
+        Log.e("LYW", "writeToFile: " + keyStore.toString() );
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             objectMapper.writeValue(destination, keyStore);
         } catch (IOException ex) {
+            Log.e("LYW", "writeToFile: " + ex.getMessage());
             throw new TokenException(Messages.WALLET_STORE_FAIL, ex);
         }
     }

@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -161,7 +162,9 @@ public class InputPasswordActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onError(Throwable e) {
-
+                ToastUtils.showShortToast(getString(R.string.wallet_create_error));
+                mLoadingAndErrorView.setVisibility(View.GONE);
+                Log.e("LYW", "onError: "  + e.getMessage());
             }
 
             @Override

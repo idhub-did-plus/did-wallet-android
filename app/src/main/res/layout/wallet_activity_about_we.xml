@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="100dp"
         android:layout_marginRight="30dp"
         app:layout_constraintTop_toBottomOf="@id/tv_version">
 
@@ -38,87 +38,87 @@
             android:id="@+id/web_site_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="www.baidu.com"
+            android:text="@string/wallet_web_site"
             android:textColor="@color/wallet_blue" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_forum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        app:layout_constraintTop_toBottomOf="@id/ll_web_site">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_forum"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="30dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginRight="30dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/ll_web_site">-->
 
-        <TextView
-            android:id="@+id/forum_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="WebSite"
-            android:textColor="@color/wallet_text_black"
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/forum_name"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="WebSite"-->
+<!--            android:textColor="@color/wallet_text_black"-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/forum_url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="www.baidu.com"
-            android:textColor="@color/wallet_blue" />
-    </LinearLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/forum_url"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="www.baidu.com"-->
+<!--            android:textColor="@color/wallet_blue" />-->
+<!--    </LinearLayout>-->
 
-    <LinearLayout
-        android:id="@+id/ll_twitter"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        app:layout_constraintTop_toBottomOf="@id/ll_forum">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_twitter"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="30dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginRight="30dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/ll_forum">-->
 
-        <TextView
-            android:id="@+id/twitter_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="WebSite"
-            android:textColor="@color/wallet_text_black"
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/twitter_name"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="WebSite"-->
+<!--            android:textColor="@color/wallet_text_black"-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/twitter_url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="www.baidu.com"
-            android:textColor="@color/wallet_blue" />
-    </LinearLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/twitter_url"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="www.baidu.com"-->
+<!--            android:textColor="@color/wallet_blue" />-->
+<!--    </LinearLayout>-->
 
-    <LinearLayout
-        android:id="@+id/ll_we_chat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        app:layout_constraintTop_toBottomOf="@id/ll_twitter">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_we_chat"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="30dp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginRight="30dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/ll_twitter">-->
 
-        <TextView
-            android:id="@+id/we_chat_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="WebSite"
-            android:textColor="@color/wallet_text_black"
-            android:textSize="16sp" />
+<!--        <TextView-->
+<!--            android:id="@+id/we_chat_name"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="WebSite"-->
+<!--            android:textColor="@color/wallet_text_black"-->
+<!--            android:textSize="16sp" />-->
 
-        <TextView
-            android:id="@+id/we_chat_url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="www.baidu.com"
-            android:textColor="@color/wallet_blue" />
-    </LinearLayout>
+<!--        <TextView-->
+<!--            android:id="@+id/we_chat_url"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="www.baidu.com"-->
+<!--            android:textColor="@color/wallet_blue" />-->
+<!--    </LinearLayout>-->
 
     <TextView
         android:id="@+id/tv_version"

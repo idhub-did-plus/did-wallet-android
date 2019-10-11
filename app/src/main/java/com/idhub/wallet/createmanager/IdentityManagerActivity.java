@@ -17,12 +17,14 @@ import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 import com.idhub.wallet.createmanager.walletimport.ImportWalletActivity;
 import com.idhub.wallet.createmanager.walletrecover.WalletIdentityRecoveryActivity;
+import com.idhub.wallet.utils.LocalUtils;
 
 public class IdentityManagerActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocalUtils.setApplicationLanguage(IdentityManagerActivity.this);
         setContentView(R.layout.wallet_activity_identity_manager);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             View decorView = getWindow().getDecorView();

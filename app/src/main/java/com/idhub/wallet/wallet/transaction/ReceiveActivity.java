@@ -82,13 +82,13 @@ public class ReceiveActivity extends BaseActivity implements View.OnClickListene
                         if (bitmap != null) {
                             mQrCodeView.setImageBitmap(bitmap);
                         } else {
-                            ToastUtils.showShortToast("生成二维码失败");
+                            ToastUtils.showShortToast(getString(R.string.wallet_create_QR_code_failed));
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        ToastUtils.showShortToast(getString(R.string.wallet_create_QR_code_failed));
                     }
 
                     @Override
@@ -114,7 +114,7 @@ public class ReceiveActivity extends BaseActivity implements View.OnClickListene
             mAmountView.setVisibility(View.INVISIBLE);
         } else {
             mAmountView.setVisibility(View.VISIBLE);
-            mAmountView.setText("请转入 " + value + " " + mAssetsModel.getName());
+            mAmountView.setText( value + " " + mAssetsModel.getName());
         }
     }
 

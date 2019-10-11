@@ -395,6 +395,10 @@
     <string name="wallet_vip_my_medal">Verifiable Claims</string>
     <string name="wallet_language">Languages</string>
     <string name="wallet_main_back_double_click">Press again to exit the program</string>
+    <string name="wallet_create_error">create failed</string>
+    <string name="wallet_create_QR_code_failed">error</string>
+    <string name="wallet_web_site">http://www.idhub.network/cn/</string>
+
 
 
 </resources>
