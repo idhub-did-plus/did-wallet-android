@@ -4,14 +4,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import android.os.Build;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.statusbar.SystemBarTintManager;
+import com.idhub.wallet.utils.UnitUtils;
 
 public class TitleLayout extends ConstraintLayout implements View.OnClickListener {
 
@@ -25,6 +32,7 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
     private TextView mTitleView;
     private TextView mImageOneView;
     private TextView mImageTwoView;
+    private View titleView;
     private OnImageClickCallbackListener mOnFirstClickCallbackListener;
     private OnImageClickCallbackListener mOnSecondClickCallbackListener;
 
@@ -41,6 +49,8 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
         mImageTwoView.setVisibility(GONE);
         mBackImageView.setOnClickListener(this);
         mBackTextView.setOnClickListener(this);
+        titleView = findViewById(R.id.title_view);
+        immerseTitle();
     }
 
     @Override
@@ -106,6 +116,19 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
             mImageOneView.setOnClickListener(this);
         } else {
             mImageOneView.setVisibility(GONE);
+        }
+    }
+
+    public void immerseTitle() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+            int mScreenWidth = displayMetrics.widthPixels;
+            int paddingTop = SystemBarTintManager.getStatusBarHeight(getContext());
+            titleView.setPadding(titleView.getPaddingLeft(), paddingTop, titleView.getPaddingRight(), titleView.getPaddingBottom());
+            RelativeLayout.LayoutParams localObject = new RelativeLayout.LayoutParams(mScreenWidth, (UnitUtils.dp2px(48) + paddingTop));
+            titleView.setLayoutParams(localObject);
         }
     }
 
