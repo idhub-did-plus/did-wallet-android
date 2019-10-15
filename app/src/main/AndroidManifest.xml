@@ -21,7 +21,9 @@
         <activity android:name=".wallet.token.Erc1400DetailActivity" />
         <activity android:name=".setting.NodeSettingActivity" />
         <activity android:name=".setting.TransactionDetailActivity" />
-        <activity android:name=".createmanager.walletimport.ImportWalletActivity" />
+        <activity android:name=".createmanager.walletimport.ImportWalletActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity android:name=".setting.message.moretransaction.MoreTransactionMessageActivity" />
         <activity android:name=".setting.message.HistoryMessageActivity" />
         <activity android:name=".dapp.Web3Activity" />

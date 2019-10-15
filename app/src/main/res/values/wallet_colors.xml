@@ -42,4 +42,5 @@
     <color name="wallet_main_tab_color_select">#15b9d7</color>
     <color name="wallet_main_tab_color_normal">#b5b5b5</color>
     <color name="wallet_main_address">#687aa5</color>
+    <color name="wallet_upload_btn_color">#37c4bb</color>
 </resources>

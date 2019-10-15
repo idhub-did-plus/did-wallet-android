@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".me.information.UploadInformationTypeActivity">
+
     <include
         android:id="@+id/title"
         layout="@layout/wallet_common_title_layout"
@@ -14,31 +15,65 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <LinearLayout
         android:id="@+id/tv_upload_idhub_information"
-        android:layout_width="286dp"
-        android:layout_height="46dp"
-        android:background="@drawable/wallet_shape_circle"
-        android:gravity="center"
-        android:text="@string/wallet_upload_user_information"
-        android:textColor="@color/wallet_white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/tv_upload_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        app:layout_constraintTop_toBottomOf="@id/title">
 
-    <TextView
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/wallet_upload_information" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/wallet_upload_btn_background"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
+            android:text="@string/wallet_upload_user_information"
+            android:textColor="@color/wallet_white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/tv_upload_file"
-        android:layout_width="286dp"
-        android:layout_height="46dp"
-        android:background="@drawable/wallet_shape_circle"
-        android:gravity="center"
-        android:text="@string/wallet_upload_file"
-        android:textColor="@color/wallet_white"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_upload_idhub_information" />
+        app:layout_constraintTop_toBottomOf="@id/tv_upload_idhub_information">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/wallet_upload_file" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/wallet_upload_btn_background"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
+            android:text="@string/wallet_upload_file"
+            android:textColor="@color/wallet_white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

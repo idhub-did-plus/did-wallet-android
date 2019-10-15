@@ -49,7 +49,7 @@ public class DidHubMnemonicKeyStore extends WalletKeystore implements EncMnemoni
         this.wallet = wallet;
         this.version = VERSION;
         this.id = Strings.isNullOrEmpty(id) ? UUID.randomUUID().toString() : id;
-        WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
+        WalletOtherInfoSharpreference.getInstance().setSelectedId(this.id);
     }
 
     @Override
