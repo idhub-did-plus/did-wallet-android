@@ -68,6 +68,7 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
     }
 
     public void setEINVisible(int visibility){
+        mEINView.setVisibility(visibility);
         mEINIdentityView.setVisibility(visibility);
     }
 

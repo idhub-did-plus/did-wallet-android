@@ -34,13 +34,6 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA},
-                        100);
-            }
-        }
         setContentView(R.layout.wallet_activity_qr_code);
         initView();
     }
@@ -51,6 +44,14 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
         View captureView = findViewById(R.id.capture_view);
         captureView.setSelected(true);
         captureView.setOnClickListener(this::switchFlash);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        100);
+                mZXingView.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void switchFlash(View view) {
@@ -135,7 +136,9 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mZXingView.setVisibility(View.VISIBLE);
                 mZXingView.startCamera();
+                mZXingView.startSpotAndShowRect();
             } else {
                 ToastUtils.showShortToast(getString(R.string.scan_camera_permission));
                 finish();
