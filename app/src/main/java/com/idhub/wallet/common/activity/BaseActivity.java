@@ -6,7 +6,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.common.statusbar.StatusBarUtil;
+import com.idhub.wallet.utils.LocalUtils;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -18,6 +20,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LocalUtils.setApplicationLanguage(this);
         StatusBarUtil.setImmersiveStatusBar(this, true);
     }
 

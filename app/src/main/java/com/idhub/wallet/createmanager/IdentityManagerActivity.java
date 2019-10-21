@@ -24,7 +24,6 @@ public class IdentityManagerActivity extends BaseActivity implements View.OnClic
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocalUtils.setApplicationLanguage(IdentityManagerActivity.this);
         setContentView(R.layout.wallet_activity_identity_manager);
         initView();
     }

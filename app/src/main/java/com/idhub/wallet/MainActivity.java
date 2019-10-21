@@ -109,13 +109,10 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LocalUtils.setApplicationLanguage(MainActivity.this);
-
         if (!init()) {
             return;
         }
         setContentView(R.layout.wallet_activity_main);
-//        Beta.checkUpgrade();
         initView();
         initData();
     }

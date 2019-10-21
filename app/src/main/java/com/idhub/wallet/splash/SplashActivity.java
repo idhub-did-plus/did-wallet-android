@@ -33,7 +33,6 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_activity_splash);
-        LocalUtils.setApplicationLanguage(SplashActivity.this);
         checkReadPhonePremission();
     }
 

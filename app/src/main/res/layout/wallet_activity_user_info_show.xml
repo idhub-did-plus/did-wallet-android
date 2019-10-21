@@ -29,7 +29,7 @@
             android:id="@+id/iv_user_head"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="12dp"
             android:src="@mipmap/wallet_default_head" />
     </LinearLayout>
 
@@ -57,7 +57,7 @@
             android:id="@+id/tv_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="12dp"
             tools:text="sfdkjfh" />
     </LinearLayout>
 
@@ -94,7 +94,7 @@
                 android:id="@+id/tv_user_signature"
                 android:gravity="right"
                 android:layout_width="0dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="12dp"
                 android:layout_height="wrap_content"
                 tools:text="你稍等试试试" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -123,7 +123,7 @@
             android:id="@+id/tv_user_ein"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="12dp"
             tools:text="sfdkjfh" />
     </LinearLayout>
 
@@ -152,7 +152,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="16dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="12dp"
             tools:text="sfdk000000000000000000000000000jfhssssss" />
     </LinearLayout>
     <LinearLayout
@@ -179,7 +179,7 @@
             android:layout_marginLeft="16dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="12dp"
             tools:text="sf000000000000000000000000000000000000000000000000000dkjfh" />
     </LinearLayout>
 

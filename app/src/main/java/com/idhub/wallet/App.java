@@ -24,6 +24,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
+        LocalUtils.setApplicationLanguage(this);
         ApkUpdate.initBugly(getApplicationContext());
         initGreenDao();
     }
