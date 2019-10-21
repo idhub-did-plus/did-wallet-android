@@ -1,6 +1,5 @@
 package com.idhub.wallet.setting.message.moretransaction;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
@@ -17,7 +16,6 @@ import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.wallet.mainfragment.WalletListDialog;
-import com.idhub.wallet.wallet.mainfragment.WalletListDialogFragment;
 
 public class MoreTransactionMessageActivity extends BaseActivity implements View.OnClickListener, WalletListDialog.WalletListSelectItemListener {
 

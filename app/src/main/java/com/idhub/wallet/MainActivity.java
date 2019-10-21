@@ -35,6 +35,7 @@ import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
+import com.idhub.wallet.common.walletobservable.WalletUpdateUserInfoObservable;
 import com.idhub.wallet.createmanager.IdentityManagerActivity;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
@@ -61,6 +62,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Observer;
 
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;
@@ -105,7 +107,9 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     private JSONObject mIdHubLoginJwtJsonObject;
     private String signMessage;
     private LoadingAndErrorView mLoadingAndErrorView;
-
+    private Observer userInfoObserver = (o, arg) -> {
+       mTopView.setUserInfo();
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +119,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         setContentView(R.layout.wallet_activity_main);
         initView();
         initData();
+        WalletUpdateUserInfoObservable.getInstance().addObserver(userInfoObserver);
     }
 
     public static void reStart(Context context) {
@@ -613,6 +618,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        WalletUpdateUserInfoObservable.getInstance().deleteObserver(userInfoObserver);
         handler.removeCallbacksAndMessages(null);
     }
 

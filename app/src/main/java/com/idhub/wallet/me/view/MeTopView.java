@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.idhub.magic.common.service.DeployedContractAddress;
@@ -30,6 +31,9 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
     private TextView mRecoverAddressView;
     private TextView mEINIdentityView;
     private TextView mEINView;
+    private ImageView headView;
+    private TextView name;
+    private TextView singature;
 
     public MeTopView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -38,13 +42,10 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ImageView headView = findViewById(R.id.iv_head);
-        UserBasicInfoEntity userBasicInfo = UserBasicInfoSharpreference.getInstance().getUserBasicInfo();
-        Glide.with(getContext()).load(userBasicInfo.headPath).apply(RequestOptions.bitmapTransform(new CircleCrop())).placeholder(R.mipmap.wallet_default_head).into(headView);
-        TextView name = findViewById(R.id.tv_name);
-        name.setText(userBasicInfo.name);
-        TextView singature = findViewById(R.id.tv_signature);
-        singature.setText(userBasicInfo.signature);
+        headView = findViewById(R.id.iv_head);
+        name = findViewById(R.id.tv_name);
+        singature = findViewById(R.id.tv_signature);
+        setUserInfo();
         findViewById(R.id.iv_setting).setOnClickListener(this);
         mRecoverAddressView = findViewById(R.id.tv_recover_address);
         mEINIdentityView = findViewById(R.id.tv_ein_number);
@@ -55,6 +56,13 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
                 UserInfoShowActivity.startAction(getContext());
             }
         });
+    }
+
+    public void setUserInfo() {
+        UserBasicInfoEntity userBasicInfo = UserBasicInfoSharpreference.getInstance().getUserBasicInfo();
+        Glide.with(this).load(userBasicInfo.headPath).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(headView);
+        name.setText(userBasicInfo.name);
+        singature.setText(userBasicInfo.signature);
     }
 
     public void setRecoverAddress(String recoverAddress) {

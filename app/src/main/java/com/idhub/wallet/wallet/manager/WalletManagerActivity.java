@@ -29,7 +29,7 @@ import java.util.LinkedList;
 public class WalletManagerActivity extends BaseActivity implements MessageDialogFragment.MessageDialogFragmentListener {
 
     private View view;
-    private SelectAddWalletWayPopupWindow mSelectAddWalletWayPopupWindow;
+    private SelectAddWalletWayDialog mSelectAddWalletWayDialog;
     private LinkedList<WalletKeystore> mDidHubMnemonicKeyStores;
 
     @Override
@@ -50,8 +50,8 @@ public class WalletManagerActivity extends BaseActivity implements MessageDialog
         titleLayout.setTitle(getString(R.string.wallet_wallet_manager));
         titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_add_wallet, () -> {
             //add wallet dialog
-            mSelectAddWalletWayPopupWindow = new SelectAddWalletWayPopupWindow(WalletManagerActivity.this, itemsOnClick);
-            mSelectAddWalletWayPopupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+            mSelectAddWalletWayDialog = new SelectAddWalletWayDialog(WalletManagerActivity.this, itemsOnClick);
+            mSelectAddWalletWayDialog.show();
         });
         RecyclerView recyclerView = findViewById(R.id.rv_wallet);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -90,7 +90,7 @@ public class WalletManagerActivity extends BaseActivity implements MessageDialog
                 }
                 break;
         }
-        mSelectAddWalletWayPopupWindow.dismiss();
+        mSelectAddWalletWayDialog.dismiss();
     };
 
     private boolean checkAddressRegisterIDHub() {

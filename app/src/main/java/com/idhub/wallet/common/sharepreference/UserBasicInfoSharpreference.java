@@ -25,7 +25,7 @@ public class UserBasicInfoSharpreference {
         return sUserBasicInfoSharpreference;
     }
 
-    public boolean setUserBasicInfo(UserBasicInfoEntity userBasicInfoEntity){
+    public boolean setUserBasicInfo(UserBasicInfoEntity userBasicInfoEntity) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString(WALLET_BASIC_USER_HEAD_PATH, userBasicInfoEntity.headPath);
         edit.putString(WALLET_BASIC_USER_NAME, userBasicInfoEntity.name);
@@ -33,12 +33,24 @@ public class UserBasicInfoSharpreference {
         return edit.commit();
     }
 
-    public UserBasicInfoEntity getUserBasicInfo(){
+    public UserBasicInfoEntity getUserBasicInfo() {
         UserBasicInfoEntity userBasicInfoEntity = new UserBasicInfoEntity();
         userBasicInfoEntity.headPath = sharedPreferences.getString(WALLET_BASIC_USER_HEAD_PATH, "");
         userBasicInfoEntity.name = sharedPreferences.getString(WALLET_BASIC_USER_NAME, "");
         userBasicInfoEntity.signature = sharedPreferences.getString(WALLET_BASIC_USER_SIGNATURE, "");
         return userBasicInfoEntity;
+    }
+
+    public void setUserName(String name) {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString(WALLET_BASIC_USER_NAME, name);
+        edit.apply();
+    }
+
+    public void setUserSignature(String signature) {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString(WALLET_BASIC_USER_SIGNATURE, signature);
+        edit.apply();
     }
 
 }
