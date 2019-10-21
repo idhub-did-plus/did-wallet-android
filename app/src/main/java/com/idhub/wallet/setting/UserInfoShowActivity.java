@@ -4,10 +4,14 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -82,6 +86,7 @@ public class UserInfoShowActivity extends BaseActivity implements View.OnClickLi
         TextView einView = findViewById(R.id.tv_user_ein);
         View didLayoutView = findViewById(R.id.ll_did);
         didView = findViewById(R.id.tv_user_did);
+        didView.setOnClickListener(this);
         String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
         if (TextUtils.isEmpty(ein)) {
             einLayoutView.setVisibility(View.GONE);
@@ -90,8 +95,8 @@ public class UserInfoShowActivity extends BaseActivity implements View.OnClickLi
             einLayoutView.setVisibility(View.VISIBLE);
             didLayoutView.setVisibility(View.VISIBLE);
             einView.setText(ein);
-            didView.setText("did:erc1484:" + DeployedContractAddress.IdentityRegistryInterface + ":" + NumericUtil.bigIntegerToHexWithZeroPadded(new BigInteger(ein), 64));
-
+            String didStr = "did:erc1484:" + DeployedContractAddress.IdentityRegistryInterface + ":" + NumericUtil.bigIntegerToHexWithZeroPadded(new BigInteger(ein), 64);
+            didView.setText(didStr);
         }
 
         View recoveryLayoutView = findViewById(R.id.ll_recovery_address);

@@ -250,6 +250,7 @@
             android:layout_marginLeft="16dp"
             android:textSize="13sp"
             android:layout_marginTop="5dp"
+            android:drawableRight="@mipmap/wallet_copy_blue"
             android:layout_marginRight="12dp"
             tools:text="sf000000000000000000000000000000000000000000000000000dkjfh" />
     </LinearLayout>
