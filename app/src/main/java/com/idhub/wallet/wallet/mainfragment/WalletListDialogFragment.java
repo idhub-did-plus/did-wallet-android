@@ -15,10 +15,9 @@ import android.view.Window;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.wallet.adapter.WalletListAdapter;
-import com.idhub.wallet.wallet.walletsetting.WalletSettingActivity;
+import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -92,7 +91,7 @@ public class WalletListDialogFragment extends DialogFragment implements View.OnC
                 break;
             case R.id.iv_setting:
                 //设置
-                WalletSettingActivity.startAction(getContext());
+                WalletManagerActivity.startAction(getContext());
                 dismiss();
                 break;
         }

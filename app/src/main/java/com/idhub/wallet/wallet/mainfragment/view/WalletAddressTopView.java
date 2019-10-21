@@ -4,27 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentManager;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.zxinglib.QrCodeActivity;
-import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.utils.UnitUtils;
 import com.idhub.wallet.wallet.mainfragment.WalletListDialog;
-import com.idhub.wallet.wallet.mainfragment.WalletListDialogFragment;
-import com.idhub.wallet.wallet.manager.WalletManagerActivity;
+import com.idhub.wallet.wallet.info.WalletInfoActivity;
 import com.idhub.wallet.wallet.transaction.ReceiveActivity;
 
 import org.web3j.crypto.Keys;
@@ -98,7 +93,7 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
             case R.id.wallet_manage:
             case R.id.upgrade_icon:
             case R.id.upgrade_name:
-                WalletManagerActivity.startAction(getContext(), walletKeystore.getId());
+                WalletInfoActivity.startAction(getContext(), walletKeystore.getId());
                 break;
             case R.id.wallet_select:
                 WalletListDialog walletListDialog = new WalletListDialog(getContext(), walletKeystore.getAddress());

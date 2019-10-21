@@ -1,4 +1,4 @@
-package com.idhub.wallet.wallet.manager;
+package com.idhub.wallet.wallet.info;
 
 import android.content.Context;
 import androidx.constraintlayout.widget.ConstraintLayout;

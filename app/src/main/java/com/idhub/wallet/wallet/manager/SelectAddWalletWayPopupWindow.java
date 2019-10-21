@@ -1,4 +1,4 @@
-package com.idhub.wallet.wallet.walletsetting;
+package com.idhub.wallet.wallet.manager;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;

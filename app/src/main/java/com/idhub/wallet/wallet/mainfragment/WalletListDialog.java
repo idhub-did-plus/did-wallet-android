@@ -3,21 +3,14 @@ package com.idhub.wallet.wallet.mainfragment;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +18,7 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.wallet.adapter.WalletListAdapter;
-import com.idhub.wallet.wallet.walletsetting.WalletSettingActivity;
+import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -87,7 +80,7 @@ public class WalletListDialog extends Dialog implements View.OnClickListener {
                 break;
             case R.id.iv_setting:
                 //设置
-                WalletSettingActivity.startAction(getContext());
+                WalletManagerActivity.startAction(getContext());
                 dismiss();
                 break;
         }

@@ -9,22 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.ImagesList.StringsListView;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
-import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.utils.ToastUtils;
-import com.idhub.wallet.wallet.adapter.WalletListAdapter;
-import com.idhub.wallet.wallet.walletsetting.WalletSettingActivity;
 
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import io.reactivex.subscribers.DisposableSubscriber;

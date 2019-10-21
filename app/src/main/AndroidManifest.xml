@@ -70,10 +70,10 @@
             android:name=".createmanager.walletcreate.MnemonicBackupConfirmActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".wallet.walletsetting.WalletSettingActivity"
+            android:name=".wallet.manager.WalletManagerActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".wallet.manager.WalletManagerActivity"
+            android:name=".wallet.info.WalletInfoActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".wallet.export.ExportWalletContentActivity"

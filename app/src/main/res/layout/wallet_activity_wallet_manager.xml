@@ -2,131 +2,20 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_setting_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/wallet_background"
     tools:context=".wallet.manager.WalletManagerActivity">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_wallet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@color/wallet_white"
-        app:layout_constraintTop_toBottomOf="@id/title">
-
-        <ImageView
-            android:id="@+id/iv_head"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="12dp"
-            android:src="@mipmap/wallet_wallet_head"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_wallet_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/wallet_black"
-            app:layout_constraintLeft_toRightOf="@id/iv_head"
-            app:layout_constraintTop_toTopOf="@id/iv_head"
-            tools:text="ETH_WALLET" />
-
-        <TextView
-            android:id="@+id/tv_wallet_address"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginRight="12dp"
-            android:singleLine="true"
-            android:layout_marginTop="6dp"
-            android:ellipsize="middle"
-            android:drawableRight="@mipmap/wallet_copy_blue"
-            app:layout_constraintLeft_toLeftOf="@id/tv_wallet_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_wallet_name"
-            tools:text="dsakjdaskjfaskjals" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include
         android:id="@+id/title"
         layout="@layout/wallet_common_title_layout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/line"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="0dp"
-        app:layout_constraintTop_toBottomOf="@id/cl_wallet"
-        android:layout_height="15dp"
-        android:background="@color/wallet_background"/>
-    <include
-        android:id="@+id/export_mnemonic"
-        layout="@layout/wallet_wallet_manager_item"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_wallet"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/export_password_hint" />
-
-    <include
-        android:id="@+id/export_password_hint"
-        layout="@layout/wallet_wallet_manager_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line" />
-    <include
-        android:id="@+id/export_keystore"
-        layout="@layout/wallet_wallet_manager_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/export_mnemonic" />
-
-    <include
-        android:id="@+id/export_private_key"
-        layout="@layout/wallet_wallet_manager_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/export_keystore" />
-
-    <include
-        android:id="@+id/associated_address"
-        layout="@layout/wallet_wallet_manager_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/export_private_key" />
-    <include
-        android:id="@+id/delete"
-        layout="@layout/wallet_wallet_manager_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/associated_address" />
-    <include
-        android:id="@+id/loading_and_error"
-        layout="@layout/wallet_common_loading_and_error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/title" />
 </androidx.constraintlayout.widget.ConstraintLayout>

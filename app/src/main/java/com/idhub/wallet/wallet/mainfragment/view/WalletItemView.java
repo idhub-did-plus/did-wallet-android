@@ -3,23 +3,17 @@ package com.idhub.wallet.wallet.mainfragment.view;
 import android.content.Context;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.didhub.keystore.DidHubMnemonicKeyStore;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.utils.StringUtils;
-import com.idhub.wallet.utils.ToastUtils;
-import com.idhub.wallet.wallet.manager.WalletManagerActivity;
+import com.idhub.wallet.wallet.info.WalletInfoActivity;
 
 import org.web3j.crypto.Keys;
-import org.web3j.protocol.Web3j;
 
 public class WalletItemView extends ConstraintLayout implements View.OnClickListener {
 
@@ -47,7 +41,7 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
             @Override
             public void onClick(View v) {
                 if (clicked) {
-                    WalletManagerActivity.startAction(getContext(), mKeyStore.getId());
+                    WalletInfoActivity.startAction(getContext(), mKeyStore.getId());
                 }
             }
         });
@@ -97,7 +91,7 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
             switch (id) {
                 case R.id.tv_associated_address:
                     //关联地址
-                    WalletManagerActivity.startAction(getContext(), mKeyStore.getId());
+                    WalletInfoActivity.startAction(getContext(), mKeyStore.getId());
                     break;
             }
     }

@@ -12,7 +12,6 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.setting.message.HistoryMessageActivity;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
-import com.idhub.wallet.wallet.walletsetting.WalletSettingActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,7 +51,7 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
                 HistoryMessageActivity.startAction(getContext());
                 break;
             case R.id.wallet_manager:
-                WalletSettingActivity.startAction(getContext());
+                WalletManagerActivity.startAction(getContext());
                 break;
             case R.id.node_setup:
                 NodeSettingActivity.startAction(getContext());
