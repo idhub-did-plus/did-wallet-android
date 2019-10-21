@@ -27,8 +27,8 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
     private TextView mAddressTv;
     private ImageView mMenuIv;
     private WalletKeystore mKeyStore;
-    private TextView mAssociatedAddress;
-    private boolean clicked = true;
+    private View mAssociatedAddress;
+    private boolean clicked = true; //设置点击当前item是否跳转
     private TextView mEINView;
 
     public WalletItemView(Context context, AttributeSet attrs) {
@@ -42,8 +42,15 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
         mAddressTv = findViewById(R.id.tv_wallet_address);
         mMenuIv = findViewById(R.id.iv_wallet_menu);
         mAssociatedAddress = findViewById(R.id.tv_associated_address);
-        mEINView = findViewById(R.id.tv_ein_number);
-        mMenuIv.setOnClickListener(this);
+        mEINView = findViewById(R.id.tv_default_address);
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (clicked) {
+                    WalletManagerActivity.startAction(getContext(), mKeyStore.getId());
+                }
+            }
+        });
     }
 
     public void setData(WalletKeystore keyStore) {
@@ -52,17 +59,15 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
         mAddressTv.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));
         boolean isgl = keyStore.getWallet().isAssociate();
         if (isgl) {
-            mAssociatedAddress.setText(getContext().getString(R.string.wallet_associated_address));
-            mAssociatedAddress.setTextColor(getContext().getResources().getColor(R.color.wallet_orange));
-            mAssociatedAddress.setBackgroundResource(R.drawable.wallet_background_stroke_orange);
+            mAddressTv.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.wallet_associated),null,null,null);
+            mAssociatedAddress.setVisibility(GONE);
         } else {
-            mAssociatedAddress.setText(getContext().getString(R.string.wallet_upgrade_associated_address));
-            mAssociatedAddress.setTextColor(getContext().getResources().getColor(R.color.wallet_black));
-            mAssociatedAddress.setBackgroundResource(R.drawable.wallet_background_stroke_black);
+            mAddressTv.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.wallet_no_associated),null,null,null);
+            mAssociatedAddress.setVisibility(VISIBLE);
             mAssociatedAddress.setOnClickListener(this);
         }
         if (keyStore.getWallet().isDefaultAddress()) {
-            mEINView.setText("defaultAddress");
+            mEINView.setText(getContext().getString(R.string.wallet_default_address));
         }else{
             mEINView.setText("");
         }
@@ -80,27 +85,20 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
         mMenuIv.setVisibility(visible);
     }
 
-    public void setAddressTextDrawable(){
-        Drawable drawable = getContext().getDrawable(R.mipmap.wallet_address_copy);
-        mAddressTv.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
-        mAddressTv.setOnClickListener(this);
-    }
+//    public void setAddressTextDrawable(){
+//        Drawable drawable = getContext().getDrawable(R.mipmap.wallet_address_copy);
+//        mAddressTv.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+//        mAddressTv.setOnClickListener(this);
+//    }
+
     @Override
     public void onClick(View v) {
-        if (clicked) {
-            int id = v.getId();
+        int id = v.getId();
             switch (id) {
-                case R.id.iv_wallet_menu:
                 case R.id.tv_associated_address:
                     //关联地址
                     WalletManagerActivity.startAction(getContext(), mKeyStore.getId());
                     break;
-                case R.id.tv_wallet_address:
-                    String s = mAddressTv.getText().toString();
-                    StringUtils.copy(getContext(), s);
-                    ToastUtils.showShortToast(getContext().getString(R.string.wallet_copy_address_success));
-                    break;
             }
-        }
     }
 }

@@ -40,6 +40,7 @@ import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.net.IDHubCredentialProvider;
+import com.idhub.wallet.utils.StringUtils;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.export.ExportWalletContentActivity;
 
@@ -88,11 +89,9 @@ public class WalletManagerActivity extends BaseActivity implements View.OnClickL
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_manager));
         headView = findViewById(R.id.iv_head);
-        UserBasicInfoEntity userBasicInfo = UserBasicInfoSharpreference.getInstance().getUserBasicInfo();
-        Glide.with(this).load(userBasicInfo.headPath).apply(RequestOptions.bitmapTransform(new CircleCrop())).placeholder(R.mipmap.wallet_default_head).into(headView);
         mWalletNameView = findViewById(R.id.tv_wallet_name);
         mWalletAddressView = findViewById(R.id.tv_wallet_address);
-
+        mWalletAddressView.setOnClickListener(this);
         mExportPasswordHint = findViewById(R.id.export_password_hint);
         mExportPasswordHint.setVisibility(View.GONE);
         mExportPasswordHint.setData(R.mipmap.wallet_export_mnemonic,getString(R.string.wallet_export_password_hint));
@@ -151,6 +150,10 @@ public class WalletManagerActivity extends BaseActivity implements View.OnClickL
             showPasswordDialog(DELETE);
         } else if (v == mExportPasswordHint) {
 
+        } else if (v == mWalletAddressView) {
+            String s = mWalletAddressView.getText().toString();
+            StringUtils.copy(this, s);
+            ToastUtils.showShortToast(getString(R.string.wallet_copy_address_success));
         }
     }
 

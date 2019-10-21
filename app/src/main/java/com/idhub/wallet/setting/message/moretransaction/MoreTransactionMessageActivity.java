@@ -16,9 +16,10 @@ import com.idhub.wallet.common.title.TitleLayout;
 
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.wallet.mainfragment.WalletListDialog;
 import com.idhub.wallet.wallet.mainfragment.WalletListDialogFragment;
 
-public class MoreTransactionMessageActivity extends BaseActivity implements View.OnClickListener, WalletListDialogFragment.WalletListSelectItemListener {
+public class MoreTransactionMessageActivity extends BaseActivity implements View.OnClickListener, WalletListDialog.WalletListSelectItemListener {
 
     private String mSearchAddress = WalletManager.getAddress();
     private TextView mAddressView;
@@ -56,11 +57,9 @@ public class MoreTransactionMessageActivity extends BaseActivity implements View
     public void onClick(View v) {
         if (v == mAddressView) {
             //选择钱包地址
-            WalletListDialogFragment dialogFragment = WalletListDialogFragment.getInstance(mSearchAddress);
-            if (getFragmentManager() != null) {
-                dialogFragment.show(getSupportFragmentManager(), "wallet_dialog_fragment");
-            }
-            dialogFragment.setWalletListSelectItemListener(this);
+            WalletListDialog walletListDialog = new WalletListDialog(this, mSearchAddress);
+            walletListDialog.setWalletListSelectItemListener(this);
+            walletListDialog.show();
         }
     }
 

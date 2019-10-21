@@ -22,13 +22,14 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.entity.AssetsModel;
 import com.idhub.wallet.utils.UnitUtils;
+import com.idhub.wallet.wallet.mainfragment.WalletListDialog;
 import com.idhub.wallet.wallet.mainfragment.WalletListDialogFragment;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 import com.idhub.wallet.wallet.transaction.ReceiveActivity;
 
 import org.web3j.crypto.Keys;
 
-public class WalletAddressTopView extends ConstraintLayout implements View.OnClickListener, WalletListDialogFragment.WalletListSelectItemListener {
+public class WalletAddressTopView extends ConstraintLayout implements View.OnClickListener, WalletListDialog.WalletListSelectItemListener {
 
     private WalletKeystore walletKeystore;
     private TextView mWalletName;
@@ -100,10 +101,9 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
                 WalletManagerActivity.startAction(getContext(), walletKeystore.getId());
                 break;
             case R.id.wallet_select:
-                WalletListDialogFragment dialogFragment = WalletListDialogFragment.getInstance(walletKeystore.getAddress());
-                FragmentManager supportFragmentManager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
-                dialogFragment.show(supportFragmentManager, "wallet_dialog_fragment");
-                dialogFragment.setWalletListSelectItemListener(this);
+                WalletListDialog walletListDialog = new WalletListDialog(getContext(), walletKeystore.getAddress());
+                walletListDialog.setWalletListSelectItemListener(this);
+                walletListDialog.show();
                 break;
             case R.id.wallet_address:
                 AssetsModel assetsModel = new AssetsModel();
