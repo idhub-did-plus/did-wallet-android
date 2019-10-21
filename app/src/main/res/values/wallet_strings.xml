@@ -371,4 +371,9 @@
     <string name="wallet_create_QR_code_failed">生成二维码失败</string>
     <string name="wallet_web_site">http://www.idhub.network/cn/</string>
 
+    <string name="wallet_user_info">个人信息</string>
+    <string name="wallet_user_info_head">头像</string>
+    <string name="wallet_user_info_name">名称</string>
+    <string name="wallet_user_info_did">DID</string>
+
 </resources>

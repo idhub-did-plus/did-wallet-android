@@ -29,7 +29,7 @@
     <include
         android:id="@+id/title"
         layout="@layout/wallet_common_title_layout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="48dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

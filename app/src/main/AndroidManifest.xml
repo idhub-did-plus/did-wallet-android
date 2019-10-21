@@ -3,17 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.idhub.wallet">
 
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
     <application
-        tools:replace="android:allowBackup"
         android:name=".App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/WalletAppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".common.zxinglib.QrCodeActivity">
-        </activity>
+        android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup">
+        <activity android:name=".setting.UserInfoShowActivity"></activity>
+        <activity android:name=".common.zxinglib.QrCodeActivity"></activity>
         <activity android:name=".setting.LanguagesActivity" />
         <activity android:name=".setting.SettingsActivity" />
         <activity android:name=".createmanager.walletrecover.WalletIdentityRecoveryActivity" />
@@ -21,9 +33,9 @@
         <activity android:name=".wallet.token.Erc1400DetailActivity" />
         <activity android:name=".setting.NodeSettingActivity" />
         <activity android:name=".setting.TransactionDetailActivity" />
-        <activity android:name=".createmanager.walletimport.ImportWalletActivity"
-            android:windowSoftInputMode="adjustPan"
-            />
+        <activity
+            android:name=".createmanager.walletimport.ImportWalletActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".setting.message.moretransaction.MoreTransactionMessageActivity" />
         <activity android:name=".setting.message.HistoryMessageActivity" />
         <activity android:name=".dapp.Web3Activity" />
@@ -105,19 +117,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths">
-            </meta-data>
+                android:resource="@xml/file_paths"></meta-data>
         </provider>
     </application>
 
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
 </manifest>

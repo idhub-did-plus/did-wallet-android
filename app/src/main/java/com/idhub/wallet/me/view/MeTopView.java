@@ -19,6 +19,7 @@ import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.me.information.UploadInformationTypeActivity;
 import com.idhub.wallet.setting.SettingsActivity;
+import com.idhub.wallet.setting.UserInfoShowActivity;
 
 import org.web3j.crypto.Keys;
 
@@ -48,6 +49,12 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
         mRecoverAddressView = findViewById(R.id.tv_recover_address);
         mEINIdentityView = findViewById(R.id.tv_ein_number);
         mEINView = findViewById(R.id.tv_ein);
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserInfoShowActivity.startAction(getContext());
+            }
+        });
     }
 
     public void setRecoverAddress(String recoverAddress) {

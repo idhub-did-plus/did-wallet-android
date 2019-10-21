@@ -401,4 +401,8 @@
 
 
 
+    <string name="wallet_user_info_name">Username</string>
+    <string name="wallet_user_info_did">DID</string>
+
+
 </resources>
