@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,6 +32,7 @@ public class TransactionDetailActivity extends BaseActivity implements View.OnCl
         }
         mTransactionRecordEntity = (TransactionRecordEntity) o;
         setContentView(R.layout.wallet_activity_transaction_detail);
+        Log.e("LYW", "onCreate: " + mTransactionRecordEntity.getHash() );
         init();
     }
 

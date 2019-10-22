@@ -97,7 +97,8 @@ public class TransactionRecordDbManager implements ModelDbManager<TransactionRec
         DaoSession daoSession = App.getInstance().getmDaoSession();
         AsyncSession asyncSession = daoSession.startAsyncSession();
         asyncSession.setListenerMainThread(listener);
-        asyncSession.loadAll(TransactionRecordEntity.class);
+        Query<TransactionRecordEntity> build = daoSession.queryBuilder(TransactionRecordEntity.class).orderDesc(TransactionRecordEntityDao.Properties.TimeStamp).build();
+        asyncSession.queryList(build);
     }
 
     @Override

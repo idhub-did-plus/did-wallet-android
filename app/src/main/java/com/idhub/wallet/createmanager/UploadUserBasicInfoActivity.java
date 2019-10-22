@@ -85,12 +85,12 @@ public class UploadUserBasicInfoActivity extends BaseActivity implements View.On
                 ToastUtils.showShortToast(getString(R.string.wallet_not_empty_user_head));
                 return;
             }
-            String userName = mUserNameView.getText().toString();
+            String userName = mUserNameView.getText().toString().trim();
             if (TextUtils.isEmpty(userName)) {
                 ToastUtils.showShortToast(getString(R.string.wallet_not_empty_user_name));
                 return;
             }
-            String userSignature = mUserNickNameView.getText().toString();
+            String userSignature = mUserNickNameView.getText().toString().trim();
             if (TextUtils.isEmpty(userSignature)) {
                 ToastUtils.showShortToast(getString(R.string.wallet_not_empty_user_signature));
                 return;

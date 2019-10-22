@@ -1,5 +1,7 @@
 package com.idhub.magic.clientlib.etherscan;
 
+import android.util.Log;
+
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,10 +118,11 @@ public class Etherscan implements IncomingService {
 	void once() throws Exception {
 		long start = ProviderFactory.getProvider().getLastEndBlockNumber();
 		long end = ProviderFactory.getProvider().web3j().ethBlockNumber().send().getBlockNumber().longValue();
+		Log.e("LYW", "once:start " + start);
+		Log.e("LYW", "once: " + end);
 		TransactionSession sess = new TransactionSession(accounts, txlistener, transferlistener, api(), start, end);
 		try {
 			sess.execute();
-			ProviderFactory.getProvider().storeLastEndBlockNumber(end);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

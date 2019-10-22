@@ -1,8 +1,11 @@
 package com.idhub.magic.clientlib.etherscan;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.interfaces.IncomingListener;
 
 import io.api.etherscan.core.impl.EtherScanApi;
@@ -62,8 +65,12 @@ public class TransactionSession {
 			}
 		}
 		List<Tx> incomingTxs(String address){
-	    	 
+
 	    	   List<Tx> txs = api.account().txs(address,start, end);
+			if (txs.size() > 0) {
+				//监听到有转账信息之后保存下一次的BlockNumber，比之前的BlockNumber多1
+				ProviderFactory.getProvider().storeLastEndBlockNumber(end+1);
+			}
 //	    	   List<Tx> rst = new ArrayList<Tx>();
 //
 //	    	   for(Tx t : txs) {
@@ -75,8 +82,11 @@ public class TransactionSession {
 	    	   return txs;
 	      }
 		List<TxToken> incomingTokens(String address){
-	    	 
-	    	    List<TxToken> es = api.account().txsToken(address, start, end);
+
+			List<TxToken> es = api.account().txsToken(address, start, end);
+			if (es.size() > 0) {
+				ProviderFactory.getProvider().storeLastEndBlockNumber(end+1);
+			}
 //	    	   List<TxToken> rst = new ArrayList<TxToken>();
 //
 //	    	   for(TxToken t : es) {

@@ -44,6 +44,7 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
     private static final String END_BLOCK_PARAM = "&endblock=";
     private static final String SORT_DESC_PARAM = "&sort=desc";
     private static final String SORT_ASC_PARAM = "&sort=asc";
+    private static final String SORT_PARAM = "&sort=";
     private static final String ADDRESS_PARAM = "&address=";
     private static final String TXHASH_PARAM = "&txhash=";
     private static final String OFFSET_PARAM = "&offset=";
@@ -113,7 +114,6 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
         return balances;
     }
 
-
     private String toAddressParam(final List<String> addresses) {
         StringBuilder builder = new StringBuilder();
         int size = addresses.size();
@@ -149,12 +149,17 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
 
     @Override
     public @NotNull List<Tx> txs(String address, long startBlock, long endBlock, String page, int offset) throws ApiException {
+        return txs(address, startBlock, endBlock,"%s",OFFSET_MAX,"asc");
+    }
+
+    @Override
+    public @NotNull List<Tx> txs(String address, long startBlock, long endBlock, String page, int offset, String sort) throws ApiException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
         final String offsetParam = PAGE_PARAM + page + OFFSET_PARAM + offset;
         final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
-        final String urlParams = ACT_TX_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
+        final String urlParams = ACT_TX_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_PARAM+sort;
 
         return getRequestUsingOffset(urlParams, TxResponseTO.class);
     }
@@ -226,8 +231,6 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
                 : response.getResult();
     }
 
-
-
     @NotNull
     @Override
     public List<TxToken> txsToken(final String address) throws ApiException {
@@ -249,12 +252,17 @@ public class AccountApiProvider extends BasicProvider implements IAccountApi {
     @Override
     public @NotNull List<TxToken> txsToken(String address, long startBlock, long endBlock, String page, int offset) throws ApiException {
 
+        return txsToken(address, startBlock, endBlock,"%s",OFFSET_MAX,"asc");
+    }
+
+    @Override
+    public @NotNull List<TxToken> txsToken(String address, long startBlock, long endBlock, String page, int offset, String sort) throws ApiException {
         BasicUtils.validateAddress(address);
         final BlockParam blocks = BasicUtils.compensateBlocks(startBlock, endBlock);
 
         final String offsetParam = PAGE_PARAM + page + OFFSET_PARAM + offset;
         final String blockParam = START_BLOCK_PARAM + blocks.start() + END_BLOCK_PARAM + blocks.end();
-        final String urlParams = ACT_TX_TOKEN_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam + SORT_ASC_PARAM;
+        final String urlParams = ACT_TX_TOKEN_ACTION + offsetParam + ADDRESS_PARAM + address + blockParam +SORT_PARAM+ sort;
 
         return getRequestUsingOffset(urlParams, TxTokenResponseTO.class);
     }

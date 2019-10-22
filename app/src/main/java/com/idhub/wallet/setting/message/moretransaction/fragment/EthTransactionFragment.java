@@ -50,7 +50,7 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
     private MoreTransactionMessageActivity mActivity;
     private static final int MAX_END_BLOCK = 999999999;
     private int mPage;
-    private static final int mOffset = 3;
+    private static final int mOffset = 20;
     private boolean hasNextPage;
     private String mAddress;
     private EtherScanApi etherScanApi = new EtherScanApi(Web3Api.ethNetwork);
@@ -97,7 +97,7 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
 
     private void loadData() {
         Observable.create((ObservableOnSubscribe<List<Tx>>) emitter -> {
-            List<Tx> txs = etherScanApi.account().txs(mAddress, 0, MAX_END_BLOCK, String.valueOf(mPage), mOffset);
+            List<Tx> txs = etherScanApi.account().txs(mAddress, 0, MAX_END_BLOCK, String.valueOf(mPage), mOffset,"desc");
             emitter.onNext(txs);
             emitter.onComplete();
         })
