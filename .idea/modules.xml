@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/basemoudle/basemoudle.iml" filepath="$PROJECT_DIR$/basemoudle/basemoudle.iml" />
       <module fileurl="file://$PROJECT_DIR$/clientlib/clientlib.iml" filepath="$PROJECT_DIR$/clientlib/clientlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/commom/commom.iml" filepath="$PROJECT_DIR$/commom/commom.iml" />
       <module fileurl="file://$PROJECT_DIR$/did-wallet-android.iml" filepath="$PROJECT_DIR$/did-wallet-android.iml" />

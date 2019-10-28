@@ -3,7 +3,7 @@ package com.idhub.wallet.common.sharepreference;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.idhub.wallet.App;
+import com.idhub.base.App;
 import com.idhub.wallet.me.VipStateType;
 
 public class WalletVipSharedPreferences {

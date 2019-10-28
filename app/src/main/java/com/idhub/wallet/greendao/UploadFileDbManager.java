@@ -1,9 +1,9 @@
 package com.idhub.wallet.greendao;
 
-import com.idhub.wallet.App;
-import com.idhub.wallet.greendao.db.DaoSession;
-import com.idhub.wallet.greendao.db.UploadFileEntityDao;
-import com.idhub.wallet.greendao.entity.UploadFileEntity;
+import com.idhub.base.greendao.db.DaoSession;
+import com.idhub.base.greendao.db.UploadFileEntityDao;
+import com.idhub.base.greendao.entity.UploadFileEntity;
+import com.idhub.base.App;
 
 import org.greenrobot.greendao.async.AsyncOperationListener;
 import org.greenrobot.greendao.async.AsyncSession;

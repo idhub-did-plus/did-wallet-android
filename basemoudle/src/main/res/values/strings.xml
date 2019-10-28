@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">basemoudle</string>
+    <string name="contract_empty_toast">合约地址为空，不能操作</string>
+</resources>

@@ -6,9 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.common.statusbar.StatusBarUtil;
-import com.idhub.wallet.utils.LocalUtils;
+import com.idhub.base.launage.LocalUtils;
 
 public class BaseActivity extends AppCompatActivity {
 

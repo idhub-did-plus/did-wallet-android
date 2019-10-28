@@ -3,14 +3,13 @@ package com.idhub.wallet.utils;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.idhub.wallet.App;
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.setting.WalletNodeManager;
-import com.idhub.wallet.wallet.assets.AssetsType;
+import com.idhub.base.node.AssetsModel;
+import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.wallet.mainfragment.QRCodeType;
 import com.idhub.wallet.wallet.transaction.SendActivity;
 
@@ -39,7 +38,7 @@ public class QRcodeAnalysisUtils {
             }
 
             if (!TextUtils.isEmpty(contractAddress)) {
-                String node = WalletOtherInfoSharpreference.getInstance().getNode();
+                String node = WalletNoteSharedPreferences.getInstance().getNode();
                 AssetsModel assetsModel = null;
                 if (node.equals(WalletNodeManager.MAINNET)) {
                     assetsModel = new AssetsModelDbManager().queryByMainContractAddressKeysync(contractAddress);

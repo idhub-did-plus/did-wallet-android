@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
@@ -160,6 +163,12 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
             messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
             messageDialogFragment.setMessagePasswordDialogFragmentListener(this);
         } else {
+            //TODO:暂时这么先写 判断当前节点没有合约地址
+            String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
+            if (TextUtils.isEmpty(identityRegistryInterface)) {
+                Toast.makeText(this, getString(R.string.wallet_none_contract_address), Toast.LENGTH_SHORT).show();
+                return;
+            }
             MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_associated_address), getString(R.string.wallet_confirm));
             messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
             messageDialogFragment.setMessagePasswordDialogFragmentListener(this);

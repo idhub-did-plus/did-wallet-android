@@ -3,7 +3,7 @@ package com.idhub.wallet.common.sharepreference;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.idhub.wallet.App;
+import com.idhub.base.App;
 
 public class BlockNumbersSharedPreferences {
     private static BlockNumbersSharedPreferences mBlockNumbersSharedPreferences;

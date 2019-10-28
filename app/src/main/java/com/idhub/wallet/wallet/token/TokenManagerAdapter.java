@@ -1,10 +1,8 @@
 package com.idhub.wallet.wallet.token;
 
-import android.app.Activity;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ComponentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.idhub.wallet.setting;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
-import com.idhub.wallet.setting.message.idhub.IdHubMessageItemView;
 
 import java.util.ArrayList;
 import java.util.List;

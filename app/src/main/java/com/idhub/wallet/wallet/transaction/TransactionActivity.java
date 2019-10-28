@@ -3,10 +3,7 @@ package com.idhub.wallet.wallet.transaction;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,7 +14,7 @@ import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.wallet.assets.AssetsType;
 import com.idhub.wallet.wallet.token.PartitionEntity;
 

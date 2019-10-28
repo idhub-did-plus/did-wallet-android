@@ -1,0 +1,32 @@
+package com.idhub.base.launage;
+
+import android.content.Context;
+import android.content.res.Configuration;
+import android.os.Build;
+import android.os.LocaleList;
+import java.util.Locale;
+
+public class LocalUtils {
+
+    public static void setApplicationLanguage(Context context) {
+
+        String localLanguage = LocaleSharpreferences.getInstance(context).getLocalLanguage();
+        Locale locale = Locale.forLanguageTag(localLanguage);//获取sp里面保存的语言
+        // 更新 app 环境
+        Configuration conf = context.getResources().getConfiguration();
+        conf.locale = locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            LocaleList localeList = new LocaleList(locale);
+            LocaleList.setDefault(localeList);
+            conf.setLocales(localeList);
+            context.createConfigurationContext(conf);
+            Locale.setDefault(locale);
+        } else {
+            conf.setLocale(locale);
+            context.createConfigurationContext(conf);
+            Locale.setDefault(locale);
+        }
+        context.getResources().updateConfiguration(conf, context.getResources().getDisplayMetrics());
+    }
+
+}

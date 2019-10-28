@@ -2,12 +2,10 @@ package com.idhub.wallet.common.dialog;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,12 +31,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.idhub.wallet.App;
+import com.idhub.base.App;
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.zxinglib.util.SDcardUtil;
 import com.idhub.wallet.common.zxinglib.util.TimeUtil;
 import com.idhub.wallet.common.zxinglib.widget.crop.Crop;
-import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.io.ByteArrayOutputStream;

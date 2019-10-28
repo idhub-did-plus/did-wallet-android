@@ -1,37 +1,32 @@
 package com.idhub.wallet.wallet.mainfragment;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import android.text.InputType;
 import android.text.TextUtils;
 
-import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
-import com.idhub.wallet.common.walletobservable.WalletNodeSelectedObservable;
+import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.base.node.AssetsModel;
+import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.wallet.mainfragment.view.WalletAddressTopView;
 import com.idhub.wallet.wallet.mainfragment.view.WalletFragmentBottomView;
 import com.idhub.wallet.wallet.token.TokenManagerActivity;
@@ -84,7 +79,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         new AssetsModelDbManager().queryAll(operation -> {
             if (operation.isCompletedSucessfully()) {
                 List<AssetsModel> result = (List<AssetsModel>) operation.getResult();
-                String node = WalletOtherInfoSharpreference.getInstance().getNode();
+                String node = WalletNoteSharedPreferences.getInstance().getNode();
                 ArrayList<AssetsModel> list = new ArrayList<>();
                 //过滤 显示对应ropsten或mainnet上的contractAddress
                 if (WalletNodeManager.ROPSTEN.equals(node)) {

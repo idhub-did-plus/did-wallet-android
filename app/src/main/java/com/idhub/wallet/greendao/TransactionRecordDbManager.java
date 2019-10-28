@@ -1,23 +1,19 @@
 package com.idhub.wallet.greendao;
 
-import com.idhub.wallet.App;
-import com.idhub.wallet.greendao.db.AssetsModelDao;
-import com.idhub.wallet.greendao.db.DaoSession;
-import com.idhub.wallet.greendao.db.TransactionRecordEntityDao;
-import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.base.greendao.db.DaoSession;
+import com.idhub.base.greendao.db.TransactionRecordEntityDao;
+import com.idhub.base.greendao.entity.TransactionRecordEntity;
+import com.idhub.base.App;
 
 import org.greenrobot.greendao.async.AsyncOperationListener;
 import org.greenrobot.greendao.async.AsyncSession;
 import org.greenrobot.greendao.query.Query;
-import org.greenrobot.greendao.query.WhereCondition;
 
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;

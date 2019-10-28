@@ -37,6 +37,7 @@ dependencies {
     api project(path: ':etherscan')
     api project(path: ':commom')
     api project(path: ':module_update')
+    implementation project(path: ':basemoudle')
 
     //    api files('libs/magic-common-0.0.1-SNAPSHOT.jar')
 }

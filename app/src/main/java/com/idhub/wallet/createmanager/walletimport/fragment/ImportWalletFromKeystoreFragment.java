@@ -11,7 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
@@ -22,7 +24,7 @@ import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
-import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
+import com.idhub.base.greendao.entity.IdHubMessageEntity;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
@@ -77,6 +79,12 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
         int id = v.getId();
         switch (id) {
             case R.id.tv_import:
+                //TODO:暂时这么先写 判断当前节点没有合约地址
+                String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
+                if (TextUtils.isEmpty(identityRegistryInterface)) {
+                    Toast.makeText(getContext(), getString(R.string.wallet_none_contract_address), Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 submit();
                 break;
         }

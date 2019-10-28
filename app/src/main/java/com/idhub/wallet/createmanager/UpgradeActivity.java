@@ -14,11 +14,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.idhub.magic.clientlib.interfaces.Identity;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface;
+import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
@@ -37,7 +39,7 @@ import com.idhub.wallet.didhub.util.MnemonicUtil;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
-import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
+import com.idhub.base.greendao.entity.IdHubMessageEntity;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
@@ -55,8 +57,6 @@ import io.reactivex.schedulers.Schedulers;
 
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.interfaces.Listen;
-
-import org.web3j.abi.datatypes.Bool;
 
 public class UpgradeActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
@@ -155,6 +155,12 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
         int id = v.getId();
         switch (id) {
             case R.id.tv_upgrade:
+                //TODO:暂时这么先写 判断当前节点没有合约地址
+                String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
+                if (TextUtils.isEmpty(identityRegistryInterface)) {
+                    Toast.makeText(this, getString(R.string.wallet_none_contract_address), Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 //身份升级需要先验证输入用户密码
                 if (TextUtils.isEmpty(mMnemonicStrs)) {
                     inputVerifyPassword();
@@ -254,7 +260,6 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
             public void onNext(Boolean aBoolean) {
                 if (aBoolean) {
                     mPwd = data;
-                    mLoadingAndErrorView.setVisibility(View.GONE);
                     boolean isUpgradeAction = UpgradeInitializeSharedpreferences.getInstance().getIsUpgradeAction();
                     if (isUpgradeAction) {
                         checkHasIdentity();
@@ -262,6 +267,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                         //生成恢复地址recoverAddress和助记词。助记词备份完之后提交create 成功之后保存recoverAddress
                         createRecoverAddressAndMnemonic();
                     }
+                    mLoadingAndErrorView.setVisibility(View.GONE);
                 } else {
                     mLoadingAndErrorView.setVisibility(View.GONE);
                     ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
@@ -301,7 +307,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                     emitter.onError(null);
                 }
             }
-        }).subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe(new DisposableObserver<List<String>>() {
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<List<String>>() {
 
             @Override
             protected void onStart() {

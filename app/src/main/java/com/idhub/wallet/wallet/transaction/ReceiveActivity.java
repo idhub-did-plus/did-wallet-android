@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -16,12 +15,12 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.title.TitleLayout;
-import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.QRCodeEncoder;
 import com.idhub.wallet.utils.StringUtils;
 import com.idhub.wallet.utils.ToastUtils;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 
 import org.web3j.crypto.Keys;
 

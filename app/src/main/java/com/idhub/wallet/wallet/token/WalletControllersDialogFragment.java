@@ -57,9 +57,6 @@ public class WalletControllersDialogFragment extends DialogFragment implements V
             public void onNext(List list) {
                 if (list != null && list.size() > 0) {
                     List<String> datas = list;
-                    for (String data : datas) {
-                        Log.e("LYW", "onNext: " + data);
-                    }
                     mRecyclerView.addAll(datas);
                 } else {
                     ToastUtils.showShortToast(getString(R.string.wallet_no_controllers));

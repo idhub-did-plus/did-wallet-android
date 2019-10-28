@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.base.greendao.entity.TransactionRecordEntity;
 
 import java.util.ArrayList;
 import java.util.List;

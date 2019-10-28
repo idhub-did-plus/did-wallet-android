@@ -1,13 +1,10 @@
 package com.idhub.wallet.greendao;
 
 
-import android.util.Log;
-
-import com.idhub.wallet.App;
-import com.idhub.wallet.greendao.db.AssetsModelDao;
-import com.idhub.wallet.greendao.db.DaoSession;
-import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.utils.ToastUtils;
+import com.idhub.base.greendao.db.AssetsModelDao;
+import com.idhub.base.greendao.db.DaoSession;
+import com.idhub.base.App;
+import com.idhub.base.node.AssetsModel;
 
 import org.greenrobot.greendao.async.AsyncOperationListener;
 import org.greenrobot.greendao.async.AsyncSession;
@@ -50,7 +47,6 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        ToastUtils.showShortToast("初始化资产失败");
                     }
 
                     @Override

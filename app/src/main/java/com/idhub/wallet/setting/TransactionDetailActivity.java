@@ -1,7 +1,5 @@
 package com.idhub.wallet.setting;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +12,7 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.base.greendao.entity.TransactionRecordEntity;
 
 import java.math.BigInteger;
 

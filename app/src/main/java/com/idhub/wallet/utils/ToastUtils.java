@@ -1,7 +1,7 @@
 package com.idhub.wallet.utils;
 
 import android.widget.Toast;
-import com.idhub.wallet.App;
+import com.idhub.base.App;
 
 public class ToastUtils {
     public static void showShortToast(String message){

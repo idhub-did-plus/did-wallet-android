@@ -16,7 +16,7 @@ import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsDefaultType;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.utils.UnitUtils;
 import com.idhub.wallet.wallet.mainfragment.WalletListDialog;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;

@@ -1,7 +1,5 @@
 package com.idhub.wallet.me.information;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,7 +30,7 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.greendao.UploadIDHubInfoDbManager;
-import com.idhub.wallet.greendao.entity.UploadIDHubInfoEntity;
+import com.idhub.base.greendao.entity.UploadIDHubInfoEntity;
 import com.idhub.wallet.me.information.view.InformationInputItemView;
 import com.idhub.wallet.me.information.view.InformationSelectItemView;
 import com.idhub.wallet.net.IDHubCredentialProvider;

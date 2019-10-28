@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="contract_empty_toast">合约地址为空，不能操作</string>
+
+</resources>

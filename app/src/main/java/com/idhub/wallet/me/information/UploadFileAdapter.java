@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.SelectUploadFileTypeDialogFragment;
-import com.idhub.wallet.greendao.entity.UploadFileEntity;
+import com.idhub.base.greendao.entity.UploadFileEntity;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.util.ArrayList;

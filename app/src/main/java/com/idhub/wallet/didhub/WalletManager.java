@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.io.CharSource;
 import com.google.common.io.Files;
+import com.idhub.base.App;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.didhub.address.EthereumAddressCreator;
 import com.idhub.wallet.didhub.keystore.DidHubKeyStore;
@@ -41,7 +42,8 @@ import javax.annotation.Nullable;
 public class WalletManager {
     private static Hashtable<String, WalletKeystore> keystoreMap = new Hashtable<>();
 
-    private static final String keystoreDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+//    private static final String keystoreDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+    private static final File keystoreDir = App.getInstance().getFilesDir();
     private static WalletKeystore mCurrentDidHubKeyStore;
 
     public static void createWallet(WalletKeystore keystore) {
@@ -55,7 +57,7 @@ public class WalletManager {
     }
 
     public static File getDefaultKeyDirectory() {
-        File directory = new File(new File(keystoreDir), "wallets");
+        File directory = new File(keystoreDir, "wallets");
 //        File directory = new File(new File(keystoreDir), "id");
         if (!directory.exists()) {
             directory.mkdirs();
@@ -64,13 +66,11 @@ public class WalletManager {
     }
 
     private static void writeToFile(WalletKeystore keyStore, File destination) {
-        Log.e("LYW", "writeToFile: " + keyStore.toString() );
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             objectMapper.writeValue(destination, keyStore);
         } catch (IOException ex) {
-            Log.e("LYW", "writeToFile: " + ex.getMessage());
             throw new TokenException(Messages.WALLET_STORE_FAIL, ex);
         }
     }
@@ -263,11 +263,9 @@ public class WalletManager {
 
     public static WalletKeystore getCurrentKeyStore() {
         String selectedId = WalletOtherInfoSharpreference.getInstance().getSelectedId();
-        Log.e("LYW", "getCurrentKeyStore:1 " + selectedId );
         mCurrentDidHubKeyStore = keystoreMap.get(selectedId);
         if (mCurrentDidHubKeyStore == null && keystoreMap.size() > 0) {
             String key = keystoreMap.keySet().iterator().next();
-            Log.e("LYW", "getCurrentKeyStore:2 " + key );
             mCurrentDidHubKeyStore = keystoreMap.get(key);
             WalletOtherInfoSharpreference.getInstance().setSelectedId(mCurrentDidHubKeyStore.getId());
         }

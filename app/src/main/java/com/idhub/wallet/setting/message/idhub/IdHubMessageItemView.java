@@ -3,7 +3,6 @@ package com.idhub.wallet.setting.message.idhub;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,13 +11,9 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.IdHubMessageType;
-import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
-import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
-import com.idhub.wallet.setting.TransactionDetailActivity;
+import com.idhub.base.greendao.entity.IdHubMessageEntity;
 
 import org.web3j.crypto.Keys;
-
-import java.math.BigInteger;
 
 public class IdHubMessageItemView extends ConstraintLayout {
 

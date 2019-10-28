@@ -3,8 +3,6 @@ package com.idhub.wallet.wallet.token;
 import android.content.Context;
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,21 +11,20 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
-import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
-import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.assets.AssetsType;
 
-import org.greenrobot.greendao.async.AsyncOperation;
 import org.greenrobot.greendao.async.AsyncOperationListener;
 
 import java.util.ArrayList;
@@ -57,7 +54,7 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
         TokenManagerAdapter adapter = new TokenManagerAdapter(this);
         recyclerView.setAdapter(adapter);
         List<AssetsModel> assetsList = AssetsType.getAssetsList();
-        String node = WalletOtherInfoSharpreference.getInstance().getNode();
+        String node = WalletNoteSharedPreferences.getInstance().getNode();
         ArrayList<AssetsModel> list = new ArrayList<>();
         //过滤 显示对应ropsten或mainnet上的contractAddress
         if (WalletNodeManager.ROPSTEN.equals(node)){
@@ -97,7 +94,6 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                Log.e("LYW2", "onError: " + e.getMessage());
                 String message = e.getMessage();
                 if (message != null)
                     ToastUtils.showShortToast(getString(R.string.wallet_assets_add_fail) + " " + message);
@@ -138,7 +134,7 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
             }
         };
         AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
-        String node = WalletOtherInfoSharpreference.getInstance().getNode();
+        String node = WalletNoteSharedPreferences.getInstance().getNode();
         AsyncOperationListener listener = operation -> {
             List<AssetsModel> o = (List<AssetsModel>) operation.getResult();
             if (o != null && o.size() > 0) {

@@ -7,7 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.text.TextUtils;
 
-import com.idhub.wallet.App;
+import com.idhub.base.App;
 
 import java.lang.reflect.Method;
 import java.net.NetworkInterface;

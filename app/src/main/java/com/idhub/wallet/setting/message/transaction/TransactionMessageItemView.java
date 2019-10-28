@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.base.greendao.entity.TransactionRecordEntity;
 import com.idhub.wallet.setting.TransactionDetailActivity;
 
 import org.web3j.crypto.Keys;

@@ -2,13 +2,13 @@ package com.idhub.wallet.net;
 
 
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.idhub.wallet.App;
+import com.idhub.base.App;
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletTransactionSharpreference;
-import com.idhub.wallet.common.walletobservable.WalletNodeSelectedObservable;
+import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.contract.EIP20Interface;
 import com.idhub.wallet.contract.ERC1400;
 import com.idhub.wallet.didhub.WalletInfo;
@@ -16,10 +16,10 @@ import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
 import com.idhub.wallet.net.parameter.EthTransactionParam;
-import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.LogUtils;
 
 import org.web3j.crypto.Credentials;
@@ -42,7 +42,6 @@ import org.web3j.utils.Numeric;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import io.api.etherscan.model.EthNetwork;
 import io.reactivex.Observable;
@@ -67,7 +66,7 @@ public class Web3Api {
     }
 
     private static void initWeb3() {
-        sNode = WalletOtherInfoSharpreference.getInstance().getNode();
+        sNode = WalletNoteSharedPreferences.getInstance().getNode();
         if (sNode.equals(WalletNodeManager.ROPSTEN)) {
             ethNetwork = EthNetwork.ROPSTEN;
         } else {
@@ -118,7 +117,7 @@ public class Web3Api {
                 emitter.onError(new Throwable(App.getInstance().getString(R.string.wallet_assets_unkonw)));
                 return;
             }
-            String node = WalletOtherInfoSharpreference.getInstance().getNode();
+            String node = WalletNoteSharedPreferences.getInstance().getNode();
             AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
             AssetsModel assetsModel = new AssetsModel();
             assetsModel.setType(AssetsDefaultType.ERC1400);
@@ -146,7 +145,7 @@ public class Web3Api {
             public void subscribe(ObservableEmitter<AssetsModel> emitter) throws Exception {
                 EIP20Interface ierc20 = EIP20Interface.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
                 AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
-                String node = WalletOtherInfoSharpreference.getInstance().getNode();
+                String node = WalletNoteSharedPreferences.getInstance().getNode();
                 //过滤 存储对应ropsten或mainnet上的contractAddress
                 String name = ierc20.name().send();
                 BigInteger decimal = ierc20.decimals().send();

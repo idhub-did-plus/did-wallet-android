@@ -1,6 +1,7 @@
 package com.idhub.magic.clientlib.local;
 
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ import org.web3j.tx.gas.DefaultGasProvider;
 //import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Convert;
 
+import com.idhub.base.node.WalletChangeContractObservable;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.contracts.EthereumClaimsRegistryInterface;
@@ -38,30 +40,58 @@ public class ContractManager {
 	static  Credentials credentials;
 
    static{
-    	Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
-       Log.e("LYW", "static initializer: " +credentials.getAddress() );
+       initContract();
+       WalletChangeContractObservable.getInstance().addObserver((o, arg) -> initContract());
+   }
+
+    private static void initContract() {
+        Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
+        Log.e("LYW", "static initializer: " +credentials.getAddress() );
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
-        registry1484 = IdentityRegistryInterface.load(DeployedContractAddress.IdentityRegistryInterface,
-                web3j,
-                credentials,
-                contractGasProvider
-        );
-        resolver1056 = ERC1056ResolverInterface.load(DeployedContractAddress.ERC1056ResolverInterface,
-                web3j,
-                credentials,
-                contractGasProvider
-        );
-        registry1056 = EthereumDIDRegistryInterface.load(DeployedContractAddress.EthereumDIDRegistryInterface,
-                web3j,
-                credentials,
-                contractGasProvider
-        );
-        registry780 = registry780.load(DeployedContractAddress.EthereumClaimsRegistryInterface,
-                web3j,
-                credentials,
-                contractGasProvider
-        );
-    
+        String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
+        Log.e("LYW", "initContract: " +identityRegistryInterface );
+        if (!TextUtils.isEmpty(identityRegistryInterface)) {
+            registry1484 = IdentityRegistryInterface.load(identityRegistryInterface,
+                    web3j,
+                    credentials,
+                    contractGasProvider
+            );
+        }else {
+            registry1484 = null;
+        }
+
+        String erc1056ResolverInterface = DeployedContractAddress.ERC1056ResolverInterface;
+        if (!TextUtils.isEmpty(erc1056ResolverInterface)) {
+            resolver1056 = ERC1056ResolverInterface.load(erc1056ResolverInterface,
+                    web3j,
+                    credentials,
+                    contractGasProvider
+            );
+        }else {
+            resolver1056 = null;
+        }
+
+        String ethereumDIDRegistryInterface = DeployedContractAddress.EthereumDIDRegistryInterface;
+        if (!TextUtils.isEmpty(ethereumDIDRegistryInterface)) {
+            registry1056 = EthereumDIDRegistryInterface.load(ethereumDIDRegistryInterface,
+                    web3j,
+                    credentials,
+                    contractGasProvider
+            );
+        }else {
+            registry1056 = null;
+        }
+
+        String ethereumClaimsRegistryInterface = DeployedContractAddress.EthereumClaimsRegistryInterface;
+        if (!TextUtils.isEmpty(ethereumClaimsRegistryInterface)){
+            registry780 = EthereumClaimsRegistryInterface.load(ethereumClaimsRegistryInterface,
+                    web3j,
+                    credentials,
+                    contractGasProvider
+            );
+        }else {
+            registry780 = null;
+        }
     }
 
     static public EthereumDIDRegistryInterface getRegistry1056() {

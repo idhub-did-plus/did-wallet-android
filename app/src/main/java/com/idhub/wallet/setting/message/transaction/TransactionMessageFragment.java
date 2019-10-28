@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.greendao.TransactionRecordDbManager;
-import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.base.greendao.entity.TransactionRecordEntity;
 
 import org.greenrobot.greendao.async.AsyncOperation;
 import org.greenrobot.greendao.async.AsyncOperationListener;

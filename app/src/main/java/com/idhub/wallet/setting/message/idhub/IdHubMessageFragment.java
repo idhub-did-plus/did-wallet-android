@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
-import com.idhub.wallet.greendao.entity.IdHubMessageEntity;
+import com.idhub.base.greendao.entity.IdHubMessageEntity;
 
 import org.greenrobot.greendao.async.AsyncOperation;
 import org.greenrobot.greendao.async.AsyncOperationListener;

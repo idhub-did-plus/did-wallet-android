@@ -6,20 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.contract.ERC1400;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.net.Web3Api;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.net.Web3jSubscriber;
-import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.wallet.assets.AssetsType;
 import com.idhub.wallet.wallet.mainfragment.view.AssetsErc1400ItemView;
 import com.idhub.wallet.wallet.mainfragment.view.AssetsItemView;

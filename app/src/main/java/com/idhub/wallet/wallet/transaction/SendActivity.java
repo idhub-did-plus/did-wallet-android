@@ -5,11 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,14 +17,12 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.zxinglib.QrCodeActivity;
-import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.utils.ToastUtils;
-import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.wallet.assets.AssetsType;
+import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.wallet.mainfragment.QRCodeType;
 
 import java.math.BigInteger;

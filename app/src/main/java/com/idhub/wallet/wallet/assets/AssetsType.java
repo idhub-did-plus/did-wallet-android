@@ -2,7 +2,7 @@ package com.idhub.wallet.wallet.assets;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.greendao.AssetsDefaultType;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

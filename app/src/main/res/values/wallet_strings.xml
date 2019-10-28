@@ -378,5 +378,6 @@
     <string name="wallet_copy_success">复制成功</string>
     <string name="wallet_update_user_name">修改用户名</string>
     <string name="wallet_update_signature">修改签名</string>
+    <string name="wallet_none_contract_address">当前节点没有合约地址，不支持的操作</string>
 
 </resources>

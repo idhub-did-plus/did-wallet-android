@@ -1,22 +1,20 @@
 package com.idhub.wallet.wallet.token;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
 
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
-import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -45,7 +43,7 @@ public class Erc1400DetailActivity extends BaseActivity {
     }
 
     private void initData() {
-        String node = WalletOtherInfoSharpreference.getInstance().getNode();
+        String node = WalletNoteSharedPreferences.getInstance().getNode();
         String contraceAddress = "";
         if (WalletNodeManager.MAINNET.equals(node)) {
             contraceAddress = mAssetsModel.getMainContractAddress();

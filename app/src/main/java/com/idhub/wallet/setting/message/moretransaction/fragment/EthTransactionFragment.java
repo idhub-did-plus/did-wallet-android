@@ -15,10 +15,8 @@ import android.widget.TextView;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
-import com.idhub.wallet.greendao.entity.TransactionRecordEntity;
+import com.idhub.base.greendao.entity.TransactionRecordEntity;
 import com.idhub.wallet.net.Web3Api;
-import com.idhub.wallet.setting.WalletNodeManager;
 import com.idhub.wallet.setting.message.moretransaction.EthTransactionMessageAdapter;
 import com.idhub.wallet.setting.message.moretransaction.MoreTransactionMessageActivity;
 import com.idhub.wallet.setting.message.moretransaction.TransactionObservable;
@@ -29,7 +27,6 @@ import java.util.List;
 import java.util.Observer;
 
 import io.api.etherscan.core.impl.EtherScanApi;
-import io.api.etherscan.model.EthNetwork;
 import io.api.etherscan.model.Tx;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;

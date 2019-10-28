@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-import com.idhub.wallet.App;
+import com.idhub.base.App;
 
 
 /**

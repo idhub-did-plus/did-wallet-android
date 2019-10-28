@@ -3,8 +3,8 @@ package com.idhub.wallet.common.sharepreference;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.idhub.wallet.App;
-import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.base.App;
+import com.idhub.base.node.WalletNodeManager;
 
 public class WalletOtherInfoSharpreference {
     private static WalletOtherInfoSharpreference sWalletOtherInfoSharpreference;
@@ -54,13 +54,4 @@ public class WalletOtherInfoSharpreference {
         boolean commit = edit.putString(WALLET_SELECT_ID, id).commit();
         return commit;
     }
-    public String getNode() {
-        return sharedPreferences.getString(WALLET_NODE, WalletNodeManager.nodes.get(1));
-    }
-
-    public boolean setNode(String node) {
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-      return   edit.putString(WALLET_NODE, node).commit();
-    }
-
 }

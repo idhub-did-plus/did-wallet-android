@@ -1,21 +1,17 @@
 package com.idhub.wallet.setting;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
-import com.idhub.wallet.common.sharepreference.LocaleSharpreferences;
+import com.idhub.base.launage.LocaleSharpreferences;
 import com.idhub.wallet.common.title.TitleLayout;
-import com.idhub.wallet.utils.LocalUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -31,7 +30,7 @@ import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.UploadFileDbManager;
-import com.idhub.wallet.greendao.entity.UploadFileEntity;
+import com.idhub.base.greendao.entity.UploadFileEntity;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.FileUtils;
 import com.idhub.wallet.utils.ToastUtils;

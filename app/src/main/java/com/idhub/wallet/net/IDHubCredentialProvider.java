@@ -1,5 +1,6 @@
 package com.idhub.wallet.net;
 
+import com.idhub.base.node.WalletChangeContractObservable;
 import com.idhub.wallet.common.sharepreference.BlockNumbersSharedPreferences;
 
 import org.web3j.crypto.Credentials;
@@ -19,6 +20,7 @@ public class IDHubCredentialProvider implements CredentialProvider {
 
     public static void setDefaultCredentials(String privateKey) {
         client = Credentials.create(privateKey);
+        WalletChangeContractObservable.getInstance().update();
     }
 
     public static void setsDefaultAddress(String defaultAddress) {

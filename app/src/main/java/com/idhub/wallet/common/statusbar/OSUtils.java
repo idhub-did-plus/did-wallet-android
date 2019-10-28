@@ -6,7 +6,7 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.idhub.wallet.App;
+import com.idhub.base.App;
 
 import java.io.BufferedReader;
 import java.io.IOException;

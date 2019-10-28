@@ -2,7 +2,6 @@ package com.idhub.wallet.wallet.transaction;
 
 import android.content.Intent;
 import android.os.Parcelable;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -21,11 +20,11 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsDefaultType;
-import com.idhub.wallet.greendao.entity.AssetsModel;
+import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
 import com.idhub.wallet.net.parameter.EthTransactionParam;
-import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
 import com.tencent.bugly.crashreport.CrashReport;
 

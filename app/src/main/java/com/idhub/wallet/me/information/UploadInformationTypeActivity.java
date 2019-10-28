@@ -5,14 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.idhub.magic.clientlib.ApiFactory;
+import com.idhub.magic.clientlib.local.ContractManager;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
+import com.idhub.wallet.net.IDHubCredentialProvider;
+
+import java.math.BigInteger;
 
 public class UploadInformationTypeActivity extends BaseActivity implements View.OnClickListener, MessageDialogFragment.MessageDialogFragmentListener {
 
@@ -24,7 +30,21 @@ public class UploadInformationTypeActivity extends BaseActivity implements View.
     }
 
     private void initView() {
-         findViewById(R.id.tv_upload_idhub_information).setOnClickListener(this);
+        new  Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    IDHubCredentialProvider.setDefaultCredentials("0");
+                    String send1 = ContractManager.getResolver1056().einToDID(new BigInteger("17")).send();
+                    Log.e("LYW", "initView: " + send1 );
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+        findViewById(R.id.tv_upload_idhub_information).setOnClickListener(this);
          findViewById(R.id.tv_upload_file).setOnClickListener(this);
     }
 

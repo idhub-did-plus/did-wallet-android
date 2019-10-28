@@ -4,20 +4,18 @@ import android.content.Context;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.wallet.greendao.entity.AssetsModel;
-import com.idhub.wallet.setting.WalletNodeManager;
+import com.idhub.base.node.AssetsModel;
+import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.assets.AssetsType;
 
@@ -57,7 +55,7 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
         mTokenName.setText(symble);
 
         //查询设置
-        String node = WalletOtherInfoSharpreference.getInstance().getNode();
+        String node = WalletNoteSharedPreferences.getInstance().getNode();
         AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
         if (WalletNodeManager.ROPSTEN.equals(node)) {
             String ropstenContractAddress = assetsModel.getRopstenContractAddress();
