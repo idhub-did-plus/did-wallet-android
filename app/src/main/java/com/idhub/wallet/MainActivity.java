@@ -25,7 +25,7 @@ import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.SignMessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
-import com.idhub.wallet.common.sharepreference.UpgradeInitializeSharedpreferences;
+import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
@@ -323,19 +323,19 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             }
         }
         //解决升级身份成功本地未记录的情况，
-        boolean isUpgradeAction = UpgradeInitializeSharedpreferences.getInstance().getIsUpgradeAction();
+        boolean isUpgradeAction = Identity1484To1056BindSharedPreferences.getInstance().getIsUpgradeAction();
         if (isUpgradeAction && TextUtils.isEmpty(defaultAddress)) {
             defaultAddress = WalletManager.getCurrentKeyStore().getAddress();
             checkHasIdentity(defaultAddress);
         }
 
 //        //解决initialize失败的情况 需要默认地址发交易
-//        if (!UpgradeInitializeSharedpreferences.getInstance().getUpgradeInitializeIsSuccess() && !TextUtils.isEmpty(WalletManager.getDefaultAddress())) {
+//        if (!Identity1484To1056BindSharedPreferences.getInstance().getUpgradeInitializeIsSuccess() && !TextUtils.isEmpty(WalletManager.getDefaultAddress())) {
 //            ApiFactory.getIdentityChainLocal().initialize(defaultAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
 //                @Override
 //                public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
 //                    Log.e("LYW", "onNext:ini success "  );
-//                    UpgradeInitializeSharedpreferences.getInstance().setUpgradeInitializeIsSuccess(true);
+//                    Identity1484To1056BindSharedPreferences.getInstance().setUpgradeInitializeIsSuccess(true);
 //                }
 //
 //                @Override

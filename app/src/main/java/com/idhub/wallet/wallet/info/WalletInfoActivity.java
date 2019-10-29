@@ -318,7 +318,8 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
                     WalletSelectedObservable.getInstance().update();
                     break;
                 case 2:
-                    ToastUtils.showShortToast(getString(R.string.wallet_upgrade_association_false));
+                    String message = ((String) msg.obj);
+                    ToastUtils.showShortToast(getString(R.string.wallet_upgrade_association_false) +message);
                     break;
             }
         }

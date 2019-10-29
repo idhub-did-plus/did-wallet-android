@@ -26,7 +26,7 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
-import com.idhub.wallet.common.sharepreference.UpgradeInitializeSharedpreferences;
+import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.createmanager.walletcreate.MnemonicBackupHintActivity;
@@ -78,7 +78,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                             String initiator = identityInitializedEventResponse.initiator;
                             String indeitity = identityInitializedEventResponse.indeitity;
                             BigInteger ein1 = identityInitializedEventResponse.ein;
-                            UpgradeInitializeSharedpreferences.getInstance().setUpgradeInitializeIsSuccess(true);
+                            Identity1484To1056BindSharedPreferences.getInstance().setUpgradeInitializeIsSuccess(true);
                             Log.e("LYW", "onNext:initialize " + indeitity + "  " + initiator + "  " + ein1);
                         }
 
@@ -165,7 +165,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 if (TextUtils.isEmpty(mMnemonicStrs)) {
                     inputVerifyPassword();
                 } else {
-                    if (UpgradeInitializeSharedpreferences.getInstance().getIsUpgradeAction()) {
+                    if (Identity1484To1056BindSharedPreferences.getInstance().getIsUpgradeAction()) {
                         checkHasIdentity();
                     }else {
                         MnemonicBackupHintActivity.startActionforResult(this, mMnemonicStrs, 100);
@@ -201,7 +201,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
         if (requestCode == 100 && resultCode == RESULT_OK) {
             mLoadingAndErrorView.setVisibility(View.VISIBLE);
             //设置记录用户升级的操作
-            UpgradeInitializeSharedpreferences.getInstance().setUpgradeAction(true);
+            Identity1484To1056BindSharedPreferences.getInstance().setUpgradeAction(true);
             //upgrade
             WalletInfo walletInfo = new WalletInfo(mWalletKeystore);
             String privateKey = walletInfo.exportPrivateKey(mPwd);
@@ -209,41 +209,59 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
             IDHubCredentialProvider.setRecoverAddress(mRecoverAddressStr);
             Listen<IdentityRegistryInterface.IdentityCreatedEventResponse> identity = ApiFactory.getIdentityChainLocal().createIdentity();
             identity.listen(identityCreatedEventResponse -> {
-                BigInteger ein = identityCreatedEventResponse.ein;
-                Log.e("LYW", "onNext:upgrade ein " + ein);
-                //升级1484success
-                //升级成功存储数据库
-                IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
-                idHubMessageEntity.setTime(DateUtils.getCurrentDate());
-                idHubMessageEntity.setType(IdHubMessageType.UPGRADE_1484_IDENTITY);
-                String associatedAddress = mWalletKeystore.getAddress();
-                idHubMessageEntity.setAddress(associatedAddress);
-                idHubMessageEntity.setEin(ein.toString());
-                idHubMessageEntity.setRecoverAddress(mRecoverAddressStr);
-                idHubMessageEntity.setDefaultAddress(associatedAddress);
-                new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
-                //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
-                WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoverAddressStr);
-                WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
-                WalletKeystore keyStore = mWalletKeystore;
-                Wallet wallet = keyStore.getWallet();
-                wallet.setAssociate(true);
-                wallet.setDefaultAddress(true);
-                WalletManager.flushWallet(keyStore, true);
-
-                Message message = Message.obtain();
-                message.what = 1;
-                message.obj = associatedAddress;
-                handler.sendMessage(message);
-
+                //检查链上HasIdentity为true，否则按创建失败处理
+                try {
+                    Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(walletInfo.getAddress());
+                    Log.e("LYW", "onActivityResult: " + hasIdentity );
+                    if (hasIdentity) {
+                        identityCreateSuccess(identityCreatedEventResponse);
+                    }else {
+                        handleIdentityErrorMessage("");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    handleIdentityErrorMessage(e.getMessage());
+                }
             }, message -> {
-                Log.e("LYW", "onActivityResult: " + message);
-                Message messageError = Message.obtain();
-                messageError.what = 2;
-                messageError.obj = message;
-                handler.sendMessage(messageError);
+                handleIdentityErrorMessage(message);
             });
         }
+    }
+
+    private void identityCreateSuccess(IdentityRegistryInterface.IdentityCreatedEventResponse identityCreatedEventResponse) {
+        BigInteger ein = identityCreatedEventResponse.ein;
+        Log.e("LYW", "onNext:upgrade ein " + ein);
+        //升级1484success
+        //升级成功存储数据库
+        IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
+        idHubMessageEntity.setTime(DateUtils.getCurrentDate());
+        idHubMessageEntity.setType(IdHubMessageType.UPGRADE_1484_IDENTITY);
+        String associatedAddress = mWalletKeystore.getAddress();
+        idHubMessageEntity.setAddress(associatedAddress);
+        idHubMessageEntity.setEin(ein.toString());
+        idHubMessageEntity.setRecoverAddress(mRecoverAddressStr);
+        idHubMessageEntity.setDefaultAddress(associatedAddress);
+        new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
+        //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
+        WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoverAddressStr);
+        WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
+        WalletKeystore keyStore = mWalletKeystore;
+        Wallet wallet = keyStore.getWallet();
+        wallet.setAssociate(true);
+        wallet.setDefaultAddress(true);
+        WalletManager.flushWallet(keyStore, true);
+
+        Message message = Message.obtain();
+        message.what = 1;
+        message.obj = associatedAddress;
+        handler.sendMessage(message);
+    }
+
+    private void handleIdentityErrorMessage(String message) {
+        Message messageError = Message.obtain();
+        messageError.what = 2;
+        messageError.obj = message;
+        handler.sendMessage(messageError);
     }
 
     @Override
@@ -260,7 +278,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
             public void onNext(Boolean aBoolean) {
                 if (aBoolean) {
                     mPwd = data;
-                    boolean isUpgradeAction = UpgradeInitializeSharedpreferences.getInstance().getIsUpgradeAction();
+                    boolean isUpgradeAction = Identity1484To1056BindSharedPreferences.getInstance().getIsUpgradeAction();
                     if (isUpgradeAction) {
                         checkHasIdentity();
                     } else {

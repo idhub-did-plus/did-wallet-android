@@ -20,7 +20,6 @@ import android.view.View;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
-import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.utils.ToastUtils;
 
 import cn.bingoogolapple.qrcode.core.QRCodeView;

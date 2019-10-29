@@ -63,15 +63,15 @@ public class ExampleUnitTest {
         );
         String send1 = erc1056.einToDID(new BigInteger("19")).send();
         System.out.println(send1);
-//        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("17")).send();
-//        System.out.println(send.getValue1());
-//        List<String> value2 = send.getValue2();
-//        System.out.println(value2.size());
-//        if (value2.size() > 0) {
-//            for (String s : value2) {
-//                System.out.println(s);
-//            }
-//        }
+        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("19")).send();
+        System.out.println(send.getValue1());
+        List<String> value2 = send.getValue2();
+        System.out.println(value2.size());
+        if (value2.size() > 0) {
+            for (String s : value2) {
+                System.out.println(s);
+            }
+        }
 //        boolean hasIdentity = registry1484.hasIdentity("0x4c000E507bE6663e264a1A21507a69Bfa5035D95").send();
 //        BigInteger bigInteger = registry1484.getEIN("0x4c000E507bE6663e264a1A21507a69Bfa5035D95").send();
 //        System.out.println(hasIdentity);

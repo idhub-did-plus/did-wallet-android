@@ -20,6 +20,7 @@ public interface IdentityChain {
 
 	BigInteger getEINSync(String associate) throws Exception;
 	Boolean hasIdentity(String address) throws Exception;
+	String einToDID(String ein) throws Exception;
 
 	Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd, String associationPrivateKey);
 	Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress, String newAssociationAddressPrivateKey);

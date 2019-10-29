@@ -14,13 +14,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
-import com.idhub.wallet.common.sharepreference.UpgradeInitializeSharedpreferences;
+import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 import com.idhub.wallet.createmanager.walletimport.ImportWalletTopView;
@@ -167,38 +168,58 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
         Log.e("LYW", "inputConfirm: " + address );
         mLoadingAndErrorView.setVisibility(View.VISIBLE);
         IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
-        ApiFactory.getIdentityChainLocal().recoveryIdentity(ein, address,new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword)).listen(rst -> {
+        ApiFactory.getIdentityChainLocal().recoveryIdentity(ein, address, new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword)).listen(rst -> {
             //恢复成功保存钱包
-            Log.e("LYW", "inputConfirm:recoverySuccess " );
-            Wallet wallet = mWalletKeystore.getWallet();
-            wallet.setAssociate(true);
-            wallet.setDefaultAddress(true);
-            WalletManager.createWallet(mWalletKeystore);
-            BigInteger rstEin = rst.ein;
-            //升级1484success
-            //升级成功存储数据库
-            IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
-            idHubMessageEntity.setTime(DateUtils.getCurrentDate());
-            idHubMessageEntity.setType(IdHubMessageType.RECOVERY_IDENTITY);
-            String associatedAddress = rst.newAssociatedAddress;
-            idHubMessageEntity.setAddress(associatedAddress);
-            idHubMessageEntity.setEin(rstEin.toString());
-            idHubMessageEntity.setRecoverAddress(mRecoveryAddress);
-            idHubMessageEntity.setDefaultAddress(associatedAddress);
-            new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
-            //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
-            WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoveryAddress);
-            WalletOtherInfoSharpreference.getInstance().setEIN(rstEin.toString());
-            Message message = Message.obtain();
-            message.what = 1;
-            message.obj = mWalletKeystore.getAddress();
-            handler.sendMessage(message);
+            Log.e("LYW", "inputConfirm:recoverySuccess ");
+            try {
+                Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(address);
+                Log.e("LYW", "onActivityResult: " + hasIdentity );
+                if (hasIdentity) {
+                    handleRecoverySuccess(rst);
+                }else {
+                    handleRecoveryIdentityErrorMessage("");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                handleRecoveryIdentityErrorMessage(e.getMessage());
+            }
+
         }, msg -> {
-            Message messageError = Message.obtain();
-            messageError.what = 2;
-            messageError.obj = msg;
-            handler.sendMessage(messageError);
+            handleRecoveryIdentityErrorMessage(msg);
         });
+    }
+
+    private void handleRecoverySuccess(IdentityRegistryInterface.RecoveryTriggeredEventResponse rst) {
+        Wallet wallet = mWalletKeystore.getWallet();
+        wallet.setAssociate(true);
+        wallet.setDefaultAddress(true);
+        WalletManager.createWallet(mWalletKeystore);
+        BigInteger rstEin = rst.ein;
+        //升级1484success
+        //升级成功存储数据库
+        IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
+        idHubMessageEntity.setTime(DateUtils.getCurrentDate());
+        idHubMessageEntity.setType(IdHubMessageType.RECOVERY_IDENTITY);
+        String associatedAddress = rst.newAssociatedAddress;
+        idHubMessageEntity.setAddress(associatedAddress);
+        idHubMessageEntity.setEin(rstEin.toString());
+        idHubMessageEntity.setRecoverAddress(mRecoveryAddress);
+        idHubMessageEntity.setDefaultAddress(associatedAddress);
+        new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
+        //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
+        WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoveryAddress);
+        WalletOtherInfoSharpreference.getInstance().setEIN(rstEin.toString());
+        Message message = Message.obtain();
+        message.what = 1;
+        message.obj = mWalletKeystore.getAddress();
+        handler.sendMessage(message);
+    }
+
+    private void handleRecoveryIdentityErrorMessage(String msg) {
+        Message messageError = Message.obtain();
+        messageError.what = 2;
+        messageError.obj = msg;
+        handler.sendMessage(messageError);
     }
 
     @Override
@@ -221,12 +242,12 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
                             String indeitity = identityResetedEventResponse.newIndeitity;
                             String oldIdentity = identityResetedEventResponse.oldIdentity;
                             BigInteger ein1 = identityResetedEventResponse.ein;
+                            Identity1484To1056BindSharedPreferences.getInstance().setUpgradeInitializeIsSuccess(true);
                             Log.e("LYW", "onNext: " + indeitity +"  "+ initiator+"  " +ein1 +" "+oldIdentity );
                         }
 
                         @Override
                         public void onError(Throwable e) {
-                            UpgradeInitializeSharedpreferences.getInstance().setIdentityResetIsSuccess(false);
                             mLoadingAndErrorView.setVisibility(View.GONE);
                             MainActivity.startAction(WalletIdentityRecoveryActivity.this, "upgrade");
                             Log.e("LYW", "onError: " +e.getMessage() );

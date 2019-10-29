@@ -28,6 +28,11 @@ public class SplashActivity extends BaseActivity {
             }
         }
     };
+
+    @Override
+    protected void checkIdentityIsBind() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

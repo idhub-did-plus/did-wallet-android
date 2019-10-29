@@ -2,6 +2,7 @@ package com.idhub.magic.clientlib.local;
 
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -97,6 +98,12 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
         return aBoolean;
     }
 
+    @Override
+    public String einToDID(String ein) throws Exception {
+        String send = ContractManager.getResolver1056().einToDID(new BigInteger(ein)).send();
+        return send;
+    }
+
 
     @Override
     public Listen<IdentityCreatedEventResponse> createIdentity() {
@@ -168,10 +175,16 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
         addAssociatedAddressParam.ein = ein;
         addAssociatedAddressParam.privateKey = privateKey;
         addAssociatedAddressParam.approvingAddress = approvingAddress;
-        addAssociatedAddressParam.timestamp = BigInteger.valueOf(System.currentTimeMillis() / 1000);
+        BigInteger timestamp = BigInteger.valueOf(System.currentTimeMillis() / 1000 -30);
+        addAssociatedAddressParam.timestamp = timestamp;
         AddAssociatedAddressParam param = ClientEncoderLocal.addAssociatedAddressEncoder(addAssociatedAddressParam);
 
-        CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().addAssociatedAddress(param.approvingAddress, param.addressToAdd, param.v, param.r, param.s, param.timestamp).sendAsync();
+        BigInteger timestamp1 = param.timestamp;
+        String approvingAddress1 = param.approvingAddress;
+        String addressToAdd1 = param.addressToAdd;
+        Log.e("LYW", "addAssociatedAddress:timestamp1 " + timestamp1 +"  approvingAddress1  " +approvingAddress1 +" addressToAdd1 " +addressToAdd1);
+
+        CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().addAssociatedAddress(approvingAddress1, addressToAdd1, param.v, param.r, param.s, timestamp1).sendAsync();
 
         return new Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse>() {
             @Override
