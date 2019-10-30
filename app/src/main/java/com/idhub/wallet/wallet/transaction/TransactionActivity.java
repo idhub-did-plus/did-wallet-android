@@ -58,7 +58,7 @@ public class TransactionActivity extends BaseActivity implements View.OnClickLis
         } else {
              balance = mAssetsModel.getBalance();
         }
-        String s = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance));
+        String s = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance), String.valueOf(Math.pow(10, Double.parseDouble(mAssetsModel.getDecimals()))));
         String symbol = mAssetsModel.getSymbol();
         balanceAndName.setText(s + " " + symbol);
         WalletKeystore currentKeyStore = WalletManager.getCurrentKeyStore();

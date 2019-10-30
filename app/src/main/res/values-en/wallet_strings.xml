@@ -400,9 +400,15 @@
     <string name="wallet_web_site">http://www.idhub.network/cn/</string>
 
 
-
     <string name="wallet_user_info_name">Username</string>
     <string name="wallet_user_info_did">DID</string>
+    <string name="wallet_copy_success">Copied</string>
 
-
+    <string name="wallet_file_size_20">Files must be less than 20 MB</string>
+    <string name="wallet_user_info">Personal Information</string>
+    <string name="wallet_user_info_head">profile photo</string>
+    <string name="wallet_none_contract_address">Current node has no contract address. Operation not supported.</string>
+    <string name="wallet_address_none_balance">Current address has insufficient balance, please recharge first</string>
+    <string name="wallet_initialize_replace">The Aggregated Identity and the default address bound failed. Please re-call the contract for binding. Please enter the default address password</string>
+    <string name="wallet_recovery_replace">The Aggregated Identity and the new address rebound failed. Please re-call the contract for binding. Please enter the default address password</string>
 </resources>

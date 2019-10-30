@@ -361,8 +361,8 @@
     <string name="wallet_main_create_wallet_tip">请选择当前您建立身份的方式</string>
     <string name="wallet_welcome_to_did_world">欢迎来到DID世界</string>
 
-    //未翻译
-    <string name="wallet_file_size_20">文件必须小于20MB</string>
+
+
     <string name="wallet_vip_my_medal">我的勋章</string>
     <string name="wallet_main_back_double_click">再按一次返回键关闭程序</string>
     <string name="wallet_chinese">简体中文</string>
@@ -371,13 +371,17 @@
     <string name="wallet_create_QR_code_failed">生成二维码失败</string>
     <string name="wallet_web_site">http://www.idhub.network/cn/</string>
 
-    <string name="wallet_user_info">个人信息</string>
-    <string name="wallet_user_info_head">头像</string>
+
     <string name="wallet_user_info_name">名称</string>
     <string name="wallet_user_info_did">DID</string>
     <string name="wallet_copy_success">复制成功</string>
-    <string name="wallet_update_user_name">修改用户名</string>
-    <string name="wallet_update_signature">修改签名</string>
+    //未翻译
+    <string name="wallet_file_size_20">文件必须小于20MB</string>
+    <string name="wallet_user_info">个人信息</string>
+    <string name="wallet_user_info_head">头像</string>
     <string name="wallet_none_contract_address">当前节点没有合约地址，不支持的操作</string>
+    <string name="wallet_address_none_balance">地址余额不足，请先充值</string>
+    <string name="wallet_initialize_replace">聚合身份与默认地址绑定不成功，请重新调用合约进行绑定,请输入默认地址密码</string>
+    <string name="wallet_recovery_replace">聚合身份与新地址重新绑定不成功，请重新调用合约进行绑定,请输入默认地址密码</string>
 
 </resources>

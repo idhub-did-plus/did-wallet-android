@@ -61,7 +61,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         }
         mAddressView = findViewById(R.id.input_address);
         mNameView.setText(mAssetsModel.getSymbol());
-        mBalanceView.setText("余额：" + NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(mAssetsModel.getBalance())) + "" + mAssetsModel.getSymbol());
+        mBalanceView.setText("余额：" + NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(mAssetsModel.getBalance()), String.valueOf(Math.pow(10, Double.parseDouble(mAssetsModel.getDecimals())))) + "" + mAssetsModel.getSymbol());
         findViewById(R.id.tv_next).setOnClickListener(this);
         Web3Api.getGasPrice();
     }

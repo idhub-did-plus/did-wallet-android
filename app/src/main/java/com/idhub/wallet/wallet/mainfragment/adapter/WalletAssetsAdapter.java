@@ -91,7 +91,7 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (TextUtils.isEmpty(balance)) {
                 itemView.setBalance("-");
             } else {
-                itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance)));
+                itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance),String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals())))));
             }
             if (AssetsDefaultType.ERC20.equals(model.getType())) {
                 Web3Api.searchBalance(address, contractAddress, new Web3jSubscriber<BigInteger>() {
@@ -99,7 +99,7 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     public void onNext(BigInteger bigInteger) {
                         String balance = String.valueOf(bigInteger);
                         model.setBalance(balance);
-                        String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
+                        String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger, String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals()))));
                         itemView.setBalance(balanceStr);
                     }
                 });
@@ -111,7 +111,7 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         BigInteger balance1 = o.getBalance();
                         String balance = String.valueOf(balance1);
                         model.setBalance(balance);
-                        itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1));
+                        itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1, String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals())))));
                     }
                 });
             }

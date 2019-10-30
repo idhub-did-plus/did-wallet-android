@@ -118,8 +118,6 @@ public class Etherscan implements IncomingService {
 	void once() throws Exception {
 		long start = ProviderFactory.getProvider().getLastEndBlockNumber();
 		long end = ProviderFactory.getProvider().web3j().ethBlockNumber().send().getBlockNumber().longValue();
-		Log.e("LYW", "once:start " + start);
-		Log.e("LYW", "once: " + end);
 		TransactionSession sess = new TransactionSession(accounts, txlistener, transferlistener, api(), start, end);
 		try {
 			sess.execute();

@@ -181,7 +181,7 @@ public class Web3Api {
     }
 
     public static void searchBalance(String address, DisposableSubscriber<EthGetBalance> observer) {
-        mWeb3j.ethGetBalance(address, DefaultBlockParameterName.LATEST)
+        mWeb3j.ethGetBalance(NumericUtil.prependHexPrefix(address), DefaultBlockParameterName.LATEST)
                 .flowable()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -70,7 +70,7 @@ public class TransactionDetailActivity extends BaseActivity implements View.OnCl
             //不是合约
             contractAddressNameView.setVisibility(View.GONE);
             contractAddressView.setVisibility(View.GONE);
-            valueView.setText(NumericUtil.ethBigIntegerToNumberViewPointAfterEight(new BigInteger(mTransactionRecordEntity.getValue())));
+            valueView.setText(NumericUtil.ethBigIntegerToNumberViewPointAfterEight(new BigInteger(mTransactionRecordEntity.getValue()),String.valueOf(Math.pow(10, 18))));
         } else {
             //合约
             valueView.setText(NumericUtil.tokenValueFormatViewPointAfterEight(new BigInteger(mTransactionRecordEntity.getValue()), String.valueOf(Math.pow(10, Double.valueOf(mTransactionRecordEntity.getTokenDecimal())))));

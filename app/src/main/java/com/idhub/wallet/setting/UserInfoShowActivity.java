@@ -129,13 +129,13 @@ public class UserInfoShowActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.ll_name:
                 //修改名称
-                InputDialogFragment instance = InputDialogFragment.getInstance("update_name", getString(R.string.wallet_update_user_name), InputType.TYPE_CLASS_TEXT);
+                InputDialogFragment instance = InputDialogFragment.getInstance("update_name", getString(R.string.wallet_user_name), InputType.TYPE_CLASS_TEXT);
                 instance.show(getSupportFragmentManager(), "input_dialog_fragment");
                 instance.setInputDialogFragmentListener(this);
                 break;
             case R.id.ll_signature:
                 //修改签名
-                InputDialogFragment dialogFragment = InputDialogFragment.getInstance("update_signature", getString(R.string.wallet_update_signature), InputType.TYPE_CLASS_TEXT);
+                InputDialogFragment dialogFragment = InputDialogFragment.getInstance("update_signature", getString(R.string.wallet_user_signature), InputType.TYPE_CLASS_TEXT);
                 dialogFragment.show(getSupportFragmentManager(), "input_dialog_fragment");
                 dialogFragment.setInputDialogFragmentListener(this);
                 break;

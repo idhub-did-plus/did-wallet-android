@@ -90,7 +90,7 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             Web3Api.searchERC1400TotalSupply(contraceAddress, new DisposableSubscriber<BigInteger>() {
                 @Override
                 public void onNext(BigInteger bigInteger) {
-                    String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
+                    String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger, String.valueOf(Math.pow(10, Double.parseDouble(mAssetsModel.getDecimals()))));
                     holder.totalSupply.setText(balanceStr);
                 }
 
@@ -110,7 +110,7 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.name.setText(NumericUtil.prependHexPrefix(NumericUtil.bytesToHex(partitionEntity.name)));
             String balance = partitionEntity.balance;
             if (!TextUtils.isEmpty(balance)) {
-                holder.balance.setText(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance)));
+                holder.balance.setText(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance), String.valueOf(Math.pow(10, Double.parseDouble(mAssetsModel.getDecimals())))));
             }
             //余额
             String node = WalletNoteSharedPreferences.getInstance().getNode();
@@ -125,7 +125,7 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 public void onNext(BigInteger bigInteger) {
                     String balance = String.valueOf(bigInteger);
                     partitionEntity.balance = balance;
-                    String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger);
+                    String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger, String.valueOf(Math.pow(10, Double.parseDouble(mAssetsModel.getDecimals()))));
                     holder.balance.setText(balanceStr);
                 }
 

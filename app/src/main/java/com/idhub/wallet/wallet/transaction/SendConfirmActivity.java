@@ -105,7 +105,7 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
         BigInteger bigIntegerGasLimit = new BigInteger(mGasLimit);
         BigInteger bigIntegerGasPrice = new BigInteger(mGasPrice);
         BigInteger gasEthAmount = bigIntegerGasLimit.multiply(bigIntegerGasPrice);
-        String s = NumericUtil.ethBigIntegerToNumberViewPointAfterEight(gasEthAmount);
+        String s = NumericUtil.ethBigIntegerToNumberViewPointAfterEight(gasEthAmount,String.valueOf(Math.pow(10, 18)));
         mGasAmountView.setText(s +" ETH");
     }
 

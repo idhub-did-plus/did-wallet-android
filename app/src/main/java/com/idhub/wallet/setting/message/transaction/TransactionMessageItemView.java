@@ -48,7 +48,7 @@ public class TransactionMessageItemView extends ConstraintLayout implements View
         String value = transactionRecordEntity.getValue();
         if (TextUtils.isEmpty(tokenName)) {
             mNameView.setText(getContext().getString(R.string.wallet_ETH));
-            mValueView.setText(NumericUtil.ethBigIntegerToNumberViewPointAfterEight(new BigInteger(value)));
+            mValueView.setText(NumericUtil.ethBigIntegerToNumberViewPointAfterEight(new BigInteger(value), String.valueOf(Math.pow(10, 18))));
         } else {
             mNameView.setText(tokenName);
             String tokenDecimal = transactionRecordEntity.getTokenDecimal();

@@ -239,8 +239,8 @@ public class NumericUtil {
         return format;
     }
 
-    public static String ethBigIntegerToNumberViewPointAfterEight(BigInteger bigInteger) {
-        BigDecimal bigInteger18 = new BigDecimal("1000000000000000000");
+    public static String ethBigIntegerToNumberViewPointAfterEight(BigInteger bigInteger,String valueDecimal) {
+        BigDecimal bigInteger18 = new BigDecimal(valueDecimal);
         BigDecimal bigDecimal = new BigDecimal(bigInteger);
         BigDecimal decimal = bigDecimal.divide(bigInteger18, 8, BigDecimal.ROUND_HALF_DOWN);
         DecimalFormat df = new DecimalFormat("###.########");
@@ -248,8 +248,8 @@ public class NumericUtil {
         return format;
     }
 
-    public static String ethBigIntegerToNumberViewPointAfterFour(BigInteger bigInteger) {
-        BigDecimal bigInteger18 = new BigDecimal("1000000000000000000");
+    public static String ethBigIntegerToNumberViewPointAfterFour(BigInteger bigInteger,String valueDecimal) {
+        BigDecimal bigInteger18 = new BigDecimal(valueDecimal);
         BigDecimal bigDecimal = new BigDecimal(bigInteger);
         BigDecimal decimal = bigDecimal.divide(bigInteger18, 4, BigDecimal.ROUND_HALF_DOWN);
         DecimalFormat df = new DecimalFormat("###.####");

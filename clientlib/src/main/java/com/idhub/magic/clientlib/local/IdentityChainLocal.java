@@ -149,7 +149,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
         recoveryIdentityParam.ein = new BigInteger(ein);
         recoveryIdentityParam.privateKey = privateKey;
         recoveryIdentityParam.newAssociationAddress = newAssociationAddress;
-        recoveryIdentityParam.timestamp = BigInteger.valueOf(System.currentTimeMillis() / 1000);
+        recoveryIdentityParam.timestamp = BigInteger.valueOf((System.currentTimeMillis() / 1000) - 30);
         RecoveryIdentityParam param = ClientEncoderLocal.recoveryIdentityEncoder(recoveryIdentityParam);
         CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().triggerRecovery(param.ein, param.newAssociationAddress, param.v, param.r, param.s, param.timestamp).sendAsync();
 

@@ -3,6 +3,7 @@ package com.idhub.wallet.createmanager.walletrecover;
 import androidx.annotation.Nullable;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +11,9 @@ import android.os.Message;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
@@ -32,13 +35,17 @@ import com.idhub.wallet.didhub.address.EthereumAddressCreator;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.BIP44Util;
+import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
 import com.idhub.base.greendao.entity.IdHubMessageEntity;
 import com.idhub.wallet.net.IDHubCredentialProvider;
+import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.utils.DateUtils;
+import com.idhub.wallet.utils.StringUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import io.reactivex.Observable;
@@ -47,7 +54,11 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
+
 import com.idhub.magic.clientlib.ApiFactory;
+
+import org.web3j.protocol.core.methods.response.EthGetBalance;
 
 public class WalletIdentityRecoveryActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
@@ -59,10 +70,11 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
     private WalletKeystore mWalletKeystore;
     private String mPassword;
 
-    public static void startActionForResult(Activity activity,int requestCode) {
+    public static void startActionForResult(Activity activity, int requestCode) {
         Intent intent = new Intent(activity, WalletIdentityRecoveryActivity.class);
         activity.startActivityForResult(intent, requestCode);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,9 +115,8 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
             public void subscribe(ObservableEmitter<String> emitter) throws Exception {
                 String privateKey = WalletManager.findPrivateKeyByMnemonic(key, sMneMonicPath);
                 emitter.onNext(privateKey);
-                emitter.onComplete();
             }
-        })  .subscribeOn(Schedulers.io())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableObserver<String>() {
                     @Override
@@ -118,12 +129,40 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
                     public void onNext(String s) {
                         mPrivateKey = s;
                         mRecoveryAddress = new EthereumAddressCreator().fromPrivateKey(s);
-                        //create wallet
-                        if (mWalletKeystore == null) {
-                            InputPasswordActivity.startActionForResult(WalletIdentityRecoveryActivity.this,100,false);
-                        }else {
-                            inputEIN();
-                        }
+                        //查询余额判断>=0.2
+                        String address = NumericUtil.prependHexPrefix(mRecoveryAddress);
+                        Web3Api.searchBalance(address, new DisposableSubscriber<EthGetBalance>() {
+                            @Override
+                            public void onNext(EthGetBalance ethGetBalance) {
+                                mLoadingAndErrorView.setVisibility(View.GONE);
+                                BigInteger balance = ethGetBalance.getBalance();
+                                String number = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance, String.valueOf(Math.pow(10, 18)));
+                                double v = Double.parseDouble(number);
+                                Log.e("LYW", "onNext:Double " + v);
+                                if (v >= 0.2) {
+                                    //create wallet
+                                    if (mWalletKeystore == null) {
+                                        InputPasswordActivity.startActionForResult(WalletIdentityRecoveryActivity.this, 100, false);
+                                    } else {
+                                        inputEIN();
+                                    }
+                                } else {
+                                    showBalanceNoEnough(address);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+                                ToastUtils.showShortToast(t.getMessage());
+                                mLoadingAndErrorView.setVisibility(View.GONE);
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+
                     }
 
                     @Override
@@ -134,10 +173,34 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
 
                     @Override
                     public void onComplete() {
-                        mLoadingAndErrorView.setVisibility(View.GONE);
-
                     }
                 });
+    }
+
+    private void showBalanceNoEnough(String address) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = LayoutInflater.from(this).inflate(R.layout.wallet_show_message_dialog_view, null);
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        TextView messageView = view.findViewById(R.id.message);
+        messageView.setText(R.string.wallet_address_none_balance);
+        TextView addressView = view.findViewById(R.id.address);
+        addressView.setText(address);
+        addressView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringUtils.copy(WalletIdentityRecoveryActivity.this, address);
+                ToastUtils.showShortToast(getString(R.string.wallet_copy_address_success));
+            }
+        });
+        view.findViewById(R.id.tv_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dialog != null)
+                    dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
     @Override
@@ -165,7 +228,7 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
     @Override
     public void inputConfirm(String ein, String source) {
         String address = mWalletKeystore.getAddress();
-        Log.e("LYW", "inputConfirm: " + address );
+        Log.e("LYW", "inputConfirm: " + address);
         mLoadingAndErrorView.setVisibility(View.VISIBLE);
         IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
         ApiFactory.getIdentityChainLocal().recoveryIdentity(ein, address, new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword)).listen(rst -> {
@@ -173,10 +236,10 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
             Log.e("LYW", "inputConfirm:recoverySuccess ");
             try {
                 Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(address);
-                Log.e("LYW", "onActivityResult: " + hasIdentity );
+                Log.e("LYW", "onActivityResult: " + hasIdentity);
                 if (hasIdentity) {
                     handleRecoverySuccess(rst);
-                }else {
+                } else {
                     handleRecoveryIdentityErrorMessage("");
                 }
             } catch (Exception e) {
@@ -235,7 +298,7 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
                 case 1:
                     String address = ((String) msg.obj);
                     //调用1056的reset
-                    ApiFactory.getIdentityChainLocal().reset(address,new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityResetedEventResponse>() {
+                    ApiFactory.getIdentityChainLocal().reset(address, new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityResetedEventResponse>() {
                         @Override
                         public void onNext(ERC1056ResolverInterface.IdentityResetedEventResponse identityResetedEventResponse) {
                             String initiator = identityResetedEventResponse.initiator;
@@ -243,14 +306,14 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
                             String oldIdentity = identityResetedEventResponse.oldIdentity;
                             BigInteger ein1 = identityResetedEventResponse.ein;
                             Identity1484To1056BindSharedPreferences.getInstance().setUpgradeInitializeIsSuccess(true);
-                            Log.e("LYW", "onNext: " + indeitity +"  "+ initiator+"  " +ein1 +" "+oldIdentity );
+                            Log.e("LYW", "onNext: " + indeitity + "  " + initiator + "  " + ein1 + " " + oldIdentity);
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             mLoadingAndErrorView.setVisibility(View.GONE);
                             MainActivity.startAction(WalletIdentityRecoveryActivity.this, "upgrade");
-                            Log.e("LYW", "onError: " +e.getMessage() );
+                            Log.e("LYW", "onError: " + e.getMessage());
                         }
 
                         @Override
@@ -261,7 +324,7 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
                     });
                     break;
                 case 2:
-                    Log.e("LYW", "inputConfirm: " + msg );
+                    Log.e("LYW", "inputConfirm: " + msg);
                     ToastUtils.showShortToast(getString(R.string.wallet_recovery_identity_fail));
                     mLoadingAndErrorView.setVisibility(View.GONE);
                     break;
