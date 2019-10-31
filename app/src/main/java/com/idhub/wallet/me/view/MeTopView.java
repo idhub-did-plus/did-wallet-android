@@ -78,7 +78,7 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
 
     public void setEIN1056(String address) {
         setEINVisible(View.VISIBLE);
-        mEINView.setText(getContext().getString(R.string.wallet_ein)+":0");
+        mEINView.setVisibility(GONE);
         mEINIdentityView.setText("did:erc1056:" + DeployedContractAddress.EthereumDIDRegistryInterface + ":" + address);
     }
 
