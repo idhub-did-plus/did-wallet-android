@@ -129,7 +129,7 @@ public class MnemonicBackupConfirmActivity extends BaseActivity implements View.
 
     private void checkSuccess() {
         List<String> confirmDatas = mMnemonicConfirmAdapter.getSurplusDatas();
-        if (confirmDatas.size() <= 0) {
+        if (confirmDatas.size() != mCodes.size()) {
             return;
         }
         boolean isSuccess = true;

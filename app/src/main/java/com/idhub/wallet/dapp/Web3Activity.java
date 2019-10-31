@@ -188,7 +188,9 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
                 mWeb3View.onSignCancel(message);
                 mDialog.dismiss();
             });
-            mDialog.show();
+            if (!mDialog.isShowing()) {
+                mDialog.show();
+            }
         } catch (Exception e) {
             ToastUtils.showShortToast(e.getMessage());
         }
