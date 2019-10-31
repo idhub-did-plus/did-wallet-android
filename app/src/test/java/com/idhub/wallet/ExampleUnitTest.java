@@ -61,9 +61,9 @@ public class ExampleUnitTest {
                 credentials,
                 contractGasProvider
         );
-        String send1 = erc1056.einToDID(new BigInteger("21")).send();
+        String send1 = erc1056.einToDID(new BigInteger("24")).send();
         System.out.println(send1);
-        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("21")).send();
+        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("24")).send();
         System.out.println(send.getValue1());
         List<String> value2 = send.getValue2();
         System.out.println(value2.size());

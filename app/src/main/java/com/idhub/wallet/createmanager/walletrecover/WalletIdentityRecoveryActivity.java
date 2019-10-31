@@ -312,13 +312,14 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
                         @Override
                         public void onError(Throwable e) {
                             mLoadingAndErrorView.setVisibility(View.GONE);
-                            MainActivity.startAction(WalletIdentityRecoveryActivity.this, "upgrade");
-                            Log.e("LYW", "onError: " + e.getMessage());
+                            setResult(RESULT_OK);
+                            finish();
                         }
 
                         @Override
                         public void onComplete() {
-                            MainActivity.startAction(WalletIdentityRecoveryActivity.this, "upgrade");
+                            setResult(RESULT_OK);
+                            finish();
                             mLoadingAndErrorView.setVisibility(View.GONE);
                         }
                     });

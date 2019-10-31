@@ -42,8 +42,8 @@ import javax.annotation.Nullable;
 public class WalletManager {
     private static Hashtable<String, WalletKeystore> keystoreMap = new Hashtable<>();
 
-    private static final File keystoreDir = Environment.getExternalStorageDirectory();
-//    private static final File keystoreDir = App.getInstance().getFilesDir();
+//    private static final File keystoreDir = Environment.getExternalStorageDirectory();
+    private static final File keystoreDir = App.getInstance().getFilesDir();
     private static WalletKeystore mCurrentDidHubKeyStore;
 
     public static void createWallet(WalletKeystore keystore) {

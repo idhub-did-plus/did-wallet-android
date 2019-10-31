@@ -60,7 +60,7 @@ public class IdentityManagerActivity extends BaseActivity implements View.OnClic
             MainActivity.startAction(this,"IdentityManager");
             finish();
         } else if (requestCode == 102 && resultCode == RESULT_OK) {
-            MainActivity.startAction(this,"IdentityManager");
+            MainActivity.startAction(this, "upgrade");
             finish();
         }
     }
