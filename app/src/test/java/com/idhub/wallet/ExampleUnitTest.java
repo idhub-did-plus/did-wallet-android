@@ -18,7 +18,14 @@ import org.bitcoinj.wallet.DeterministicSeed;
 import org.junit.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.DefaultBlockParameterNumber;
 import org.web3j.protocol.core.RemoteCall;
+import org.web3j.protocol.core.methods.response.EthBlock;
+import org.web3j.protocol.core.methods.response.EthBlockNumber;
+import org.web3j.protocol.core.methods.response.EthGetBlockTransactionCountByNumber;
+import org.web3j.protocol.core.methods.response.EthHashrate;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tx.gas.ContractGasProvider;
@@ -51,6 +58,7 @@ public class ExampleUnitTest {
         Credentials credentials = Credentials.create("0");
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         Web3j web3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
+
         IdentityRegistryInterface  registry1484 = IdentityRegistryInterface.load("0x90e1B1C7B8C829b3d0b1C09eD961e46f5AeeD184",
                 web3j,
                 credentials,
@@ -61,9 +69,9 @@ public class ExampleUnitTest {
                 credentials,
                 contractGasProvider
         );
-        String send1 = erc1056.einToDID(new BigInteger("24")).send();
+        String send1 = erc1056.einToDID(new BigInteger("26")).send();
         System.out.println(send1);
-        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("24")).send();
+        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("26")).send();
         System.out.println(send.getValue1());
         List<String> value2 = send.getValue2();
         System.out.println(value2.size());

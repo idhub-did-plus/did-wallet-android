@@ -15,10 +15,13 @@ import com.idhub.magic.clientlib.parameter.RecoveryIdentityParam;
 import com.idhub.magic.clientlib.parameter.ResetIdentityParam;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface;
+
 import io.reactivex.Observable;
 import java8.util.concurrent.CompletableFuture;
 import java8.util.function.Consumer;
 
+import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthBlock;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tuples.generated.Tuple4;
 
@@ -130,7 +133,7 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
                     if (TextUtils.isEmpty(transactionReceipt.getTransactionHash())) {
                         CrashReport.postCatchedException(new Throwable("升级身份hash null"));
                         el.error("");
-                    }else {
+                    } else {
                         List<IdentityCreatedEventResponse> es = ContractManager.getRegistry1484()
                                 .getIdentityCreatedEvents(transactionReceipt);
                         listener.result(es.get(0));
@@ -144,63 +147,79 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
     }
 
     @Override
-    public Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress, String privateKey) {
-        RecoveryIdentityParam recoveryIdentityParam = new RecoveryIdentityParam();
-        recoveryIdentityParam.ein = new BigInteger(ein);
-        recoveryIdentityParam.privateKey = privateKey;
-        recoveryIdentityParam.newAssociationAddress = newAssociationAddress;
-        recoveryIdentityParam.timestamp = BigInteger.valueOf((System.currentTimeMillis() / 1000) - 30);
-        RecoveryIdentityParam param = ClientEncoderLocal.recoveryIdentityEncoder(recoveryIdentityParam);
-        BigInteger timestamp = param.timestamp;
-        Log.e("LYW", "recoveryIdentity: "+ timestamp );
-        CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().triggerRecovery(param.ein, param.newAssociationAddress, param.v, param.r, param.s, timestamp).sendAsync();
+    public Observable<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress, String privateKey) {
 
-        return new Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse>() {
-            @Override
-            public void listen(ResultListener l, ExceptionListener el) {
-                future.thenAccept(transactionReceipt -> {
-                    List<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryTriggeredEvents = ContractManager.getRegistry1484()
-                            .getRecoveryTriggeredEvents(transactionReceipt);
-                    l.result(recoveryTriggeredEvents.get(0));
-                }).exceptionally(throwable -> {
-                    el.error(throwable.getMessage());
-                    return null;
-                });
-            }
-        };
+        return Observable.create(observableEmitter -> {
+            RecoveryIdentityParam recoveryIdentityParam = new RecoveryIdentityParam();
+            recoveryIdentityParam.ein = new BigInteger(ein);
+            recoveryIdentityParam.privateKey = privateKey;
+            recoveryIdentityParam.newAssociationAddress = newAssociationAddress;
+            EthBlock ethBlock = ContractManager.web3j.ethGetBlockByNumber(DefaultBlockParameterName.LATEST, true).send();
+            recoveryIdentityParam.timestamp = ethBlock.getBlock().getTimestamp();
+            RecoveryIdentityParam param = ClientEncoderLocal.recoveryIdentityEncoder(recoveryIdentityParam);
+            BigInteger timestamp = param.timestamp;
+            Log.e("LYW", "recoveryIdentity: " + timestamp);
+            TransactionReceipt transactionReceipt = ContractManager.getRegistry1484().triggerRecovery(param.ein, param.newAssociationAddress, param.v, param.r, param.s, timestamp).send();
+            List<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryTriggeredEvents = ContractManager.getRegistry1484()
+                                .getRecoveryTriggeredEvents(transactionReceipt);
+            observableEmitter.onNext(recoveryTriggeredEvents.get(0));
+            observableEmitter.onComplete();
+//            CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().triggerRecovery(param.ein, param.newAssociationAddress, param.v, param.r, param.s, timestamp).sendAsync();
+//
+//            return new Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse>() {
+//                @Override
+//                public void listen(ResultListener l, ExceptionListener el) {
+//                    future.thenAccept(transactionReceipt -> {
+//                        List<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryTriggeredEvents = ContractManager.getRegistry1484()
+//                                .getRecoveryTriggeredEvents(transactionReceipt);
+//                        l.result(recoveryTriggeredEvents.get(0));
+//                    }).exceptionally(throwable -> {
+//                        el.error(throwable.getMessage());
+//                        return null;
+//                    });
+//                }
+//            };
+        });
     }
 
     @Override
-    public Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd, String privateKey) {
-        AddAssociatedAddressParam addAssociatedAddressParam = new AddAssociatedAddressParam();
-        addAssociatedAddressParam.addressToAdd = addressToAdd;
-        addAssociatedAddressParam.ein = ein;
-        addAssociatedAddressParam.privateKey = privateKey;
-        addAssociatedAddressParam.approvingAddress = approvingAddress;
-        BigInteger timestamp = BigInteger.valueOf(System.currentTimeMillis() / 1000 -30);
-        addAssociatedAddressParam.timestamp = timestamp;
-        AddAssociatedAddressParam param = ClientEncoderLocal.addAssociatedAddressEncoder(addAssociatedAddressParam);
+    public Observable<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd, String privateKey) {
+        return Observable.create(observableEmitter -> {
+            AddAssociatedAddressParam addAssociatedAddressParam = new AddAssociatedAddressParam();
+            addAssociatedAddressParam.addressToAdd = addressToAdd;
+            addAssociatedAddressParam.ein = ein;
+            addAssociatedAddressParam.privateKey = privateKey;
+            addAssociatedAddressParam.approvingAddress = approvingAddress;
+            EthBlock ethBlock = ContractManager.web3j.ethGetBlockByNumber(DefaultBlockParameterName.LATEST, true).send();
+            addAssociatedAddressParam.timestamp = ethBlock.getBlock().getTimestamp();
+            AddAssociatedAddressParam param = ClientEncoderLocal.addAssociatedAddressEncoder(addAssociatedAddressParam);
 
-        BigInteger timestamp1 = param.timestamp;
-        String approvingAddress1 = param.approvingAddress;
-        String addressToAdd1 = param.addressToAdd;
-        Log.e("LYW", "addAssociatedAddress:timestamp1 " + timestamp1 +"  approvingAddress1  " +approvingAddress1 +" addressToAdd1 " +addressToAdd1);
+            BigInteger timestamp1 = param.timestamp;
+            String approvingAddress1 = param.approvingAddress;
+            String addressToAdd1 = param.addressToAdd;
+            Log.e("LYW", "addAssociatedAddress:timestamp1 " + timestamp1 + "  approvingAddress1  " + approvingAddress1 + " addressToAdd1 " + addressToAdd1);
+            TransactionReceipt transactionReceipt = ContractManager.getRegistry1484().addAssociatedAddress(approvingAddress1, addressToAdd1, param.v, param.r, param.s, timestamp1).send();
+            List<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> associatedAddressAddedEvents = ContractManager.getRegistry1484()
+                    .getAssociatedAddressAddedEvents(transactionReceipt);
+//            CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().addAssociatedAddress(approvingAddress1, addressToAdd1, param.v, param.r, param.s, timestamp1).sendAsync();
+//
+//            return new Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse>() {
+//                @Override
+//                public void listen(ResultListener l, ExceptionListener el) {
+//                    future.thenAccept(transactionReceipt -> {
+//                        List<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> associatedAddressAddedEvents = ContractManager.getRegistry1484()
+//                                .getAssociatedAddressAddedEvents(transactionReceipt);
+//                        l.result(associatedAddressAddedEvents.get(0));
+//                    }).exceptionally(throwable -> {
+//                        el.error(throwable.getMessage());
+//                        return null;
+//                    });
+//                }
+//            };
 
-        CompletableFuture<TransactionReceipt> future = ContractManager.getRegistry1484().addAssociatedAddress(approvingAddress1, addressToAdd1, param.v, param.r, param.s, timestamp1).sendAsync();
-
-        return new Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse>() {
-            @Override
-            public void listen(ResultListener l, ExceptionListener el) {
-                future.thenAccept(transactionReceipt -> {
-                    List<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> associatedAddressAddedEvents = ContractManager.getRegistry1484()
-                            .getAssociatedAddressAddedEvents(transactionReceipt);
-                    l.result(associatedAddressAddedEvents.get(0));
-                }).exceptionally(throwable -> {
-                    el.error(throwable.getMessage());
-                    return null;
-                });
-            }
-        };
+            observableEmitter.onNext(associatedAddressAddedEvents.get(0));
+            observableEmitter.onComplete();
+        });
     }
 
     @Override

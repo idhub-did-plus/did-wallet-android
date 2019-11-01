@@ -231,25 +231,53 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
         Log.e("LYW", "inputConfirm: " + address);
         mLoadingAndErrorView.setVisibility(View.VISIBLE);
         IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
-        ApiFactory.getIdentityChainLocal().recoveryIdentity(ein, address, new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword)).listen(rst -> {
-            //恢复成功保存钱包
-            Log.e("LYW", "inputConfirm:recoverySuccess ");
-            try {
-                Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(address);
-                Log.e("LYW", "onActivityResult: " + hasIdentity);
-                if (hasIdentity) {
-                    handleRecoverySuccess(rst);
-                } else {
-                    handleRecoveryIdentityErrorMessage("");
+        ApiFactory.getIdentityChainLocal().recoveryIdentity(ein, address, new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword))
+                .subscribeOn(Schedulers.io()).observeOn(Schedulers.io()).subscribe(new DisposableObserver<IdentityRegistryInterface.RecoveryTriggeredEventResponse>() {
+            @Override
+            public void onNext(IdentityRegistryInterface.RecoveryTriggeredEventResponse recoveryTriggeredEventResponse) {
+                try {
+                    Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(address);
+                    Log.e("LYW", "onActivityResult: " + hasIdentity);
+                    if (hasIdentity) {
+                        handleRecoverySuccess(recoveryTriggeredEventResponse);
+                    } else {
+                        handleRecoveryIdentityErrorMessage("");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    handleRecoveryIdentityErrorMessage(e.getMessage());
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+            }
+
+            @Override
+            public void onError(Throwable e) {
                 handleRecoveryIdentityErrorMessage(e.getMessage());
             }
 
-        }, msg -> {
-            handleRecoveryIdentityErrorMessage(msg);
+            @Override
+            public void onComplete() {
+
+            }
         });
+//        ApiFactory.getIdentityChainLocal().recoveryIdentity(ein, address, new WalletInfo(mWalletKeystore).exportPrivateKey(mPassword)).listen(rst -> {
+//            //恢复成功保存钱包
+//            Log.e("LYW", "inputConfirm:recoverySuccess ");
+//            try {
+//                Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(address);
+//                Log.e("LYW", "onActivityResult: " + hasIdentity);
+//                if (hasIdentity) {
+//                    handleRecoverySuccess(rst);
+//                } else {
+//                    handleRecoveryIdentityErrorMessage("");
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                handleRecoveryIdentityErrorMessage(e.getMessage());
+//            }
+//
+//        }, msg -> {
+//            handleRecoveryIdentityErrorMessage(msg);
+//        });
     }
 
     private void handleRecoverySuccess(IdentityRegistryInterface.RecoveryTriggeredEventResponse rst) {

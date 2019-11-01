@@ -22,8 +22,8 @@ public interface IdentityChain {
 	Boolean hasIdentity(String address) throws Exception;
 	String einToDID(String ein) throws Exception;
 
-	Listen<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd, String associationPrivateKey);
-	Listen<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress, String newAssociationAddressPrivateKey);
+	Observable<IdentityRegistryInterface.AssociatedAddressAddedEventResponse> addAssociatedAddress(BigInteger ein, String approvingAddress, String addressToAdd, String associationPrivateKey);
+	Observable<IdentityRegistryInterface.RecoveryTriggeredEventResponse> recoveryIdentity(String ein, String newAssociationAddress, String newAssociationAddressPrivateKey);
 	Observable<ERC1056ResolverInterface.IdentityResetedEventResponse> reset(String newIdentity, String privateKey);
 	Observable< ERC1056ResolverInterface.IdentityInitializedEventResponse> initialize(String identity);
 

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
@@ -47,6 +48,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+
 import com.idhub.magic.clientlib.ApiFactory;
 
 import org.web3j.crypto.Keys;
@@ -90,7 +92,7 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
         mWalletAddressView.setOnClickListener(this);
         mExportPasswordHint = findViewById(R.id.export_password_hint);
         mExportPasswordHint.setVisibility(View.GONE);
-        mExportPasswordHint.setData(R.mipmap.wallet_export_mnemonic,getString(R.string.wallet_export_password_hint));
+        mExportPasswordHint.setData(R.mipmap.wallet_export_mnemonic, getString(R.string.wallet_export_password_hint));
         mExportPasswordHint.setOnClickListener(this);
         mExportMnemonic = findViewById(R.id.export_mnemonic);
         mExportMnemonic.setData(R.mipmap.wallet_export_mnemonic, getString(R.string.wallet_export_mnemonic));
@@ -176,7 +178,7 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
     }
 
     private void showPasswordDialog(String data) {
-        InputDialogFragment instance = InputDialogFragment.getInstance(data, getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        InputDialogFragment instance = InputDialogFragment.getInstance(data, getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         instance.show(getSupportFragmentManager(), "input_dialog_fragment");
         instance.setInputDialogFragmentListener(this);
     }
@@ -242,12 +244,12 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
         } else {
             //关联
             //输入密码
-            mDefaultKeystore  = WalletManager.getDefaultKeystore();
+            mDefaultKeystore = WalletManager.getDefaultKeystore();
             if (mDefaultKeystore == null) {
                 return;
             }
             mAssociationKeyStore = WalletManager.getKeyStore(mID);
-            AddAssociationAddressDialogFragment dialogFragment = AddAssociationAddressDialogFragment.getInstance(mDefaultKeystore.getAddress(),mAssociationKeyStore.getAddress());
+            AddAssociationAddressDialogFragment dialogFragment = AddAssociationAddressDialogFragment.getInstance(mDefaultKeystore.getAddress(), mAssociationKeyStore.getAddress());
             dialogFragment.show(getSupportFragmentManager(), "add_association_address_dialog_fragment");
             dialogFragment.setAddAssociationAddressDialogFragmentListener(this);
         }
@@ -278,20 +280,45 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
                 String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
                 //关联地址签名消息。默认地址发交易
                 IDHubCredentialProvider.setDefaultCredentials(defaultAddressWalletInfo.exportPrivateKey(defaultPsd));
-                ApiFactory.getIdentityChainLocal().addAssociatedAddress(new BigInteger(ein), mDefaultKeystore.getAddress(), mAssociationKeyStore.getAddress(),associationAddressWalletInfo.exportPrivateKey(associationPsd))
-                        .listen(rst -> {
-                            mAssociationKeyStore.getWallet().setAssociate(true);
-                            WalletManager.flushWallet(mAssociationKeyStore, true);
-                            Message message = Message.obtain();
-                            message.what = 1;
-                            message.obj = rst;
-                            handler.sendMessage(message);
-                        }, msg -> {
-                            Message message = Message.obtain();
-                            message.what = 2;
-                            message.obj = msg;
-                            handler.sendMessage(message);
+                ApiFactory.getIdentityChainLocal().addAssociatedAddress(new BigInteger(ein), mDefaultKeystore.getAddress(), mAssociationKeyStore.getAddress()
+                        , associationAddressWalletInfo.exportPrivateKey(associationPsd)).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new DisposableObserver<IdentityRegistryInterface.AssociatedAddressAddedEventResponse>() {
+                            @Override
+                            public void onNext(IdentityRegistryInterface.AssociatedAddressAddedEventResponse associatedAddressAddedEventResponse) {
+
+                                mAssociationKeyStore.getWallet().setAssociate(true);
+                                WalletManager.flushWallet(mAssociationKeyStore, true);
+                                MainActivity.startAction(WalletInfoActivity.this, "associated");
+                                WalletSelectedObservable.getInstance().update();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Message message = Message.obtain();
+                                message.what = 2;
+                                message.obj = e.getMessage();
+                                handler.sendMessage(message);
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
                         });
+//                ApiFactory.getIdentityChainLocal().addAssociatedAddress(new BigInteger(ein), mDefaultKeystore.getAddress(), mAssociationKeyStore.getAddress(),associationAddressWalletInfo.exportPrivateKey(associationPsd))
+//                        .listen(rst -> {
+//                            mAssociationKeyStore.getWallet().setAssociate(true);
+//                            WalletManager.flushWallet(mAssociationKeyStore, true);
+//                            Message message = Message.obtain();
+//                            message.what = 1;
+//                            message.obj = rst;
+//                            handler.sendMessage(message);
+//                        }, msg -> {
+//                            Message message = Message.obtain();
+//                            message.what = 2;
+//                            message.obj = msg;
+//                            handler.sendMessage(message);
+//                        });
             }
 
             @Override
@@ -314,12 +341,11 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
             mLoadingAndErrorView.setVisibility(View.GONE);
             switch (msg.what) {
                 case 1:
-                    MainActivity.startAction(WalletInfoActivity.this, "associated");
-                    WalletSelectedObservable.getInstance().update();
+
                     break;
                 case 2:
                     String message = ((String) msg.obj);
-                    ToastUtils.showShortToast(getString(R.string.wallet_upgrade_association_false) +message);
+                    ToastUtils.showShortToast(getString(R.string.wallet_upgrade_association_false) + message);
                     break;
             }
         }

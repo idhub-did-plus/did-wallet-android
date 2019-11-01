@@ -38,7 +38,6 @@ public class SignMessageDialog extends Dialog {
 
         setContentView(R.layout.wallet_dialog_sign_message);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        setCanceledOnTouchOutside(true);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         title = findViewById(R.id.dialog_main_text);
