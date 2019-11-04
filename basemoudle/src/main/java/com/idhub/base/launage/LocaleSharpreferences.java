@@ -24,7 +24,8 @@ public class LocaleSharpreferences {
     }
 
     public String getLocalLanguage() {
-        return sharedPreferences.getString(WALLET_BLOCK_NUMBERS, Locale.ENGLISH.toLanguageTag());
+//        return sharedPreferences.getString(WALLET_BLOCK_NUMBERS, Locale.ENGLISH.toLanguageTag());
+        return sharedPreferences.getString(WALLET_BLOCK_NUMBERS, "");
     }
 
     public boolean setLocalLanguage(String language) {

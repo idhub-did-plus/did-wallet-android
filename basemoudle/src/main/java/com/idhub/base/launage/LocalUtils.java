@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.LocaleList;
+import android.text.TextUtils;
+
 import java.util.Locale;
 
 public class LocalUtils {
@@ -11,7 +13,25 @@ public class LocalUtils {
     public static void setApplicationLanguage(Context context) {
 
         String localLanguage = LocaleSharpreferences.getInstance(context).getLocalLanguage();
-        Locale locale = Locale.forLanguageTag(localLanguage);//获取sp里面保存的语言
+        Locale locale;
+        if (TextUtils.isEmpty(localLanguage)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                locale = LocaleList.getDefault().get(0);
+            } else {
+                locale = Locale.getDefault();
+            }
+            String language = locale.getLanguage();
+            if (language.contains(Locale.CHINESE.toLanguageTag())) {
+                LocaleSharpreferences.getInstance(context).setLocalLanguage(Locale.CHINESE.toLanguageTag());
+                locale = Locale.forLanguageTag(Locale.CHINESE.toLanguageTag());
+            }else {
+                LocaleSharpreferences.getInstance(context).setLocalLanguage(Locale.ENGLISH.toLanguageTag());
+                locale = Locale.forLanguageTag(Locale.ENGLISH.toLanguageTag());
+            }
+        } else {
+            locale = Locale.forLanguageTag(localLanguage);//获取sp里面保存的语言
+        }
+
         // 更新 app 环境
         Configuration conf = context.getResources().getConfiguration();
         conf.locale = locale;
