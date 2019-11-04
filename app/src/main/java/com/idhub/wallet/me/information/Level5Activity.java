@@ -61,7 +61,7 @@ public class Level5Activity extends BaseActivity implements View.OnClickListener
 
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
-        titleLayout.setTitle(getString(R.string.wallet_idhub_vip));
+        titleLayout.setTitle(getString(R.string.wallet_st_compliance_investor));
         TextView idhubVip = findViewById(R.id.tv_idhub_vip);
         applyBtn = findViewById(R.id.tv_apply);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);

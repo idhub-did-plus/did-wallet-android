@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.local.ContractManager;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
+import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
@@ -70,6 +72,12 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //TODO:暂时这么先写 判断当前节点没有合约地址
+        String identityRegistryInterface = DeployedContractAddress.ERC1056ResolverInterface;
+        Log.e("LYW", "onStart: " + identityRegistryInterface );
+        if (TextUtils.isEmpty(identityRegistryInterface)) {
+            return;
+        }
         checkIdentityIsBind();
     }
 

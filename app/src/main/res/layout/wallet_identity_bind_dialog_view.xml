@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/wallet_shape_dialog">
 
     <TextView
@@ -12,7 +13,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:text="@string/wallet_please_input_password"
+        tools:text="@string/wallet_initialize_replace"
         android:textColor="@color/wallet_black"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -28,6 +29,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="12dp"
         android:singleLine="true"
+        tools:text="0x4c000E507bE6663e264a1A21507a69Bfa5035D95"
         android:ellipsize="middle"
         android:layout_marginRight="12dp"
         android:layout_width="match_parent"

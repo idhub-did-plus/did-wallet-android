@@ -26,6 +26,7 @@ import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.createmanager.walletcreate.InputPasswordActivity;
 import com.idhub.wallet.createmanager.walletimport.ImportWalletTopView;
 import com.idhub.wallet.didhub.DidHubIdentify;
@@ -83,6 +84,8 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
     }
 
     private void initView() {
+        TitleLayout titleLayout = findViewById(R.id.title);
+        titleLayout.setTitle(getString(R.string.wallet_recovery_identity));
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
         findViewById(R.id.tv_import).setOnClickListener(this);
         mTopView = findViewById(R.id.top_view);

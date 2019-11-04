@@ -30,19 +30,6 @@ public class UploadInformationTypeActivity extends BaseActivity implements View.
     }
 
     private void initView() {
-        new  Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    IDHubCredentialProvider.setDefaultCredentials("0");
-                    String send1 = ContractManager.getResolver1056().einToDID(new BigInteger("17")).send();
-                    Log.e("LYW", "initView: " + send1 );
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
 
         findViewById(R.id.tv_upload_idhub_information).setOnClickListener(this);
          findViewById(R.id.tv_upload_file).setOnClickListener(this);
@@ -75,6 +62,8 @@ public class UploadInformationTypeActivity extends BaseActivity implements View.
     @Override
     public void confirm() {
         WalletKeystore didHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
-        UpgradeActivity.startAction(this, didHubMnemonicKeyStore.getId());
+        if (didHubMnemonicKeyStore != null) {
+            UpgradeActivity.startAction(this, didHubMnemonicKeyStore.getId());
+        }
     }
 }
