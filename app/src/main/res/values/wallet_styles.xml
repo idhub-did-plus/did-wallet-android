@@ -9,7 +9,8 @@
     </style>
     <style name="WalletSplashTheme" parent="WalletAppTheme">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
  <style name="WalletCommonEditText" >
      <item name="android:layout_width">match_parent</item>
