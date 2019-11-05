@@ -5,110 +5,88 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/qr_code"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:src="@mipmap/wallet_qrcode_scan"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/wallet_manage"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="20dp"
-        android:src="@mipmap/wallet_wallet_manage"
-        app:layout_constraintRight_toLeftOf="@id/qr_code"
-        app:layout_constraintTop_toTopOf="@id/qr_code" />
-
-    <ImageView
-        android:id="@+id/wallet_select"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="20dp"
-        android:src="@mipmap/wallet_select"
-        app:layout_constraintRight_toLeftOf="@id/wallet_manage"
-        app:layout_constraintTop_toTopOf="@id/qr_code" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ct_address_view"
         android:layout_width="0dp"
-        android:layout_height="115dp"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginRight="35dp"
-        android:background="@mipmap/wallet_normal_wallet"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@mipmap/wallet_wallet_fragmentbackground"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/upgrade_icon"
-            android:layout_width="28dp"
-            android:layout_height="18dp"
-            android:layout_marginLeft="27dp"
-            android:layout_marginBottom="28dp"
-            android:scaleType="fitXY"
-            android:src="@mipmap/wallet_upgrade_wallet"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent" />
 
         <TextView
             android:id="@+id/wallet_name"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
             android:ellipsize="end"
             android:singleLine="true"
             android:textColor="@color/wallet_black"
-            android:textSize="18sp"
+            android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="wallet_name" />
 
+        <View
+            android:id="@+id/middle_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/wallet_line_gray"
+            app:layout_constraintTop_toBottomOf="@id/wallet_name"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
         <TextView
             android:id="@+id/upgrade_name"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
+            android:layout_width="130dp"
+            android:layout_height="26dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="3dp"
+            android:paddingBottom="3dp"
+            android:background="@mipmap/wallet_add_associated_background"
             android:gravity="center"
-            android:textColor="@color/wallet_black"
             android:text="@string/wallet_upgrade_associated_address"
-            android:textSize="7dp"
-            app:layout_constraintLeft_toLeftOf="@id/upgrade_icon"
-            app:layout_constraintRight_toRightOf="@id/upgrade_icon"
-            app:layout_constraintTop_toBottomOf="@id/upgrade_icon" />
+            android:textColor="@color/wallet_white"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="@id/middle_line"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/wallet_address"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="0x14o37492738624924hfsd727624"
-            android:textColor="@color/wallet_black"
-            android:textSize="12sp"
-            android:layout_marginRight="46dp"
             android:drawableRight="@mipmap/wallet_qr_code"
-            android:singleLine="true"
             android:ellipsize="middle"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/upgrade_icon"
-            app:layout_constraintTop_toTopOf="@id/upgrade_icon" />
+            android:singleLine="true"
+            android:drawablePadding="5dp"
+            android:text="0x14o37492738624924hfsd727624"
+            android:textColor="@color/wallet_text_gray_color"
+            android:textSize="11sp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="7dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/middle_line" />
 
         <TextView
             android:id="@+id/tv_default"
             android:layout_width="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
+            android:layout_marginRight="20dp"
             android:text="@string/wallet_default_address"
             android:textColor="@color/wallet_black"
-            android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="@id/wallet_address"
-            app:layout_constraintTop_toBottomOf="@id/wallet_address" />
+            android:textSize="11sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/wallet_address" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.idhub.wallet.wallet.mainfragment.view.WalletAddressTopView>

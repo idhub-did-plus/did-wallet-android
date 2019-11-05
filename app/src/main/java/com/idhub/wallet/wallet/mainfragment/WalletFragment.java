@@ -1,6 +1,7 @@
 package com.idhub.wallet.wallet.mainfragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,18 +19,22 @@ import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
+import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.base.node.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
+import com.idhub.wallet.wallet.info.WalletInfoActivity;
 import com.idhub.wallet.wallet.mainfragment.view.WalletAddressTopView;
 import com.idhub.wallet.wallet.mainfragment.view.WalletFragmentBottomView;
 import com.idhub.wallet.wallet.token.TokenManagerActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observer;
@@ -108,7 +113,8 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
 
     private void initData() {
         mDidHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
-        mWalletAddressTopView.setData(mDidHubMnemonicKeyStore);
+        if (mDidHubMnemonicKeyStore != null)
+            mWalletAddressTopView.setData(mDidHubMnemonicKeyStore);
         searchAssetmodelData();
     }
 
@@ -117,13 +123,47 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         mWalletAddressTopView = view.findViewById(R.id.wallet_card);
         mWalletBottomView = view.findViewById(R.id.bottom_view);
         mLoadingAndErrorView = view.findViewById(R.id.loading_and_error);
+        TitleLayout titleLayout = view.findViewById(R.id.title);
+        titleLayout.setBackImg(R.mipmap.wallet_nav);
+        titleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //钱包选择
+                if (mDidHubMnemonicKeyStore != null) {
+                    WalletListDialog walletListDialog = new WalletListDialog(getContext(), mDidHubMnemonicKeyStore.getAddress());
+                    walletListDialog.setWalletListSelectItemListener(new WalletListDialog.WalletListSelectItemListener() {
+                        @Override
+                        public void selectItem(String id) {
+                            boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
+                            if (b)
+                                WalletSelectedObservable.getInstance().update();
+                        }
+                    });
+                    walletListDialog.show();
+                }
+            }
+        });
+        titleLayout.setSecondImageAndClickCallBack(R.mipmap.wallet_manage, new TitleLayout.OnImageClickCallbackListener() {
+            @Override
+            public void onImageClick() {
+                if (mDidHubMnemonicKeyStore != null) {
+                    WalletInfoActivity.startAction(getContext(), mDidHubMnemonicKeyStore.getId());
+                }
+            }
+        });
+        titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_qrcode_scan, new TitleLayout.OnImageClickCallbackListener() {
+            @Override
+            public void onImageClick() {
+                QrCodeActivity.startAction(((Activity) getContext()), 100);
+            }
+        });
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
-
 
 
     @Override

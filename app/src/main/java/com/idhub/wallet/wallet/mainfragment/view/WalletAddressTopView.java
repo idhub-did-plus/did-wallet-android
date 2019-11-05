@@ -24,15 +24,15 @@ import com.idhub.wallet.wallet.transaction.ReceiveActivity;
 
 import org.web3j.crypto.Keys;
 
-public class WalletAddressTopView extends ConstraintLayout implements View.OnClickListener, WalletListDialog.WalletListSelectItemListener {
+public class WalletAddressTopView extends ConstraintLayout implements View.OnClickListener {
 
     private WalletKeystore walletKeystore;
     private TextView mWalletName;
     private TextView mAddressView;
     private TextView mDefaultAddressName;
-    private ImageView mUpgradeIcon;
+
     private TextView mUpgradeName;
-    private View mAddressBackGroundView;
+
 
     public WalletAddressTopView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -41,19 +41,14 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        findViewById(R.id.qr_code).setOnClickListener(this);
-        findViewById(R.id.wallet_manage).setOnClickListener(this);
-        findViewById(R.id.wallet_select).setOnClickListener(this);
-        mUpgradeIcon = findViewById(R.id.upgrade_icon);
+
         mUpgradeName = findViewById(R.id.upgrade_name);
-        mUpgradeIcon.setOnClickListener(this);
+
         mUpgradeName.setOnClickListener(this);
         mWalletName = findViewById(R.id.wallet_name);
         mAddressView = findViewById(R.id.wallet_address);
         mAddressView.setOnClickListener(this);
         mDefaultAddressName = findViewById(R.id.tv_default);
-        mAddressBackGroundView = findViewById(R.id.ct_address_view);
-
     }
 
     public void setData(WalletKeystore keyStore) {
@@ -62,12 +57,8 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
         mAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));
         boolean isgl = keyStore.getWallet().isAssociate();
         if (isgl) {
-            mUpgradeIcon.setVisibility(INVISIBLE);
             mUpgradeName.setVisibility(INVISIBLE);
-            mAddressBackGroundView.setBackgroundResource(R.mipmap.wallet_association_wallet);
         } else {
-            mAddressBackGroundView.setBackgroundResource(R.mipmap.wallet_normal_wallet);
-            mUpgradeIcon.setVisibility(VISIBLE);
             mUpgradeName.setVisibility(VISIBLE);
         }
         if (keyStore.getWallet().isDefaultAddress()) {
@@ -87,18 +78,8 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.qr_code:
-                QrCodeActivity.startAction(((Activity) getContext()), 100);
-                break;
-            case R.id.wallet_manage:
-            case R.id.upgrade_icon:
             case R.id.upgrade_name:
                 WalletInfoActivity.startAction(getContext(), walletKeystore.getId());
-                break;
-            case R.id.wallet_select:
-                WalletListDialog walletListDialog = new WalletListDialog(getContext(), walletKeystore.getAddress());
-                walletListDialog.setWalletListSelectItemListener(this);
-                walletListDialog.show();
                 break;
             case R.id.wallet_address:
                 AssetsModel assetsModel = new AssetsModel();
@@ -112,10 +93,4 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
         }
     }
 
-    @Override
-    public void selectItem(String id) {
-        boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
-        if (b)
-            WalletSelectedObservable.getInstance().update();
-    }
 }
