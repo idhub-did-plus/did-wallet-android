@@ -6,101 +6,100 @@
     android:layout_height="match_parent"
     tools:context=".createmanager.IdentityManagerActivity">
 
-    <LinearLayout
-        android:id="@+id/tv_identity_create"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_title">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/wallet_create_wallet" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:text="@string/wallet_identity_create"
-            android:textColor="@color/wallet_create_wallet_text_gray"
-            android:textSize="15sp" />
-    </LinearLayout>
-
     <ImageView
-        android:id="@+id/line"
-        app:layout_constraintTop_toBottomOf="@id/tv_identity_create"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="30dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:src="@mipmap/wallet_main_create_line"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <LinearLayout
-        android:id="@+id/tv_identity_recover"
+        android:id="@+id/wallet_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:layout_marginRight="50dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/wallet_recovery_wallet" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:text="@string/wallet_identity_recovery"
-            android:textColor="@color/wallet_create_wallet_text_gray"
-            android:textSize="15sp" />
-    </LinearLayout>
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="130dp"
+        android:src="@mipmap/wallet_create_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/tv_identity_import"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:gravity="center"
-        android:layout_marginLeft="50dp"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/wallet_import_wallet" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
-            android:text="@string/wallet_identity_import"
-            android:textColor="@color/wallet_create_wallet_text_gray"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_main_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="94dp"
-        android:gravity="center"
-        android:text="@string/wallet_main_create_wallet_tip"
-        android:textColor="@color/wallet_create_wallet_text_black"
-        android:textSize="18sp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/wallet_rectangle_line_10"
+        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/wallet_icon">
+
+        <LinearLayout
+            android:id="@+id/tv_identity_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="29dp"
+            android:paddingRight="14dp"
+            android:paddingBottom="19dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableRight="@mipmap/wallet_right_arrow"
+                android:text="@string/wallet_identity_create"
+                android:textColor="@color/wallet_main_blue_color"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/wallet_line_gray" />
+
+        <LinearLayout
+            android:id="@+id/tv_identity_import"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="24dp"
+            android:paddingRight="14dp"
+            android:paddingBottom="19dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableRight="@mipmap/wallet_right_arrow"
+                android:text="@string/wallet_identity_import"
+                android:textColor="@color/wallet_main_blue_color"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/wallet_line_gray" />
+
+        <LinearLayout
+            android:id="@+id/tv_identity_recover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingTop="24dp"
+            android:paddingRight="14dp"
+            android:paddingBottom="19dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableRight="@mipmap/wallet_right_arrow"
+                android:text="@string/wallet_identity_recovery"
+                android:textColor="@color/wallet_main_blue_color"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

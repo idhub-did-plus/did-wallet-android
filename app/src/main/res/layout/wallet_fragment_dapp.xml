@@ -26,7 +26,7 @@
         android:paddingLeft="10dp"
         android:hint="@string/wallet_dapp_search_hint"
         android:textSize="15sp"
-        android:textColor="@color/wallet_text_dapp_color"
+        android:textColor="@color/wallet_text_gray_color"
         android:layout_marginLeft="20dp"
         android:imeOptions="actionDone"
         android:layout_marginRight="20dp"

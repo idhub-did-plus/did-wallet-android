@@ -271,7 +271,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         View view = tab.getCustomView();
         TextView txt_title = view.findViewById(R.id.tab_name);
         ImageView img_title = view.findViewById(R.id.tab_image);
-        txt_title.setTextColor(getResources().getColor(R.color.wallet_text_blue_color));
+        txt_title.setTextColor(getResources().getColor(R.color.wallet_main_blue_color));
         img_title.setImageResource(tabIconsPressed[tab.getPosition()]);
 
     }
@@ -291,7 +291,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         img_title.setImageResource(tabIcons[position]);
 
         if (position == 0) {
-            txt_title.setTextColor(getResources().getColor(R.color.wallet_text_blue_color));
+            txt_title.setTextColor(getResources().getColor(R.color.wallet_main_blue_color));
             img_title.setImageResource(tabIconsPressed[position]);
         } else {
             txt_title.setTextColor(getResources().getColor(R.color.wallet_text_title_color));

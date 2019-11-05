@@ -48,8 +48,9 @@
 
 
 
-    <color name="wallet_text_blue_color">#007AFF</color>
+    <color name="wallet_light_red">#FF8585</color>
+    <color name="wallet_main_blue_color">#007AFF</color>
     <color name="wallet_text_title_color">#B5B5B5</color>
-    <color name="wallet_text_dapp_color">#999999</color>
-    <color name="wallet_text_gray_color">#696969</color>
+    <color name="wallet_text_gray_color">#999999</color>
+    <color name="wallet_text_deep_gray_color">#696969</color>
 </resources>

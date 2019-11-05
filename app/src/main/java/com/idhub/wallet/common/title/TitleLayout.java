@@ -28,7 +28,6 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
     }
 
     private ImageView mBackImageView;
-    private TextView mBackTextView;
     private TextView mTitleView;
     private TextView mImageOneView;
     private TextView mImageTwoView;
@@ -41,21 +40,19 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
     protected void onFinishInflate() {
         super.onFinishInflate();
         mBackImageView = findViewById(R.id.back_icon);
-        mBackTextView = findViewById(R.id.back_text);
         mTitleView = findViewById(R.id.tv_title);
         mImageOneView = findViewById(R.id.image_one);
         mImageOneView.setVisibility(GONE);
         mImageTwoView = findViewById(R.id.image_two);
         mImageTwoView.setVisibility(GONE);
         mBackImageView.setOnClickListener(this);
-        mBackTextView.setOnClickListener(this);
         titleView = findViewById(R.id.title_view);
         immerseTitle();
     }
 
     @Override
     public void onClick(View v) {
-        if (v == mBackImageView || v == mBackTextView) {
+        if (v == mBackImageView) {
             ((Activity) getContext()).finish();
         }
         if (v == mImageOneView && mOnFirstClickCallbackListener != null) {
@@ -68,17 +65,14 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
 
     public void setOnClickListener(OnClickListener onClickListener) {
         mBackImageView.setOnClickListener(onClickListener);
-        mBackTextView.setOnClickListener(onClickListener);
     }
 
     public void setBackImg(int resId){
         mBackImageView.setImageResource(resId);
-        mBackTextView.setVisibility(INVISIBLE);
     }
 
     public void setBackImgVisible(int visibility){
         mBackImageView.setVisibility(visibility);
-        mBackTextView.setVisibility(visibility);
     }
     public void setTitle(String title) {
         mTitleView.setText(title);
