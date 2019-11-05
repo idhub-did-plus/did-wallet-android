@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.tabs.TabLayout;
 import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.SignMessageDialogFragment;
@@ -28,9 +27,11 @@ import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.walletobservable.WalletUpdateUserInfoObservable;
+import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.createmanager.IdentityManagerActivity;
 import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
@@ -80,8 +81,7 @@ import org.web3j.crypto.Credentials;
 public class MainActivity extends BaseActivity implements SignMessageDialogFragment.SignMessageDialogFragmentListener {
 
     private MainFragmentPagerAdapter adapter;
-    private MeTopView mTopView;
-    private Handler handler = new NetHandler(this);
+
     private int[] tabIcons = {
             R.drawable.wallet_me_normal,
             R.drawable.wallet_wallet_normal,
@@ -97,9 +97,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     private JSONObject mIdHubLoginJwtJsonObject;
     private String signMessage;
     private LoadingAndErrorView mLoadingAndErrorView;
-    private Observer userInfoObserver = (o, arg) -> {
-       mTopView.setUserInfo();
-    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,8 +106,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         }
         setContentView(R.layout.wallet_activity_main);
         initView();
-        initData();
-        WalletUpdateUserInfoObservable.getInstance().addObserver(userInfoObserver);
+
     }
 
     public static void reStart(Context context) {
@@ -197,8 +194,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             WalletSelectedObservable.getInstance().update();
         } else if ("upgrade".equals(data)) {
             WalletSelectedObservable.getInstance().update();
-            //upgrade
-            initData();
+            WalletUpgradeObservable.getInstance().update();
         } else if ("transaction".equals(data)) {
             WalletAddAssetsObservable.getInstance().update();
         } else if ("add".equals(data)) {
@@ -213,9 +209,8 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     }
 
     private void initView() {
-        mTopView = findViewById(R.id.top_view);
-        mLoadingAndErrorView = findViewById(R.id.loading_and_error);
 
+        mLoadingAndErrorView = findViewById(R.id.loading_and_error);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -268,7 +263,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         View view = tab.getCustomView();
         TextView txt_title = view.findViewById(R.id.tab_name);
         ImageView img_title = view.findViewById(R.id.tab_image);
-        txt_title.setTextColor(getResources().getColor(R.color.wallet_main_tab_color_normal));
+        txt_title.setTextColor(getResources().getColor(R.color.wallet_text_gray_color));
         img_title.setImageResource(tabIcons[tab.getPosition()]);
     }
 
@@ -276,7 +271,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         View view = tab.getCustomView();
         TextView txt_title = view.findViewById(R.id.tab_name);
         ImageView img_title = view.findViewById(R.id.tab_image);
-        txt_title.setTextColor(getResources().getColor(R.color.wallet_main_tab_color_select));
+        txt_title.setTextColor(getResources().getColor(R.color.wallet_text_blue_color));
         img_title.setImageResource(tabIconsPressed[tab.getPosition()]);
 
     }
@@ -296,214 +291,17 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         img_title.setImageResource(tabIcons[position]);
 
         if (position == 0) {
-            txt_title.setTextColor(getResources().getColor(R.color.wallet_main_tab_color_select));
+            txt_title.setTextColor(getResources().getColor(R.color.wallet_text_blue_color));
             img_title.setImageResource(tabIconsPressed[position]);
         } else {
-            txt_title.setTextColor(getResources().getColor(R.color.wallet_main_tab_color_normal));
+            txt_title.setTextColor(getResources().getColor(R.color.wallet_text_gray_color));
             img_title.setImageResource(tabIcons[position]);
         }
         return view;
     }
 
-    private void initData() {
-        //设置ein和recoverAddress
-        String defaultAddress = WalletManager.getDefaultAddress();
-        if (TextUtils.isEmpty(defaultAddress)) {
-            //显示1056
-            mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
-            mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
-        } else {
-            //先获取sp里是否有存储，没有则进行网络请求
-            String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
-            if (TextUtils.isEmpty(ein)) {
-                checkHasIdentity(defaultAddress);
-            } else {
-                setEIN1484View(ein);
-                setRecoverAddress(ein);
-            }
-        }
-        //解决升级身份成功本地未记录的情况，
-        boolean isUpgradeAction = Identity1484To1056BindSharedPreferences.getInstance().getIsUpgradeAction();
-        if (isUpgradeAction && TextUtils.isEmpty(defaultAddress)) {
-            defaultAddress = WalletManager.getCurrentKeyStore().getAddress();
-            checkHasIdentity(defaultAddress);
-        }
-
-//        //解决initialize失败的情况 需要默认地址发交易
-//        if (!Identity1484To1056BindSharedPreferences.getInstance().getUpgradeInitializeIsSuccess() && !TextUtils.isEmpty(WalletManager.getDefaultAddress())) {
-//            ApiFactory.getIdentityChainLocal().initialize(defaultAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
-//                @Override
-//                public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
-//                    Log.e("LYW", "onNext:ini success "  );
-//                    Identity1484To1056BindSharedPreferences.getInstance().setUpgradeInitializeIsSuccess(true);
-//                }
-//
-//                @Override
-//                public void onError(Throwable e) {
-//                    Log.e("LYW", "onNext:ini false "  );
-//                }
-//
-//                @Override
-//                public void onComplete() {
-//                }
-//            });
-//        }
 
 
-    }
-
-    private void getEIN(String defaultAddress) {
-        //TODO:暂时这么先写 判断当前节点没有合约地址
-        String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
-        if (TextUtils.isEmpty(identityRegistryInterface)) {
-            return;
-        }
-        Credentials credentials = Credentials.create("0");
-        BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
-        IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
-        ApiFactory.getIdentityChainLocal().getEIN(defaultAddress).listen(aLong -> {
-            String einStr = aLong.toString();
-            WalletOtherInfoSharpreference.getInstance().setEIN(einStr);
-            Message message = Message.obtain();
-            message.what = 1;
-            message.obj = einStr;
-            handler.sendMessage(message);
-        }, s -> {
-            Message message = Message.obtain();
-            message.what = 2;
-            handler.sendMessage(message);
-        });
-    }
-
-
-    private void checkHasIdentity(String defaultAddress) {
-        //TODO:暂时这么先写 判断当前节点没有合约地址
-        String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
-        if (TextUtils.isEmpty(identityRegistryInterface)) {
-            return;
-        }
-        Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
-            Credentials credentials = Credentials.create("0");
-            BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
-            IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
-            Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(defaultAddress);
-            emitter.onNext(hasIdentity);
-            emitter.onComplete();
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<Boolean>() {
-            @Override
-            public void onNext(Boolean aBoolean) {
-                WalletKeystore defaultKeystore = WalletManager.getDefaultKeystore();
-                if (defaultKeystore == null) {
-                    defaultKeystore = WalletManager.getCurrentKeyStore();
-                }
-                if (aBoolean) {
-                    Wallet wallet = defaultKeystore.getWallet();
-                    if (!wallet.isDefaultAddress()) {
-                        wallet.setAssociate(true);
-                        wallet.setDefaultAddress(true);
-                        WalletManager.flushWallet(defaultKeystore, true);
-                        WalletSelectedObservable.getInstance().update();
-                    }
-                    getEIN(defaultAddress);
-                }else {
-                    Wallet wallet = defaultKeystore.getWallet();
-                    if (wallet.isDefaultAddress()) {
-                        wallet.setAssociate(false);
-                        wallet.setDefaultAddress(false);
-                        WalletManager.flushWallet(defaultKeystore, true);
-                        WalletSelectedObservable.getInstance().update();
-                    }
-                    mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
-                    mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.e("LYW", "onNext:checkHasIdentityonError " + e.getMessage() );
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-
-    }
-
-    private void setRecoverAddress(String ein) {
-        //recoverAddress
-        String recoverAddress = WalletOtherInfoSharpreference.getInstance().getRecoverAddress();
-        if (TextUtils.isEmpty(recoverAddress)) {
-            if (TextUtils.isEmpty(ein)) {
-                mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
-            } else {
-                //TODO:暂时这么先写 判断当前节点没有合约地址
-                String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
-                if (TextUtils.isEmpty(identityRegistryInterface)) {
-                    return;
-                }
-                Credentials credentials = Credentials.create("0");
-                BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
-                IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
-                ApiFactory.getIdentityChainLocal().getIdentity(Long.parseLong(ein)).listen(rst -> {
-                    String recoveryAddress = rst.getRecoveryAddress();
-                    WalletOtherInfoSharpreference.getInstance().setRecoverAddress(recoveryAddress);
-                    Message message = Message.obtain();
-                    message.what = 3;
-                    message.obj = recoveryAddress;
-                    handler.sendMessage(message);
-                }, msg -> {
-                    Message message = Message.obtain();
-                    message.what = 4;
-                    handler.sendMessage(message);
-                });
-            }
-        } else {
-            mTopView.setRecoverAddress(recoverAddress);
-        }
-    }
-
-    private void setEIN1484View(String ein) {
-        mTopView.setEIN1484(ein);
-    }
-
-
-    private static class NetHandler extends Handler {
-        private final WeakReference<AppCompatActivity> mFragmentReference;
-
-        private NetHandler(AppCompatActivity activity) {
-            mFragmentReference = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            AppCompatActivity activity = mFragmentReference.get();
-            if ((activity instanceof MainActivity)) {
-                MainActivity mainActivity = (MainActivity) activity;
-                switch (msg.what) {
-                    case 1:
-                        String ein = ((String) msg.obj);
-                        mainActivity.setEIN1484View(ein);
-                        mainActivity.setRecoverAddress(ein);
-                        break;
-                    case 2:
-                        mainActivity.mTopView.setEINVisible(View.INVISIBLE);
-                        mainActivity.setRecoverAddress("");
-                        break;
-                    case 3:
-                        String recoveryAddress = ((String) msg.obj);
-                        mainActivity.mTopView.setRecoverAddress(recoveryAddress);
-                        break;
-                    case 4:
-                        mainActivity.mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
-                        break;
-                }
-
-            }
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -620,12 +418,6 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        WalletUpdateUserInfoObservable.getInstance().deleteObserver(userInfoObserver);
-        handler.removeCallbacksAndMessages(null);
-    }
 
 
     @Override

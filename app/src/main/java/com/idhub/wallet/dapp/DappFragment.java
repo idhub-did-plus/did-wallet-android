@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +47,16 @@ public class DappFragment extends MainBaseFragment {
                 }
             }
             return false;
+        });
+
+        TitleLayout titleLayout = view.findViewById(R.id.title);
+        titleLayout.setTitle(getString(R.string.wallet_dapp));
+        titleLayout.setBackImgVisible(View.GONE);
+        titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_qrcode_scan, new TitleLayout.OnImageClickCallbackListener() {
+            @Override
+            public void onImageClick() {
+                QrCodeActivity.startAction(getActivity(),100);
+            }
         });
         return view;
     }

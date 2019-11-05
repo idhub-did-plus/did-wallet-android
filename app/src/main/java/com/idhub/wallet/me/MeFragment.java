@@ -3,6 +3,7 @@ package com.idhub.wallet.me;
 import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -19,16 +20,23 @@ import com.idhub.magic.clientlib.http.RetrofitAccessor;
 import com.idhub.magic.common.event.MagicEvent;
 import com.idhub.magic.common.kvc.entity.ClaimType;
 import com.idhub.magic.common.parameter.MagicResponse;
+import com.idhub.magic.common.service.DeployedContractAddress;
+import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.title.TitleLayout;
+import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
+import com.idhub.wallet.common.walletobservable.WalletUpdateUserInfoObservable;
 import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
 import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
+import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.me.information.Level1Activity;
 import com.idhub.wallet.me.information.Level2Activity;
@@ -56,6 +64,11 @@ import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.ToastUtils;
 import com.subgraph.orchid.events.EventHandler;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,7 +78,14 @@ import retrofit2.Response;
  */
 public class MeFragment extends MainBaseFragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
-
+    private MeTopView mTopView;
+    private Observer userInfoObserver = (o, arg) -> {
+        mTopView.setUserInfo();
+    };
+    private Observer upgradeObserver = (o, arg) -> {
+        initTopViewData();
+    };
+    private Handler handler = new NetHandler(this);
     private MeBottomItemView mIDHubVipView;
     private MeBottomItemView mIDHubSuperVipView;
     private MeBottomItemView mQualifiedInvestorView;
@@ -90,11 +110,14 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         View view = inflater.inflate(R.layout.wallet_fragment_me, container, false);
         initView(view);
         initData();
+        initTopViewData();
         return view;
     }
 
     private void initData() {
         WalletVipStateObservable.getInstance().addObserver(observer);
+        WalletUpdateUserInfoObservable.getInstance().addObserver(userInfoObserver);
+        WalletUpgradeObservable.getInstance().addObserver(upgradeObserver);
         mIDHubVipView.setData(getString(R.string.wallet_idhub_vip), R.mipmap.wallet_idhub_vip_success, R.mipmap.wallet_idhub_vip_fail);
         mIDHubSuperVipView.setData(getString(R.string.wallet_idhub_super_vip), R.mipmap.wallet_idhub_svip_success, R.mipmap.wallet_idhub_svip_fail);
         mQualifiedInvestorView.setData(getString(R.string.wallet_qualified_investor), R.mipmap.wallet_sec_accredited_investor_success, R.mipmap.wallet_sec_accredited_investor_fail);
@@ -129,6 +152,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
     }
 
     private void initView(View view) {
+        mTopView = view.findViewById(R.id.top_view);
         swipeRefreshLayout = view.findViewById(R.id.srl_level);
         swipeRefreshLayout.setOnRefreshListener(this);
 
@@ -248,7 +272,189 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
     @Override
     public void onDestroy() {
         super.onDestroy();
+        WalletUpdateUserInfoObservable.getInstance().deleteObserver(userInfoObserver);
         WalletVipStateObservable.getInstance().deleteObserver(observer);
+        WalletUpgradeObservable.getInstance().deleteObserver(upgradeObserver);
+        handler.removeCallbacksAndMessages(null);
     }
 
+
+    private void initTopViewData() {
+        //设置ein和recoverAddress
+        String defaultAddress = WalletManager.getDefaultAddress();
+        if (TextUtils.isEmpty(defaultAddress)) {
+            //显示1056
+            mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
+            mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
+        } else {
+            //先获取sp里是否有存储，没有则进行网络请求
+            String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
+            if (TextUtils.isEmpty(ein)) {
+                checkHasIdentity(defaultAddress);
+            } else {
+                setEIN1484View(ein);
+                setRecoverAddress(ein);
+            }
+        }
+        //解决升级身份成功本地未记录的情况，
+        boolean isUpgradeAction = Identity1484To1056BindSharedPreferences.getInstance().getIsUpgradeAction();
+        if (isUpgradeAction && TextUtils.isEmpty(defaultAddress)) {
+            defaultAddress = WalletManager.getCurrentKeyStore().getAddress();
+            checkHasIdentity(defaultAddress);
+        }
+
+    }
+
+    private void getEIN(String defaultAddress) {
+        //TODO:暂时这么先写 判断当前节点没有合约地址
+        String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
+        if (TextUtils.isEmpty(identityRegistryInterface)) {
+            return;
+        }
+        Credentials credentials = Credentials.create("0");
+        BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
+        IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
+        ApiFactory.getIdentityChainLocal().getEIN(defaultAddress).listen(aLong -> {
+            String einStr = aLong.toString();
+            WalletOtherInfoSharpreference.getInstance().setEIN(einStr);
+            Message message = Message.obtain();
+            message.what = 1;
+            message.obj = einStr;
+            handler.sendMessage(message);
+        }, s -> {
+            Message message = Message.obtain();
+            message.what = 2;
+            handler.sendMessage(message);
+        });
+    }
+
+
+    private void checkHasIdentity(String defaultAddress) {
+        //TODO:暂时这么先写 判断当前节点没有合约地址
+        String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
+        if (TextUtils.isEmpty(identityRegistryInterface)) {
+            return;
+        }
+        Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
+            Credentials credentials = Credentials.create("0");
+            BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
+            IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
+            Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(defaultAddress);
+            emitter.onNext(hasIdentity);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<Boolean>() {
+            @Override
+            public void onNext(Boolean aBoolean) {
+                WalletKeystore defaultKeystore = WalletManager.getDefaultKeystore();
+                if (defaultKeystore == null) {
+                    defaultKeystore = WalletManager.getCurrentKeyStore();
+                }
+                if (aBoolean) {
+                    Wallet wallet = defaultKeystore.getWallet();
+                    if (!wallet.isDefaultAddress()) {
+                        wallet.setAssociate(true);
+                        wallet.setDefaultAddress(true);
+                        WalletManager.flushWallet(defaultKeystore, true);
+                        WalletSelectedObservable.getInstance().update();
+                    }
+                    getEIN(defaultAddress);
+                }else {
+                    Wallet wallet = defaultKeystore.getWallet();
+                    if (wallet.isDefaultAddress()) {
+                        wallet.setAssociate(false);
+                        wallet.setDefaultAddress(false);
+                        WalletManager.flushWallet(defaultKeystore, true);
+                        WalletSelectedObservable.getInstance().update();
+                    }
+                    mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
+                    mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("LYW", "onNext:checkHasIdentityonError " + e.getMessage() );
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+    }
+
+    private void setRecoverAddress(String ein) {
+        //recoverAddress
+        String recoverAddress = WalletOtherInfoSharpreference.getInstance().getRecoverAddress();
+        if (TextUtils.isEmpty(recoverAddress)) {
+            if (TextUtils.isEmpty(ein)) {
+                mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
+            } else {
+                //TODO:暂时这么先写 判断当前节点没有合约地址
+                String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
+                if (TextUtils.isEmpty(identityRegistryInterface)) {
+                    return;
+                }
+                Credentials credentials = Credentials.create("0");
+                BigInteger privateKey = credentials.getEcKeyPair().getPrivateKey();
+                IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
+                ApiFactory.getIdentityChainLocal().getIdentity(Long.parseLong(ein)).listen(rst -> {
+                    String recoveryAddress = rst.getRecoveryAddress();
+                    WalletOtherInfoSharpreference.getInstance().setRecoverAddress(recoveryAddress);
+                    Message message = Message.obtain();
+                    message.what = 3;
+                    message.obj = recoveryAddress;
+                    handler.sendMessage(message);
+                }, msg -> {
+                    Message message = Message.obtain();
+                    message.what = 4;
+                    handler.sendMessage(message);
+                });
+            }
+        } else {
+            mTopView.setRecoverAddress(recoverAddress);
+        }
+    }
+
+    private void setEIN1484View(String ein) {
+        mTopView.setEIN1484(ein);
+    }
+
+
+    private static class NetHandler extends Handler {
+        private final WeakReference<Fragment> mFragmentReference;
+
+        private NetHandler(Fragment fragment) {
+            mFragmentReference = new WeakReference<>(fragment);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            Fragment fragment = mFragmentReference.get();
+            if ((fragment instanceof MeFragment)) {
+                MeFragment meFragment = (MeFragment) fragment;
+                switch (msg.what) {
+                    case 1:
+                        String ein = ((String) msg.obj);
+                        meFragment.setEIN1484View(ein);
+                        meFragment.setRecoverAddress(ein);
+                        break;
+                    case 2:
+                        meFragment.mTopView.setEINVisible(View.INVISIBLE);
+                        meFragment.setRecoverAddress("");
+                        break;
+                    case 3:
+                        String recoveryAddress = ((String) msg.obj);
+                        meFragment.mTopView.setRecoverAddress(recoveryAddress);
+                        break;
+                    case 4:
+                        meFragment.mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
+                        break;
+                }
+
+            }
+        }
+    }
 }

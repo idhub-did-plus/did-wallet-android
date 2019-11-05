@@ -46,4 +46,9 @@
 
     <color name="wallet_transparent">#00000000</color>
 
+
+
+    <color name="wallet_text_blue_color">#007AFF</color>
+    <color name="wallet_text_gray_color">#B5B5B5</color>
+    <color name="wallet_text_dapp_color">#999999</color>
 </resources>

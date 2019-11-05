@@ -5,7 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".me.MeFragment">
-
+    <include
+        android:id="@+id/top_view"
+        layout="@layout/wallet_fragment_me_top_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_level"
         android:layout_width="match_parent"
@@ -13,7 +20,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/top_view">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

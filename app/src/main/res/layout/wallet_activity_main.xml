@@ -12,37 +12,27 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+        app:layout_constraintBottom_toTopOf="@id/tab_layout" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/top_view"
-        app:tabIndicatorColor="@color/wallet_main_tab_color_select"
-        app:tabIndicatorHeight="3dp"
-        app:tabRippleColor="@android:color/transparent" />
-
-    <include
-        android:id="@+id/top_view"
-        layout="@layout/wallet_fragment_me_top_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/line"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.idhub.wallet.common.tablayout.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:tabIndicatorColor="@color/wallet_main_tab_color_select"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@android:color/transparent" />
 
     <include
         android:id="@+id/loading_and_error"
