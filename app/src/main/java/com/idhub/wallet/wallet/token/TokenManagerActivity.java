@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -124,8 +125,13 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
-                Log.e("LYW1", "onError: " + e.getMessage());
-                Web3Api.searchERC20ContractAddressAssets(contractAddress,erc20observer);
+                String message = e.getMessage();
+                if (message.contains("Empty value (0x) returned from contract")) {
+                    Web3Api.searchERC20ContractAddressAssets(contractAddress,erc20observer);
+                }else {
+                    Toast.makeText(TokenManagerActivity.this, message, Toast.LENGTH_SHORT).show();
+                }
+                Log.e("LYW1", "onError: " + message);
             }
 
             @Override

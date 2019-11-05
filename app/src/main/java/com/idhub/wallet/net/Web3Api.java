@@ -110,6 +110,7 @@ public class Web3Api {
         Observable.create((ObservableOnSubscribe<AssetsModel>) emitter -> {
             ERC1400 erc1400 = ERC1400.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
             List list = erc1400.totalPartitions().send();
+            //报错 Empty value (0x) returned from contract 此时调用查询ERC20合约资产
             String name = erc1400.name().send();
             BigInteger decimal = erc1400.decimals().send();
             String symbol = erc1400.symbol().send();
