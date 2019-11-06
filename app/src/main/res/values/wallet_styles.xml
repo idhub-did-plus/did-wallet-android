@@ -25,12 +25,14 @@
     </style>
 
     <style name="WalletCommonButton">
-        <item name="android:layout_width">330dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
-        <item name="android:background">@drawable/wallet_shape_button</item>
+        <item name="android:layout_marginLeft">30dp</item>
+        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:background">@drawable/wallet_main_btn_background</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/wallet_white</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="WalletAnimation">

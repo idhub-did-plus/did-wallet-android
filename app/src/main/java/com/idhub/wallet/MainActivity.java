@@ -7,30 +7,22 @@ import android.content.Intent;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.SignMessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
-import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
-import com.idhub.wallet.common.walletobservable.WalletUpdateUserInfoObservable;
 import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.createmanager.IdentityManagerActivity;
 import com.idhub.wallet.createmanager.UploadUserBasicInfoActivity;
@@ -38,28 +30,21 @@ import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
-import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.transaction.EthereumSign;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.TransactionRecordDbManager;
 import com.idhub.base.greendao.entity.TransactionRecordEntity;
-import com.idhub.wallet.me.view.MeTopView;
-import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.setting.NotificationUtils;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.mainfragment.QRCodeType;
 import com.idhub.wallet.wallet.mainfragment.WalletFragment;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 import io.api.etherscan.model.Tx;
 import io.api.etherscan.model.TxToken;
-import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -76,7 +61,6 @@ import com.idhub.magic.clientlib.interfaces.IncomingService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.web3j.crypto.Credentials;
 
 public class MainActivity extends BaseActivity implements SignMessageDialogFragment.SignMessageDialogFragmentListener {
 
