@@ -6,10 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +35,18 @@ import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.base.node.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
+import com.idhub.wallet.wallet.adapter.WalletListAdapter;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;
+import com.idhub.wallet.wallet.mainfragment.adapter.SelectWalletAdapter;
 import com.idhub.wallet.wallet.mainfragment.view.WalletAddressTopView;
 import com.idhub.wallet.wallet.mainfragment.view.WalletFragmentBottomView;
+import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 import com.idhub.wallet.wallet.token.TokenManagerActivity;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observer;
 
@@ -54,6 +65,8 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     private Observer selectWalletObsever = (o, arg) -> initData();
     private LoadingAndErrorView mLoadingAndErrorView;
     private WalletAddressTopView mWalletAddressTopView;
+    private DrawerLayout drawerLayout;
+    private View leftDrawerView;
 
     public WalletFragment() {
         // Required empty public constructor
@@ -119,6 +132,28 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
     }
 
     private void initView(View view) {
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        leftDrawerView = view.findViewById(R.id.left_drawer);
+        view.findViewById(R.id.drawer_wallet_manage).setOnClickListener(this);
+        RecyclerView drawerRecyclerView = view.findViewById(R.id.wallet_recycler_view);
+        drawerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        Hashtable<String, WalletKeystore> walletKeystores = WalletManager.getWalletKeystores();
+        LinkedList<WalletKeystore> didHubMnemonicKeyStores = new LinkedList<>();
+        for (Iterator<String> iterator = walletKeystores.keySet().iterator(); iterator.hasNext(); ) {
+            String key = iterator.next();
+            didHubMnemonicKeyStores.add(walletKeystores.get(key));
+        }
+        SelectWalletAdapter selectWalletAdapter = new SelectWalletAdapter(getContext());
+        selectWalletAdapter.setOnItemClickListener(id -> {
+            closeDrawerLayout();
+            boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
+            if (b)
+                WalletSelectedObservable.getInstance().update();
+        });
+        selectWalletAdapter.addDatas(didHubMnemonicKeyStores);
+        drawerRecyclerView.setAdapter(selectWalletAdapter);
+
         view.findViewById(R.id.add_token).setOnClickListener(this);
         mWalletAddressTopView = view.findViewById(R.id.wallet_card);
         mWalletBottomView = view.findViewById(R.id.bottom_view);
@@ -130,16 +165,11 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
             public void onClick(View v) {
                 //钱包选择
                 if (mDidHubMnemonicKeyStore != null) {
-                    WalletListDialog walletListDialog = new WalletListDialog(getContext(), mDidHubMnemonicKeyStore.getAddress());
-                    walletListDialog.setWalletListSelectItemListener(new WalletListDialog.WalletListSelectItemListener() {
-                        @Override
-                        public void selectItem(String id) {
-                            boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
-                            if (b)
-                                WalletSelectedObservable.getInstance().update();
-                        }
-                    });
-                    walletListDialog.show();
+                    if (!drawerLayout.isDrawerOpen(leftDrawerView)) {
+                        drawerLayout.openDrawer(leftDrawerView);
+                    } else {
+                        drawerLayout.closeDrawer(leftDrawerView);
+                    }
                 }
             }
         });
@@ -178,6 +208,16 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
                 //go to add token
                 TokenManagerActivity.startAction(getContext());
                 break;
+            case R.id.drawer_wallet_manage:
+                WalletManagerActivity.startAction(getContext());
+                closeDrawerLayout();
+                break;
+        }
+    }
+
+    private void closeDrawerLayout() {
+        if (drawerLayout.isDrawerOpen(leftDrawerView)) {
+            drawerLayout.closeDrawer(leftDrawerView);
         }
     }
 
@@ -187,5 +227,14 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         WalletSelectedObservable.getInstance().deleteObserver(selectWalletObsever);
         WalletNodeSelectedObservable.getInstance().deleteObserver(nodeObervable);
         WalletAddAssetsObservable.getInstance().deleteObserver(addAssetsOberver);
+    }
+
+    public boolean onBackPress() {
+        if (drawerLayout.isDrawerOpen(leftDrawerView)) {
+            drawerLayout.closeDrawer(leftDrawerView);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

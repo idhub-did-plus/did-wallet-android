@@ -403,9 +403,15 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     }
 
 
-
     @Override
     public void onBackPressed() {
+        Fragment currentFragment = adapter.getCurrentFragment();
+        if (currentFragment instanceof WalletFragment) {
+            if (((WalletFragment) currentFragment).onBackPress()) {
+                return;
+            }
+        }
+
         long secondTime = System.currentTimeMillis();
         if (secondTime - mFirstTime > 2000) {
             ToastUtils.showShortToast(getString(R.string.wallet_main_back_double_click));

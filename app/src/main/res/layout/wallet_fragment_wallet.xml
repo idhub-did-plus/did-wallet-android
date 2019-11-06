@@ -1,69 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".wallet.mainfragment.WalletFragment">
 
-    <include
-        android:id="@+id/title"
-        layout="@layout/wallet_common_title_layout"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-        android:id="@+id/wallet_card"
-        layout="@layout/wallet_wallet_top_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_assets_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/wallet_assets"
-        android:textColor="@color/wallet_text_black"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wallet_card" />
+        <include
+            android:id="@+id/title"
+            layout="@layout/wallet_common_title_layout"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/add_token"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="22dp"
-        android:padding="10dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/wallet_main_add_assets"
-        app:layout_constraintBottom_toBottomOf="@id/tv_assets_title"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_assets_title" />
+        <include
+            android:id="@+id/wallet_card"
+            layout="@layout/wallet_wallet_top_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/title" />
 
-    <include
-        android:id="@+id/bottom_view"
-        layout="@layout/wallet_fragment_bottom_assets"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_assets_title" />
+        <TextView
+            android:id="@+id/tv_assets_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="23dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/wallet_assets"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wallet_card" />
 
-    <include
-        android:id="@+id/loading_and_error"
-        layout="@layout/wallet_common_loading_and_error"
-        android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/add_token"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="22dp"
+            android:padding="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/wallet_main_add_assets"
+            app:layout_constraintBottom_toBottomOf="@id/tv_assets_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_assets_title" />
+
+        <include
+            android:id="@+id/bottom_view"
+            layout="@layout/wallet_fragment_bottom_assets"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_assets_title" />
+
+        <include
+            android:id="@+id/loading_and_error"
+            layout="@layout/wallet_common_loading_and_error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/left_drawer"
+        android:layout_width="285dp"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:background="@color/wallet_white"
+        android:layout_gravity="start"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:background="@color/wallet_main_blue_color"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="7dp"
+                android:layout_weight="1"
+                android:text="@string/wallet_wallet_select"
+                android:textColor="@color/wallet_white"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/drawer_wallet_manage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="7dp"
+                android:text="@string/wallet_manager"
+                android:textColor="@color/wallet_white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/wallet_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
