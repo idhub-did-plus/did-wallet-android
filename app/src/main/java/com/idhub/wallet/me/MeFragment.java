@@ -96,8 +96,6 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private Handler eventHandler = new EventListenerHandler();
-    private ImageView mUploadView;
-    private ImageView mQRCodeView;
 
     public MeFragment() {
         // Required empty public constructor
@@ -166,11 +164,6 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         mQualifiedPurchaserView.setOnClickListener(this);
         mStComplianceInvestorView = view.findViewById(R.id.st_compliance_investor);
         mStComplianceInvestorView.setOnClickListener(this);
-
-        mUploadView = view.findViewById(R.id.upload);
-        mUploadView.setOnClickListener(this);
-        mQRCodeView = view.findViewById(R.id.qrcode_scan);
-        mQRCodeView.setOnClickListener(this);
     }
 
     @Override
@@ -185,10 +178,6 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
             Level4Activity.startAction(getContext());
         } else if (v == mStComplianceInvestorView) {
             Level5Activity.startAction(getContext());
-        } else if (mUploadView == v) {
-            UploadInformationTypeActivity.startAction(getContext());
-        } else if (v == mQRCodeView) {
-            QrCodeActivity.startAction(getActivity(),100);
         }
     }
 

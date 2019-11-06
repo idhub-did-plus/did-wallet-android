@@ -1,5 +1,6 @@
 package com.idhub.wallet.me.view;
 
+import android.app.Activity;
 import android.content.Context;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
+import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.me.information.UploadInformationTypeActivity;
@@ -47,6 +49,8 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
         singature = findViewById(R.id.tv_signature);
         setUserInfo();
         findViewById(R.id.iv_setting).setOnClickListener(this);
+        findViewById(R.id.upload).setOnClickListener(this);
+        findViewById(R.id.scan_code).setOnClickListener(this);
         mRecoverAddressView = findViewById(R.id.tv_recover_address);
         mEINIdentityView = findViewById(R.id.tv_ein_number);
         mEINView = findViewById(R.id.tv_ein);
@@ -67,12 +71,12 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
 
     public void setRecoverAddress(String recoverAddress) {
         setRecoverAddressViewVisible(VISIBLE);
-        mRecoverAddressView.setText(getContext().getString(R.string.wallet_recovery_address)+":" + Keys.toChecksumAddress(recoverAddress));
+        mRecoverAddressView.setText(getContext().getString(R.string.wallet_recovery_address) + ":" + Keys.toChecksumAddress(recoverAddress));
     }
 
     public void setEIN1484(String ein) {
         setEINVisible(View.VISIBLE);
-        mEINView.setText(getContext().getString(R.string.wallet_ein)+":"+ein);
+        mEINView.setText(getContext().getString(R.string.wallet_ein) + ":" + ein);
         mEINIdentityView.setText("did:erc1484:" + DeployedContractAddress.IdentityRegistryInterface + ":" + NumericUtil.bigIntegerToHexWithZeroPadded(new BigInteger(ein), 64));
     }
 
@@ -82,12 +86,12 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
         mEINIdentityView.setText("did:erc1056:" + DeployedContractAddress.EthereumDIDRegistryInterface + ":" + address);
     }
 
-    public void setEINVisible(int visibility){
+    public void setEINVisible(int visibility) {
         mEINView.setVisibility(visibility);
         mEINIdentityView.setVisibility(visibility);
     }
 
-    public void setRecoverAddressViewVisible(int visibility){
+    public void setRecoverAddressViewVisible(int visibility) {
         mRecoverAddressView.setVisibility(visibility);
     }
 
@@ -96,6 +100,12 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
         switch (v.getId()) {
             case R.id.iv_setting:
                 SettingsActivity.startAction(getContext());
+                break;
+            case R.id.scan_code:
+                QrCodeActivity.startAction(((Activity) getContext()),100);
+                break;
+            case R.id.upload:
+                UploadInformationTypeActivity.startAction(getContext());
                 break;
         }
     }

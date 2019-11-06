@@ -3,30 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="241dp"
     android:background="@mipmap/wallet_main_top_background">
 
     <ImageView
-        android:id="@+id/iv_head"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:src="@mipmap/wallet_default_head"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="17dp"
+        android:src="@mipmap/wallet_upload_icon"
+        app:layout_constraintRight_toLeftOf="@id/scan_code"
+        app:layout_constraintTop_toTopOf="@id/scan_code" />
+
+    <ImageView
+        android:id="@+id/scan_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="17dp"
+        android:src="@mipmap/wallet_scan_code_white"
+        app:layout_constraintRight_toLeftOf="@id/iv_setting"
+        app:layout_constraintTop_toTopOf="@id/iv_setting" />
 
     <ImageView
         android:id="@+id/iv_setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
-        android:src="@mipmap/wallet_main_setting"
+        android:layout_marginTop="35dp"
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/wallet_setting_white"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_head"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/wallet_default_head"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <LinearLayout
         android:layout_width="0dp"
@@ -54,7 +71,6 @@
 
             <TextView
                 android:id="@+id/tv_ein"
-                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
@@ -63,6 +79,7 @@
                 android:singleLine="true"
                 android:textColor="@color/wallet_white"
                 android:textSize="17sp"
+                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="@id/iv_head"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_head"
@@ -73,8 +90,8 @@
         <TextView
             android:id="@+id/tv_signature"
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:textColor="@color/wallet_white"
             android:textSize="13sp"
             tools:text="Idhub did plus" />
