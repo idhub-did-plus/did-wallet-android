@@ -25,6 +25,7 @@ import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
+import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
@@ -85,6 +86,22 @@ public class UploadFileActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initView() {
+        TitleLayout titleLayout = findViewById(R.id.title);
+        titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_file_add, new TitleLayout.OnImageClickCallbackListener() {
+            @Override
+            public void onImageClick() {
+                List<UploadFileEntity> uploadFileEntities = mUploadFileAdapter.getDatas();
+                if (uploadFileEntities.size() > 0) {
+                    UploadFileEntity fileEntity = uploadFileEntities.get(uploadFileEntities.size() - 1);
+                    if (!fileEntity.isSubmit) {
+                        ToastUtils.showLongToast(getString(R.string.wallet_upload_file_add_tip));
+                        return;
+                    }
+                }
+                uploadFileEntities.add(new UploadFileEntity());
+                mUploadFileAdapter.notifyDataSetChanged();
+            }
+        });
         mUploadFileDbManager = new UploadFileDbManager();
         mUploadFileDbManager.queryAll(operation -> {
             List<UploadFileEntity> entities = (List<UploadFileEntity>) operation.getResult();

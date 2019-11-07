@@ -18,11 +18,16 @@ public class StringsListAdapter extends RecyclerView.Adapter<StringsListAdapter.
     private Context mContext;
     private List<String> mStrings;
     private final LayoutInflater mLayoutInflater;
-
+    private StringClickItem mStringClickItem;
     public StringsListAdapter(Context context) {
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
         mStrings = new ArrayList<>();
+    }
+
+
+    public void setStringClickItem(StringClickItem stringClickItem){
+        mStringClickItem = stringClickItem;
     }
 
     public void addAll(List<String> strs) {
@@ -59,6 +64,18 @@ public class StringsListAdapter extends RecyclerView.Adapter<StringsListAdapter.
         public StringsListAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.tv_str);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mStringClickItem != null) {
+                        mStringClickItem.itemClick(mStrings.get(getLayoutPosition()));
+                    }
+                }
+            });
         }
+    }
+
+    public interface StringClickItem{
+        void itemClick(String str);
     }
 }

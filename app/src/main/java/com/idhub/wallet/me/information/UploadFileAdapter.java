@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.ImagesList.StringsListAdapter;
 import com.idhub.wallet.common.dialog.SelectUploadFileTypeDialogFragment;
 import com.idhub.base.greendao.entity.UploadFileEntity;
 import com.idhub.wallet.utils.ToastUtils;
@@ -29,8 +30,6 @@ import java.util.List;
 
 public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int ITEM_BOOTOM_VIEW = 1;
-    private final int ITEM_OTHER_VIEW = 2;
     private Context mContext;
     private LayoutInflater inflater;
     private List<UploadFileEntity> uploadFileEntities;
@@ -46,35 +45,24 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void setDataItem(UploadFileEntity uploadFileEntity){
-        notifyItemChanged(uploadFileEntities.size() - 1, uploadFileEntity);
+        notifyItemChanged(uploadFileEntities.size() -1, uploadFileEntity);
     }
-    @Override
-    public int getItemViewType(int position) {
-        int itemCount = getItemCount();
-        if (position == itemCount - 1) {
-            return ITEM_BOOTOM_VIEW;
-        } else {
-            return ITEM_OTHER_VIEW;
-        }
-    }
+
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder viewHolder = null;
-        if (viewType == ITEM_BOOTOM_VIEW) {
-            viewHolder = new UploadFileAdapterBottomViewHolder(inflater.inflate(R.layout.wallet_upload_list_bootom_item, parent, false));
-        } else {
-            viewHolder = new UploadFileAdapterOtherViewHolder(inflater.inflate(R.layout.wallet_upload_list_item, parent, false));
-        }
+
+//            viewHolder = new UploadFileAdapterBottomViewHolder(inflater.inflate(R.layout.wallet_upload_list_bootom_item, parent, false));
+
+            RecyclerView.ViewHolder     viewHolder = new UploadFileAdapterOtherViewHolder(inflater.inflate(R.layout.wallet_upload_list_item, parent, false));
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof UploadFileAdapterBottomViewHolder) {
-
-        } else if (holder instanceof UploadFileAdapterOtherViewHolder) {
+        if (holder instanceof UploadFileAdapterOtherViewHolder) {
             UploadFileAdapterOtherViewHolder otherViewHolder = (UploadFileAdapterOtherViewHolder) holder;
             UploadFileEntity uploadFileEntity = uploadFileEntities.get(position);
             String filePath = uploadFileEntity.getFilePath();
@@ -92,65 +80,70 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
             otherViewHolder.mNameEditView.setText(uploadFileEntity.getName());
             String type = uploadFileEntity.getType();
-            if (!TextUtils.isEmpty(type)) {
-                otherViewHolder.mSpinner.setSelection(otherViewHolder.mTypesMap.get(type));
-            } else {
-                otherViewHolder.mSpinner.setSelection(0);
-            }
-            if (uploadFileEntity.isSubmit) {
-                otherViewHolder.mSpinner.setEnabled(false);
-                otherViewHolder.mNameEditView.setFocusable(false);
-                otherViewHolder.mNameEditView.setFocusableInTouchMode(false);
-            } else {
-                otherViewHolder.mSpinner.setEnabled(true);
-                otherViewHolder.mNameEditView.setFocusable(true);
-                otherViewHolder.mNameEditView.setFocusableInTouchMode(true);
-            }
+//            if (!TextUtils.isEmpty(type)) {
+//                otherViewHolder.mSpinner.setSelection(otherViewHolder.mTypesMap.get(type));
+//            } else {
+//                otherViewHolder.mSpinner.setSelection(0);
+//            }
+//            if (uploadFileEntity.isSubmit) {
+//                otherViewHolder.mSpinner.setEnabled(false);
+//                otherViewHolder.mNameEditView.setFocusable(false);
+//                otherViewHolder.mNameEditView.setFocusableInTouchMode(false);
+//            } else {
+//                otherViewHolder.mSpinner.setEnabled(true);
+//                otherViewHolder.mNameEditView.setFocusable(true);
+//                otherViewHolder.mNameEditView.setFocusableInTouchMode(true);
+//            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return uploadFileEntities.size() + 1;
+        return uploadFileEntities.size();
     }
 
     public class UploadFileAdapterOtherViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, SelectUploadFileTypeDialogFragment.SelectUploadFileTypeDialogFragmentListener {
 
+        private TextView mFileType;
         private ImageView mFileImage;
         private HashMap<String, Integer> mTypesMap;
         private EditText mNameEditView;
         private TextView mFilePathView;
-        private Spinner mSpinner;
+
         private SelectUploadFileTypeDialogFragment mSelectUploadFileTypeDialogFragment;
+        private FileTypePopupWindow fileTypePopupWindow;
 
         public UploadFileAdapterOtherViewHolder(@NonNull View itemView) {
             super(itemView);
             mNameEditView = itemView.findViewById(R.id.et_information);
             mFilePathView = itemView.findViewById(R.id.file_path);
             mFileImage = itemView.findViewById(R.id.file_image);
-            ImageView deleteImage = itemView.findViewById(R.id.file_delete);
-            deleteImage.setOnClickListener(this);
+            mFileType = itemView.findViewById(R.id.file_type);
+            mFileType.setOnClickListener(this);
+
+
             itemView.findViewById(R.id.btn_select_file).setOnClickListener(this);
-            mSpinner = itemView.findViewById(R.id.spinner_type);
+
             String[] types = mContext.getResources().getStringArray(R.array.identity_file_spinner);
             mTypesMap = new HashMap<>();
             for (int i = 0; i < types.length; i++) {
                 mTypesMap.put(types[i], i);
             }
-            mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    String type = types[position];
-                    int layoutPosition = getLayoutPosition();
-                    UploadFileEntity uploadFileEntity = uploadFileEntities.get(layoutPosition);
-                    uploadFileEntity.setType(type);
-                }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
+//            mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                    String type = types[position];
+//                    int layoutPosition = getLayoutPosition();
+//                    UploadFileEntity uploadFileEntity = uploadFileEntities.get(layoutPosition);
+//                    uploadFileEntity.setType(type);
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> parent) {
+//
+//                }
+//            });
             mNameEditView.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -175,18 +168,32 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public void onClick(View v) {
             int id = v.getId();
             switch (id) {
-                case R.id.file_delete:
-                    int layoutPosition = getLayoutPosition();
-                    uploadFileEntities.remove(layoutPosition);
-                    notifyDataSetChanged();
-                    break;
                 case R.id.btn_select_file:
                     //图片
                     mSelectUploadFileTypeDialogFragment = SelectUploadFileTypeDialogFragment.getInstance("adapter");
                     mSelectUploadFileTypeDialogFragment.show(((UploadFileActivity) mContext).getSupportFragmentManager(), "select_upload_file");
                     mSelectUploadFileTypeDialogFragment.setUploadFileTypeDialogFragmentListeneristener(this);
                     break;
+
+                case R.id.file_type:
+                    //选择类型
+                    showTypePopupWindow();
+                    break;
             }
+        }
+
+        private void showTypePopupWindow() {
+            fileTypePopupWindow = new FileTypePopupWindow(mContext, new StringsListAdapter.StringClickItem() {
+                @Override
+                public void itemClick(String str) {
+                    int layoutPosition = getLayoutPosition();
+                    UploadFileEntity uploadFileEntity = uploadFileEntities.get(layoutPosition);
+                    uploadFileEntity.setType(str);
+                    mFileType.setText(str);
+                    fileTypePopupWindow.dismiss();
+                }
+            });
+            fileTypePopupWindow.showAsDropDown(mFileType);
         }
 
         @Override

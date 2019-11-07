@@ -12,7 +12,7 @@ import com.idhub.wallet.R;
 public class AssetsErc1400ItemView extends ConstraintLayout {
 
 
-    private TextView mAssetsAmount;
+    private ImageView mAssetsAmount;
     private TextView mAssetsName;
     private ImageView mAssetsImage;
 

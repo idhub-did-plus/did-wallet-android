@@ -34,24 +34,12 @@
         android:id="@+id/tv_assets_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="55dp"
+        android:layout_marginRight="35dp"
         android:textColor="@color/wallet_text_deep_gray_color"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_assets_name"
         android:text="-" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/tv_assets_rmb"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginRight="36dp"-->
-<!--        android:textColor="@color/wallet_text_grey"-->
-<!--        android:textSize="12sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/tv_assets_amount"-->
-<!--        android:text="-"  />-->
 
 </com.idhub.wallet.wallet.mainfragment.view.AssetsItemView>

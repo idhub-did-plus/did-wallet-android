@@ -83,10 +83,12 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:text="@string/wallet_default_address"
-            android:textColor="@color/wallet_black"
+            android:textColor="@color/wallet_main_blue_color"
             android:textSize="11sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/middle_line"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/wallet_address" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.idhub.wallet.wallet.mainfragment.view.WalletAddressTopView>

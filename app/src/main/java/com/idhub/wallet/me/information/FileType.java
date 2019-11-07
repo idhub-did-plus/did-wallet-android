@@ -1,11 +1,31 @@
 package com.idhub.wallet.me.information;
 
+import com.idhub.base.App;
+import com.idhub.wallet.R;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FileType {
     public static Map<String, String> fileTypes ;
+    public static List<String> types ;
+
     static {
+        types = new ArrayList<>();
+        types.add(App.getInstance().getString(R.string.wallet_id_photo_positive));
+        types.add(App.getInstance().getString(R.string.wallet_id_photo_negative));
+        types.add(App.getInstance().getString(R.string.wallet_passport_photo));
+        types.add(App.getInstance().getString(R.string.wallet_bank_balance_document));
+        types.add(App.getInstance().getString(R.string.wallet_bank_flow_file));
+        types.add(App.getInstance().getString(R.string.wallet_evaluation_agency_is_assessment_document));
+        types.add(App.getInstance().getString(R.string.wallet_cfa_net_assets_certification_document));
+        types.add(App.getInstance().getString(R.string.wallet_tax_document));
+        types.add(App.getInstance().getString(R.string.wallet_credit_report));
+        types.add(App.getInstance().getString(R.string.wallet_address_proof_document));
+        types.add(App.getInstance().getString(R.string.wallet_property_certificate_for_non_self_occupied_housing));
+
         fileTypes = new HashMap<>();
         fileTypes.put("身份证件正面照片", "IDFront");
         fileTypes.put("身份证件反面照片", "IDBack");

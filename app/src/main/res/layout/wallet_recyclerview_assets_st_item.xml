@@ -30,17 +30,15 @@
         tools:text="ETH" />
 
 
-    <TextView
+    <ImageView
         android:id="@+id/tv_assets_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="36dp"
-        android:textColor="@color/wallet_orange"
-        android:textSize="16sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:src="@mipmap/wallet_more_detail"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="@string/wallet_view_detail" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!--    <TextView-->
     <!--        android:id="@+id/tv_assets_rmb"-->
