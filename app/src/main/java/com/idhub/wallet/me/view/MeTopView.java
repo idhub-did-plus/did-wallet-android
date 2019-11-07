@@ -45,21 +45,22 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
     protected void onFinishInflate() {
         super.onFinishInflate();
         headView = findViewById(R.id.iv_head);
+        headView.setOnClickListener(this);
         name = findViewById(R.id.tv_name);
+        name.setOnClickListener(this);
         singature = findViewById(R.id.tv_signature);
+        singature.setOnClickListener(this);
         setUserInfo();
         findViewById(R.id.iv_setting).setOnClickListener(this);
         findViewById(R.id.upload).setOnClickListener(this);
         findViewById(R.id.scan_code).setOnClickListener(this);
         mRecoverAddressView = findViewById(R.id.tv_recover_address);
+        mRecoverAddressView.setOnClickListener(this);
         mEINIdentityView = findViewById(R.id.tv_ein_number);
+        mEINIdentityView.setOnClickListener(this);
         mEINView = findViewById(R.id.tv_ein);
-        setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserInfoShowActivity.startAction(getContext());
-            }
-        });
+        mEINView.setOnClickListener(this);
+
     }
 
     public void setUserInfo() {
@@ -107,6 +108,15 @@ public class MeTopView extends ConstraintLayout implements View.OnClickListener 
             case R.id.upload:
                 UploadInformationTypeActivity.startAction(getContext());
                 break;
+            case R.id.iv_head:
+            case R.id.tv_name:
+            case R.id.tv_signature:
+            case R.id.tv_recover_address:
+            case R.id.tv_ein_number:
+            case R.id.tv_ein:
+                UserInfoShowActivity.startAction(getContext());
+                break;
+
         }
     }
 }

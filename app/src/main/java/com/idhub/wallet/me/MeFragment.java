@@ -274,7 +274,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         if (TextUtils.isEmpty(defaultAddress)) {
             //显示1056
             mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
-            mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
+            mTopView.setRecoverAddressViewVisible(View.GONE);
         } else {
             //先获取sp里是否有存储，没有则进行网络请求
             String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
@@ -356,7 +356,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                         WalletSelectedObservable.getInstance().update();
                     }
                     mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
-                    mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
+                    mTopView.setRecoverAddressViewVisible(View.GONE);
                 }
             }
 
@@ -378,7 +378,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         String recoverAddress = WalletOtherInfoSharpreference.getInstance().getRecoverAddress();
         if (TextUtils.isEmpty(recoverAddress)) {
             if (TextUtils.isEmpty(ein)) {
-                mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
+                mTopView.setRecoverAddressViewVisible(View.GONE);
             } else {
                 //TODO:暂时这么先写 判断当前节点没有合约地址
                 String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
@@ -439,7 +439,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                         meFragment.mTopView.setRecoverAddress(recoveryAddress);
                         break;
                     case 4:
-                        meFragment.mTopView.setRecoverAddressViewVisible(View.INVISIBLE);
+                        meFragment.mTopView.setRecoverAddressViewVisible(View.GONE);
                         break;
                 }
 
