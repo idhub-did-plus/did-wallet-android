@@ -26,8 +26,9 @@
         <TextView
             android:text="@string/wallet_upgrade_hint"
             android:textColor="@color/wallet_text_black"
-            android:textSize="18sp"
-            android:padding="12dp"
+            android:textSize="15sp"
+            android:lineSpacingExtra="6dp"
+            android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

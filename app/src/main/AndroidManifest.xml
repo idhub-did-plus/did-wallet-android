@@ -42,7 +42,9 @@
         <activity android:name=".me.information.UploadIDHubInformationActivity" />
         <activity android:name=".me.information.UploadInformationTypeActivity" />
         <activity android:name=".createmanager.UploadUserBasicInfoActivity" />
-        <activity android:name=".me.information.UploadFileActivity" />
+        <activity android:name=".me.information.UploadFileActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity android:name=".me.information.Level5Activity" />
         <activity android:name=".me.information.Level4Activity" />
         <activity android:name=".me.information.Level3Activity" />

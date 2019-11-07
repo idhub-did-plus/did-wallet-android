@@ -62,11 +62,15 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
 
     private Observer nodeObervable = (o, arg) -> searchAssetmodelData();
     private Observer addAssetsOberver = (o, arg) -> searchAssetmodelData();
-    private Observer selectWalletObsever = (o, arg) -> initData();
+    private Observer selectWalletObsever = (o, arg) -> {
+        initData();
+        initDrawerlayoutData();
+    };
     private LoadingAndErrorView mLoadingAndErrorView;
     private WalletAddressTopView mWalletAddressTopView;
     private DrawerLayout drawerLayout;
     private View leftDrawerView;
+    private SelectWalletAdapter selectWalletAdapter;
 
     public WalletFragment() {
         // Required empty public constructor
@@ -138,20 +142,8 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         view.findViewById(R.id.drawer_wallet_manage).setOnClickListener(this);
         RecyclerView drawerRecyclerView = view.findViewById(R.id.wallet_recycler_view);
         drawerRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        Hashtable<String, WalletKeystore> walletKeystores = WalletManager.getWalletKeystores();
-        LinkedList<WalletKeystore> didHubMnemonicKeyStores = new LinkedList<>();
-        for (Iterator<String> iterator = walletKeystores.keySet().iterator(); iterator.hasNext(); ) {
-            String key = iterator.next();
-            didHubMnemonicKeyStores.add(walletKeystores.get(key));
-        }
-        SelectWalletAdapter selectWalletAdapter = new SelectWalletAdapter(getContext());
-        selectWalletAdapter.setOnItemClickListener(id -> {
-            closeDrawerLayout();
-            boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
-            if (b)
-                WalletSelectedObservable.getInstance().update();
-        });
-        selectWalletAdapter.addDatas(didHubMnemonicKeyStores);
+        selectWalletAdapter = new SelectWalletAdapter(getContext());
+        initDrawerlayoutData();
         drawerRecyclerView.setAdapter(selectWalletAdapter);
 
         view.findViewById(R.id.add_token).setOnClickListener(this);
@@ -187,6 +179,22 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
                 QrCodeActivity.startAction(((Activity) getContext()), 100);
             }
         });
+    }
+
+    private void initDrawerlayoutData() {
+        Hashtable<String, WalletKeystore> walletKeystores = WalletManager.getWalletKeystores();
+        LinkedList<WalletKeystore> didHubMnemonicKeyStores = new LinkedList<>();
+        for (Iterator<String> iterator = walletKeystores.keySet().iterator(); iterator.hasNext(); ) {
+            String key = iterator.next();
+            didHubMnemonicKeyStores.add(walletKeystores.get(key));
+        }
+        selectWalletAdapter.setOnItemClickListener(id -> {
+            closeDrawerLayout();
+            boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
+            if (b)
+                WalletSelectedObservable.getInstance().update();
+        });
+        selectWalletAdapter.addDatas(didHubMnemonicKeyStores);
     }
 
 

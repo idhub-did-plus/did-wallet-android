@@ -15,6 +15,7 @@ import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.base.node.AssetsModel;
+import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.wallet.assets.AssetsType;
 import com.idhub.wallet.wallet.token.PartitionEntity;
 
@@ -45,8 +46,13 @@ public class TransactionActivity extends BaseActivity implements View.OnClickLis
         titleLayout.setTitle(getString(R.string.wallet_transaction));
         ImageView iconView = findViewById(R.id.coin_icon);
         Integer integer = AssetsType.assetsMipmap.get(mAssetsModel.getSymbol());
-        if (integer != null)
+        if (integer != null){
             iconView.setImageResource(integer);
+        }else if (AssetsDefaultType.ETH_NAME.equals(mAssetsModel.getType())){
+            iconView.setImageResource(R.mipmap.wallet_eth_icon);
+        }else {
+            iconView.setImageResource(R.mipmap.wallet_default_token_icon);
+        }
         findViewById(R.id.receive).setOnClickListener(this);
         findViewById(R.id.send).setOnClickListener(this);
         TextView balanceAndName = findViewById(R.id.balance_and_name);

@@ -62,14 +62,8 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
             mUpgradeName.setVisibility(VISIBLE);
         }
         if (keyStore.getWallet().isDefaultAddress()) {
-            ConstraintLayout.LayoutParams layoutParams = (LayoutParams) mAddressView.getLayoutParams();
-            layoutParams.topMargin = UnitUtils.dp2px(0);
-            mAddressView.setLayoutParams(layoutParams);
             mDefaultAddressName.setVisibility(VISIBLE);
         } else {
-            ConstraintLayout.LayoutParams layoutParams = (LayoutParams) mAddressView.getLayoutParams();
-            layoutParams.topMargin = UnitUtils.dp2px(11);
-            mAddressView.setLayoutParams(layoutParams);
             mDefaultAddressName.setVisibility(GONE);
         }
     }

@@ -67,7 +67,7 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
     private final String PRIVATEKEY = "privatekey";
     private final String DELETE = "delete";
     private WalletManagerItemView mDelete;
-    private ImageView headView;
+//    private ImageView headView;
     private TextView mWalletNameView;
     private TextView mWalletAddressView;
     private WalletKeystore mDefaultKeystore;
@@ -86,7 +86,7 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_manager));
-        headView = findViewById(R.id.iv_head);
+//        headView = findViewById(R.id.iv_head);
         mWalletNameView = findViewById(R.id.tv_wallet_name);
         mWalletAddressView = findViewById(R.id.tv_wallet_address);
         mWalletAddressView.setOnClickListener(this);

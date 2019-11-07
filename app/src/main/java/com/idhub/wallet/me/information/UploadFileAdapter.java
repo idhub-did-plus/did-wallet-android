@@ -73,27 +73,29 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 otherViewHolder.mFileImage.setVisibility(View.GONE);
             }
             if (TextUtils.isEmpty(filePath)) {
-                otherViewHolder.mFilePathView.setVisibility(View.GONE);
+                otherViewHolder.mFilePathView.setVisibility(View.INVISIBLE);
             } else {
                 otherViewHolder.mFilePathView.setVisibility(View.VISIBLE);
                 otherViewHolder.mFilePathView.setText(filePath);
             }
             otherViewHolder.mNameEditView.setText(uploadFileEntity.getName());
             String type = uploadFileEntity.getType();
-//            if (!TextUtils.isEmpty(type)) {
-//                otherViewHolder.mSpinner.setSelection(otherViewHolder.mTypesMap.get(type));
-//            } else {
-//                otherViewHolder.mSpinner.setSelection(0);
-//            }
-//            if (uploadFileEntity.isSubmit) {
-//                otherViewHolder.mSpinner.setEnabled(false);
-//                otherViewHolder.mNameEditView.setFocusable(false);
-//                otherViewHolder.mNameEditView.setFocusableInTouchMode(false);
-//            } else {
-//                otherViewHolder.mSpinner.setEnabled(true);
-//                otherViewHolder.mNameEditView.setFocusable(true);
-//                otherViewHolder.mNameEditView.setFocusableInTouchMode(true);
-//            }
+            if (!TextUtils.isEmpty(type)) {
+                otherViewHolder.mFileType.setText(type);
+            } else {
+                otherViewHolder.mFileType.setText("");
+            }
+            if (uploadFileEntity.isSubmit) {
+                otherViewHolder.mFileType.setClickable(false);
+                otherViewHolder.mNameEditView.setFocusable(false);
+                otherViewHolder.mNameEditView.setFocusableInTouchMode(false);
+                otherViewHolder.selectFileView.setClickable(false);
+            } else {
+                otherViewHolder.mFileType.setClickable(true);
+                otherViewHolder.mNameEditView.setFocusable(true);
+                otherViewHolder.mNameEditView.setFocusableInTouchMode(true);
+                otherViewHolder.selectFileView.setClickable(true);
+            }
         }
     }
 
@@ -106,12 +108,12 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         private TextView mFileType;
         private ImageView mFileImage;
-        private HashMap<String, Integer> mTypesMap;
         private EditText mNameEditView;
         private TextView mFilePathView;
 
         private SelectUploadFileTypeDialogFragment mSelectUploadFileTypeDialogFragment;
         private FileTypePopupWindow fileTypePopupWindow;
+        private View selectFileView;
 
         public UploadFileAdapterOtherViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -121,14 +123,8 @@ public class UploadFileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mFileType = itemView.findViewById(R.id.file_type);
             mFileType.setOnClickListener(this);
 
-
-            itemView.findViewById(R.id.btn_select_file).setOnClickListener(this);
-
-            String[] types = mContext.getResources().getStringArray(R.array.identity_file_spinner);
-            mTypesMap = new HashMap<>();
-            for (int i = 0; i < types.length; i++) {
-                mTypesMap.put(types[i], i);
-            }
+            selectFileView = itemView.findViewById(R.id.btn_select_file);
+            selectFileView.setOnClickListener(this);
 
 //            mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 //                @Override

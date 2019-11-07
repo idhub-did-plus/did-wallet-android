@@ -98,7 +98,7 @@
             android:paddingTop="25dp"
             android:paddingBottom="25dp"
             android:text="@string/wallet_designated_amount"
-            android:textColor="@color/wallet_blue_text"
+            android:textColor="@color/wallet_main_blue_color"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

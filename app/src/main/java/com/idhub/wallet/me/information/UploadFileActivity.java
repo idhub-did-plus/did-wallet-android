@@ -64,6 +64,7 @@ public class UploadFileActivity extends BaseActivity implements View.OnClickList
     private UploadFileEntity mUploadFileEntity;
     private String mPrivateKey;
     private WalletKeystore mDefaultKeystore;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,7 @@ public class UploadFileActivity extends BaseActivity implements View.OnClickList
                 }
                 uploadFileEntities.add(new UploadFileEntity());
                 mUploadFileAdapter.notifyDataSetChanged();
+                recyclerView.scrollToPosition(mUploadFileAdapter.getItemCount() - 1);
             }
         });
         mUploadFileDbManager = new UploadFileDbManager();
@@ -112,7 +114,7 @@ public class UploadFileActivity extends BaseActivity implements View.OnClickList
                 }
             }
         });
-        RecyclerView recyclerView = findViewById(R.id.rv_upload_file);
+        recyclerView = findViewById(R.id.rv_upload_file);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUploadFileAdapter = new UploadFileAdapter(this);
         recyclerView.setAdapter(mUploadFileAdapter);

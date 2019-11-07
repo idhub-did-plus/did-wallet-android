@@ -60,7 +60,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="@string/wallet_receive"
-            android:textColor="@color/wallet_blue" />
+            android:textColor="@color/wallet_main_blue_color" />
     </LinearLayout>
 
     <LinearLayout
@@ -84,7 +84,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="@string/wallet_send"
-            android:textColor="@color/wallet_blue" />
+            android:textColor="@color/wallet_main_blue_color" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

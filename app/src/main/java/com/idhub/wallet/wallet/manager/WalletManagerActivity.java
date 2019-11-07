@@ -21,6 +21,7 @@ import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.wallet.adapter.WalletSettingListAdapter;
+import com.idhub.wallet.wallet.mainfragment.adapter.SelectWalletAdapter;
 
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -61,9 +62,9 @@ public class WalletManagerActivity extends BaseActivity implements MessageDialog
             String key = iterator.next();
             mDidHubMnemonicKeyStores.add(walletKeystores.get(key));
         }
-        WalletSettingListAdapter walletSettingListAdapter = new WalletSettingListAdapter(this);
-        walletSettingListAdapter.addDatas(mDidHubMnemonicKeyStores);
-        recyclerView.setAdapter(walletSettingListAdapter);
+        WalletManageAdapter walletManageAdapter = new WalletManageAdapter(this);
+        walletManageAdapter.addDatas(mDidHubMnemonicKeyStores);
+        recyclerView.setAdapter(walletManageAdapter);
     }
 
     private View.OnClickListener itemsOnClick = v -> {

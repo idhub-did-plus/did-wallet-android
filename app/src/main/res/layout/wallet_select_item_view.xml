@@ -52,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="@id/tv_wallet_name"
         app:layout_constraintLeft_toRightOf="@id/tv_wallet_name"
         app:layout_constraintTop_toTopOf="@id/tv_wallet_name"
-        tools:text="Default Address" />
+        android:text="Default Address" />
 
 
     <View

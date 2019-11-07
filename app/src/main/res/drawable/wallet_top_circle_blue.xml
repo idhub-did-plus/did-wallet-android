@@ -3,5 +3,5 @@
     <corners
         android:topLeftRadius="15dp"
         android:topRightRadius="15dp" />
-    <solid android:color="@color/wallet_blue" />
+    <solid android:color="@color/wallet_main_blue_color" />
 </shape>

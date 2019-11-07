@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="12dp"
             tools:text="余额: 1ETH"
-            android:textColor="@color/wallet_blue_text"
+            android:textColor="@color/wallet_main_blue_color"
             android:textSize="15sp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/name" />

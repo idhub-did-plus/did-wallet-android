@@ -2,6 +2,7 @@ package com.idhub.wallet.wallet.mainfragment.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,12 +46,14 @@ public class SelectWalletItemView extends ConstraintLayout implements View.OnCli
         walletAddress.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));
         boolean isgl = keyStore.getWallet().isAssociate();
         if (isgl) {
-            defaultWalletView.setVisibility(GONE);
+            upgradeImageView.setVisibility(GONE);
         } else {
-            defaultWalletView.setVisibility(VISIBLE);
-            defaultWalletView.setOnClickListener(this);
+            upgradeImageView.setVisibility(VISIBLE);
+            upgradeImageView.setOnClickListener(this);
         }
-        if (keyStore.getWallet().isDefaultAddress()) {
+        boolean defaultAddress = keyStore.getWallet().isDefaultAddress();
+        Log.e("LYW", "setData: " + defaultAddress );
+        if (defaultAddress) {
             defaultWalletView.setVisibility(VISIBLE);
         } else {
             defaultWalletView.setVisibility(GONE);

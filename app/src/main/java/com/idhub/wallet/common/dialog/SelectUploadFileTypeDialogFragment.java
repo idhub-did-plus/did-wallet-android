@@ -26,10 +26,12 @@ import androidx.fragment.app.DialogFragment;
 import androidx.core.content.FileProvider;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.idhub.base.App;
 import com.idhub.wallet.R;
@@ -99,6 +101,11 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
         Window window = getDialog().getWindow();
         if (window != null)
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.BOTTOM;
+        window.setAttributes(wlp);
+
+        view.findViewById(R.id.dialog_cancel).setOnClickListener(this);
         view.findViewById(R.id.tv_take_photo).setOnClickListener(this);
         view.findViewById(R.id.tv_picture).setOnClickListener(this);
         View fileView = view.findViewById(R.id.tv_file);
@@ -124,6 +131,9 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
                 break;
             case R.id.tv_file:
                 selectFile();
+                break;
+            case R.id.dialog_cancel:
+                dismiss();
                 break;
         }
     }

@@ -19,11 +19,12 @@
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="15sp"
+                android:lineSpacingExtra="6dp"
                 android:textColor="@color/wallet_text_black"
                 android:text="@string/wallet_idhub_vip_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp" />
             <RadioGroup
                 android:id="@+id/qualified_investor_condition"
@@ -38,32 +39,44 @@
                     android:id="@+id/qualified_purchaser_condition_first"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:lineSpacingExtra="6dp"
+                    android:paddingLeft="10dp"
+                    android:button="@drawable/wallet_checkbox_blue_background"
                     android:text="@string/wallet_qualified_purchaser_condition_first"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <RadioButton
                     android:id="@+id/qualified_purchaser_condition_second"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="6dp"
+                    android:paddingLeft="10dp"
+                    android:button="@drawable/wallet_checkbox_blue_background"
+                    android:layout_marginTop="25dp"
                     android:text="@string/wallet_qualified_purchaser_condition_second"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <RadioButton
                     android:id="@+id/qualified_purchaser_condition_third"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="6dp"
+                    android:paddingLeft="10dp"
+                    android:button="@drawable/wallet_checkbox_blue_background"
+                    android:layout_marginTop="25dp"
                     android:text="@string/wallet_qualified_purchaser_condition_third"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <RadioButton
                     android:id="@+id/qualified_purchaser_condition_fourth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:lineSpacingExtra="6dp"
+                    android:paddingLeft="10dp"
+                    android:button="@drawable/wallet_checkbox_blue_background"
+                    android:layout_marginTop="25dp"
                     android:text="@string/wallet_qualified_purchaser_condition_fourth"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
             </RadioGroup>
 
             <TextView

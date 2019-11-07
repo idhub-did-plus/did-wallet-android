@@ -9,7 +9,8 @@
     <EditText
         android:id="@+id/user_nick_name"
         style="@style/WalletCommonEditText"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/wallet_rectangle_line_4"
         app:layout_constraintTop_toBottomOf="@id/user_name" />
 
     <EditText
@@ -17,13 +18,14 @@
         style="@style/WalletCommonEditText"
         android:layout_marginTop="50dp"
         android:maxLength="10"
+        android:background="@drawable/wallet_rectangle_line_4"
         app:layout_constraintTop_toBottomOf="@id/tv_welcome" />
 
     <ImageView
         android:id="@+id/iv_user_head"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="90dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="102dp"
         android:src="@mipmap/wallet_default_head"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -33,26 +35,20 @@
         android:id="@+id/tv_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:text="@string/wallet_welcome_to_did_world"
-        android:textColor="@color/wallet_create_wallet_text_gray"
-        android:textSize="15sp"
+        android:textColor="@color/wallet_text_gray_color"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_user_head" />
 
     <TextView
         android:id="@+id/tv_upload"
-        android:gravity="center"
-        android:textColor="@color/wallet_white"
-        android:layout_width="195dp"
-        android:layout_height="38dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="60dp"
+       style="@style/WalletCommonButton"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="14dp"
-        android:background="@color/wallet_user_basic_info_btn"
         android:text="@string/wallet_commit"
-        android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/user_nick_name" />
