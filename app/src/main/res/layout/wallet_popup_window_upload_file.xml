@@ -40,6 +40,7 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent" />
         <View
+            android:id="@+id/line"
             android:background="@color/wallet_line_gray"
             android:layout_width="match_parent"
             android:layout_height="1dp" />

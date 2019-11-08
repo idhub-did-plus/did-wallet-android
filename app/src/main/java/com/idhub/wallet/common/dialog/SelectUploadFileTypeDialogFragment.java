@@ -109,9 +109,11 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
         view.findViewById(R.id.tv_take_photo).setOnClickListener(this);
         view.findViewById(R.id.tv_picture).setOnClickListener(this);
         View fileView = view.findViewById(R.id.tv_file);
+        View lineView = view.findViewById(R.id.line);
         fileView.setOnClickListener(this);
         if (SOURCE_USER_BASIC_INFO.equals(mSource)) {
             fileView.setVisibility(View.GONE);
+            lineView.setVisibility(View.GONE);
             mImagesDir = App.getInstance().getFilesDir();
             mImageName = "user_head.jpg";
         }

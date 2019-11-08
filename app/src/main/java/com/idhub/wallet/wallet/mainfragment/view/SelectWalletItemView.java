@@ -65,13 +65,15 @@ public class SelectWalletItemView extends ConstraintLayout implements View.OnCli
             stateView.setVisibility(VISIBLE);
             walletName.setTextColor(getResources().getColor(R.color.wallet_main_blue_color));
             walletAddress.setTextColor(getResources().getColor(R.color.wallet_main_blue_color));
-            defaultWalletView.setTextColor(getResources().getColor(R.color.wallet_main_blue_color));
+            defaultWalletView.setTextColor(getResources().getColor(R.color.wallet_light_blue_color));
+            defaultWalletView.setBackground(getResources().getDrawable(R.drawable.wallet_rectangle_line_blue_4));
             upgradeImageView.setImageResource(R.mipmap.wallet_upgrade_blue_icon);
         } else {
             stateView.setVisibility(GONE);
-            walletName.setTextColor(getResources().getColor(R.color.wallet_text_black));
-            walletAddress.setTextColor(getResources().getColor(R.color.wallet_text_black));
-            defaultWalletView.setTextColor(getResources().getColor(R.color.wallet_text_black));
+            walletName.setTextColor(getResources().getColor(R.color.wallet_text_gray_color));
+            walletAddress.setTextColor(getResources().getColor(R.color.wallet_text_gray_color));
+            defaultWalletView.setTextColor(getResources().getColor(R.color.wallet_text_gray_color));
+            defaultWalletView.setBackground(getResources().getDrawable(R.drawable.wallet_rectangle_line_4));
             upgradeImageView.setImageResource(R.mipmap.wallet_upgrade_black_icon);
         }
     }

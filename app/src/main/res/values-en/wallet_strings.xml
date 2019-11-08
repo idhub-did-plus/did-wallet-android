@@ -393,6 +393,8 @@
     <string name="wallet_password_length">Password at least 8 characters</string>
 
     <string name="wallet_vip_my_medal">Verifiable Claims</string>
+    <string name="wallet_idhub_vip_my_medal">IDHub Claims</string>
+    <string name="wallet_security_vip_my_medal">Security Token Claims</string>
     <string name="wallet_language">Languages</string>
     <string name="wallet_main_back_double_click">Press again to exit the program</string>
     <string name="wallet_create_error">create failed</string>
@@ -411,4 +413,6 @@
     <string name="wallet_address_none_balance">Current address has insufficient balance, please recharge first</string>
     <string name="wallet_initialize_replace">The Aggregated Identity and the default address bound failed. Please re-call the contract for binding. Please enter the default address password</string>
     <string name="wallet_recovery_replace">The Aggregated Identity and the new address rebound failed. Please re-call the contract for binding. Please enter the default address password</string>
+    <string name="wallet_select_file">select file</string>
+
 </resources>

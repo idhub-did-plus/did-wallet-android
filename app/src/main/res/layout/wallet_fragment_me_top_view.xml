@@ -61,7 +61,7 @@
         android:id="@+id/tv_ein"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
+        android:layout_marginLeft="15dp"
         android:ellipsize="middle"
         android:singleLine="true"
         android:textColor="@color/wallet_white"

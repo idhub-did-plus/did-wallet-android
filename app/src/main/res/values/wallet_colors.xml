@@ -53,4 +53,6 @@
     <color name="wallet_text_title_color">#B5B5B5</color>
     <color name="wallet_text_gray_color">#999999</color>
     <color name="wallet_text_deep_gray_color">#696969</color>
+    <color name="wallet_splash_blue_color">#4189FD</color>
+    <color name="wallet_light_blue_color">#99CAFF</color>
 </resources>

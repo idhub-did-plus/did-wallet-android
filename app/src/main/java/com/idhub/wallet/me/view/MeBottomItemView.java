@@ -40,15 +40,19 @@ public class MeBottomItemView extends ConstraintLayout {
 
     public void setState(String state) {
         if (VipStateType.NO_APPLY_FOR.equals(state)) {
+            mStateView.setVisibility(VISIBLE);
             mStateView.setText(getContext().getString(R.string.wallet_no_appply_for));
             setVipFailIcon();
         } else if (VipStateType.APPLY_FOR_ING.equals(state)) {
+            mStateView.setVisibility(VISIBLE);
             mStateView.setText(getContext().getString(R.string.wallet_apply_for_ing));
             setVipFailIcon();
         } else if (VipStateType.HAVE_APPLY_FOR.equals(state)) {
+            mStateView.setVisibility(INVISIBLE);
             mStateView.setText("");
             setVipSuccessIcon();
         } else if (VipStateType.REFUSED_APPLY_FOR.equals(state)) {
+            mStateView.setVisibility(VISIBLE);
             mStateView.setText(getContext().getString(R.string.wallet_refused_apply));
             setVipFailIcon();
         }
