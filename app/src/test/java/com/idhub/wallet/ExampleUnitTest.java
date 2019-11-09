@@ -65,38 +65,38 @@ public class ExampleUnitTest {
         Credentials credentials = Credentials.create("0");
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         Web3j web3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
-//
-//        IdentityRegistryInterface  registry1484 = IdentityRegistryInterface.load("0x90e1B1C7B8C829b3d0b1C09eD961e46f5AeeD184",
-//                web3j,
-//                credentials,
-//                contractGasProvider
-//        );
+
+        IdentityRegistryInterface  registry1484 = IdentityRegistryInterface.load("0x90e1B1C7B8C829b3d0b1C09eD961e46f5AeeD184",
+                web3j,
+                credentials,
+                contractGasProvider
+        );
         ERC1056ResolverInterface erc1056 = ERC1056ResolverInterface.load("0x6d0f04B6Ca0217323af7fB7147a63C97Ef910617",
                 web3j,
                 credentials,
                 contractGasProvider
         );
-        String send1 = erc1056.einToDID(new BigInteger("39")).send();
+        String send1 = erc1056.einToDID(new BigInteger("40")).send();
         System.out.println(send1);
-//        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("26")).send();
-//        System.out.println(send.getValue1());
-//        List<String> value2 = send.getValue2();
-//        System.out.println(value2.size());
-//        if (value2.size() > 0) {
-//            for (String s : value2) {
-//                System.out.println(s);
-//            }
-//        }
+        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("40")).send();
+        System.out.println(send.getValue1());
+        List<String> value2 = send.getValue2();
+        System.out.println(value2.size());
+        if (value2.size() > 0) {
+            for (String s : value2) {
+                System.out.println(s);
+            }
+        }
 //        boolean hasIdentity = registry1484.hasIdentity("0x4c000E507bE6663e264a1A21507a69Bfa5035D95").send();
 //        BigInteger bigInteger = registry1484.getEIN("0x4c000E507bE6663e264a1A21507a69Bfa5035D95").send();
 //        System.out.println(hasIdentity);
 //        System.out.println(bigInteger);
 
 
-        ERC1400 ierc20 = ERC1400.load("0x4c000e507be6663e264a1a21507a69bfa5035d95", web3j, credentials, contractGasProvider);
+//        ERC1400 ierc20 = ERC1400.load("0x4c000e507be6663e264a1a21507a69bfa5035d95", web3j, credentials, contractGasProvider);
 //        ERC1400 erc1400 = ERC1400.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
         //过滤
-        List list = ierc20.totalPartitions().send();
+//        List list = ierc20.totalPartitions().send();
 //        String name = ierc20.name().send();
 //        BigInteger decimal = ierc20.decimals().send();
 //        String symbol = ierc20.symbol().send();

@@ -131,7 +131,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         if (TextUtils.isEmpty(defaultAddress)) {
             defaultAddress = WalletManager.getCurrentKeyStore().getAddress();
         }
-        IDHubCredentialProvider.setsDefaultAddress(defaultAddress);
+        IDHubCredentialProvider.setsDefaultAddress(NumericUtil.prependHexPrefix(defaultAddress));
         ApiFactory.getEventListenerService().listen(e -> {
             Message obtain = Message.obtain();
             obtain.what = 1;
