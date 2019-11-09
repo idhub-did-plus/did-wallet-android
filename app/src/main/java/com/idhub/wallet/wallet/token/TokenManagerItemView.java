@@ -50,8 +50,9 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
         this.assetsModel = assetsModel;
         String symble = assetsModel.getSymbol();
         Integer integer = AssetsType.assetsMipmap.get(symble);
-        if (integer != null)
+        if (integer != null){
             mTokenIcon.setImageResource(integer);
+        }
         mTokenName.setText(symble);
 
         //查询设置
