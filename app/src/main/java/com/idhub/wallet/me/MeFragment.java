@@ -222,7 +222,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                         } else if (ClaimType.ST_Compliant_Investor.name().equals(claimType)) {
                             WalletVipSharedPreferences.getInstance().setComplianceInvestorVipState(VipStateType.REFUSED_APPLY_FOR);
                         }
-                        WalletVipStateObservable.getInstance().update();
+                        initVipState();
                     } else {
                         JSONObject jsonObject = null;
                         try {
@@ -247,7 +247,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                                 WalletVipSharedPreferences.getInstance().setComplianceInvestorVipState(VipStateType.HAVE_APPLY_FOR);
                                 WalletVipSharedPreferences.getInstance().setComplianceInvestorVipClaim(event);
                             }
-                            WalletVipStateObservable.getInstance().update();
+                            initVipState();
                         } catch (JSONException ex) {
                             LogUtils.e("did", "requestNetData:message " + ex.getMessage());
                             ex.printStackTrace();

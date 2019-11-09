@@ -71,13 +71,13 @@ public class ExampleUnitTest {
 //                credentials,
 //                contractGasProvider
 //        );
-//        ERC1056ResolverInterface erc1056 = ERC1056ResolverInterface.load("0x6d0f04B6Ca0217323af7fB7147a63C97Ef910617",
-//                web3j,
-//                credentials,
-//                contractGasProvider
-//        );
-//        String send1 = erc1056.einToDID(new BigInteger("26")).send();
-//        System.out.println(send1);
+        ERC1056ResolverInterface erc1056 = ERC1056ResolverInterface.load("0x6d0f04B6Ca0217323af7fB7147a63C97Ef910617",
+                web3j,
+                credentials,
+                contractGasProvider
+        );
+        String send1 = erc1056.einToDID(new BigInteger("39")).send();
+        System.out.println(send1);
 //        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("26")).send();
 //        System.out.println(send.getValue1());
 //        List<String> value2 = send.getValue2();
