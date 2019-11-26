@@ -49,7 +49,7 @@ public class ConfigPropertiesUtils {
 
     public static String getAssets(Context context) {
         Properties properties = getProperties(context);
-        String assets = properties.getProperty("assets");
+        String assets = properties.getProperty("tokens");
         return assets;
     }
 }

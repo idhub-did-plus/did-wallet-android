@@ -24,13 +24,14 @@
         android:theme="@style/WalletAppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".setting.UserInfoShowActivity"></activity>
-        <activity android:name=".common.zxinglib.QrCodeActivity"></activity>
+        <activity android:name=".wallet.token.activity.TokenRemoveActivity"></activity>
+        <activity android:name=".setting.UserInfoShowActivity" />
+        <activity android:name=".common.zxinglib.QrCodeActivity" />
         <activity android:name=".setting.LanguagesActivity" />
         <activity android:name=".setting.SettingsActivity" />
         <activity android:name=".createmanager.walletrecover.WalletIdentityRecoveryActivity" />
         <activity android:name=".setting.AboutWeActivity" />
-        <activity android:name=".wallet.token.Erc1400DetailActivity" />
+        <activity android:name=".wallet.token.activity.Erc1400DetailActivity" />
         <activity android:name=".setting.NodeSettingActivity" />
         <activity android:name=".setting.TransactionDetailActivity" />
         <activity
@@ -42,9 +43,9 @@
         <activity android:name=".me.information.UploadIDHubInformationActivity" />
         <activity android:name=".me.information.UploadInformationTypeActivity" />
         <activity android:name=".createmanager.UploadUserBasicInfoActivity" />
-        <activity android:name=".me.information.UploadFileActivity"
-            android:windowSoftInputMode="adjustPan"
-            />
+        <activity
+            android:name=".me.information.UploadFileActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".me.information.Level5Activity" />
         <activity android:name=".me.information.Level4Activity" />
         <activity android:name=".me.information.Level3Activity" />
@@ -62,8 +63,7 @@
         <activity
             android:name=".createmanager.walletcreate.InputPasswordActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"
-            />
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".createmanager.walletcreate.MnemonicBackupHintActivity"
             android:screenOrientation="portrait" />
@@ -83,7 +83,7 @@
             android:name=".wallet.export.ExportWalletContentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".wallet.token.TokenManagerActivity"
+            android:name=".wallet.token.activity.TokenManagerActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".wallet.transaction.TransactionActivity"
@@ -121,7 +121,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
     </application>
 

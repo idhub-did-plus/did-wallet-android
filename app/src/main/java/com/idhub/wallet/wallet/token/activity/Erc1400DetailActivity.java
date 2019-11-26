@@ -1,4 +1,4 @@
-package com.idhub.wallet.wallet.token;
+package com.idhub.wallet.wallet.token.activity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,15 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
+import com.idhub.wallet.wallet.token.adapter.PartitionAdapter;
+import com.idhub.wallet.wallet.token.PartitionEntity;
 
 import java.util.ArrayList;
 import java.util.List;

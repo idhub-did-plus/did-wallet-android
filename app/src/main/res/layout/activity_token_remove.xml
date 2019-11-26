@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".wallet.token.activity.TokenManagerActivity">
+    tools:context=".wallet.token.activity.TokenRemoveActivity">
     <include
         android:id="@+id/title"
         layout="@layout/wallet_common_title_layout"

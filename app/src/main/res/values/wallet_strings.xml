@@ -276,6 +276,7 @@
 
     //assets
     <string name="wallet_assets_add_success">资产添加成功</string>
+    <string name="wallet_assets_remove_success">资产删除成功</string>
     <string name="wallet_assets_unkonw">资产未找到</string>
     <string name="wallet_assets_address_fail">无效地址</string>
     <string name="wallet_assets_add_fail">资产添加失败</string>

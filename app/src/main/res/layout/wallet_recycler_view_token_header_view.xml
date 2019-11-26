@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.idhub.wallet.wallet.token.TokenManagerHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.idhub.wallet.wallet.token.view.TokenManagerHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/main_asserts_manager"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:paddingTop="15dp"-->
-<!--        android:paddingBottom="15dp">-->
+    <LinearLayout
+        android:id="@+id/main_asserts_manager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
 
-<!--        <TextView-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="15dp"-->
-<!--            android:layout_weight="1"-->
-<!--            android:text="@string/wallet_main_asserts_manager"-->
-<!--            android:textColor="@color/wallet_text_black"-->
-<!--            android:textSize="13sp" />-->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:text="@string/wallet_main_asserts_manager"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="13sp" />
 
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_vertical"-->
-<!--            android:layout_marginRight="15dp"-->
-<!--            android:src="@mipmap/wallet_right_arrow" />-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/wallet_right_arrow" />
 
-<!--    </LinearLayout>-->
+    </LinearLayout>
 
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="1dp"-->
-<!--        android:layout_marginLeft="15dp"-->
-<!--        android:background="@color/wallet_line_gray" />-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="15dp"
+        android:background="@color/wallet_line_gray" />
 
     <LinearLayout
         android:id="@+id/add_assets"
@@ -75,4 +75,4 @@
         android:layout_marginBottom="15dp"
         android:textColor="@color/wallet_text_black"
         android:textSize="13sp" />
-</com.idhub.wallet.wallet.token.TokenManagerHeaderView>
+</com.idhub.wallet.wallet.token.view.TokenManagerHeaderView>

@@ -10,15 +10,16 @@ import org.greenrobot.greendao.annotation.Transient;
 
 @Entity
 public class AssetsModel implements Parcelable {
-
-    private String name = "";
-    private String address = "";
-    private String mainContractAddress = "";
-    private String ropstenContractAddress = "";
-    private String symbol = "";
-    private String balance = "";
-    private String decimals = "";
-    private String type = "";
+    @Id(autoincrement = true)
+    private Long id;
+    private String name;
+    private String address;
+    private String mainContractAddress;
+    private String ropstenContractAddress;
+    private String symbol;
+    private String balance;
+    private String decimals;
+    private String type;
     @Transient
     public byte[] partition;
     @Transient
@@ -32,6 +33,7 @@ public class AssetsModel implements Parcelable {
 
 
     protected AssetsModel(Parcel in) {
+        id = in.readLong();
         name = in.readString();
         address = in.readString();
         mainContractAddress = in.readString();
@@ -43,10 +45,13 @@ public class AssetsModel implements Parcelable {
         partition = in.createByteArray();
     }
 
-    @Generated(hash = 1032221936)
-    public AssetsModel(String name, String address, String mainContractAddress,
-            String ropstenContractAddress, String symbol, String balance,
-            String decimals, String type) {
+
+
+    @Generated(hash = 201016777)
+    public AssetsModel(Long id, String name, String address,
+            String mainContractAddress, String ropstenContractAddress,
+            String symbol, String balance, String decimals, String type) {
+        this.id = id;
         this.name = name;
         this.address = address;
         this.mainContractAddress = mainContractAddress;
@@ -141,6 +146,7 @@ public class AssetsModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
         dest.writeString(name);
         dest.writeString(address);
         dest.writeString(mainContractAddress);
@@ -150,5 +156,17 @@ public class AssetsModel implements Parcelable {
         dest.writeString(decimals);
         dest.writeString(type);
         dest.writeByteArray(partition);
+    }
+
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

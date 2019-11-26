@@ -1,4 +1,4 @@
-package com.idhub.wallet.wallet.token;
+package com.idhub.wallet.wallet.token.view;
 
 import android.content.Context;
 
@@ -11,13 +11,12 @@ import android.widget.TextView;
 
 import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.base.node.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
-import com.idhub.wallet.wallet.assets.AssetsType;
+import com.idhub.wallet.wallet.token.TokenTypeManager;
 
 import org.greenrobot.greendao.async.AsyncOperation;
 import org.greenrobot.greendao.async.AsyncOperationListener;
@@ -42,14 +41,13 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
         mTokenIcon = findViewById(R.id.iv_token_icon);
         mTokenName = findViewById(R.id.tv_token_name);
         mContractName = findViewById(R.id.tv_contract_address);
-        mContractName = findViewById(R.id.tv_contract_address);
         mTokenAdd = findViewById(R.id.iv_token_add);
     }
 
     public void setData(AssetsModel assetsModel) {
         this.assetsModel = assetsModel;
         String symble = assetsModel.getSymbol();
-        Integer integer = AssetsType.assetsMipmap.get(symble);
+        Integer integer = TokenTypeManager.assetsMipmap.get(symble);
         if (integer != null) {
             mTokenIcon.setImageResource(integer);
         }

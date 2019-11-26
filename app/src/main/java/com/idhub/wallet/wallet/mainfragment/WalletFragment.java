@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,13 +33,12 @@ import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.base.node.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
-import com.idhub.wallet.wallet.adapter.WalletListAdapter;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;
 import com.idhub.wallet.wallet.mainfragment.adapter.SelectWalletAdapter;
 import com.idhub.wallet.wallet.mainfragment.view.WalletAddressTopView;
 import com.idhub.wallet.wallet.mainfragment.view.WalletFragmentBottomView;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
-import com.idhub.wallet.wallet.token.TokenManagerActivity;
+import com.idhub.wallet.wallet.token.activity.TokenManagerActivity;
 
 import java.util.ArrayList;
 import java.util.Hashtable;

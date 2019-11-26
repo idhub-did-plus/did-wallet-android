@@ -66,6 +66,8 @@
 
         <com.idhub.wallet.dapp.web3.Web3View
             android:id="@+id/web3_view"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

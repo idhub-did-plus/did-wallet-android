@@ -1,4 +1,4 @@
-package com.idhub.wallet.wallet.token;
+package com.idhub.wallet.wallet.token.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -19,6 +19,8 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.base.node.WalletNodeManager;
+import com.idhub.wallet.wallet.token.PartitionEntity;
+import com.idhub.wallet.wallet.token.WalletControllersDialogFragment;
 import com.idhub.wallet.wallet.transaction.TransactionActivity;
 
 import java.math.BigInteger;

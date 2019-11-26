@@ -18,10 +18,10 @@ import com.idhub.wallet.net.Web3Api;
 import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.net.Web3jSubscriber;
 import com.idhub.base.node.WalletNodeManager;
-import com.idhub.wallet.wallet.assets.AssetsType;
+import com.idhub.wallet.wallet.token.TokenTypeManager;
 import com.idhub.wallet.wallet.mainfragment.view.AssetsErc1400ItemView;
 import com.idhub.wallet.wallet.mainfragment.view.AssetsItemView;
-import com.idhub.wallet.wallet.token.Erc1400DetailActivity;
+import com.idhub.wallet.wallet.token.activity.Erc1400DetailActivity;
 import com.idhub.wallet.wallet.transaction.TransactionActivity;
 
 import org.web3j.protocol.core.methods.response.EthGetBalance;
@@ -79,7 +79,7 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         AssetsModel model = mAssetsModels.get(i);
         String symble = model.getSymbol();
-        Integer integer = AssetsType.assetsMipmap.get(symble);
+        Integer integer = TokenTypeManager.assetsMipmap.get(symble);
         if (viewHolder instanceof WalletAssetsAdapterViewHolder){
             AssetsItemView itemView = (AssetsItemView)((WalletAssetsAdapterViewHolder) viewHolder).itemView;
             if (integer != null)

@@ -1,4 +1,4 @@
-package com.idhub.wallet.wallet.token;
+package com.idhub.wallet.wallet.token.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
@@ -24,7 +23,8 @@ import com.idhub.base.node.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
-import com.idhub.wallet.wallet.assets.AssetsType;
+import com.idhub.wallet.wallet.token.adapter.TokenManagerAdapter;
+import com.idhub.wallet.wallet.token.TokenTypeManager;
 
 import org.greenrobot.greendao.async.AsyncOperationListener;
 
@@ -54,7 +54,7 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         TokenManagerAdapter adapter = new TokenManagerAdapter(this);
         recyclerView.setAdapter(adapter);
-        List<AssetsModel> assetsList = AssetsType.getAssetsList();
+        List<AssetsModel> assetsList = TokenTypeManager.getAssetsList();
         String node = WalletNoteSharedPreferences.getInstance().getNode();
         ArrayList<AssetsModel> list = new ArrayList<>();
         //过滤 显示对应ropsten或mainnet上的contractAddress

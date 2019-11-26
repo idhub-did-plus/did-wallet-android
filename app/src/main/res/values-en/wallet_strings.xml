@@ -304,6 +304,7 @@
 
     //assets
     <string name="wallet_assets_add_success">asset add successfully</string>
+    <string name="wallet_assets_remove_success">asset remove successfully</string>
     <string name="wallet_assets_unkonw">asset not found</string>
     <string name="wallet_assets_address_fail">invalid address</string>
     <string name="wallet_assets_add_fail">asset add failed</string>

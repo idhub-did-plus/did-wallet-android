@@ -20,7 +20,7 @@ import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
-    
+
     public void queryAll(AsyncOperationListener listener) {
         Observable.create((ObservableOnSubscribe<AssetsModel>) emitter -> {
             DaoSession daoSession = App.getInstance().getmDaoSession();
@@ -77,6 +77,18 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
         assetsModelDao.insertOrReplace(assetsModel);
     }
 
+    public void deleteDataSync(AssetsModel assetsModel) {
+        AssetsModelDao assetsModelDao = App.getInstance().getmDaoSession().getAssetsModelDao();
+        assetsModelDao.delete(assetsModel);
+    }
+
+
+    public void deleteData(AssetsModel assetsModel, AsyncOperationListener asyncOperationListener) {
+        AsyncSession asyncSession = App.getInstance().getmDaoSession().startAsyncSession();
+        asyncSession.setListenerMainThread(asyncOperationListener);
+        asyncSession.delete(assetsModel);
+    }
+
     @Override
     public void insertListData(List<AssetsModel> list, AsyncOperationListener listener) {
         if (list != null && list.size() > 0) {
@@ -123,6 +135,7 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
         WhereCondition eq = AssetsModelDao.Properties.MainContractAddress.eq(key);
         return assetsModelDao.queryBuilder().where(eq).build().unique();
     }
+
     public AssetsModel queryByRopstenContractAddressKeysync(String key) {
         AssetsModelDao assetsModelDao = App.getInstance().getmDaoSession().getAssetsModelDao();
         WhereCondition eq = AssetsModelDao.Properties.RopstenContractAddress.eq(key);
