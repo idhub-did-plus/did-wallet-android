@@ -1,4 +1,4 @@
-package com.dreame.apk_update;
+package com.idhub.apk_update;
 
 import org.junit.Test;
 

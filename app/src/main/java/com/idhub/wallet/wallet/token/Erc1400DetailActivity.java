@@ -43,13 +43,7 @@ public class Erc1400DetailActivity extends BaseActivity {
     }
 
     private void initData() {
-        String node = WalletNoteSharedPreferences.getInstance().getNode();
-        String contraceAddress = "";
-        if (WalletNodeManager.MAINNET.equals(node)) {
-            contraceAddress = mAssetsModel.getMainContractAddress();
-        } else if (WalletNodeManager.ROPSTEN.equals(node)) {
-            contraceAddress = mAssetsModel.getRopstenContractAddress();
-        }
+        String contraceAddress = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
         Web3Api.searchERC1400Partition(contraceAddress, new DisposableSubscriber<List>() {
             @Override
             public void onNext(List list) {

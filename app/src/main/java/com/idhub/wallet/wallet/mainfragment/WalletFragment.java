@@ -104,21 +104,21 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
                 String node = WalletNoteSharedPreferences.getInstance().getNode();
                 ArrayList<AssetsModel> list = new ArrayList<>();
                 //过滤 显示对应ropsten或mainnet上的contractAddress
-                if (WalletNodeManager.ROPSTEN.equals(node)) {
-                    for (AssetsModel assetsModel : result) {
-                        if (assetsModel.getType().equals(AssetsDefaultType.ETH_NAME)) {
-                            list.add(assetsModel);
-                        }
-                        if (!TextUtils.isEmpty(assetsModel.getRopstenContractAddress())) {
-                            list.add(assetsModel);
-                        }
-                    }
-                } else if (WalletNodeManager.MAINNET.equals(node)) {
+               if (WalletNodeManager.MAINNET.equals(node)) {
                     for (AssetsModel assetsModel : result) {
                         if (assetsModel.getType().equals(AssetsDefaultType.ETH_NAME)) {
                             list.add(assetsModel);
                         }
                         if (!TextUtils.isEmpty(assetsModel.getMainContractAddress())) {
+                            list.add(assetsModel);
+                        }
+                    }
+                }else {
+                    for (AssetsModel assetsModel : result) {
+                        if (assetsModel.getType().equals(AssetsDefaultType.ETH_NAME)) {
+                            list.add(assetsModel);
+                        }
+                        if (!TextUtils.isEmpty(assetsModel.getRopstenContractAddress())) {
                             list.add(assetsModel);
                         }
                     }

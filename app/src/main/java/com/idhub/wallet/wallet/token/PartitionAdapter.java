@@ -80,14 +80,8 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.name.setText(mAssetsModel.getName());
             String symble = mAssetsModel.getSymbol();
             holder.symbol.setText(symble);
-            String node = WalletNoteSharedPreferences.getInstance().getNode();
-            String contraceAddress = "";
-            if (WalletNodeManager.MAINNET.equals(node)) {
-                contraceAddress = mAssetsModel.getMainContractAddress();
-            } else if (WalletNodeManager.ROPSTEN.equals(node)) {
-                contraceAddress = mAssetsModel.getRopstenContractAddress();
-            }
-            Web3Api.searchERC1400TotalSupply(contraceAddress, new DisposableSubscriber<BigInteger>() {
+            String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
+            Web3Api.searchERC1400TotalSupply(contractAddress, new DisposableSubscriber<BigInteger>() {
                 @Override
                 public void onNext(BigInteger bigInteger) {
                     String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger, String.valueOf(Math.pow(10, Double.parseDouble(mAssetsModel.getDecimals()))));
@@ -113,14 +107,8 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.balance.setText(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance), String.valueOf(Math.pow(10, Double.parseDouble(mAssetsModel.getDecimals())))));
             }
             //余额
-            String node = WalletNoteSharedPreferences.getInstance().getNode();
-            String contraceAddress = "";
-            if (WalletNodeManager.MAINNET.equals(node)) {
-                contraceAddress = mAssetsModel.getMainContractAddress();
-            } else if (WalletNodeManager.ROPSTEN.equals(node)) {
-                contraceAddress = mAssetsModel.getRopstenContractAddress();
-            }
-            Web3Api.searchERC1400Balance(contraceAddress, partitionEntity.name, WalletManager.getAddress(), new DisposableSubscriber<BigInteger>() {
+            String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
+            Web3Api.searchERC1400Balance(contractAddress, partitionEntity.name, WalletManager.getAddress(), new DisposableSubscriber<BigInteger>() {
                 @Override
                 public void onNext(BigInteger bigInteger) {
                     String balance = String.valueOf(bigInteger);

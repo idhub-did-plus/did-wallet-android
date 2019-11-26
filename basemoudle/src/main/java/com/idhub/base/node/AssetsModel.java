@@ -11,14 +11,14 @@ import org.greenrobot.greendao.annotation.Transient;
 @Entity
 public class AssetsModel implements Parcelable {
 
-    private String name;
-    private String address;
-    private String mainContractAddress;
-    private String ropstenContractAddress;
-    private String symbol;
-    private String balance;
-    private String decimals;
-    private String type;
+    private String name = "";
+    private String address = "";
+    private String mainContractAddress = "";
+    private String ropstenContractAddress = "";
+    private String symbol = "";
+    private String balance = "";
+    private String decimals = "";
+    private String type = "";
     @Transient
     public byte[] partition;
     @Transient
@@ -42,8 +42,6 @@ public class AssetsModel implements Parcelable {
         type = in.readString();
         partition = in.createByteArray();
     }
-
-
 
     @Generated(hash = 1032221936)
     public AssetsModel(String name, String address, String mainContractAddress,

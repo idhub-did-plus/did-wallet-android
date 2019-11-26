@@ -58,15 +58,15 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
         String node = WalletNoteSharedPreferences.getInstance().getNode();
         ArrayList<AssetsModel> list = new ArrayList<>();
         //过滤 显示对应ropsten或mainnet上的contractAddress
-        if (WalletNodeManager.ROPSTEN.equals(node)){
+       if (WalletNodeManager.MAINNET.equals(node)) {
             for (AssetsModel assetsModel : assetsList) {
-                if (!TextUtils.isEmpty(assetsModel.getRopstenContractAddress())) {
+                if (!TextUtils.isEmpty(assetsModel.getMainContractAddress())) {
                     list.add(assetsModel);
                 }
             }
-        } else if (WalletNodeManager.MAINNET.equals(node)) {
+        }else {
             for (AssetsModel assetsModel : assetsList) {
-                if (!TextUtils.isEmpty(assetsModel.getMainContractAddress())) {
+                if (!TextUtils.isEmpty(assetsModel.getRopstenContractAddress())) {
                     list.add(assetsModel);
                 }
             }
@@ -152,10 +152,10 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
         };
 
         //过滤 显示对应ropsten或mainnet上的contractAddress
-        if (WalletNodeManager.ROPSTEN.equals(node)) {
-            assetsModelDbManager.queryByRopstenContractAddressKey(contractAddress, listener);
-        } else if (WalletNodeManager.MAINNET.equals(node)) {
+        if (WalletNodeManager.MAINNET.equals(node)) {
             assetsModelDbManager.queryByMainContractAddressKey(contractAddress,listener);
+        }else {
+            assetsModelDbManager.queryByRopstenContractAddressKey(contractAddress, listener);
         }
 
 

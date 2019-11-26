@@ -42,7 +42,7 @@ public class QRcodeAnalysisUtils {
                 AssetsModel assetsModel = null;
                 if (node.equals(WalletNodeManager.MAINNET)) {
                     assetsModel = new AssetsModelDbManager().queryByMainContractAddressKeysync(contractAddress);
-                } else if (node.equals(WalletNodeManager.ROPSTEN)) {
+                } else {
                     assetsModel = new AssetsModelDbManager().queryByRopstenContractAddressKeysync(contractAddress);
                 }
                 if (assetsModel == null) {

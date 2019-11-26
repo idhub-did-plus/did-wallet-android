@@ -25,7 +25,6 @@ public class EventFetcher implements EventListenerService {
 		return instance;
 	}
 
-	static String url = "http://localhost:8080/chainevent/getChainEvent";
 	ScheduledExecutorService pool;
 	EventListener listener;
 	private EventFetcher() {

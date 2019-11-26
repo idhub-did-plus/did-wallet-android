@@ -25,7 +25,11 @@ public class WalletNoteSharedPreferences {
 
 
     public String getNode() {
-        return sharedPreferences.getString(WALLET_NODE, WalletNodeManager.nodes.get(1));
+        String defaultNote = "";
+        if (WalletNodeManager.nodes.size() > 0) {
+            defaultNote = WalletNodeManager.nodes.get(0);
+        }
+        return sharedPreferences.getString(WALLET_NODE, defaultNote);
     }
 
     public boolean setNode(String node) {

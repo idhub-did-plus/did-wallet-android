@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/basemoudle/basemoudle.iml" filepath="$PROJECT_DIR$/basemoudle/basemoudle.iml" />
       <module fileurl="file://$PROJECT_DIR$/clientlib/clientlib.iml" filepath="$PROJECT_DIR$/clientlib/clientlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/commom/commom.iml" filepath="$PROJECT_DIR$/commom/commom.iml" />
+      <module fileurl="file://$PROJECT_DIR$/config/config.iml" filepath="$PROJECT_DIR$/config/config.iml" />
       <module fileurl="file://$PROJECT_DIR$/did-wallet-android.iml" filepath="$PROJECT_DIR$/did-wallet-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/etherscan/etherscan.iml" filepath="$PROJECT_DIR$/etherscan/etherscan.iml" />
       <module fileurl="file://$PROJECT_DIR$/module_update/module_update.iml" filepath="$PROJECT_DIR$/module_update/module_update.iml" />

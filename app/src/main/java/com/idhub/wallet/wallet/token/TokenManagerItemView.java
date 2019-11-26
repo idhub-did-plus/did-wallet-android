@@ -50,7 +50,7 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
         this.assetsModel = assetsModel;
         String symble = assetsModel.getSymbol();
         Integer integer = AssetsType.assetsMipmap.get(symble);
-        if (integer != null){
+        if (integer != null) {
             mTokenIcon.setImageResource(integer);
         }
         mTokenName.setText(symble);
@@ -58,14 +58,14 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
         //查询设置
         String node = WalletNoteSharedPreferences.getInstance().getNode();
         AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
-        if (WalletNodeManager.ROPSTEN.equals(node)) {
-            String ropstenContractAddress = assetsModel.getRopstenContractAddress();
-            mContractName.setText(ropstenContractAddress);
-            assetsModelDbManager.queryByRopstenContractAddressKey(ropstenContractAddress, this);
-        } else if (WalletNodeManager.MAINNET.equals(node)) {
+        if (WalletNodeManager.MAINNET.equals(node)) {
             String mainContractAddress = assetsModel.getMainContractAddress();
             mContractName.setText(mainContractAddress);
             assetsModelDbManager.queryByMainContractAddressKey(mainContractAddress, this);
+        } else {
+            String ropstenContractAddress = assetsModel.getRopstenContractAddress();
+            mContractName.setText(ropstenContractAddress);
+            assetsModelDbManager.queryByRopstenContractAddressKey(ropstenContractAddress, this);
         }
     }
 

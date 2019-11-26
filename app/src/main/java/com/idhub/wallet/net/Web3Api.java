@@ -67,10 +67,10 @@ public class Web3Api {
 
     private static void initWeb3() {
         sNode = WalletNoteSharedPreferences.getInstance().getNode();
-        if (sNode.equals(WalletNodeManager.ROPSTEN)) {
-            ethNetwork = EthNetwork.ROPSTEN;
-        } else {
+        if (sNode.equals(WalletNodeManager.MAINNET)) {
             ethNetwork = EthNetwork.MAINNET;
+        } else {
+            ethNetwork = EthNetwork.ROPSTEN;
         }
         ((Etherscan) Etherscan.getInstance()).setCurrentApi(ethNetwork);
         mWeb3j = Web3j.build(new HttpService(sNode));
@@ -125,10 +125,10 @@ public class Web3Api {
             assetsModel.setName(name);
             assetsModel.setDecimals(decimal.toString());
             assetsModel.setSymbol(symbol);
-            if (WalletNodeManager.ROPSTEN.equals(node)) {
-                assetsModel.setRopstenContractAddress(contractAddress);
-            } else if (WalletNodeManager.MAINNET.equals(node)) {
+            if (WalletNodeManager.MAINNET.equals(node)) {
                 assetsModel.setMainContractAddress(contractAddress);
+            } else {
+                assetsModel.setRopstenContractAddress(contractAddress);
             }
             assetsModelDbManager.insertDatasync(assetsModel);
             emitter.onNext(assetsModel);
@@ -160,10 +160,10 @@ public class Web3Api {
                 assetsModel.setName(name);
                 assetsModel.setDecimals(decimal.toString());
                 assetsModel.setSymbol(symbol);
-                if (WalletNodeManager.ROPSTEN.equals(node)) {
-                    assetsModel.setRopstenContractAddress(contractAddress);
-                } else if (WalletNodeManager.MAINNET.equals(node)) {
+                if (WalletNodeManager.MAINNET.equals(node)) {
                     assetsModel.setMainContractAddress(contractAddress);
+                } else {
+                    assetsModel.setRopstenContractAddress(contractAddress);
                 }
                 assetsModelDbManager.insertDatasync(assetsModel);
                 emitter.onNext(assetsModel);

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.multidex.MultiDex;
 
-import com.dreame.apk_update.ApkUpdate;
+import com.idhub.apk_update.ApkUpdate;
 import com.idhub.base.greendao.DbUpdateHelper;
 import com.idhub.base.launage.LocalUtils;
 import com.idhub.base.greendao.db.DaoMaster;

@@ -1,17 +1,18 @@
 package com.idhub.base.node;
 
 
+import com.idhub.base.App;
+import com.idhub.config.ConfigPropertiesUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class WalletNodeManager {
-    public static List<String> nodes;
+    public static List<String> nodes = new ArrayList<>();
     public static final String  MAINNET = "https://mainnet.infura.io";
-    public static final String  ROPSTEN = "https://ropsten.infura.io";
     static {
-        nodes = new ArrayList<>();
-        nodes.add(MAINNET);
-        nodes.add(ROPSTEN);
+        nodes.clear();
+        nodes.addAll(ConfigPropertiesUtils.getNotes(App.getInstance()));
     }
 
     public static String assetsGetContractAddressToNode(AssetsModel model) {
@@ -19,7 +20,7 @@ public class WalletNodeManager {
         String node = WalletNoteSharedPreferences.getInstance().getNode();
         if (node.equals(MAINNET)) {
             contractAddress = model.getMainContractAddress();
-        } else if (node.equals(ROPSTEN)) {
+        } else {
             contractAddress = model.getRopstenContractAddress();
         }
         return contractAddress;

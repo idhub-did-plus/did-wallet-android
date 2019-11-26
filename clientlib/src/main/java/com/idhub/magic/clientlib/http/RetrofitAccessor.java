@@ -8,6 +8,8 @@ import org.web3j.crypto.Credentials;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.idhub.base.App;
+import com.idhub.config.ConfigPropertiesUtils;
 import com.idhub.magic.clientlib.ProviderFactory;
 import com.idhub.magic.clientlib.interfaces.DelegationService;
 import com.idhub.magic.clientlib.interfaces.EventService;
@@ -80,7 +82,7 @@ public class RetrofitAccessor {
 		}).build();
 		
 		
-		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://api.hosting.idhub.network")
+		Retrofit retrofit = new Retrofit.Builder().baseUrl(ConfigPropertiesUtils.getBaseUrl(App.getInstance()))
 				.addConverterFactory(JacksonConverterFactory.create(mapper)).client(client).build();
 
 		identityStorage = retrofit.create(IdentityStorage.class);
