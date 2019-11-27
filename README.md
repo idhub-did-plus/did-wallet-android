@@ -16,8 +16,9 @@ baseUrl = **       //网络请求的baseUrl
 buglyAppId = **  //配置bugly的appid  
 tokens = [{"name": "*","symbol": "*","decimals": "*","type": "*","mainContractAddress":"*","ropstenContractAddress": ""},{*}]  //配置app中推荐的资产列表  (type:ERC20/ERC1400)
 
->eg:  （注意：配置文件如果某一项的配置出现换行的情况 需要在结尾加\\ ,可参考（https://blog.csdn.net/yin_jw/article/details/27107355）  
+>（注意：配置文件如果某一项的配置出现换行的情况 需要在结尾加\\ ,可参考（https://blog.csdn.net/yin_jw/article/details/27107355）  
 
+>eg:  
 notes = ["https://ropsten.infura.io","https://ropsten.infura.io"]  
 baseUrl = http://127.0.0.1  
 buglyAppId = 123456  
