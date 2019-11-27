@@ -44,6 +44,8 @@ public class TokenRemoveItemView extends ConstraintLayout implements View.OnClic
         Integer integer = TokenTypeManager.assetsMipmap.get(symble);
         if (integer != null) {
             mTokenIcon.setImageResource(integer);
+        }else {
+            mTokenIcon.setImageResource(R.mipmap.wallet_default_token_icon);
         }
         mTokenName.setText(symble);
         String contractAddressToNode = WalletNodeManager.assetsGetContractAddressToNode(assetsModel);
