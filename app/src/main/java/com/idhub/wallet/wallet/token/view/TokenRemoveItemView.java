@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;

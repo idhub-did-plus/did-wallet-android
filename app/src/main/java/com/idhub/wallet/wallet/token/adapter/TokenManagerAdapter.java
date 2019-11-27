@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.wallet.token.view.TokenManagerHeaderView;
 import com.idhub.wallet.wallet.token.view.TokenManagerItemView;
 

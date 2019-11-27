@@ -14,7 +14,7 @@ import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.wallet.token.TokenTypeManager;
 import com.idhub.wallet.wallet.token.PartitionEntity;

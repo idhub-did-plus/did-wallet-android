@@ -5,7 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.idhub.base.App;
 import com.idhub.config.ConfigPropertiesUtils;
 import com.idhub.wallet.R;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 
 import java.util.HashMap;
 import java.util.List;

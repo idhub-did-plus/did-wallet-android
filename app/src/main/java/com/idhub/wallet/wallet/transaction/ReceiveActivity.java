@@ -20,7 +20,7 @@ import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.QRCodeEncoder;
 import com.idhub.wallet.utils.StringUtils;
 import com.idhub.wallet.utils.ToastUtils;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 
 import org.web3j.crypto.Keys;
 

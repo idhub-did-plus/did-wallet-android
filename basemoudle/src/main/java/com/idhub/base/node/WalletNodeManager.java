@@ -2,6 +2,7 @@ package com.idhub.base.node;
 
 
 import com.idhub.base.App;
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.config.ConfigPropertiesUtils;
 
 import java.util.ArrayList;

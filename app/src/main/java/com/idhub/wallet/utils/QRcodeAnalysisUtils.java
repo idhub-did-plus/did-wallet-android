@@ -5,10 +5,9 @@ import android.text.TextUtils;
 
 import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.greendao.AssetsDefaultType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.wallet.mainfragment.QRCodeType;
 import com.idhub.wallet.wallet.transaction.SendActivity;

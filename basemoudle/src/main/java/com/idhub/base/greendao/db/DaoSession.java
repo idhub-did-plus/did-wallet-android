@@ -12,7 +12,7 @@ import com.idhub.base.greendao.entity.IdHubMessageEntity;
 import com.idhub.base.greendao.entity.TransactionRecordEntity;
 import com.idhub.base.greendao.entity.UploadFileEntity;
 import com.idhub.base.greendao.entity.UploadIDHubInfoEntity;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 
 import com.idhub.base.greendao.db.IdHubMessageEntityDao;
 import com.idhub.base.greendao.db.TransactionRecordEntityDao;

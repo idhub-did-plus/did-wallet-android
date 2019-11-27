@@ -19,7 +19,7 @@ import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;

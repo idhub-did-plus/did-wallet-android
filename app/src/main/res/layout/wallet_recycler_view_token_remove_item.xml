@@ -37,9 +37,9 @@
         android:textColor="@color/wallet_text_grey"
         android:textSize="14sp"
         app:layout_constraintLeft_toRightOf="@id/iv_token_icon"
-        app:layout_constraintRight_toLeftOf="@id/iv_token_add"
+        app:layout_constraintRight_toLeftOf="@id/iv_token_remove"
         app:layout_constraintTop_toBottomOf="@id/tv_token_name"
-        tools:text="0xadasdadasdasd" />
+        tools:text="0xadasdssssssssssssssssksjdhfkjsdhfksjdhfksjladasdasd" />
 
     <ImageView
         android:id="@+id/iv_token_remove"

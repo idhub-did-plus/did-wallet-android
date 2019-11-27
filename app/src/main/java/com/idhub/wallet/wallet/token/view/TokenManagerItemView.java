@@ -13,7 +13,7 @@ import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.token.TokenTypeManager;

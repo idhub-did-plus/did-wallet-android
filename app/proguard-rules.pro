@@ -116,6 +116,8 @@
 #-keep com.idhub.magic.common.kvc.** {*;}
 #-keep com.idhub.magic.common.ustorage.** {*;}
 
+#数据库类不混淆
+-keep class com.idhub.base.greendao.** {*;}
 
 # 保留Serializable序列化的类不被混淆
 -keepnames class * implements java.io.Serializable

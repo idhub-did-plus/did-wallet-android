@@ -1,24 +1,17 @@
 package com.idhub.wallet.wallet.mainfragment.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.idhub.wallet.R;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
-import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
-import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.AssetsDefaultType;
-import com.idhub.base.node.AssetsModel;
-import com.idhub.wallet.utils.UnitUtils;
-import com.idhub.wallet.wallet.mainfragment.WalletListDialog;
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;
 import com.idhub.wallet.wallet.transaction.ReceiveActivity;
 

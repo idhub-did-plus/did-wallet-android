@@ -1,4 +1,4 @@
-package com.idhub.base.node;
+package com.idhub.base.greendao.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;

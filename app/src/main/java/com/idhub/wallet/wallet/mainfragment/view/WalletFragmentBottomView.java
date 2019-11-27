@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.wallet.mainfragment.adapter.WalletAssetsAdapter;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 
 import java.util.List;
 

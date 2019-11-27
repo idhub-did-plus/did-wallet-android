@@ -4,7 +4,7 @@ package com.idhub.wallet.greendao;
 import com.idhub.base.greendao.db.AssetsModelDao;
 import com.idhub.base.greendao.db.DaoSession;
 import com.idhub.base.App;
-import com.idhub.base.node.AssetsModel;
+import com.idhub.base.greendao.entity.AssetsModel;
 
 import org.greenrobot.greendao.async.AsyncOperationListener;
 import org.greenrobot.greendao.async.AsyncSession;
