@@ -10,23 +10,22 @@ IDHUB不存储我们客户的任何钱包数据或私钥。私钥存储在移动
 3.添加配置文件 
 >1.在did-wallet-android/config/src/main/ 目录下新建assets文件夹  
 >2.在assets文件夹下新建config.properties文件  
->3.添加配置   
+>3.添加配置  
+```
 notes = ["*","*"]    //以太坊节点配置，默认app使用第一个配置的节点  
 baseUrl = **       //网络请求的baseUrl  
 buglyAppId = **  //配置bugly的appid  
 tokens = [{"name": "*","symbol": "*","decimals": "*","type": "*","mainContractAddress":"*","ropstenContractAddress": ""},{*}]  //配置app中推荐的资产列表  (type:ERC20/ERC1400)
-
+```
 >（注意：配置文件如果某一项的配置出现换行的情况 需要在结尾加\\ ,可参考（https://blog.csdn.net/yin_jw/article/details/27107355）  
-
->eg:  
+```
+eg:  
 notes = ["https://ropsten.infura.io","https://ropsten.infura.io"]  
 baseUrl = http://127.0.0.1  
 buglyAppId = 123456  
-tokens = [{"name": "Tether USD","symbol": "USDT","decimals": "6","type": "ERC20","mainContractAddress":\\   
-"0xdac17f958d2ee523a2206206994597c13d831ec7","ropstenContractAddress": ""},\\  
- {"name": "Tether USD","symbol": "USDT","decimals": "6","type": "ERC20","mainContractAddress":\\  
-"0xdac17f958d2ee523a2206206994597c13d831ec7","ropstenContractAddress": ""}]
-
+tokens = [{"name": "Tether USD","symbol": "USDT","decimals": "6","type": "ERC20","mainContractAddress":"0xdac17f958d2ee523a2206206994597c13d831ec7","ropstenContractAddress": ""},\  
+ {"name": "Tether USD","symbol": "USDT","decimals": "6","type": "ERC20","mainContractAddress":"0xdac17f958d2ee523a2206206994597c13d831ec7","ropstenContractAddress": ""}]
+```
 
 3.Android Studio打开修改好配置的项目即可
 # APK下载地址
