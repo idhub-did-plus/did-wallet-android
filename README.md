@@ -1,7 +1,7 @@
-# IDHUB-基于以太坊开发的数字身份钱包
+## IDHUB-基于以太坊开发的数字身份钱包
 数字身份采用ERC1056和ERC1484聚合数字身份，通过钱包，用户可自主实现声明管理。  
 IDHUB不存储我们客户的任何钱包数据或私钥。私钥存储在移动设备的安全存储器中，如果用户从钱包中删除，则私钥会自行删除。为了保护资金，创建了keystore加密私钥并进行备份。可以输入密码查看。
-# 安装教程
+## 安装教程
 1.[下载](https://developer.android.com/studio/) 并安装 Android Studio 
 
 2.克隆代码  
@@ -28,9 +28,9 @@ tokens = [{"name": "Tether USD","symbol": "USDT","decimals": "6","type": "ERC20"
 ```
 
 4.Android Studio打开修改好配置的项目即可
-# APK下载地址
+## APK下载地址
 http://api.stplatform.idhub.network/v1/did/wallet/idhub-v0.0.2.apk
-# 版权说明  
+## 版权说明  
 该项目签署了MIT 授权许可，详情请参阅 LICENSE.md
 
 
