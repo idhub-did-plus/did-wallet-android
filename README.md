@@ -31,6 +31,6 @@ tokens = [{"name": "Tether USD","symbol": "USDT","decimals": "6","type": "ERC20"
 ## APK下载地址
 http://api.stplatform.idhub.network/v1/did/wallet/idhub-v0.0.2.apk
 ## 版权说明  
-该项目签署了MIT 授权许可，详情请参阅 LICENSE.md
+该项目签署了MIT 授权许可，详情请参阅 [LICENSE.md](https://github.com/idhub-did-plus/did-wallet-android/blob/master/LICENSE)
 
 
