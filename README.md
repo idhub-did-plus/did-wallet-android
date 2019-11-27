@@ -27,7 +27,7 @@ tokens = [{"name": "Tether USD","symbol": "USDT","decimals": "6","type": "ERC20"
  {"name": "Tether USD","symbol": "USDT","decimals": "6","type": "ERC20","mainContractAddress":"0xdac17f958d2ee523a2206206994597c13d831ec7","ropstenContractAddress": ""}]
 ```
 
-3.Android Studio打开修改好配置的项目即可
+4.Android Studio打开修改好配置的项目即可
 # APK下载地址
 http://api.stplatform.idhub.network/v1/did/wallet/idhub-v0.0.2.apk
 # 版权说明  
