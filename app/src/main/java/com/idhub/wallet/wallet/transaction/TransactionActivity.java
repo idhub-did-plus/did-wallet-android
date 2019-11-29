@@ -15,7 +15,7 @@ import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.base.greendao.entity.AssetsModel;
-import com.idhub.wallet.greendao.AssetsDefaultType;
+import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.wallet.wallet.token.TokenTypeManager;
 import com.idhub.wallet.wallet.token.PartitionEntity;
 
@@ -48,7 +48,7 @@ public class TransactionActivity extends BaseActivity implements View.OnClickLis
         Integer integer = TokenTypeManager.assetsMipmap.get(mAssetsModel.getSymbol());
         if (integer != null){
             iconView.setImageResource(integer);
-        }else if (AssetsDefaultType.ETH_NAME.equals(mAssetsModel.getType())){
+        }else if (TransactionTokenType.ETH_NAME.equals(mAssetsModel.getType())){
             iconView.setImageResource(R.mipmap.wallet_eth_icon);
         }else {
             iconView.setImageResource(R.mipmap.wallet_default_token_icon);

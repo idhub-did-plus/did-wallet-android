@@ -1,5 +1,6 @@
 package com.idhub.wallet.wallet.transaction;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.os.Bundle;
@@ -16,10 +17,11 @@ import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletTransactionSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.contract.ERC1400;
+import com.idhub.wallet.dapp.entity.Transaction;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.AssetsDefaultType;
+import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
@@ -31,63 +33,88 @@ import com.tencent.bugly.crashreport.CrashReport;
 import org.web3j.crypto.Keys;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.utils.Numeric;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.subscribers.DisposableSubscriber;
 
-public class SendConfirmActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener,InputGasDialogFragment.InputGasDialogFragmentListener {
+public class SendConfirmActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener, InputGasDialogFragment.InputGasDialogFragmentListener {
 
     private TextView mSendAmountView;
     private TextView mFromAddressView;
     private TextView mToAddressView;
     private TextView mGasAmountView;
-    private AssetsModel mAssetsModel;
+
     private View mConfirmView;
     private LoadingAndErrorView mLoadingAndErrorView;
     private String mGasLimit;
     private String mGasPrice;
-    private String mToAddress;
-    private String mAmount;
+
     private View mPartitionName;
     private TextView mPartitionView;
     private View mLineView;
+
+
+    private TransactionParam mTransactionParam;
+    private TransactionDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.wallet_activity_send_confirm);
+        Parcelable data = getIntent().getParcelableExtra("data");
+        if (!(data instanceof TransactionParam)) {
+            finish();
+            return;
+        }
+        mTransactionParam = (TransactionParam) data;
         initView();
         initData();
     }
 
+    public static void startAction(Activity activity, TransactionParam transactionParam, int requestCode) {
+        Intent intent = new Intent(activity, SendConfirmActivity.class);
+        intent.putExtra("data", transactionParam);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
     private void initData() {
-        Intent intent = getIntent();
-        Parcelable data = getIntent().getParcelableExtra("assets");
-        mAssetsModel = (AssetsModel) data;
-        mToAddress = intent.getStringExtra("toAddress");
-        mAmount = intent.getStringExtra("amount");
-        mToAddressView.setText(mToAddress);
-        if (mAssetsModel != null) {
-            mSendAmountView.setText(mAmount + " " + mAssetsModel.getSymbol());
-            mFromAddressView.setText(Keys.toChecksumAddress(mAssetsModel.getAddress()));
+        mToAddressView.setText(mTransactionParam.toAddress);
+        AssetsModel assetsModel = mTransactionParam.assetsModel;
+        if (assetsModel != null) {
+            String value = mTransactionParam.value;
+            if (mTransactionParam.type.equals(TransactionTokenType.WEB3_DAPP)) {
+                BigDecimal bigDecimal = BigDecimal.valueOf(Double.valueOf(value));
+                String decimals = assetsModel.getDecimals();
+                BigDecimal divisor = new BigDecimal(Math.pow(10, Double.valueOf(decimals)));
+                BigDecimal divide = bigDecimal.divide(divisor);
+                value = divide.toString();
+            }
+            mSendAmountView.setText(value + " " + assetsModel.getSymbol());
+            mFromAddressView.setText(Keys.toChecksumAddress(assetsModel.getAddress()));
         }
         mGasPrice = WalletTransactionSharpreference.getInstance().getGasPrice();
-        String type = mAssetsModel.getType();
-        switch (type){
-            case AssetsDefaultType.ERC20:
+        switch (mTransactionParam.type) {
+            case TransactionTokenType.ERC20:
                 mGasLimit = WalletTransactionSharpreference.getInstance().getERC20GasLimit();
                 break;
-            case AssetsDefaultType.ERC1400:
+            case TransactionTokenType.ERC1400:
                 mGasLimit = WalletTransactionSharpreference.getInstance().getSTGasLimit();
                 break;
-            case AssetsDefaultType.ETH_NAME:
+            case TransactionTokenType.ETH_NAME:
                 mGasLimit = WalletTransactionSharpreference.getInstance().getEthGasLimit();
+                break;
+            case TransactionTokenType.WEB3_DAPP:
+                Transaction transaction = mTransactionParam.transaction;
+                mGasLimit = String.valueOf(transaction.gasLimit);
+                mGasPrice = transaction.gasPrice.toString();
                 break;
         }
         setGasAmount();
-        byte[] partition = mAssetsModel.partition;
+        byte[] partition = assetsModel.partition;
         if (partition != null) {
             mPartitionName.setVisibility(View.VISIBLE);
             mPartitionView.setVisibility(View.VISIBLE);
@@ -105,8 +132,8 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
         BigInteger bigIntegerGasLimit = new BigInteger(mGasLimit);
         BigInteger bigIntegerGasPrice = new BigInteger(mGasPrice);
         BigInteger gasEthAmount = bigIntegerGasLimit.multiply(bigIntegerGasPrice);
-        String s = NumericUtil.ethBigIntegerToNumberViewPointAfterEight(gasEthAmount,String.valueOf(Math.pow(10, 18)));
-        mGasAmountView.setText(s +" ETH");
+        String s = NumericUtil.ethBigIntegerToNumberViewPointAfterEight(gasEthAmount, String.valueOf(Math.pow(10, 18)));
+        mGasAmountView.setText(s + " ETH");
     }
 
     private void initView() {
@@ -132,7 +159,7 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
             InputGasDialogFragment inputGasDialogFragment = InputGasDialogFragment.getInstance(mGasPrice, mGasLimit);
             inputGasDialogFragment.show(getSupportFragmentManager(), "input_gas_dialog_fragment");
         } else if (v == mConfirmView) {
-            InputDialogFragment instance = InputDialogFragment.getInstance("send", getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            InputDialogFragment instance = InputDialogFragment.getInstance("send", getString(R.string.wallet_please_input_password), InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             instance.show(getSupportFragmentManager(), "input_dialog_fragment");
             instance.setInputDialogFragmentListener(this);
         }
@@ -168,7 +195,7 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
             public void onComplete() {
             }
         };
-        walletInfo.verifyPassword(data,observer);
+        walletInfo.verifyPassword(data, observer);
     }
 
     @Override
@@ -179,24 +206,26 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void transaction(String data) {
-        String type = mAssetsModel.getType();
+        String type = mTransactionParam.type;
+        AssetsModel assetsModel = mTransactionParam.assetsModel;
+        String toAddress = mTransactionParam.toAddress;
+        String value = mTransactionParam.value;
         switch (type) {
-            case AssetsDefaultType.ERC20:
-                Web3Api.sendERC20Transaction(data,mAssetsModel.getDecimals(), WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel),mGasPrice,mGasLimit,mToAddress,mAmount,new DisposableSubscriber<TransactionReceipt>(){
+            case TransactionTokenType.ERC20:
+                Web3Api.sendERC20Transaction(data, assetsModel.getDecimals(), WalletNodeManager.assetsGetContractAddressToNode(assetsModel), mGasPrice, mGasLimit, toAddress, value, new DisposableSubscriber<TransactionReceipt>() {
 
                     @Override
                     public void onNext(TransactionReceipt o) {
-                        Log.e("LYW", "onNext: "+ o.getTransactionHash() );
-                        CrashReport.postCatchedException(new Throwable(o.getTransactionHash()));
+                        Log.e("LYW", "onNext: " + o.getTransactionHash());
                         ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
-                        MainActivity.startAction(SendConfirmActivity.this,"transaction");
+                        MainActivity.startAction(SendConfirmActivity.this, "transaction");
                         mLoadingAndErrorView.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Throwable t) {
                         mLoadingAndErrorView.setVisibility(View.GONE);
-                        ToastUtils.showShortToast(getString(R.string.wallet_transaction_fail) + t.getMessage());
+                        showErrorDoalog(t.getMessage());
                     }
 
                     @Override
@@ -204,20 +233,20 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
                     }
                 });
                 break;
-            case AssetsDefaultType.ERC1400:
+            case TransactionTokenType.ERC1400:
                 byte[] bytes = new byte[]{0x0};
-                ERC1400TransactionParam transactionParam = new ERC1400TransactionParam(data, WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel), mGasPrice, mGasLimit, mAssetsModel.partition, mAssetsModel.getAddress(), mToAddress, mAmount, mAssetsModel.getDecimals(), bytes);
+                ERC1400TransactionParam transactionParam = new ERC1400TransactionParam(data, WalletNodeManager.assetsGetContractAddressToNode(assetsModel), mGasPrice, mGasLimit, assetsModel.partition, assetsModel.getAddress(), toAddress, value, assetsModel.getDecimals(), bytes);
                 Web3Api.sendERC1400Transaction(transactionParam, new DisposableObserver<ERC1400.TransferByPartitionEventResponse>() {
                     @Override
                     public void onNext(ERC1400.TransferByPartitionEventResponse transferByPartitionEventResponse) {
                         ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
-                        MainActivity.startAction(SendConfirmActivity.this,"transaction");
+                        MainActivity.startAction(SendConfirmActivity.this, "transaction");
                         mLoadingAndErrorView.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.showLongToast(getString(R.string.wallet_transaction_fail) +" "+ e.getMessage());
+                        showErrorDoalog(e.getMessage());
                         mLoadingAndErrorView.setVisibility(View.GONE);
 
                     }
@@ -228,8 +257,8 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
                     }
                 });
                 break;
-            case AssetsDefaultType.ETH_NAME:
-                EthTransactionParam param = new EthTransactionParam(data, mAssetsModel.getAddress(), mToAddress, mAmount, mGasLimit, mGasPrice);
+            case TransactionTokenType.ETH_NAME:
+                EthTransactionParam param = new EthTransactionParam(data, assetsModel.getAddress(), toAddress, value, mGasLimit, mGasPrice);
                 Web3Api.sendETHTransaction(param, new DisposableObserver<EthSendTransaction>() {
                     @Override
                     protected void onStart() {
@@ -238,21 +267,20 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onNext(EthSendTransaction ethSendTransaction) {
-                        String transactionHash = ethSendTransaction.getTransactionHash();
-                        if (transactionHash != null) {
+                        boolean b = ethSendTransaction.hasError();
+                        mLoadingAndErrorView.setVisibility(View.GONE);
+                        if (!b) {
                             ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
                             MainActivity.startAction(SendConfirmActivity.this, "transaction");
-                            mLoadingAndErrorView.setVisibility(View.GONE);
-                        }else {
-                            CrashReport.postCatchedException(new Throwable("交易内容为空"));
-                            ToastUtils.showShortToast(getString(R.string.wallet_transaction_fail) );
+                        } else {
+                            showErrorDoalog(ethSendTransaction.getError().getMessage());
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mLoadingAndErrorView.setVisibility(View.GONE);
-                        ToastUtils.showShortToast(getString(R.string.wallet_transaction_fail) + e.getMessage());
+                        showErrorDoalog(e.getMessage());
                     }
 
                     @Override
@@ -261,7 +289,87 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
                     }
                 });
                 break;
+            case TransactionTokenType.WEB3_DAPP:
+                signWeb3DAppTransaction(data);
+                break;
         }
 
+    }
+
+    private void signWeb3DAppTransaction(String password) {
+        BigInteger addr = Numeric.toBigInt(mTransactionParam.transaction.recipient.toString());
+
+        //constructor
+        if (addr.equals(BigInteger.ZERO)) {
+            Web3Api.sendTransactionWithSig(password, mTransactionParam.assetsModel.getAddress(), mGasPrice, mGasLimit, mTransactionParam.transaction.payload, new DisposableObserver<EthSendTransaction>() {
+                @Override
+                public void onNext(EthSendTransaction ethSendTransaction) {
+                    boolean b = ethSendTransaction.hasError();
+                    mLoadingAndErrorView.setVisibility(View.GONE);
+                    if (!b) {
+                        ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
+                        Intent intent = new Intent();
+                        intent.putExtra("transaction", mTransactionParam.transaction);
+                        intent.putExtra("hashData", ethSendTransaction.getTransactionHash());
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    } else {
+                        showErrorDoalog(ethSendTransaction.getError().getMessage());
+                    }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    mLoadingAndErrorView.setVisibility(View.GONE);
+                    showErrorDoalog(e.getMessage());
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+            });
+        } else {
+            Web3Api.sendTransactionWithSig(password, mTransactionParam.assetsModel.getAddress(),mTransactionParam.transaction.recipient.toString(),new BigInteger(mTransactionParam.value), mGasPrice, mGasLimit, mTransactionParam.transaction.payload, new DisposableObserver<EthSendTransaction>() {
+                @Override
+                public void onNext(EthSendTransaction ethSendTransaction) {
+                    boolean b = ethSendTransaction.hasError();
+                    mLoadingAndErrorView.setVisibility(View.GONE);
+                    if (!b) {
+                        ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
+                        Intent intent = new Intent();
+                        intent.putExtra("transaction", mTransactionParam.transaction);
+                        intent.putExtra("hashData", ethSendTransaction.getTransactionHash());
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    } else {
+                     showErrorDoalog(ethSendTransaction.getError().getMessage());
+                    }
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    mLoadingAndErrorView.setVisibility(View.GONE);
+                    showErrorDoalog(e.getMessage());
+                }
+
+                @Override
+                public void onComplete() {
+
+                }
+            });
+        }
+    }
+
+    private void showErrorDoalog(String message) {
+        hideDialog();
+        dialog = new TransactionDialog(this,message);
+        dialog.show();
+    }
+
+    private void hideDialog() {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 }

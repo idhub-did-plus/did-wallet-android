@@ -29,7 +29,7 @@ import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
-import com.idhub.wallet.greendao.AssetsDefaultType;
+import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
@@ -103,7 +103,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
                 //过滤 显示对应ropsten或mainnet上的contractAddress
                if (WalletNodeManager.MAINNET.equals(node)) {
                     for (AssetsModel assetsModel : result) {
-                        if (assetsModel.getType().equals(AssetsDefaultType.ETH_NAME)) {
+                        if (assetsModel.getType().equals(TransactionTokenType.ETH_NAME)) {
                             list.add(assetsModel);
                         }
                         if (!TextUtils.isEmpty(assetsModel.getMainContractAddress())) {
@@ -112,7 +112,7 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
                     }
                 }else {
                     for (AssetsModel assetsModel : result) {
-                        if (assetsModel.getType().equals(AssetsDefaultType.ETH_NAME)) {
+                        if (assetsModel.getType().equals(TransactionTokenType.ETH_NAME)) {
                             list.add(assetsModel);
                         }
                         if (!TextUtils.isEmpty(assetsModel.getRopstenContractAddress())) {

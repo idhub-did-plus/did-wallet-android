@@ -1,6 +1,7 @@
 package com.idhub.wallet;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.common.base.Strings;
 import com.idhub.base.App;
@@ -38,6 +39,7 @@ import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
@@ -62,31 +64,31 @@ public class ExampleUnitTest {
 //        String address = new EthereumAddressCreator().fromPrivateKey(key.getPrivateKeyAsHex());
 //        System.out.println(address);
 
-        Credentials credentials = Credentials.create("0");
-        ContractGasProvider contractGasProvider = new DefaultGasProvider();
-        Web3j web3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
-
-        IdentityRegistryInterface  registry1484 = IdentityRegistryInterface.load("0x90e1B1C7B8C829b3d0b1C09eD961e46f5AeeD184",
-                web3j,
-                credentials,
-                contractGasProvider
-        );
-        ERC1056ResolverInterface erc1056 = ERC1056ResolverInterface.load("0x6d0f04B6Ca0217323af7fB7147a63C97Ef910617",
-                web3j,
-                credentials,
-                contractGasProvider
-        );
-        String send1 = erc1056.einToDID(new BigInteger("40")).send();
-        System.out.println(send1);
-        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("40")).send();
-        System.out.println(send.getValue1());
-        List<String> value2 = send.getValue2();
-        System.out.println(value2.size());
-        if (value2.size() > 0) {
-            for (String s : value2) {
-                System.out.println(s);
-            }
-        }
+//        Credentials credentials = Credentials.create("0");
+//        ContractGasProvider contractGasProvider = new DefaultGasProvider();
+//        Web3j web3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
+//
+//        IdentityRegistryInterface  registry1484 = IdentityRegistryInterface.load("0x90e1B1C7B8C829b3d0b1C09eD961e46f5AeeD184",
+//                web3j,
+//                credentials,
+//                contractGasProvider
+//        );
+//        ERC1056ResolverInterface erc1056 = ERC1056ResolverInterface.load("0x6d0f04B6Ca0217323af7fB7147a63C97Ef910617",
+//                web3j,
+//                credentials,
+//                contractGasProvider
+//        );
+//        String send1 = erc1056.einToDID(new BigInteger("40")).send();
+//        System.out.println(send1);
+//        Tuple4<String, List<String>, List<String>, List<String>> send = registry1484.getIdentity(new BigInteger("40")).send();
+//        System.out.println(send.getValue1());
+//        List<String> value2 = send.getValue2();
+//        System.out.println(value2.size());
+//        if (value2.size() > 0) {
+//            for (String s : value2) {
+//                System.out.println(s);
+//            }
+//        }
 //        boolean hasIdentity = registry1484.hasIdentity("0x4c000E507bE6663e264a1A21507a69Bfa5035D95").send();
 //        BigInteger bigInteger = registry1484.getEIN("0x4c000E507bE6663e264a1A21507a69Bfa5035D95").send();
 //        System.out.println(hasIdentity);
@@ -101,5 +103,12 @@ public class ExampleUnitTest {
 //        BigInteger decimal = ierc20.decimals().send();
 //        String symbol = ierc20.symbol().send();
 //        System.out.println(symbol);
+
+        BigDecimal bigDecimal = BigDecimal.valueOf(5500000000000000L);
+        BigDecimal divisor = new BigDecimal(Math.pow(10, 18));
+        System.out.println(bigDecimal);
+        System.out.println(divisor);
+        BigDecimal divide = bigDecimal.divide(divisor);
+        System.out.println(divide);
     }
 }

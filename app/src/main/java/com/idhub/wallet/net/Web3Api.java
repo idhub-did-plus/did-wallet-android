@@ -13,7 +13,7 @@ import com.idhub.wallet.contract.ERC1400;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.AssetsDefaultType;
+import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
@@ -120,7 +120,7 @@ public class Web3Api {
             String node = WalletNoteSharedPreferences.getInstance().getNode();
             AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
             AssetsModel assetsModel = new AssetsModel();
-            assetsModel.setType(AssetsDefaultType.ERC1400);
+            assetsModel.setType(TransactionTokenType.ERC1400);
             assetsModel.setName(name);
             assetsModel.setDecimals(decimal.toString());
             assetsModel.setSymbol(symbol);
@@ -155,7 +155,7 @@ public class Web3Api {
                     return;
                 }
                 AssetsModel assetsModel = new AssetsModel();
-                assetsModel.setType(AssetsDefaultType.ERC20);
+                assetsModel.setType(TransactionTokenType.ERC20);
                 assetsModel.setName(name);
                 assetsModel.setDecimals(decimal.toString());
                 assetsModel.setSymbol(symbol);
@@ -233,6 +233,31 @@ public class Web3Api {
         EIP20Interface ierc20 = EIP20Interface.load(contractAddress, mWeb3j, credentials, staticGasProvider);
         BigDecimal value1 = NumericUtil.valueFormatByDecimal(value, Integer.valueOf(decimals));
         ierc20.transfer(toAddress, value1.toBigInteger()).flowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(web3jSubscriber);
+    }
+
+    public static void sendTransactionWithSig(String password, String fromAddress, String gasPrice, String gasLimit, String data, DisposableObserver<EthSendTransaction> observer) {
+        Observable.create((ObservableOnSubscribe<EthSendTransaction>) emitter -> {
+            EthGetTransactionCount transactionCount = mWeb3j.ethGetTransactionCount(fromAddress, DefaultBlockParameterName.LATEST).send();//获取noce
+            BigInteger nonce = transactionCount.getTransactionCount();
+            RawTransaction rawTransaction = RawTransaction.createContractTransaction(nonce, new BigInteger(gasPrice), new BigInteger(gasLimit), BigInteger.ZERO, data);
+            byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, getCredentials(password));
+            String hexValue = Numeric.toHexString(signedMessage);
+            EthSendTransaction ethSendTransaction = mWeb3j.ethSendRawTransaction(hexValue).send();
+            emitter.onNext(ethSendTransaction);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+    }
+    public static void sendTransactionWithSig(String password,String fromAddress, String toAddress, BigInteger value, String gasPrice, String gasLimit, String data, DisposableObserver<EthSendTransaction> observer) {
+        Observable.create((ObservableOnSubscribe<EthSendTransaction>) emitter -> {
+            EthGetTransactionCount transactionCount = mWeb3j.ethGetTransactionCount(fromAddress, DefaultBlockParameterName.LATEST).send();//获取noce
+            BigInteger nonce = transactionCount.getTransactionCount();
+            RawTransaction rawTransaction = RawTransaction.createTransaction(nonce, new BigInteger(gasPrice), new BigInteger(gasLimit),toAddress,value , data);
+            byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, getCredentials(password));
+            String hexValue = Numeric.toHexString(signedMessage);
+            EthSendTransaction ethSendTransaction = mWeb3j.ethSendRawTransaction(hexValue).send();
+            emitter.onNext(ethSendTransaction);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
     }
 
     public static void sendERC1400Transaction(ERC1400TransactionParam param, DisposableObserver<ERC1400.TransferByPartitionEventResponse> web3jSubscriber) {

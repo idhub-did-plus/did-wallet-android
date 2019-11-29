@@ -22,10 +22,7 @@ public class AssetsModel implements Parcelable {
     private String type;
     @Transient
     public byte[] partition;
-    @Transient
-    public String value;
-    @Transient
-    public String toAddress;
+
 
     public AssetsModel() {
     }
@@ -146,7 +143,7 @@ public class AssetsModel implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
+        dest.writeLong((id == null ? 0l : id));
         dest.writeString(name);
         dest.writeString(address);
         dest.writeString(mainContractAddress);

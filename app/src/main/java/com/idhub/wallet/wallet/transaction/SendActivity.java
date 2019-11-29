@@ -19,7 +19,7 @@ import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.AssetsDefaultType;
+import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.base.greendao.entity.AssetsModel;
@@ -56,7 +56,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         mNameView = findViewById(R.id.name);
         mBalanceView = findViewById(R.id.balance);
         mAmountView = findViewById(R.id.input_amount);
-        if (AssetsDefaultType.ERC1400.equals(mAssetsModel.getType())) {
+        if (TransactionTokenType.ERC1400.equals(mAssetsModel.getType())) {
             mAmountView.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
         mAddressView = findViewById(R.id.input_address);
@@ -127,11 +127,12 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             ToastUtils.showShortToast(getString(R.string.wallet_send_address_false));
             return;
         }
-        Intent intent = new Intent(this, SendConfirmActivity.class);
-        intent.putExtra("amount", amount);
-        intent.putExtra("toAddress", toAddress);
-        intent.putExtra("assets", mAssetsModel);
-        startActivityForResult(intent, 100);
+        TransactionParam transactionParam = new TransactionParam();
+        transactionParam.value = amount;
+        transactionParam.toAddress = toAddress;
+        transactionParam.type = mAssetsModel.getType();
+        transactionParam.assetsModel = mAssetsModel;
+        SendConfirmActivity.startAction(this,transactionParam,100);
     }
 
 }

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.AssetsDefaultType;
+import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.net.Web3jSubscriber;
@@ -54,7 +54,7 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if (AssetsDefaultType.ERC1400.equals(mAssetsModels.get(position).getType())) {
+        if (TransactionTokenType.ERC1400.equals(mAssetsModels.get(position).getType())) {
             return ERC1400_ITEM;
         } else {
             return ERC20_ITEM;
@@ -93,7 +93,7 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             } else {
                 itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance),String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals())))));
             }
-            if (AssetsDefaultType.ERC20.equals(model.getType())) {
+            if (TransactionTokenType.ERC20.equals(model.getType())) {
                 Web3Api.searchBalance(address, contractAddress, new Web3jSubscriber<BigInteger>() {
                     @Override
                     public void onNext(BigInteger bigInteger) {
@@ -103,7 +103,7 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         itemView.setBalance(balanceStr);
                     }
                 });
-            } else if (AssetsDefaultType.ETH_NAME.equals(model.getType())){
+            } else if (TransactionTokenType.ETH_NAME.equals(model.getType())){
                 Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
                     @Override
                     public void onNext(EthGetBalance o) {

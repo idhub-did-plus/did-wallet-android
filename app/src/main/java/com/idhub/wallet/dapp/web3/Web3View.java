@@ -72,6 +72,10 @@ public class Web3View extends WebView {
         WebSettings webSettings = super.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+       // WebView是可以在一个安全的站点（Https）里加载非安全的站点内容（Http）,这是WebView最不安全的操作模式，尽可能地不要使用这种模式
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+//        }
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false);
         webSettings.setUseWideViewPort(true);
@@ -180,7 +184,9 @@ public class Web3View extends WebView {
 
     private void callbackToJS(long callbackId, String function, String param) {
         String callback = String.format(function, callbackId, param);
-        post(() -> evaluateJavascript(callback, value -> Log.d("WEB_VIEW", value)));
+        post(() -> {
+            evaluateJavascript(callback, value -> Log.d("WEB_VIEW",callback +  value));
+        });
     }
 
     private final OnSignTransactionListener innerOnSignTransactionListener = new OnSignTransactionListener() {

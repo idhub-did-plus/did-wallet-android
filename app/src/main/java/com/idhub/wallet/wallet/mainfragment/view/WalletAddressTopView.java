@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.greendao.AssetsDefaultType;
+import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;
 import com.idhub.wallet.wallet.transaction.ReceiveActivity;
@@ -70,11 +70,11 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
                 break;
             case R.id.wallet_address:
                 AssetsModel assetsModel = new AssetsModel();
-                assetsModel.setType(AssetsDefaultType.ETH_NAME);
-                assetsModel.setName(AssetsDefaultType.ETH_NAME);
+                assetsModel.setType(TransactionTokenType.ETH_NAME);
+                assetsModel.setName(TransactionTokenType.ETH_NAME);
                 assetsModel.setAddress(walletKeystore.getAddress());
                 assetsModel.setDecimals("18");
-                assetsModel.setSymbol(AssetsDefaultType.ETH_NAME);
+                assetsModel.setSymbol(TransactionTokenType.ETH_NAME);
                 ReceiveActivity.startAction(getContext(), assetsModel);
                 break;
         }

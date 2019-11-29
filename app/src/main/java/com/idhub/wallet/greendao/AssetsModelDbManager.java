@@ -24,14 +24,14 @@ public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
     public void queryAll(AsyncOperationListener listener) {
         Observable.create((ObservableOnSubscribe<AssetsModel>) emitter -> {
             DaoSession daoSession = App.getInstance().getmDaoSession();
-            WhereCondition eq = AssetsModelDao.Properties.Name.eq(AssetsDefaultType.ETH_NAME);
+            WhereCondition eq = AssetsModelDao.Properties.Name.eq(TransactionTokenType.ETH_NAME);
             AssetsModel unique = daoSession.queryBuilder(AssetsModel.class).where(eq).unique();
             if (unique == null) {
                 AssetsModel assetsModel = new AssetsModel();
-                assetsModel.setType(AssetsDefaultType.ETH_NAME);
-                assetsModel.setName(AssetsDefaultType.ETH_NAME);
+                assetsModel.setType(TransactionTokenType.ETH_NAME);
+                assetsModel.setName(TransactionTokenType.ETH_NAME);
                 assetsModel.setDecimals("18");
-                assetsModel.setSymbol(AssetsDefaultType.ETH_NAME);
+                assetsModel.setSymbol(TransactionTokenType.ETH_NAME);
                 daoSession.insert(assetsModel);
             }
 

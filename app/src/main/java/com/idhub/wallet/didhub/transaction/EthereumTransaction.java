@@ -118,7 +118,7 @@ public class EthereumTransaction implements TransactionSigner {
       result.add(RlpString.create(""));
     }
 
-    result.add(RlpString.create(getValue()));
+    result.add(RlpString.create("null"));
 
     // value field will already be hex encoded, so we need to convert into binary first
     byte[] data = NumericUtil.hexToBytes(getData());

@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -14,6 +16,9 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import androidx.annotation.Nullable;
+
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.BuildConfig;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
@@ -37,10 +42,14 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.transaction.EthereumSign;
 import com.idhub.wallet.didhub.transaction.EthereumTransaction;
+import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.LogUtils;
 import com.idhub.wallet.utils.ToastUtils;
+import com.idhub.wallet.wallet.transaction.SendConfirmActivity;
+import com.idhub.wallet.wallet.transaction.TransactionParam;
 
 import java.math.BigInteger;
 
@@ -69,6 +78,7 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         mUrlStr = intent.getStringExtra("data");
+        Log.e("LYW", "onCreate: " + mUrlStr );
         if (TextUtils.isEmpty(mUrlStr)) {
             finish();
             return;
@@ -84,6 +94,7 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
         }else {
             mChainID = "3";
         }
+        Log.e("LYW", "initData: " + mRpcUrl +"  " + mChainID);
         mAddress = WalletManager.getCurrentKeyStore().getAddress();
         mWeb3View.loadUrl(mUrlStr);
         mWeb3View.requestFocus();
@@ -162,9 +173,43 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
 
     @Override
     public void onSignTransaction(Transaction transaction) {
+        //交易 跳转到发起交易页面
+        Log.e("LYW", "onSignTransaction: " + transaction.toString() );
+        TransactionParam transactionParam = new TransactionParam();
+        transactionParam.transaction = transaction;
+        transactionParam.value = transaction.value.toString();
+        transactionParam.toAddress = transaction.recipient.toString();
+        transactionParam.type = TransactionTokenType.WEB3_DAPP;
+        AssetsModel assetsModel = new AssetsModel();
+        assetsModel.setName(TransactionTokenType.ETH_NAME);
+        assetsModel.setAddress(NumericUtil.prependHexPrefix(mAddress));
+        assetsModel.setDecimals("18");
+        assetsModel.setSymbol(TransactionTokenType.ETH_NAME);
+        transactionParam.assetsModel = assetsModel;
+        SendConfirmActivity.startAction(this,transactionParam,100);
         mCurrentTransaction = transaction;
-        Message<String> message = new Message<>(mCurrentTransaction.toString(), mUrlStr, 0L);
-        showSignDialog(message, SIGN_TRANSACTION);
+//        Log.e("LYW", "onSignTransaction: " + mCurrentTransaction.toString() );
+//        Message<String> message = new Message<>(mCurrentTransaction.toString(), mUrlStr, 0L);
+//        showSignDialog(message, SIGN_TRANSACTION);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
+                if (data == null) {
+                    return;
+                }
+                Parcelable parcelable = data.getParcelableExtra("transaction");
+                Transaction transaction = (Transaction) parcelable;
+                String transactionHash = data.getStringExtra("hashData");
+                mWeb3View.onSignTransactionSuccessful(transaction, transactionHash);
+            }else {
+                mWeb3View.onSignCancel(mCurrentTransaction);
+
+            }
+        }
     }
 
     @Override
@@ -283,9 +328,15 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
     }
 
     private void signTransaction(WalletInfo walletInfo, String data) {
-        String signedTx = new EthereumTransaction(new BigInteger(String.valueOf(mCurrentTransaction.nonce)), mCurrentTransaction.gasPrice,
-                new BigInteger(String.valueOf(mCurrentTransaction.gasLimit)),
-                mCurrentTransaction.recipient.toString(), mCurrentTransaction.value, "")
+        long nonce = mCurrentTransaction.nonce;
+        BigInteger gasPrice = mCurrentTransaction.gasPrice;
+        long gasLimit = mCurrentTransaction.gasLimit;
+        Address recipient = mCurrentTransaction.recipient;
+        BigInteger value = mCurrentTransaction.value;
+        Log.e("LYW", "signTransaction:nonce " +nonce +"  gasprice " + gasPrice.toString()+" gaslimit "+gasLimit +" recipient "+recipient.toString()+" value " +value);
+        String signedTx = new EthereumTransaction(new BigInteger(String.valueOf(nonce)), gasPrice,
+                new BigInteger(String.valueOf(gasLimit)),
+                recipient.toString(), value, "")
                 .signTransaction(mChainID, walletInfo.exportPrivateKey(data)).getSignedTx();
         LogUtils.e("did", "onNext:SIGN_TRANSACTION_SUCCESS " + signedTx);
         mWeb3View.onSignTransactionSuccessful(mCurrentTransaction,signedTx);

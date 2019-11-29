@@ -53,7 +53,7 @@ public class SignCallbackJSInterface {
         Transaction transaction = new Transaction(
                 TextUtils.isEmpty(recipient) ? Address.EMPTY : new Address(recipient),
                 null,
-                Hex.hexToBigInteger(value),
+                Hex.hexToBigInteger(value,BigInteger.ZERO),
                 Hex.hexToBigInteger(gasPrice, BigInteger.ZERO),
                 Hex.hexToLong(gasLimit, 0),
                 Hex.hexToLong(nonce, -1),
