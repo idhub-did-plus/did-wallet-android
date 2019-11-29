@@ -52,6 +52,7 @@ import com.idhub.wallet.wallet.transaction.SendConfirmActivity;
 import com.idhub.wallet.wallet.transaction.TransactionParam;
 
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -78,7 +79,6 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         mUrlStr = intent.getStringExtra("data");
-        Log.e("LYW", "onCreate: " + mUrlStr );
         if (TextUtils.isEmpty(mUrlStr)) {
             finish();
             return;
@@ -94,7 +94,6 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
         }else {
             mChainID = "3";
         }
-        Log.e("LYW", "initData: " + mRpcUrl +"  " + mChainID);
         mAddress = WalletManager.getCurrentKeyStore().getAddress();
         mWeb3View.loadUrl(mUrlStr);
         mWeb3View.requestFocus();
@@ -188,9 +187,6 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
         transactionParam.assetsModel = assetsModel;
         SendConfirmActivity.startAction(this,transactionParam,100);
         mCurrentTransaction = transaction;
-//        Log.e("LYW", "onSignTransaction: " + mCurrentTransaction.toString() );
-//        Message<String> message = new Message<>(mCurrentTransaction.toString(), mUrlStr, 0L);
-//        showSignDialog(message, SIGN_TRANSACTION);
     }
 
     @Override
@@ -223,7 +219,10 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
             mDialog = new SignMessageDialog(this, message);
             mDialog.setAddress(mAddress);
             if (SIGN_PERSONAL.equals(source)) {
-                mDialog.setMessage(Hex.hexToUtf8(message.value));
+                String value = message.value;
+                String signString = Hex.hexToUtf8(value);
+                if (!Charset.forName("ISO-8859-1").newEncoder().canEncode(signString)) signString = message.value;
+                mDialog.setMessage(signString);
             }
             mDialog.setOnApproveListener(v -> {
                 mDialog.dismiss();
@@ -305,8 +304,6 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
                         signPersonalMessage(walletInfo, data);
                     } else if (SIGN.equals(source)) {
                         signMessage(walletInfo, data);
-                    } else if (SIGN_TRANSACTION.equals(source)) {
-                        signTransaction(walletInfo, data);
                     }
                     mLoadingAndErrorView.setVisibility(View.GONE);
                 } else {
@@ -327,31 +324,19 @@ public class Web3Activity extends BaseActivity implements OnSignMessageListener,
         walletInfo.verifyPassword(data,observer);
     }
 
-    private void signTransaction(WalletInfo walletInfo, String data) {
-        long nonce = mCurrentTransaction.nonce;
-        BigInteger gasPrice = mCurrentTransaction.gasPrice;
-        long gasLimit = mCurrentTransaction.gasLimit;
-        Address recipient = mCurrentTransaction.recipient;
-        BigInteger value = mCurrentTransaction.value;
-        Log.e("LYW", "signTransaction:nonce " +nonce +"  gasprice " + gasPrice.toString()+" gaslimit "+gasLimit +" recipient "+recipient.toString()+" value " +value);
-        String signedTx = new EthereumTransaction(new BigInteger(String.valueOf(nonce)), gasPrice,
-                new BigInteger(String.valueOf(gasLimit)),
-                recipient.toString(), value, "")
-                .signTransaction(mChainID, walletInfo.exportPrivateKey(data)).getSignedTx();
-        LogUtils.e("did", "onNext:SIGN_TRANSACTION_SUCCESS " + signedTx);
-        mWeb3View.onSignTransactionSuccessful(mCurrentTransaction,signedTx);
-    }
 
     private void signMessage(WalletInfo walletInfo, String data) {
         String sign = EthereumSign.sign(mCurrentSignMessage.value, walletInfo.exportPrivateKey(data));
-        LogUtils.e("did", "onNext:SIGN_SUCCESS " + sign);
-        mWeb3View.onSignMessageSuccessful(mCurrentSignMessage, sign);
+        String hexPrefixSign = NumericUtil.prependHexPrefix(sign);
+        LogUtils.e("did", "onNext:SIGN_SUCCESS " + hexPrefixSign);
+        mWeb3View.onSignMessageSuccessful(mCurrentSignMessage, hexPrefixSign);
     }
 
     private void signPersonalMessage(WalletInfo walletInfo, String data) {
         String sign = EthereumSign.personalSign(mCurrentSignMessage.value,walletInfo.exportPrivateKey(data));
-        LogUtils.e("did", "onNext:SIGN_PERSONAL_SUCCESS " + sign);
-        mWeb3View.onSignPersonalMessageSuccessful(mCurrentSignMessage, sign);
+        String hexPrefixSign = NumericUtil.prependHexPrefix(sign);
+        LogUtils.e("did", "onNext:SIGN_PERSONAL_SUCCESS " + hexPrefixSign);
+        mWeb3View.onSignPersonalMessageSuccessful(mCurrentSignMessage, hexPrefixSign);
     }
 
     @Override
