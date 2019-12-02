@@ -12,6 +12,7 @@ import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.contract.EIP20Interface;
 import com.idhub.wallet.contract.ERC1400;
 import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.didhub.address.EthereumAddressCreator;
 import com.idhub.wallet.didhub.model.Messages;
 import com.idhub.wallet.didhub.model.TokenException;
@@ -104,11 +105,7 @@ public class ExampleUnitTest {
 //        String symbol = ierc20.symbol().send();
 //        System.out.println(symbol);
 
-        BigDecimal bigDecimal = BigDecimal.valueOf(5500000000000000L);
-        BigDecimal divisor = new BigDecimal(Math.pow(10, 18));
-        System.out.println(bigDecimal);
-        System.out.println(divisor);
-        BigDecimal divide = bigDecimal.divide(divisor);
-        System.out.println(divide);
+        boolean validAddress = ETHAddressValidator.isValidAddress("0x5f9eB509EfC563b55fCF959B6E19E6D3342D87Da");
+
     }
 }

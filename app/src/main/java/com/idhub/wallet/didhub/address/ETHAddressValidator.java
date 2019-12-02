@@ -24,7 +24,7 @@ public class ETHAddressValidator  {
 
 
   public static boolean isValidAddress(String address) {
-
+    address = address.trim();
     // if not [0-9]{40} return false
     if (Strings.isNullOrEmpty(address) || !ignoreCaseAddrPattern.matcher(address).find()) {
       return false;
