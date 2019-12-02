@@ -100,8 +100,8 @@
     <string name="wallet_take_photo">拍照</string>
     <string name="wallet_picture">相册</string>
     <string name="wallet_file">文件</string>
-    <string name="wallet_qualified_investor">SEC合格投资人</string>
-    <string name="wallet_qualified_purchaser">SEC合格购买人</string>
+    <string name="wallet_qualified_investor">合格投资人</string>
+    <string name="wallet_qualified_purchaser">合格购买人</string>
     <string name="wallet_st_compliance_investor">ST合规投资者</string>
     <string name="wallet_qualified_investor_condition_first">连续三年年收入超过20万美金，或与配偶一起超过30万。（需要上传图片或PDF格式的银行流水）</string>
     <string name="wallet_qualified_investor_condition_second">价值超过1百万美金（除自住房之外）。（上传图片或PDF格式的资产证明/负债证明，如果国籍或居住国任一为美国需要上传税表）</string>

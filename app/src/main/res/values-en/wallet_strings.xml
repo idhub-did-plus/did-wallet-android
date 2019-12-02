@@ -131,8 +131,8 @@
     <string name="wallet_take_photo">Take Photo</string>
     <string name="wallet_picture">Album</string>
     <string name="wallet_file">File</string>
-    <string name="wallet_qualified_investor">SEC Accredited Investor</string>
-    <string name="wallet_qualified_purchaser">SEC Accredited Purchaser</string>
+    <string name="wallet_qualified_investor">Accredited Investor</string>
+    <string name="wallet_qualified_purchaser">Accredited Purchaser</string>
     <string name="wallet_st_compliance_investor">ST Compliant Investor</string>
     <string name="wallet_qualified_investor_condition_first">Any individual who had an income in excess of US$200,000 in each of the two most recent years or joint income with that person’s spouse in excess of US$300,000 in each of those years and reasonably expects to reach the same income level in the current year.</string>
     <string name="wallet_qualified_investor_condition_second">Any individual whose net worth, or joint net worth with that person’s spouse, at the time of his or her purchase of an Interest, exceeds US$1,000,000. As used herein, “net worth” means the excess of total assets at fair market value, including homes (but excluding the value of the undersigned’s primary residence), home furnishings and automobiles, over total liabilities.</string>
