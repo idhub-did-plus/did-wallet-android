@@ -1,9 +1,7 @@
 package com.idhub.wallet.me;
 
-import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -14,37 +12,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.idhub.magic.clientlib.http.RetrofitAccessor;
 import com.idhub.magic.common.event.MagicEvent;
 import com.idhub.magic.common.kvc.entity.ClaimType;
-import com.idhub.magic.common.parameter.MagicResponse;
 import com.idhub.magic.common.service.DeployedContractAddress;
-import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
-import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.walletobservable.WalletUpdateUserInfoObservable;
 import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
-import com.idhub.wallet.common.zxinglib.QrCodeActivity;
-import com.idhub.wallet.common.zxinglib.widget.zing.MipcaActivityCapture;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.me.information.Level1Activity;
-import com.idhub.wallet.me.information.Level2Activity;
-import com.idhub.wallet.me.information.Level3Activity;
-import com.idhub.wallet.me.information.Level4Activity;
-import com.idhub.wallet.me.information.Level5Activity;
-import com.idhub.wallet.me.information.UploadFileActivity;
-import com.idhub.wallet.me.information.UploadInformationTypeActivity;
+import com.idhub.wallet.me.information.IDHubVIPActivity;
+import com.idhub.wallet.me.information.IDHubSVIPActivity;
+import com.idhub.wallet.me.information.AccreditedInvestorActivity;
+import com.idhub.wallet.me.information.AccreditedPurchaserActivity;
+import com.idhub.wallet.me.information.STCompliantInvestorActivity;
 import com.idhub.wallet.me.view.MeBottomItemView;
 import com.idhub.wallet.me.view.MeTopView;
 import com.idhub.wallet.net.IDHubCredentialProvider;
@@ -55,23 +44,16 @@ import org.web3j.crypto.Credentials;
 
 import java.lang.ref.WeakReference;
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Observer;
 
 import com.idhub.magic.clientlib.ApiFactory;
-import com.idhub.magic.clientlib.event.EventListener;
 import com.idhub.wallet.utils.LogUtils;
-import com.idhub.wallet.utils.ToastUtils;
-import com.subgraph.orchid.events.EventHandler;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -169,15 +151,15 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
     @Override
     public void onClick(View v) {
         if (v == mIDHubVipView) {
-            Level1Activity.startAction(getContext());
+            IDHubVIPActivity.startAction(getContext());
         } else if (v == mIDHubSuperVipView) {
-            Level2Activity.startAction(getContext());
+            IDHubSVIPActivity.startAction(getContext());
         } else if (v == mQualifiedInvestorView) {
-            Level3Activity.startAction(getContext());
+            AccreditedInvestorActivity.startAction(getContext());
         } else if (v == mQualifiedPurchaserView) {
-            Level4Activity.startAction(getContext());
+            AccreditedPurchaserActivity.startAction(getContext());
         } else if (v == mStComplianceInvestorView) {
-            Level5Activity.startAction(getContext());
+            STCompliantInvestorActivity.startAction(getContext());
         }
     }
 

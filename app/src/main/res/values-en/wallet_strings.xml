@@ -415,5 +415,7 @@
     <string name="wallet_initialize_replace">The Aggregated Identity and the default address bound failed. Please re-call the contract for binding. Please enter the default address password</string>
     <string name="wallet_recovery_replace">The Aggregated Identity and the new address rebound failed. Please re-call the contract for binding. Please enter the default address password</string>
     <string name="wallet_select_file">select file</string>
-
+    <string name="wallet_auto">Auto</string>
+    <string name="wallet_chinese">简体中文</string>
+    <string name="wallet_english">English</string>
 </resources>

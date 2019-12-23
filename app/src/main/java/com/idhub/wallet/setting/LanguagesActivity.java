@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
@@ -34,7 +35,7 @@ public class LanguagesActivity extends BaseActivity {
     }
 
     private void initView() {
-        Map<String, String> languagesMap = LanguagesManager.languages;
+        Map<String, String> languagesMap = LanguagesManager.getLanguages(this);
         List<String> languages = new ArrayList<>(languagesMap.values());
 
         TitleLayout titleLayout = findViewById(R.id.title);

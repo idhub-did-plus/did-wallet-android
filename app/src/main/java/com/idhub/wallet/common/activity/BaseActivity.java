@@ -74,7 +74,6 @@ public class BaseActivity extends AppCompatActivity {
         super.onStart();
         //TODO:暂时这么先写 判断当前节点没有合约地址
         String identityRegistryInterface = DeployedContractAddress.ERC1056ResolverInterface;
-        Log.e("LYW", "onStart: " + identityRegistryInterface );
         if (TextUtils.isEmpty(identityRegistryInterface)) {
             return;
         }

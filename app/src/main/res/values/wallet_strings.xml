@@ -370,6 +370,7 @@
     <string name="wallet_security_vip_my_medal">证券型通证凭证</string>
 
     <string name="wallet_main_back_double_click">再按一次返回键关闭程序</string>
+    <string name="wallet_auto">自动</string>
     <string name="wallet_chinese">简体中文</string>
     <string name="wallet_english">English</string>
     <string name="wallet_create_error">创建失败</string>

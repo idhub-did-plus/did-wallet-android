@@ -46,11 +46,11 @@
         <activity
             android:name=".me.information.UploadFileActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".me.information.Level5Activity" />
-        <activity android:name=".me.information.Level4Activity" />
-        <activity android:name=".me.information.Level3Activity" />
-        <activity android:name=".me.information.Level2Activity" />
-        <activity android:name=".me.information.Level1Activity" />
+        <activity android:name=".me.information.STCompliantInvestorActivity" />
+        <activity android:name=".me.information.AccreditedPurchaserActivity" />
+        <activity android:name=".me.information.AccreditedInvestorActivity" />
+        <activity android:name=".me.information.IDHubSVIPActivity" />
+        <activity android:name=".me.information.IDHubVIPActivity" />
         <activity android:name=".createmanager.UpgradeActivity" />
         <activity
             android:name=".MainActivity"
@@ -107,9 +107,7 @@
         <activity
             android:name=".wallet.transaction.SendConfirmActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".common.zxinglib.widget.zing.MipcaActivityCapture"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name=".common.zxinglib.widget.crop.CropImageActivity"
             android:screenOrientation="portrait" />
@@ -121,7 +119,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/wallet_file_paths" />
         </provider>
     </application>
 

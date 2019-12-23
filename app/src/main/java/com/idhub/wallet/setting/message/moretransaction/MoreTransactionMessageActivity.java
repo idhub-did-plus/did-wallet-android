@@ -25,7 +25,7 @@ public class MoreTransactionMessageActivity extends BaseActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_more_transaction_message);
+        setContentView(R.layout.wallet_activity_more_transaction_message);
         initView();
     }
 

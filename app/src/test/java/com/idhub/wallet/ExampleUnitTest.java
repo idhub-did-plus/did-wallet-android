@@ -16,10 +16,12 @@ import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.didhub.address.EthereumAddressCreator;
 import com.idhub.wallet.didhub.model.Messages;
 import com.idhub.wallet.didhub.model.TokenException;
+import com.idhub.wallet.didhub.transaction.EthereumSign;
 import com.idhub.wallet.didhub.util.BIP44Util;
 import com.idhub.wallet.didhub.util.MnemonicUtil;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.net.IDHubCredentialProvider;
+import com.idhub.wallet.setting.LanguagesManager;
 
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.wallet.DeterministicKeyChain;
@@ -43,7 +45,10 @@ import org.web3j.tx.gas.DefaultGasProvider;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import static com.idhub.wallet.net.Web3Api.sNode;
 
@@ -104,8 +109,18 @@ public class ExampleUnitTest {
 //        BigInteger decimal = ierc20.decimals().send();
 //        String symbol = ierc20.symbol().send();
 //        System.out.println(symbol);
-
-        boolean validAddress = ETHAddressValidator.isValidAddress("0x5f9eB509EfC563b55fCF959B6E19E6D3342D87Da");
-
+        String data = "0x3E01C8A3F80ea37cFBb7D9064FD919Df9cF641131575975615175complianceManager";
+        String signature = "0x676feafc6deca97019c295963e619410a66fd15366f012815ea7129db0d471297bd0a33e17da04a4303fb9fa161033bd1801ec346dc0d67cb00e2eb7239b578d1c";
+        String address = EthereumSign.recoverAddress(data, signature);
+        BigInteger bigInteger = EthereumSign.ecRecover(data, signature);
+        System.out.println(bigInteger.toString());
+        System.out.println(address);
+//        boolean validAddress = ETHAddressValidator.isValidAddress("0x5f9eB509EfC563b55fCF959B6E19E6D3342D87Da");
+//        Map<String, String> languages = new LinkedHashMap<>();
+//            languages.put("", "Auto");
+//            languages.put(Locale.ENGLISH.toLanguageTag(), "ENGLISH");
+//            languages.put(Locale.CHINESE.toLanguageTag(), "CHINESE");
+//        String s = languages.get("");
+//        System.out.println(s);
     }
 }

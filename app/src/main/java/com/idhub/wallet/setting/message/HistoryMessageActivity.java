@@ -1,6 +1,5 @@
 package com.idhub.wallet.setting.message;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
@@ -18,7 +17,7 @@ public class HistoryMessageActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_message);
+        setContentView(R.layout.wallet_activity_history_message);
         initView();
     }
 

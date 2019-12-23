@@ -35,7 +35,7 @@ public class TokenRemoveActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_token_remove);
+        setContentView(R.layout.wallet_activity_token_remove);
         initView();
        searchAssetmodelData();
         WalletAddAssetsObservable.getInstance().addObserver(mAssetsObserver);

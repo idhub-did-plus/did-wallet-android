@@ -71,7 +71,6 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 case 1:
                     String associatedAddress = (String) msg.obj;
                     //调用1056的initialize
-                    Log.e("LYW", "handleMessage:begininitialize ");
                     ApiFactory.getIdentityChainLocal().initialize(associatedAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
                         @Override
                         public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
@@ -79,14 +78,12 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                             String indeitity = identityInitializedEventResponse.indeitity;
                             BigInteger ein1 = identityInitializedEventResponse.ein;
                             Identity1484To1056BindSharedPreferences.getInstance().setUpgradeInitializeIsSuccess(true);
-                            Log.e("LYW", "onNext:initialize " + indeitity + "  " + initiator + "  " + ein1);
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             mLoadingAndErrorView.setVisibility(View.GONE);
                             MainActivity.startAction(UpgradeActivity.this, "upgrade");
-                            Log.e("LYW", "onError:initialize " + e.getMessage());
                         }
 
                         @Override
@@ -212,7 +209,6 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 //检查链上HasIdentity为true，否则按创建失败处理
                 try {
                     Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(walletInfo.getAddress());
-                    Log.e("LYW", "onActivityResult: " + hasIdentity );
                     if (hasIdentity) {
                         identityCreateSuccess(identityCreatedEventResponse);
                     }else {
@@ -230,7 +226,6 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
 
     private void identityCreateSuccess(IdentityRegistryInterface.IdentityCreatedEventResponse identityCreatedEventResponse) {
         BigInteger ein = identityCreatedEventResponse.ein;
-        Log.e("LYW", "onNext:upgrade ein " + ein);
         //升级1484success
         //升级成功存储数据库
         IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
@@ -307,7 +302,6 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
 
     //考虑到异常退出类的情况，已经升级身份本地没有记录
     private void checkHasIdentity() {
-        Log.e("LYW", "checkHasIdentity: check" );
         String address = mWalletKeystore.getAddress();
         Observable.create(new ObservableOnSubscribe<List<String>>() {
             @Override
@@ -338,7 +332,6 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 mLoadingAndErrorView.setVisibility(View.GONE);
                 String ein = list.get(0);
                 String recoverAddress = list.get(1);
-                Log.e("LYW", "onNext:upgrade ein " + ein);
                 //升级1484success
                 //升级成功存储数据库
                 IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();

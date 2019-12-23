@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="74dp"
-        android:background="@mipmap/icon_main_top_bg"
+        android:background="@mipmap/wallet_icon_main_top_bg"
         android:gravity="bottom">
 
         <RelativeLayout
@@ -28,7 +28,7 @@
                     android:layout_height="18dp"
                     android:layout_marginLeft="10dp"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/icon_scan_back" />
+                    android:src="@mipmap/wallet_icon_scan_back" />
 
                 <TextView
                     android:layout_width="wrap_content"

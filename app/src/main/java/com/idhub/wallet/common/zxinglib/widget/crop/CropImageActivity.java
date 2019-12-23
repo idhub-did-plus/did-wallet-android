@@ -76,7 +76,7 @@ public class CropImageActivity extends MonitoredActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_crop);
+        setContentView(R.layout.wallet_activity_crop);
         fullScreen();
         initViews();
         setupFromIntent();

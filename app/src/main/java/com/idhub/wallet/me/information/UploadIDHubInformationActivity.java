@@ -85,7 +85,7 @@ public class UploadIDHubInformationActivity extends BaseActivity implements View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload_idhub_information);
+        setContentView(R.layout.wallet_activity_upload_idhub_information);
         mDefaultKeystore = WalletManager.getDefaultKeystore();
         if (mDefaultKeystore == null) {
             finish();
