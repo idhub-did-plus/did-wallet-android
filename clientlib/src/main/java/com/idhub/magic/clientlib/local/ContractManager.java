@@ -41,15 +41,14 @@ public class ContractManager {
 
    static{
        initContract();
+       //监听合约对象重置，切换节点改变对应链上合约地址或私钥改变
        WalletChangeContractObservable.getInstance().addObserver((o, arg) -> initContract());
    }
 
     private static void initContract() {
         Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
-        Log.e("LYW", "static initializer: " +credentials.getAddress() );
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
-        Log.e("LYW", "initContract: " +identityRegistryInterface );
         if (!TextUtils.isEmpty(identityRegistryInterface)) {
             registry1484 = IdentityRegistryInterface.load(identityRegistryInterface,
                     web3j,

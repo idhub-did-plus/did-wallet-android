@@ -16,13 +16,25 @@ android {
             }
         }
     }
+    flavorDimensions "default"
+    productFlavors {
+        common {
+            dimension "default"
+        }
+        google {
+            dimension "default"
+        }
+    }
+
     buildTypes {
-//        debug{
-//            minifyEnabled true //开启混淆
-//            zipAlignEnabled true //压缩优化
-//            shrinkResources true //移除无用的资源
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
+        debug{
+            //包名会根据此配置改变
+//            applicationIdSuffix ".debug"
+            minifyEnabled false //开启混淆
+            zipAlignEnabled false //压缩优化
+            shrinkResources false //移除无用的资源
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled true //开启混淆
             zipAlignEnabled true //压缩优化

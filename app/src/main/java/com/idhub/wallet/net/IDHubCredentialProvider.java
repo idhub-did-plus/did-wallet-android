@@ -20,6 +20,7 @@ public class IDHubCredentialProvider implements CredentialProvider {
 
     public static void setDefaultCredentials(String privateKey) {
         client = Credentials.create(privateKey);
+        //合约通过私钥构建，当调用合约身份改变时，重置合约
         WalletChangeContractObservable.getInstance().update();
     }
 
