@@ -9,9 +9,11 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;
 
 import org.web3j.crypto.Keys;
@@ -44,15 +46,21 @@ public class SelectWalletItemView extends ConstraintLayout implements View.OnCli
         walletKeystore = keyStore;
         walletName.setText(keyStore.getWallet().getName());
         walletAddress.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));
-        boolean isgl = keyStore.getWallet().isAssociate();
+        IdentityEntity identity = new IdentityDbManager().searchIdentity(keyStore.getAddress());
+        if (identity == null) {
+            upgradeImageView.setVisibility(VISIBLE);
+            upgradeImageView.setOnClickListener(this);
+            defaultWalletView.setVisibility(GONE);
+            return;
+        }
+        boolean isgl = identity.getIsAssociate();
         if (isgl) {
             upgradeImageView.setVisibility(GONE);
         } else {
             upgradeImageView.setVisibility(VISIBLE);
             upgradeImageView.setOnClickListener(this);
         }
-        boolean defaultAddress = keyStore.getWallet().isDefaultAddress();
-        Log.e("LYW", "setData: " + defaultAddress );
+        boolean defaultAddress =identity.getIsDefaultAddress();
         if (defaultAddress) {
             defaultWalletView.setVisibility(VISIBLE);
         } else {

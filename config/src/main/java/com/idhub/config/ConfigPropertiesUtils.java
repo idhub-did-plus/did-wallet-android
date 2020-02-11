@@ -52,4 +52,10 @@ public class ConfigPropertiesUtils {
         String assets = properties.getProperty("tokens");
         return assets;
     }
+
+    public static String getContractAddress(Context context) {
+        Properties properties = getProperties(context);
+        String contractAddress = properties.getProperty("contractAddress");
+        return contractAddress;
+    }
 }

@@ -2,8 +2,10 @@ package com.idhub.wallet.net;
 
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.idhub.base.App;
+import com.idhub.base.greendao.entity.AssetsContractAddress;
 import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletTransactionSharpreference;
@@ -13,6 +15,7 @@ import com.idhub.wallet.contract.ERC1400;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.AssetsContractAddressDbManager;
 import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.base.greendao.entity.AssetsModel;
@@ -72,6 +75,7 @@ public class Web3Api {
             ethNetwork = EthNetwork.ROPSTEN;
         }
         ((Etherscan) Etherscan.getInstance()).setCurrentApi(ethNetwork);
+        Log.e("LYW", "initWeb3: " + sNode );
         mWeb3j = Web3j.build(new HttpService(sNode));
     }
 
@@ -117,24 +121,31 @@ public class Web3Api {
                 emitter.onError(new Throwable(App.getInstance().getString(R.string.wallet_assets_unkonw)));
                 return;
             }
-            String node = WalletNoteSharedPreferences.getInstance().getNode();
-            AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
-            AssetsModel assetsModel = new AssetsModel();
-            assetsModel.setType(TransactionTokenType.ERC1400);
-            assetsModel.setName(name);
-            assetsModel.setDecimals(decimal.toString());
-            assetsModel.setSymbol(symbol);
-            if (WalletNodeManager.MAINNET.equals(node)) {
-                assetsModel.setMainContractAddress(contractAddress);
-            } else {
-                assetsModel.setRopstenContractAddress(contractAddress);
-            }
-            assetsModelDbManager.insertDatasync(assetsModel);
+            AssetsModel assetsModel = saveAssets(TransactionTokenType.ERC1400,contractAddress, name, decimal, symbol);
+
             emitter.onNext(assetsModel);
             emitter.onComplete();
 
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
+    }
+
+    private static AssetsModel saveAssets(String transactionTokenType,String contractAddress, String name, BigInteger decimal, String symbol) {
+        String node = WalletNoteSharedPreferences.getInstance().getNode();
+        AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
+        AssetsModel assetsModel = new AssetsModel();
+        assetsModel.setType(transactionTokenType);
+        assetsModel.setName(name);
+        assetsModel.setDecimals(decimal.toString());
+        assetsModel.setSymbol(symbol);
+
+        long id = assetsModelDbManager.insertDatasync(assetsModel);
+        AssetsContractAddress assetsContractAddress = new AssetsContractAddress();
+        assetsContractAddress.setNode(node);
+        assetsContractAddress.setContractAddress(contractAddress);
+        assetsContractAddress.setAssetsId(id);
+        new AssetsContractAddressDbManager().insertDatasync(assetsContractAddress);
+        return assetsModel;
     }
 
     public static void searchERC20ContractAddressAssets(String contractAddress, DisposableObserver<AssetsModel> observer) {
@@ -144,8 +155,6 @@ public class Web3Api {
             @Override
             public void subscribe(ObservableEmitter<AssetsModel> emitter) throws Exception {
                 EIP20Interface ierc20 = EIP20Interface.load(contractAddress, mWeb3j, credentials, defaultGasProvider);
-                AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
-                String node = WalletNoteSharedPreferences.getInstance().getNode();
                 //过滤 存储对应ropsten或mainnet上的contractAddress
                 String name = ierc20.name().send();
                 BigInteger decimal = ierc20.decimals().send();
@@ -154,17 +163,7 @@ public class Web3Api {
                     emitter.onError(new Throwable(App.getInstance().getString(R.string.wallet_assets_unkonw)));
                     return;
                 }
-                AssetsModel assetsModel = new AssetsModel();
-                assetsModel.setType(TransactionTokenType.ERC20);
-                assetsModel.setName(name);
-                assetsModel.setDecimals(decimal.toString());
-                assetsModel.setSymbol(symbol);
-                if (WalletNodeManager.MAINNET.equals(node)) {
-                    assetsModel.setMainContractAddress(contractAddress);
-                } else {
-                    assetsModel.setRopstenContractAddress(contractAddress);
-                }
-                assetsModelDbManager.insertDatasync(assetsModel);
+                AssetsModel assetsModel = saveAssets(TransactionTokenType.ERC20,contractAddress, name, decimal, symbol);
                 emitter.onNext(assetsModel);
                 emitter.onComplete();
             }

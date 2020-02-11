@@ -23,7 +23,6 @@ public class DidHubIdentify {
         Wallet wallet = new Wallet();
         wallet.setName(name);
         wallet.setPasswordHint(passwordHit);
-        wallet.setAssociate(false);
         DidHubIdentify identity = new DidHubIdentify(wallet, mnemonicCodes, password,isSave);
         identify = identity;
         return identity;

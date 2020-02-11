@@ -7,11 +7,13 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.IdHubMessageType;
 import com.idhub.base.greendao.entity.IdHubMessageEntity;
+import com.idhub.wallet.greendao.IdentityDbManager;
 
 import org.web3j.crypto.Keys;
 
@@ -61,8 +63,10 @@ public class IdHubMessageItemView extends ConstraintLayout {
                 mTypeView.setText(getContext().getString(R.string.wallet_import_1056_identity));
                 break;
             case IdHubMessageType.IMPORT_1484_IDENTITY:
-                idHubMessageEntity.setRecoverAddress(WalletOtherInfoSharpreference.getInstance().getRecoverAddress());
-                idHubMessageEntity.setEin(WalletOtherInfoSharpreference.getInstance().getEIN());
+                IdentityEntity identity = new IdentityDbManager().searchIdentity(address);
+
+                idHubMessageEntity.setRecoverAddress(identity.getRecoveryAddress());
+                idHubMessageEntity.setEin(identity.getEIN());
                 mTypeView.setText(getContext().getString(R.string.wallet_import_1484_identity));
                 break;
             case IdHubMessageType.UPGRADE_ASSOCIATION_IDENTITY:

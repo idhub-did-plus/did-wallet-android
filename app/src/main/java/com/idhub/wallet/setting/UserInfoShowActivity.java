@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
@@ -36,6 +37,7 @@ import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.walletobservable.WalletUpdateUserInfoObservable;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.utils.StringUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
@@ -87,7 +89,14 @@ public class UserInfoShowActivity extends BaseActivity implements View.OnClickLi
         View didLayoutView = findViewById(R.id.ll_did);
         didView = findViewById(R.id.tv_user_did);
         didView.setOnClickListener(this);
-        String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
+        IdentityEntity defaultIdentity = new IdentityDbManager().getDefaultIdentity();
+        String ein = "";
+        String recoverAddress = "";
+        if (defaultIdentity != null) {
+            ein = defaultIdentity.getEIN();
+            recoverAddress = defaultIdentity.getRecoveryAddress();
+        }
+
         if (TextUtils.isEmpty(ein)) {
             einLayoutView.setVisibility(View.GONE);
             didLayoutView.setVisibility(View.GONE);
@@ -98,11 +107,10 @@ public class UserInfoShowActivity extends BaseActivity implements View.OnClickLi
             String didStr = "did:erc1484:" + DeployedContractAddress.IdentityRegistryInterface + ":" + NumericUtil.bigIntegerToHexWithZeroPadded(new BigInteger(ein), 64);
             didView.setText(didStr);
         }
-
         View recoveryLayoutView = findViewById(R.id.ll_recovery_address);
         recoveryView = findViewById(R.id.tv_user_recovery_address);
         recoveryView.setOnClickListener(this);
-        String recoverAddress = WalletOtherInfoSharpreference.getInstance().getRecoverAddress();
+
         if (TextUtils.isEmpty(recoverAddress)) {
             recoveryLayoutView.setVisibility(View.GONE);
         }else {

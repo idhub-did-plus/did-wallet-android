@@ -43,7 +43,7 @@ public class Erc1400DetailActivity extends BaseActivity {
     }
 
     private void initData() {
-        String contraceAddress = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
+        String contraceAddress = mAssetsModel.getCurrentContractAddress();
         Web3Api.searchERC1400Partition(contraceAddress, new DisposableSubscriber<List>() {
             @Override
             public void onNext(List list) {

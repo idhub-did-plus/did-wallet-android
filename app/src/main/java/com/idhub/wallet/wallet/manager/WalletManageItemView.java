@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;
 
 import org.web3j.crypto.Keys;
@@ -41,13 +43,17 @@ public class WalletManageItemView extends LinearLayout implements View.OnClickLi
         Wallet wallet = store.getWallet();
         nameView.setText(wallet.getName());
         addressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(store.getAddress())));
-        boolean associate = wallet.isAssociate();
+        IdentityEntity identity = new IdentityDbManager().searchIdentity(store.getAddress());
+        if (identity == null) {
+            return;
+        }
+        boolean associate = identity.getIsAssociate();
         if (associate) {
             upgradeView.setVisibility(GONE);
         } else {
             upgradeView.setVisibility(VISIBLE);
         }
-        if (store.getWallet().isDefaultAddress()) {
+        if (identity.getIsDefaultAddress()) {
             defaultAddressView.setVisibility(VISIBLE);
         } else {
             defaultAddressView.setVisibility(GONE);

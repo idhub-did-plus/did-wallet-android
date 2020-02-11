@@ -80,7 +80,7 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             holder.name.setText(mAssetsModel.getName());
             String symble = mAssetsModel.getSymbol();
             holder.symbol.setText(symble);
-            String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
+            String contractAddress = mAssetsModel.getCurrentContractAddress();
             Web3Api.searchERC1400TotalSupply(contractAddress, new DisposableSubscriber<BigInteger>() {
                 @Override
                 public void onNext(BigInteger bigInteger) {
@@ -107,7 +107,7 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 holder.balance.setText(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance), String.valueOf(Math.pow(10, Double.parseDouble(mAssetsModel.getDecimals())))));
             }
             //余额
-            String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
+            String contractAddress = mAssetsModel.getCurrentContractAddress();
             Web3Api.searchERC1400Balance(contractAddress, partitionEntity.name, WalletManager.getAddress(), new DisposableSubscriber<BigInteger>() {
                 @Override
                 public void onNext(BigInteger bigInteger) {
@@ -176,7 +176,7 @@ public class PartitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.controller:
-                    String contractAddressToNode = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
+                    String contractAddressToNode = mAssetsModel.getCurrentContractAddress();
                     WalletControllersDialogFragment dialogFragment = WalletControllersDialogFragment.getInstance(contractAddressToNode);
                     dialogFragment.show(((AppCompatActivity) mContext).getSupportFragmentManager(), "wallet_controllers_dialog_fragment");
                     break;

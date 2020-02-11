@@ -24,7 +24,7 @@ android {
     }
 }
 greendao {
-    schemaVersion 2
+    schemaVersion 4
     daoPackage 'com.idhub.base.greendao.db'
     targetGenDir 'src/main/java'
 }

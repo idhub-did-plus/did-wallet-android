@@ -52,7 +52,7 @@ public class WalletInfo {
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.addMixIn(DidHubMnemonicKeyStore.class, DidHubExportKeystoreIgnore.class);
+            mapper.addMixIn(WalletKeystore.class, DidHubExportKeystoreIgnore.class);
             return mapper.writeValueAsString(keystore);
         } catch (Exception ex) {
             throw new TokenException(Messages.WALLET_INVALID, ex);

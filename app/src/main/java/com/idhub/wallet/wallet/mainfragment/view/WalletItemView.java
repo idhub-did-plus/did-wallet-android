@@ -8,9 +8,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;
 
 import org.web3j.crypto.Keys;
@@ -51,7 +53,8 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
         this.mKeyStore = keyStore;
         mNameTv.setText(keyStore.getWallet().getName());
         mAddressTv.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));
-        boolean isgl = keyStore.getWallet().isAssociate();
+        IdentityEntity identity = new IdentityDbManager().searchIdentity(keyStore.getAddress());
+        boolean isgl =identity.getIsAssociate();
         if (isgl) {
             mAddressTv.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.wallet_associated),null,null,null);
             mAssociatedAddress.setVisibility(GONE);
@@ -60,7 +63,7 @@ public class WalletItemView extends ConstraintLayout implements View.OnClickList
             mAssociatedAddress.setVisibility(VISIBLE);
             mAssociatedAddress.setOnClickListener(this);
         }
-        if (keyStore.getWallet().isDefaultAddress()) {
+        if (identity.getIsDefaultAddress()) {
             mEINView.setText(getContext().getString(R.string.wallet_default_address));
         }else{
             mEINView.setText("");

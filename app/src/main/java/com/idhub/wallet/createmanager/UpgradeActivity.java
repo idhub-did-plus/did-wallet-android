@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.idhub.base.greendao.entity.IdentityEntity;
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.magic.clientlib.interfaces.Identity;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface;
@@ -40,6 +42,7 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
 import com.idhub.base.greendao.entity.IdHubMessageEntity;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
@@ -58,6 +61,8 @@ import io.reactivex.schedulers.Schedulers;
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.interfaces.Listen;
 
+import org.web3j.crypto.Keys;
+
 public class UpgradeActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
 
     private String mRecoverAddressStr;
@@ -74,9 +79,6 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                     ApiFactory.getIdentityChainLocal().initialize(associatedAddress).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<ERC1056ResolverInterface.IdentityInitializedEventResponse>() {
                         @Override
                         public void onNext(ERC1056ResolverInterface.IdentityInitializedEventResponse identityInitializedEventResponse) {
-                            String initiator = identityInitializedEventResponse.initiator;
-                            String indeitity = identityInitializedEventResponse.indeitity;
-                            BigInteger ein1 = identityInitializedEventResponse.ein;
                             Identity1484To1056BindSharedPreferences.getInstance().setUpgradeInitializeIsSuccess(true);
                         }
 
@@ -235,17 +237,10 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
         idHubMessageEntity.setAddress(associatedAddress);
         idHubMessageEntity.setEin(ein.toString());
         idHubMessageEntity.setRecoverAddress(mRecoverAddressStr);
-        idHubMessageEntity.setDefaultAddress(associatedAddress);
+        idHubMessageEntity.setCurrentDefaultAddress(associatedAddress);
         new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
         //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
-        WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoverAddressStr);
-        WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
-        WalletKeystore keyStore = mWalletKeystore;
-        Wallet wallet = keyStore.getWallet();
-        wallet.setAssociate(true);
-        wallet.setDefaultAddress(true);
-        WalletManager.flushWallet(keyStore, true);
-
+        saveIdentityData(mRecoverAddressStr, ein.toString(), true, true);
         Message message = Message.obtain();
         message.what = 1;
         message.obj = associatedAddress;
@@ -253,6 +248,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void handleIdentityErrorMessage(String message) {
+        Log.e("LYW", "handleIdentityErrorMessage: " + message );
         Message messageError = Message.obtain();
         messageError.what = 2;
         messageError.obj = message;
@@ -340,16 +336,10 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                 idHubMessageEntity.setAddress(address);
                 idHubMessageEntity.setEin(ein.toString());
                 idHubMessageEntity.setRecoverAddress(recoverAddress);
-                idHubMessageEntity.setDefaultAddress(address);
+                idHubMessageEntity.setCurrentDefaultAddress(address);
                 new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
                 //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
-                WalletOtherInfoSharpreference.getInstance().setRecoverAddress(recoverAddress);
-                WalletOtherInfoSharpreference.getInstance().setEIN(ein.toString());
-                WalletKeystore keyStore = mWalletKeystore;
-                Wallet wallet = keyStore.getWallet();
-                wallet.setAssociate(true);
-                wallet.setDefaultAddress(true);
-                WalletManager.flushWallet(keyStore, true);
+                saveIdentityData(recoverAddress, ein, true, true);
                 MainActivity.startAction(UpgradeActivity.this, "upgrade");
             }
 
@@ -367,4 +357,28 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
 
 
     }
+
+    private void saveIdentityData(String recoverAddress, String ein, boolean isAssociate, boolean isDefaultAddress) {
+        IdentityDbManager identityDbManager = new IdentityDbManager();
+        IdentityEntity identity = identityDbManager.searchIdentity(mWalletKeystore.getAddress());
+        if (identity == null) {
+            IdentityEntity identityEntity = new IdentityEntity();
+            identityEntity.setRecoveryAddress(recoverAddress);
+            identityEntity.setEIN(ein);
+            identityEntity.setIsAssociate(isAssociate);
+            identityEntity.setIsDefaultAddress(isDefaultAddress);
+            identityEntity.setNode(WalletNoteSharedPreferences.getInstance().getNode());
+            identityEntity.setIdentityAddress(Keys.toChecksumAddress(mWalletKeystore.getAddress()));
+            identityDbManager.insertData(identityEntity,null);
+        }else {
+            identity.setRecoveryAddress(recoverAddress);
+            identity.setEIN(ein);
+            identity.setIsAssociate(isAssociate);
+            identity.setIsDefaultAddress(isDefaultAddress);
+            identity.setNode(WalletNoteSharedPreferences.getInstance().getNode());
+            identity.setIdentityAddress(Keys.toChecksumAddress(mWalletKeystore.getAddress()));
+            identityDbManager.update(identity);
+        }
+    }
+
 }

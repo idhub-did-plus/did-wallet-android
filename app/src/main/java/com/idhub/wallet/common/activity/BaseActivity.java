@@ -32,6 +32,7 @@ import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.utils.StringUtils;
@@ -93,7 +94,7 @@ public class BaseActivity extends AppCompatActivity {
         if (defaultKeystore != null && !upgradeInitializeIsSuccess) {
             //表示身份创建成功，但是没有记录到initialize或recovery成功，通过einToDID来判断是哪个调用失败
             //查询einToDID
-            String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
+            String ein = new IdentityDbManager().getEIN(defaultKeystore.getAddress());
             if (!TextUtils.isEmpty(ein)) {
                 Observable.create(new ObservableOnSubscribe<String>() {
                     @Override
@@ -107,7 +108,6 @@ public class BaseActivity extends AppCompatActivity {
                     public void onNext(String s) {
                         BigInteger bigInteger = NumericUtil.hexToBigInteger(s);
                         int i = bigInteger.compareTo(new BigInteger("0"));
-                        Log.e("LYW", "subscribe: " + s + "  " + bigInteger + "  " + i);
                         if (i == 0) {
                             //initialize
                             showDialog(defaultKeystore, getString(R.string.wallet_initialize_replace), INITIALIZE);

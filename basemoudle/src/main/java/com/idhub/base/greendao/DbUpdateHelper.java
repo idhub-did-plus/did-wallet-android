@@ -4,9 +4,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.idhub.base.greendao.db.AssetsContractAddressDao;
 import com.idhub.base.greendao.db.AssetsModelDao;
 import com.idhub.base.greendao.db.DaoMaster;
 import com.idhub.base.greendao.db.IdHubMessageEntityDao;
+import com.idhub.base.greendao.db.IdentityEntityDao;
 import com.idhub.base.greendao.db.TransactionRecordEntityDao;
 import com.idhub.base.greendao.db.UploadFileEntityDao;
 import com.idhub.base.greendao.db.UploadIDHubInfoEntityDao;
@@ -50,18 +52,20 @@ public class DbUpdateHelper extends DaoMaster.DevOpenHelper {
                             IdHubMessageEntityDao.class,
                             TransactionRecordEntityDao.class,
                             UploadFileEntityDao.class,
-                            UploadIDHubInfoEntityDao.class
+                            UploadIDHubInfoEntityDao.class,
+                            AssetsContractAddressDao.class,
+                            IdentityEntityDao.class
                     );
             Log.e("MyGreenDaoDbHelper","进行数据库升级--完成");
         }
     }
 
-    @Override
-    public void onUpgrade(Database db, int oldVersion, int newVersion) {
-        // 不要调用父类的，它默认是先删除全部表再创建
-        // super.onUpgrade(db, oldVersion, newVersion);
-
-    }
+//    @Override
+//    public void onUpgrade(Database db, int oldVersion, int newVersion) {
+//        // 不要调用父类的，它默认是先删除全部表再创建
+//        // super.onUpgrade(db, oldVersion, newVersion);
+//
+//    }
 //    @Override
 //    public void onUpgrade(Database db, int oldVersion, int newVersion) {
 //        switch (oldVersion) {

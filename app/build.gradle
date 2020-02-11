@@ -83,4 +83,5 @@ dependencies {
     implementation 'com.github.TrustWallet:trust-web3-provider:0.2.1'
     implementation project(path: ':clientlib')
     implementation project(path: ':basemoudle')
+    implementation files('libs/SQLiteStudioRemote.jar')
 }

@@ -212,7 +212,7 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
         String value = mTransactionParam.value;
         switch (type) {
             case TransactionTokenType.ERC20:
-                Web3Api.sendERC20Transaction(data, assetsModel.getDecimals(), WalletNodeManager.assetsGetContractAddressToNode(assetsModel), mGasPrice, mGasLimit, toAddress, value, new DisposableSubscriber<TransactionReceipt>() {
+                Web3Api.sendERC20Transaction(data, assetsModel.getDecimals(),assetsModel.getCurrentContractAddress(), mGasPrice, mGasLimit, toAddress, value, new DisposableSubscriber<TransactionReceipt>() {
 
                     @Override
                     public void onNext(TransactionReceipt o) {
@@ -235,7 +235,7 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
                 break;
             case TransactionTokenType.ERC1400:
                 byte[] bytes = new byte[]{0x0};
-                ERC1400TransactionParam transactionParam = new ERC1400TransactionParam(data, WalletNodeManager.assetsGetContractAddressToNode(assetsModel), mGasPrice, mGasLimit, assetsModel.partition, assetsModel.getAddress(), toAddress, value, assetsModel.getDecimals(), bytes);
+                ERC1400TransactionParam transactionParam = new ERC1400TransactionParam(data, assetsModel.getCurrentContractAddress(), mGasPrice, mGasLimit, assetsModel.partition, assetsModel.getAddress(), toAddress, value, assetsModel.getDecimals(), bytes);
                 Web3Api.sendERC1400Transaction(transactionParam, new DisposableObserver<ERC1400.TransferByPartitionEventResponse>() {
                     @Override
                     public void onNext(ERC1400.TransferByPartitionEventResponse transferByPartitionEventResponse) {

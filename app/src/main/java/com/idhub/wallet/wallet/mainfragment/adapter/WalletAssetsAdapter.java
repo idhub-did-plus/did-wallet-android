@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,10 +66,10 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         RecyclerView.ViewHolder viewHolder = null;
-        if (i == ERC1400_ITEM){
+        if (i == ERC1400_ITEM) {
             View view = mInflater.inflate(R.layout.wallet_recyclerview_assets_st_item, viewGroup, false);
             viewHolder = new WalletAssetsErc1400AdapterViewHolder(view);
-        }else {
+        } else {
             View view = mInflater.inflate(R.layout.wallet_recyclerview_assets_item, viewGroup, false);
             viewHolder = new WalletAssetsAdapterViewHolder(view);
         }
@@ -80,18 +81,21 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         AssetsModel model = mAssetsModels.get(i);
         String symble = model.getSymbol();
         Integer integer = TokenTypeManager.assetsMipmap.get(symble);
-        if (viewHolder instanceof WalletAssetsAdapterViewHolder){
-            AssetsItemView itemView = (AssetsItemView)((WalletAssetsAdapterViewHolder) viewHolder).itemView;
-            if (integer != null)
+        if (viewHolder instanceof WalletAssetsAdapterViewHolder) {
+            AssetsItemView itemView = (AssetsItemView) ((WalletAssetsAdapterViewHolder) viewHolder).itemView;
+            if (integer != null) {
                 itemView.setAssetsImage(integer);
+            } else {
+                itemView.setAssetsImage(R.mipmap.wallet_eth_icon);
+            }
             itemView.setName(symble);
-            String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(model);
+            String contractAddress = model.getCurrentContractAddress();
             address = WalletManager.getAddress();
             String balance = model.getBalance();
             if (TextUtils.isEmpty(balance)) {
                 itemView.setBalance("-");
             } else {
-                itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance),String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals())))));
+                itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance), String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals())))));
             }
             if (TransactionTokenType.ERC20.equals(model.getType())) {
                 Web3Api.searchBalance(address, contractAddress, new Web3jSubscriber<BigInteger>() {
@@ -103,7 +107,7 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         itemView.setBalance(balanceStr);
                     }
                 });
-            } else if (TransactionTokenType.ETH_NAME.equals(model.getType())){
+            } else if (TransactionTokenType.ETH_NAME.equals(model.getType())) {
                 Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
                     @Override
                     public void onNext(EthGetBalance o) {
@@ -115,8 +119,8 @@ public class WalletAssetsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     }
                 });
             }
-        }else if (viewHolder instanceof WalletAssetsErc1400AdapterViewHolder){
-            AssetsErc1400ItemView itemView = (AssetsErc1400ItemView)((WalletAssetsErc1400AdapterViewHolder) viewHolder).itemView;
+        } else if (viewHolder instanceof WalletAssetsErc1400AdapterViewHolder) {
+            AssetsErc1400ItemView itemView = (AssetsErc1400ItemView) ((WalletAssetsErc1400AdapterViewHolder) viewHolder).itemView;
             if (integer != null)
                 itemView.setAssetsImage(integer);
             itemView.setName(symble);

@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.magic.common.event.MagicEvent;
 import com.idhub.magic.common.kvc.entity.ClaimType;
 import com.idhub.magic.common.service.DeployedContractAddress;
@@ -29,6 +31,7 @@ import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.me.information.IDHubVIPActivity;
 import com.idhub.wallet.me.information.IDHubSVIPActivity;
 import com.idhub.wallet.me.information.AccreditedInvestorActivity;
@@ -41,6 +44,7 @@ import com.idhub.wallet.net.IDHubCredentialProvider;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.web3j.crypto.Credentials;
+import org.web3j.crypto.Keys;
 
 import java.lang.ref.WeakReference;
 import java.math.BigInteger;
@@ -78,6 +82,7 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private Handler eventHandler = new EventListenerHandler();
+    private IdentityEntity defaultIdentity;
 
     public MeFragment() {
         // Required empty public constructor
@@ -252,28 +257,29 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
 
     private void initTopViewData() {
         //设置ein和recoverAddress
-        String defaultAddress = WalletManager.getDefaultAddress();
-        if (TextUtils.isEmpty(defaultAddress)) {
+        defaultIdentity = new IdentityDbManager().getDefaultIdentity();
+        if (defaultIdentity == null) {
             //显示1056
             mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
             mTopView.setRecoverAddressViewVisible(View.GONE);
         } else {
             //先获取sp里是否有存储，没有则进行网络请求
-            String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
+            String ein = defaultIdentity.getEIN();
             if (TextUtils.isEmpty(ein)) {
-                checkHasIdentity(defaultAddress);
+                checkHasIdentity(defaultIdentity.getIdentityAddress());
             } else {
                 setEIN1484View(ein);
                 setRecoverAddress(ein);
             }
         }
-        //解决升级身份成功本地未记录的情况，
-        boolean isUpgradeAction = Identity1484To1056BindSharedPreferences.getInstance().getIsUpgradeAction();
-        if (isUpgradeAction && TextUtils.isEmpty(defaultAddress)) {
-            defaultAddress = WalletManager.getCurrentKeyStore().getAddress();
-            checkHasIdentity(defaultAddress);
-        }
-
+//        //解决升级身份成功本地未记录的情况，
+//        boolean isUpgradeAction = Identity1484To1056BindSharedPreferences.getInstance().getIsUpgradeAction();
+//        if (isUpgradeAction && defaultIdentity == null) {
+//            String address = WalletManager.getCurrentKeyStore().getAddress();
+//            checkHasIdentity(address);
+//        }
+        String address = WalletManager.getCurrentKeyStore().getAddress();
+        checkHasIdentity(address);
     }
 
     private void getEIN(String defaultAddress) {
@@ -287,7 +293,10 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
         ApiFactory.getIdentityChainLocal().getEIN(defaultAddress).listen(aLong -> {
             String einStr = aLong.toString();
-            WalletOtherInfoSharpreference.getInstance().setEIN(einStr);
+            if (defaultIdentity != null) {
+                defaultIdentity.setEIN(einStr);
+                new IdentityDbManager().update(defaultIdentity);
+            }
             Message message = Message.obtain();
             message.what = 1;
             message.obj = einStr;
@@ -316,30 +325,37 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<Boolean>() {
             @Override
             public void onNext(Boolean aBoolean) {
-                WalletKeystore defaultKeystore = WalletManager.getDefaultKeystore();
-                if (defaultKeystore == null) {
-                    defaultKeystore = WalletManager.getCurrentKeyStore();
-                }
-                if (aBoolean) {
-                    Wallet wallet = defaultKeystore.getWallet();
-                    if (!wallet.isDefaultAddress()) {
-                        wallet.setAssociate(true);
-                        wallet.setDefaultAddress(true);
-                        WalletManager.flushWallet(defaultKeystore, true);
-                        WalletSelectedObservable.getInstance().update();
+//                WalletKeystore defaultKeystore = WalletManager.getDefaultKeystore();
+//                if (defaultKeystore == null) {
+//                    defaultKeystore = WalletManager.getCurrentKeyStore();
+//                }
+                if (defaultIdentity == null) {
+                    //数据库中没有
+                    if (aBoolean) {
+                        saveIdentityData(defaultAddress,true,true);
+                        defaultIdentity = new IdentityDbManager().getDefaultIdentity();
+                        getEIN(defaultAddress);
+                    }else {
+                        mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
+                        mTopView.setRecoverAddressViewVisible(View.GONE);
                     }
-                    getEIN(defaultAddress);
+
                 }else {
-                    Wallet wallet = defaultKeystore.getWallet();
-                    if (wallet.isDefaultAddress()) {
-                        wallet.setAssociate(false);
-                        wallet.setDefaultAddress(false);
-                        WalletManager.flushWallet(defaultKeystore, true);
-                        WalletSelectedObservable.getInstance().update();
+                    //数据库中有
+                    if (aBoolean) {
+                        defaultIdentity.setIsAssociate(true);
+                        defaultIdentity.setIsDefaultAddress(true);
+                        new IdentityDbManager().update(defaultIdentity);
+                        getEIN(defaultAddress);
+                    } else {
+                        defaultIdentity.setIsAssociate(false);
+                        defaultIdentity.setIsDefaultAddress(false);
+                        new IdentityDbManager().update(defaultIdentity);
+                        mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
+                        mTopView.setRecoverAddressViewVisible(View.GONE);
                     }
-                    mTopView.setEIN1056(WalletManager.getCurrentKeyStore().getAddress());
-                    mTopView.setRecoverAddressViewVisible(View.GONE);
                 }
+                WalletSelectedObservable.getInstance().update();
             }
 
             @Override
@@ -355,9 +371,18 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
 
     }
 
+    public void saveIdentityData(String address,boolean isAssociate ,boolean isDefaultAddress){
+        IdentityEntity identityEntity = new IdentityEntity();
+        identityEntity.setIsAssociate(isAssociate);
+        identityEntity.setIsDefaultAddress(isDefaultAddress);
+        identityEntity.setNode(WalletNoteSharedPreferences.getInstance().getNode());
+        identityEntity.setIdentityAddress(Keys.toChecksumAddress(address));
+        new IdentityDbManager().insertData(identityEntity,null);
+    }
+
     private void setRecoverAddress(String ein) {
         //recoverAddress
-        String recoverAddress = WalletOtherInfoSharpreference.getInstance().getRecoverAddress();
+        String recoverAddress = new IdentityDbManager().getRecoveryAddress(WalletManager.getDefaultAddress());
         if (TextUtils.isEmpty(recoverAddress)) {
             if (TextUtils.isEmpty(ein)) {
                 mTopView.setRecoverAddressViewVisible(View.GONE);
@@ -372,7 +397,10 @@ public class MeFragment extends MainBaseFragment implements View.OnClickListener
                 IDHubCredentialProvider.setDefaultCredentials(String.valueOf(privateKey));
                 ApiFactory.getIdentityChainLocal().getIdentity(Long.parseLong(ein)).listen(rst -> {
                     String recoveryAddress = rst.getRecoveryAddress();
-                    WalletOtherInfoSharpreference.getInstance().setRecoverAddress(recoveryAddress);
+                    if (defaultIdentity != null) {
+                        defaultIdentity.setRecoveryAddress(recoveryAddress);
+                        new IdentityDbManager().update(defaultIdentity);
+                    }
                     Message message = Message.obtain();
                     message.what = 3;
                     message.obj = recoveryAddress;

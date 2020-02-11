@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.base.greendao.entity.AssetsContractAddress;
 import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.MainBaseFragment;
 import com.idhub.wallet.R;
@@ -98,26 +100,17 @@ public class WalletFragment extends MainBaseFragment implements View.OnClickList
         new AssetsModelDbManager().queryAll(operation -> {
             if (operation.isCompletedSucessfully()) {
                 List<AssetsModel> result = (List<AssetsModel>) operation.getResult();
-                String node = WalletNoteSharedPreferences.getInstance().getNode();
+                for (AssetsModel assetsModel : result) {
+                    assetsModel.getContractAddresses();
+                }
                 ArrayList<AssetsModel> list = new ArrayList<>();
                 //过滤 显示对应ropsten或mainnet上的contractAddress
-               if (WalletNodeManager.MAINNET.equals(node)) {
-                    for (AssetsModel assetsModel : result) {
-                        if (assetsModel.getType().equals(TransactionTokenType.ETH_NAME)) {
-                            list.add(assetsModel);
-                        }
-                        if (!TextUtils.isEmpty(assetsModel.getMainContractAddress())) {
-                            list.add(assetsModel);
-                        }
+                for (AssetsModel assetsModel : result) {
+                    if (assetsModel.getType().equals(TransactionTokenType.ETH_NAME)) {
+                        list.add(assetsModel);
                     }
-                }else {
-                    for (AssetsModel assetsModel : result) {
-                        if (assetsModel.getType().equals(TransactionTokenType.ETH_NAME)) {
-                            list.add(assetsModel);
-                        }
-                        if (!TextUtils.isEmpty(assetsModel.getRopstenContractAddress())) {
-                            list.add(assetsModel);
-                        }
+                    if (!TextUtils.isEmpty(assetsModel.getCurrentContractAddress())) {
+                        list.add(assetsModel);
                     }
                 }
                 mWalletBottomView.setData(list);

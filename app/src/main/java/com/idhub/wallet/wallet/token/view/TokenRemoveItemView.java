@@ -8,13 +8,17 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.idhub.base.greendao.entity.AssetsContractAddress;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
+import com.idhub.wallet.greendao.AssetsContractAddressDbManager;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.token.TokenTypeManager;
+
+import java.util.List;
 
 public class TokenRemoveItemView extends ConstraintLayout implements View.OnClickListener {
 
@@ -44,11 +48,11 @@ public class TokenRemoveItemView extends ConstraintLayout implements View.OnClic
         Integer integer = TokenTypeManager.assetsMipmap.get(symble);
         if (integer != null) {
             mTokenIcon.setImageResource(integer);
-        }else {
+        } else {
             mTokenIcon.setImageResource(R.mipmap.wallet_default_token_icon);
         }
         mTokenName.setText(symble);
-        String contractAddressToNode = WalletNodeManager.assetsGetContractAddressToNode(assetsModel);
+        String contractAddressToNode = assetsModel.getCurrentContractAddress();
         mContractName.setText(contractAddressToNode);
     }
 
@@ -56,12 +60,13 @@ public class TokenRemoveItemView extends ConstraintLayout implements View.OnClic
     @Override
     public void onClick(View v) {
         if (v == mTokenRemove) {
-            new AssetsModelDbManager().deleteData(assetsModel, operation -> {
-                if (operation.isCompleted()) {
-                    WalletAddAssetsObservable.getInstance().update();
-                    ToastUtils.showShortToast(getContext().getString(R.string.wallet_assets_remove_success));
-                }
-            });
+            //删除资产，删除资产表关联合约地址表数据
+            List<AssetsContractAddress> contractAddresses = assetsModel.getContractAddresses();
+            assetsModel.delete();
+            new AssetsContractAddressDbManager().deleteInTxDatasync(contractAddresses);
+            WalletAddAssetsObservable.getInstance().update();
+            ToastUtils.showShortToast(getContext().getString(R.string.wallet_assets_remove_success));
+
         }
     }
 }

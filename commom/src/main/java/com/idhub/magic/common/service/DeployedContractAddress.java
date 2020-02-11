@@ -1,17 +1,33 @@
 package com.idhub.magic.common.service;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.idhub.base.App;
 import com.idhub.base.node.WalletChangeContractObservable;
 import com.idhub.base.node.WalletNodeManager;
 import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.base.node.WalletNoteSharedPreferences;
+import com.idhub.config.ConfigPropertiesUtils;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class DeployedContractAddress {
     static public String IdentityRegistryInterface = "";
     static public String ERC1056ResolverInterface = "";
     static public String EthereumDIDRegistryInterface = "";
     static public String EthereumClaimsRegistryInterface = "";
+    private static Map<String, ContractAddress> maps = new HashMap<>();
 
     static {
+        List<ContractAddress> contractAddresses = new Gson().fromJson(ConfigPropertiesUtils.getContractAddress(App.getInstance()), new TypeToken<List<ContractAddress>>() {
+        }.getType());
+        for (ContractAddress contractAddress : contractAddresses) {
+            maps.put(contractAddress.getNode(), contractAddress);
+        }
         initAddress();
         WalletNodeSelectedObservable.getInstance().addObserver((o, arg) -> {
             initAddress();
@@ -20,19 +36,79 @@ public class DeployedContractAddress {
 
     static void initAddress() {
         String node = WalletNoteSharedPreferences.getInstance().getNode();
-        if (WalletNodeManager.MAINNET.equals(node)) {
+        ContractAddress contractAddress = maps.get(node);
+        if (contractAddress != null) {
+            IdentityRegistryInterface = contractAddress.getERC1484();
+            ERC1056ResolverInterface = contractAddress.getResolver1056();
+            EthereumDIDRegistryInterface = contractAddress.getRegistry1056();
+            EthereumClaimsRegistryInterface = contractAddress.getERC780();
+        } else {
             IdentityRegistryInterface = "";
             ERC1056ResolverInterface = "";
             EthereumDIDRegistryInterface = "";
             EthereumClaimsRegistryInterface = "";
-        } else {
-            IdentityRegistryInterface = "0x90e1B1C7B8C829b3d0b1C09eD961e46f5AeeD184";
-            ERC1056ResolverInterface = "0x6d0f04B6Ca0217323af7fB7147a63C97Ef910617";
-            EthereumDIDRegistryInterface = "0x42197FC11ad0765567e1b552d4063464DE938923";
-            EthereumClaimsRegistryInterface = "0xaC7A17ecBab2694FB0b3dE4a93dA76be99E58604";
         }
+        Log.e("LYW", "initAddress: " + IdentityRegistryInterface + " "+ ERC1056ResolverInterface+" " +EthereumDIDRegistryInterface+" "+EthereumClaimsRegistryInterface);
         WalletChangeContractObservable.getInstance().update();
     }
 
 
+    public class ContractAddress {
+        private String node;
+        private String ERC1484;
+        private String resolver1056;
+        private String registry1056;
+        private String ERC780;
+
+        public String getNode() {
+            return node;
+        }
+
+        public void setNode(String node) {
+            this.node = node;
+        }
+
+        public String getERC1484() {
+            return ERC1484;
+        }
+
+        public void setERC1484(String ERC1484) {
+            this.ERC1484 = ERC1484;
+        }
+
+        public String getResolver1056() {
+            return resolver1056;
+        }
+
+        public void setResolver1056(String resolver1056) {
+            this.resolver1056 = resolver1056;
+        }
+
+        public String getRegistry1056() {
+            return registry1056;
+        }
+
+        public void setRegistry1056(String registry1056) {
+            this.registry1056 = registry1056;
+        }
+
+        public String getERC780() {
+            return ERC780;
+        }
+
+        public void setERC780(String ERC780) {
+            this.ERC780 = ERC780;
+        }
+
+        @Override
+        public String toString() {
+            return "ContractAddress{" +
+                    "node='" + node + '\'' +
+                    ", ERC1484='" + ERC1484 + '\'' +
+                    ", resolver1056='" + resolver1056 + '\'' +
+                    ", registry1056='" + registry1056 + '\'' +
+                    ", ERC780='" + ERC780 + '\'' +
+                    '}';
+        }
+    }
 }

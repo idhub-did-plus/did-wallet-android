@@ -14,6 +14,7 @@ import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.base.node.WalletNodeSelectedObservable;
+import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class NodeSettingActivity extends BaseActivity {
             String node = mAdapter.getNode();
             if (WalletNoteSharedPreferences.getInstance().setNode(node)) {
                 WalletNodeSelectedObservable.getInstance().update();
+                WalletUpgradeObservable.getInstance().update();
             }
             finish();
         });

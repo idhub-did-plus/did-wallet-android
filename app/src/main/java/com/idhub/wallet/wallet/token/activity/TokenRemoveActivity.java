@@ -55,22 +55,14 @@ public class TokenRemoveActivity extends BaseActivity {
         new AssetsModelDbManager().queryAll(operation -> {
             if (operation.isCompletedSucessfully()) {
                 List<AssetsModel> result = (List<AssetsModel>) operation.getResult();
-                String node = WalletNoteSharedPreferences.getInstance().getNode();
                 ArrayList<AssetsModel> list = new ArrayList<>();
                 //过滤 显示对应ropsten或mainnet上的contractAddress
-                if (WalletNodeManager.MAINNET.equals(node)) {
-                    for (AssetsModel assetsModel : result) {
-                        if (!TextUtils.isEmpty(assetsModel.getMainContractAddress())) {
-                            list.add(assetsModel);
-                        }
-                    }
-                }else {
-                    for (AssetsModel assetsModel : result) {
-                        if (!TextUtils.isEmpty(assetsModel.getRopstenContractAddress())) {
-                            list.add(assetsModel);
-                        }
+                for (AssetsModel assetsModel : result) {
+                    if (!TextUtils.isEmpty(assetsModel.getCurrentContractAddress())) {
+                        list.add(assetsModel);
                     }
                 }
+
                 mTokenRemoveAdapter.addItems(list);
             }
         });

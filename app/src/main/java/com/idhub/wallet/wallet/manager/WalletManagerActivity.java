@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
@@ -20,6 +21,7 @@ import com.idhub.wallet.createmanager.walletimport.ImportWalletActivity;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.wallet.adapter.WalletSettingListAdapter;
 import com.idhub.wallet.wallet.mainfragment.adapter.SelectWalletAdapter;
 
@@ -97,7 +99,13 @@ public class WalletManagerActivity extends BaseActivity implements MessageDialog
     private boolean checkAddressRegisterIDHub() {
         if (mDidHubMnemonicKeyStores.size() == 1) {
             WalletKeystore didHubMnemonicKeyStore = mDidHubMnemonicKeyStores.get(0);
-            return didHubMnemonicKeyStore.getWallet().isAssociate();
+            String address = didHubMnemonicKeyStore.getAddress();
+            IdentityDbManager identityDbManager = new IdentityDbManager();
+            IdentityEntity identity = identityDbManager.searchIdentity(address);
+            if (identity == null) {
+                return false;
+            }
+            return identity.getIsDefaultAddress();
         }
         return true;
     }

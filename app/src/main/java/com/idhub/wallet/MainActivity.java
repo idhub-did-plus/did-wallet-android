@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,6 +55,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
 
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.clientlib.interfaces.IncomingListener;
@@ -88,6 +90,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         if (!init()) {
             return;
         }
+        SQLiteStudioService.instance().start(this);
         setContentView(R.layout.wallet_activity_main);
         initView();
 

@@ -23,7 +23,7 @@ public class FileTypePopupWindow extends PopupWindow {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         StringsListAdapter stringsListAdapter = new StringsListAdapter(context);
-        List<String> types = FileType.types;
+        List<String> types = FileType.getFileTypes(context);
         stringsListAdapter.addAll(types);
         stringsListAdapter.setStringClickItem(clickItem);
         recyclerView.setAdapter(stringsListAdapter);

@@ -61,7 +61,7 @@ public class ReceiveActivity extends BaseActivity implements View.OnClickListene
     private void updateQRCode() {
         StringBuilder codeBuilder = new StringBuilder();
         String address = mAssetsModel.getAddress();
-        String contractAddress = WalletNodeManager.assetsGetContractAddressToNode(mAssetsModel);
+        String contractAddress = mAssetsModel.getCurrentContractAddress();
         codeBuilder.append("ethereum:").append(address).append("?");
         if (!TextUtils.isEmpty(contractAddress)) {
             codeBuilder.append("contractAddress=").append(contractAddress).append("&");

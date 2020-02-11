@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
@@ -25,11 +27,13 @@ import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
 import com.idhub.base.greendao.entity.IdHubMessageEntity;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.DateUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 import org.web3j.crypto.Credentials;
+import org.web3j.crypto.Keys;
 
 import java.math.BigInteger;
 
@@ -38,6 +42,7 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+
 import com.idhub.magic.clientlib.ApiFactory;
 
 import static com.idhub.wallet.createmanager.walletimport.ImportWalletActivity.*;
@@ -102,7 +107,7 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
             return;
         }
 
-        checkWalletFromKeyStore(key, password, new DisposableObserver<String>() {
+        checkWalletFromKeyStore(key, password, new DisposableObserver<TemplateAddress>() {
             @Override
             protected void onStart() {
                 super.onStart();
@@ -110,27 +115,25 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
             }
 
             @Override
-            public void onNext(String msg) {
+            public void onNext(TemplateAddress templeteAddress) {
                 Wallet wallet = new Wallet();
-                switch (msg) {
+                switch (templeteAddress.type) {
                     case NO_IMPORT_EQUAL_ADDRESS:
                         ToastUtils.showShortToast(getString(R.string.wallet_has_wallet));
                         break;
                     case IMPORT:
                         wallet.setName("ETH-Wallet");
-                        wallet.setAssociate(false);
-                        importWallet(wallet, key, password,msg);
+                        importWallet(wallet, key, password, templeteAddress.type);
                         break;
                     case IMPORT_FIRST_ASSOCIATION:
                         wallet.setName("ETH-Wallet");
-                        wallet.setAssociate(true);
-                        wallet.setDefaultAddress(true);
-                        importWallet(wallet, key, password,msg);
+                        saveIdentityData(templeteAddress.address,true, true);
+                        importWallet(wallet, key, password, templeteAddress.type);
                         break;
                     case IMPORT_EQUAL_ASSOCIATION:
                         wallet.setName("ETH-Wallet");
-                        wallet.setAssociate(true);
-                        importWallet(wallet, key, password,msg);
+                        saveIdentityData(templeteAddress.address,true, false);
+                        importWallet(wallet, key, password, templeteAddress.type);
                         break;
                     case NO_IMPORT_OTHER_IDENTIFY:
                         ToastUtils.showLongToast(getString(R.string.wallet_other_identify_wallet));
@@ -152,7 +155,16 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
 
     }
 
-    private void importWallet(Wallet wallet,String key, String password,String importType) {
+    private void saveIdentityData(String address,boolean isAssociate, boolean isDefaultAddress) {
+        IdentityEntity identityEntity = new IdentityEntity();
+        identityEntity.setIsAssociate(isAssociate);
+        identityEntity.setIsDefaultAddress(isDefaultAddress);
+        identityEntity.setNode(WalletNoteSharedPreferences.getInstance().getNode());
+        identityEntity.setIdentityAddress(Keys.toChecksumAddress(address));
+        new IdentityDbManager().insertData(identityEntity,null);
+    }
+
+    private void importWallet(Wallet wallet, String key, String password, String importType) {
         Observable.create((ObservableOnSubscribe<WalletInfo>) emitter -> {
             WalletInfo walletInfo = WalletManager.importWalletFromKeystore(wallet, key, password, true);
             emitter.onNext(walletInfo);
@@ -169,21 +181,21 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
 
                     @Override
                     public void onNext(WalletInfo walletInfo) {
-                        switch (importType){
+                        switch (importType) {
                             case IMPORT:
                                 IdHubMessageEntity idHubMessageEntity = new IdHubMessageEntity();
                                 idHubMessageEntity.setType(IdHubMessageType.IMPORT_1056_IDENTITY);
                                 idHubMessageEntity.setTime(DateUtils.getCurrentDate());
                                 idHubMessageEntity.setAddress(walletInfo.getAddress());
-                                new IdHubMessageDbManager().insertData(idHubMessageEntity,null);
+                                new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
                                 break;
                             case IMPORT_FIRST_ASSOCIATION:
                                 IdHubMessageEntity idHubMessageEntity1 = new IdHubMessageEntity();
                                 idHubMessageEntity1.setType(IdHubMessageType.IMPORT_1484_IDENTITY);
                                 idHubMessageEntity1.setTime(DateUtils.getCurrentDate());
                                 idHubMessageEntity1.setAddress(walletInfo.getAddress());
-                                idHubMessageEntity1.setDefaultAddress(walletInfo.getAddress());
-                                new IdHubMessageDbManager().insertData(idHubMessageEntity1,null);
+                                idHubMessageEntity1.setCurrentDefaultAddress(walletInfo.getAddress());
+                                new IdHubMessageDbManager().insertData(idHubMessageEntity1, null);
                                 break;
                             case IMPORT_EQUAL_ASSOCIATION:
 
@@ -209,12 +221,12 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
                 });
     }
 
-    private void checkWalletFromKeyStore(String key,String password, DisposableObserver<String> disposableObserver) {
-        Observable.create((ObservableOnSubscribe<String>) emitter -> {
-            String address = WalletManager.findWalletAddressByKeystore(key,password);
+    private void checkWalletFromKeyStore(String key, String password, DisposableObserver<TemplateAddress> disposableObserver) {
+        Observable.create((ObservableOnSubscribe<TemplateAddress>) emitter -> {
+            String address = WalletManager.findWalletAddressByKeystore(key, password);
             WalletInfo wallet = WalletManager.findWalletByAddress(address);
             if (wallet != null) {
-                emitter.onNext(NO_IMPORT_EQUAL_ADDRESS);
+                emitter.onNext(new TemplateAddress(NO_IMPORT_EQUAL_ADDRESS, address));
             } else {
                 //检查是否已经注册身份，已注册进行ein判断
                 Credentials credentials = Credentials.create("0");
@@ -223,26 +235,26 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
                 Boolean hasIdentity = ApiFactory.getIdentityChainLocal().hasIdentity(address);
                 if (!hasIdentity) {
                     //导入一个没有注册身份的钱包
-                    emitter.onNext(IMPORT);
+                    emitter.onNext(new TemplateAddress(IMPORT, address));
                 } else {
                     //已经注册身份
                     String defaultAddress = WalletManager.getDefaultAddress();
                     if (TextUtils.isEmpty(defaultAddress)) {
                         //导入第一个注册身份的wallet
-                        emitter.onNext(IMPORT_FIRST_ASSOCIATION);
+                        emitter.onNext(new TemplateAddress(IMPORT_FIRST_ASSOCIATION, address));
                     } else {
                         //判断ein是否和已有身份的ein相同
                         BigInteger einSync = ApiFactory.getIdentityChainLocal().getEINSync(address);
-                        String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
+                        String ein = new IdentityDbManager().getEIN(defaultAddress);
                         if (TextUtils.isEmpty(ein)) {
                             ein = ApiFactory.getIdentityChainLocal().getEINSync(defaultAddress).toString();
                         }
                         if (ein.equals(einSync.toString())) {
                             //导入相同身份的钱包
-                            emitter.onNext(IMPORT_EQUAL_ASSOCIATION);
+                            emitter.onNext(new TemplateAddress(IMPORT_EQUAL_ASSOCIATION, address));
                         } else {
                             //禁止导入不相同身份的钱包
-                            emitter.onNext(NO_IMPORT_OTHER_IDENTIFY);
+                            emitter.onNext(new TemplateAddress(NO_IMPORT_OTHER_IDENTIFY, address));
                         }
                     }
                 }
@@ -253,4 +265,5 @@ public class ImportWalletFromKeystoreFragment extends Fragment implements View.O
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(disposableObserver);
     }
+
 }

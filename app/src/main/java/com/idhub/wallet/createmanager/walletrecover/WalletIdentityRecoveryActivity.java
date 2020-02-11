@@ -16,6 +16,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import com.idhub.magic.common.service.DeployedContractAddress;
@@ -40,6 +42,7 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.IdHubMessageDbManager;
 import com.idhub.wallet.greendao.IdHubMessageType;
 import com.idhub.base.greendao.entity.IdHubMessageEntity;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.utils.DateUtils;
@@ -59,6 +62,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
 
 import com.idhub.magic.clientlib.ApiFactory;
 
+import org.web3j.crypto.Keys;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
 
 public class WalletIdentityRecoveryActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener {
@@ -284,9 +288,6 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
     }
 
     private void handleRecoverySuccess(IdentityRegistryInterface.RecoveryTriggeredEventResponse rst) {
-        Wallet wallet = mWalletKeystore.getWallet();
-        wallet.setAssociate(true);
-        wallet.setDefaultAddress(true);
         WalletManager.createWallet(mWalletKeystore);
         BigInteger rstEin = rst.ein;
         //升级1484success
@@ -298,16 +299,27 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
         idHubMessageEntity.setAddress(associatedAddress);
         idHubMessageEntity.setEin(rstEin.toString());
         idHubMessageEntity.setRecoverAddress(mRecoveryAddress);
-        idHubMessageEntity.setDefaultAddress(associatedAddress);
+        idHubMessageEntity.setCurrentDefaultAddress(associatedAddress);
         new IdHubMessageDbManager().insertData(idHubMessageEntity, null);
         //备份成功进行身份升级注册 。身份升级只能是有第一个address的时候，升级成功设置address为defaultAddress
-        WalletOtherInfoSharpreference.getInstance().setRecoverAddress(mRecoveryAddress);
-        WalletOtherInfoSharpreference.getInstance().setEIN(rstEin.toString());
+        saveIdentityData(mRecoveryAddress, rstEin.toString(), true, true);
         Message message = Message.obtain();
         message.what = 1;
         message.obj = mWalletKeystore.getAddress();
         handler.sendMessage(message);
     }
+
+    private void saveIdentityData(String recoverAddress, String ein, boolean isAssociate, boolean isDefaultAddress) {
+        IdentityEntity identityEntity = new IdentityEntity();
+        identityEntity.setRecoveryAddress(recoverAddress);
+        identityEntity.setEIN(ein);
+        identityEntity.setIsAssociate(isAssociate);
+        identityEntity.setIsDefaultAddress(isDefaultAddress);
+        identityEntity.setNode(WalletNoteSharedPreferences.getInstance().getNode());
+        identityEntity.setIdentityAddress(Keys.toChecksumAddress(mWalletKeystore.getAddress()));
+        new IdentityDbManager().insertData(identityEntity,null);
+    }
+
 
     private void handleRecoveryIdentityErrorMessage(String msg) {
         Message messageError = Message.obtain();

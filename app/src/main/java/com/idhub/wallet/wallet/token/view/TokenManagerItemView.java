@@ -9,9 +9,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.idhub.base.greendao.entity.AssetsContractAddress;
 import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
+import com.idhub.wallet.greendao.AssetsContractAddressDbManager;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.base.node.WalletNodeManager;
@@ -54,31 +56,29 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
         mTokenName.setText(symble);
 
         //查询设置
-        String node = WalletNoteSharedPreferences.getInstance().getNode();
         AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
-        if (WalletNodeManager.MAINNET.equals(node)) {
-            String mainContractAddress = assetsModel.getMainContractAddress();
-            mContractName.setText(mainContractAddress);
-            assetsModelDbManager.queryByMainContractAddressKey(mainContractAddress, this);
-        } else {
-            String ropstenContractAddress = assetsModel.getRopstenContractAddress();
-            mContractName.setText(ropstenContractAddress);
-            assetsModelDbManager.queryByRopstenContractAddressKey(ropstenContractAddress, this);
-        }
+        String currentContractAddress = assetsModel.getCurrentContractAddress();
+        mContractName.setText(currentContractAddress);
+        assetsModelDbManager.queryCurrentNodeContractAddressKey(currentContractAddress, this);
+
     }
 
 
     @Override
     public void onClick(View v) {
         if (v == mTokenAdd) {
-            new AssetsModelDbManager().insertData(assetsModel, operation -> {
-                if (operation.isCompleted()) {
-                    WalletAddAssetsObservable.getInstance().update();
-                    ToastUtils.showShortToast(getContext().getString(R.string.wallet_assets_add_success));
-                    mTokenAdd.setImageResource(R.mipmap.wallet_assets_selected);
-                    mTokenAdd.setClickable(false);
-                }
-            });
+
+            long id =   new AssetsModelDbManager().insertDatasync(assetsModel);
+            List<AssetsContractAddress> contractAddresses = assetsModel.getContractAddresses();
+            for (AssetsContractAddress contractAddress : contractAddresses) {
+                contractAddress.setAssetsId(id);
+            }
+            new AssetsContractAddressDbManager().insertInTxDatasync(contractAddresses);
+            WalletAddAssetsObservable.getInstance().update();
+            ToastUtils.showShortToast(getContext().getString(R.string.wallet_assets_add_success));
+            mTokenAdd.setImageResource(R.mipmap.wallet_assets_selected);
+            mTokenAdd.setClickable(false);
+
         }
     }
 

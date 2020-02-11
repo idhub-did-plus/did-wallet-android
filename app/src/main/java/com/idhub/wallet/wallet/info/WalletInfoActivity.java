@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
+import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.MainActivity;
@@ -36,6 +38,7 @@ import com.idhub.wallet.didhub.model.MnemonicAndPath;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.didhub.model.Wallet;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.utils.StringUtils;
 import com.idhub.wallet.utils.ToastUtils;
@@ -53,7 +56,7 @@ import com.idhub.magic.clientlib.ApiFactory;
 
 import org.web3j.crypto.Keys;
 
-public class WalletInfoActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener, MessageDialogFragment.MessageDialogFragmentListener, AddAssociationAddressDialogFragment.AddAssociationAddressDialogFragmentListener {
+public class WalletInfoActivity extends BaseActivity implements View.OnClickListener, InputDialogFragment.InputDialogFragmentListener, AddAssociationAddressDialogFragment.AddAssociationAddressDialogFragmentListener {
 
     private WalletManagerItemView mExportPasswordHint;
     private WalletManagerItemView mExportMnemonic;
@@ -114,6 +117,8 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
 
     private void initData() {
         WalletKeystore keyStore = WalletManager.getKeyStore(mID);
+        String address = keyStore.getAddress();
+        mDefaultKeystore = WalletManager.getDefaultKeystore();
         mWalletNameView.setText(keyStore.getWallet().getName());
         mWalletAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));
         if (keyStore instanceof DidHubKeyStore) {
@@ -121,10 +126,11 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
         } else if (keyStore instanceof DidHubMnemonicKeyStore) {
             mExportMnemonic.setVisibility(View.VISIBLE);
         }
-        if (keyStore.getWallet().isAssociate()) {
-            mAssociatedAddress.setVisibility(View.GONE);
-            mDelete.setVisibility(View.GONE);
-        }
+//        if (mCurrentIdentity!= null && mCurrentIdentity.getIsAssociate()) {
+//            mAssociatedAddress.setVisibility(View.GONE);
+//            mDelete.setVisibility(View.GONE);
+//        }
+        mDelete.setVisibility(View.GONE);
     }
 
     public static void startAction(Context context, String id) {
@@ -142,7 +148,7 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
         } else if (v == mExportPrivateKey) {
             showPasswordDialog(PRIVATEKEY);
         } else if (v == mAssociatedAddress) {
-            //判断如果只有一个地址就是去升级，否则就是设置关联地址
+            //判断当前节点下是否有默认地址
             showMessageDialog();
         } else if (v == mDelete) {
             showPasswordDialog(DELETE);
@@ -156,14 +162,16 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
     }
 
     private void showMessageDialog() {
-        WalletKeystore keyStore = WalletManager.getKeyStore(mID);
-        Wallet wallet = keyStore.getWallet();
-
-        int walletNum = WalletManager.getWalletNum();
-        if (walletNum <= 1 && !wallet.isAssociate()) {
+        //判断当前节点下是否有默认地址，没有默认地址进行升级
+        if (mDefaultKeystore == null) {
             MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_tip), getString(R.string.wallet_go_upgrade));
             messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
-            messageDialogFragment.setMessagePasswordDialogFragmentListener(this);
+            messageDialogFragment.setMessagePasswordDialogFragmentListener(new MessageDialogFragment.MessageDialogFragmentListener() {
+                @Override
+                public void confirm() {
+                    UpgradeActivity.startAction(WalletInfoActivity.this, mID);
+                }
+            });
         } else {
             //TODO:暂时这么先写 判断当前节点没有合约地址
             String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
@@ -173,7 +181,17 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
             }
             MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_associated_address), getString(R.string.wallet_confirm));
             messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
-            messageDialogFragment.setMessagePasswordDialogFragmentListener(this);
+            messageDialogFragment.setMessagePasswordDialogFragmentListener(new MessageDialogFragment.MessageDialogFragmentListener() {
+                @Override
+                public void confirm() {
+                    //关联
+                    //输入密码
+                    mAssociationKeyStore = WalletManager.getKeyStore(mID);
+                    AddAssociationAddressDialogFragment dialogFragment = AddAssociationAddressDialogFragment.getInstance(mDefaultKeystore.getAddress(), mAssociationKeyStore.getAddress());
+                    dialogFragment.show(getSupportFragmentManager(), "add_association_address_dialog_fragment");
+                    dialogFragment.setAddAssociationAddressDialogFragmentListener(WalletInfoActivity.this);
+                }
+            });
         }
     }
 
@@ -235,27 +253,6 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
-    public void confirm() {
-        //升级
-        int walletNum = WalletManager.getWalletNum();
-        if (walletNum <= 1 && !WalletManager.getCurrentKeyStore().getWallet().isAssociate()) {
-            //升级
-            UpgradeActivity.startAction(this, mID);
-        } else {
-            //关联
-            //输入密码
-            mDefaultKeystore = WalletManager.getDefaultKeystore();
-            if (mDefaultKeystore == null) {
-                return;
-            }
-            mAssociationKeyStore = WalletManager.getKeyStore(mID);
-            AddAssociationAddressDialogFragment dialogFragment = AddAssociationAddressDialogFragment.getInstance(mDefaultKeystore.getAddress(), mAssociationKeyStore.getAddress());
-            dialogFragment.show(getSupportFragmentManager(), "add_association_address_dialog_fragment");
-            dialogFragment.setAddAssociationAddressDialogFragmentListener(this);
-        }
-    }
-
-    @Override
     public void confirm(String defaultPsd, String associationPsd) {
         WalletInfo defaultAddressWalletInfo = new WalletInfo(mDefaultKeystore);
         WalletInfo associationAddressWalletInfo = new WalletInfo(mAssociationKeyStore);
@@ -277,7 +274,7 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new DisposableObserver<Boolean>() {
             @Override
             public void onNext(Boolean aBoolean) {
-                String ein = WalletOtherInfoSharpreference.getInstance().getEIN();
+                String ein = new IdentityDbManager().getEIN(defaultAddressWalletInfo.getAddress());
                 //关联地址签名消息。默认地址发交易
                 IDHubCredentialProvider.setDefaultCredentials(defaultAddressWalletInfo.exportPrivateKey(defaultPsd));
                 ApiFactory.getIdentityChainLocal().addAssociatedAddress(new BigInteger(ein), mDefaultKeystore.getAddress(), mAssociationKeyStore.getAddress()
@@ -285,9 +282,7 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
                         .subscribe(new DisposableObserver<IdentityRegistryInterface.AssociatedAddressAddedEventResponse>() {
                             @Override
                             public void onNext(IdentityRegistryInterface.AssociatedAddressAddedEventResponse associatedAddressAddedEventResponse) {
-
-                                mAssociationKeyStore.getWallet().setAssociate(true);
-                                WalletManager.flushWallet(mAssociationKeyStore, true);
+                                saveAssociate(mAssociationKeyStore.getAddress());
                                 MainActivity.startAction(WalletInfoActivity.this, "associated");
                                 WalletSelectedObservable.getInstance().update();
                             }
@@ -307,7 +302,7 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
                         });
 //                ApiFactory.getIdentityChainLocal().addAssociatedAddress(new BigInteger(ein), mDefaultKeystore.getAddress(), mAssociationKeyStore.getAddress(),associationAddressWalletInfo.exportPrivateKey(associationPsd))
 //                        .listen(rst -> {
-//                            mAssociationKeyStore.getWallet().setAssociate(true);
+//                            mAssociationKeyStore.getWallet().setCurrentAssociate(true);
 //                            WalletManager.flushWallet(mAssociationKeyStore, true);
 //                            Message message = Message.obtain();
 //                            message.what = 1;
@@ -332,6 +327,14 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
 
             }
         });
+    }
+
+    private void saveAssociate(String address) {
+        IdentityEntity identityEntity = new IdentityEntity();
+        identityEntity.setIdentityAddress(Keys.toChecksumAddress(address));
+        identityEntity.setNode(WalletNoteSharedPreferences.getInstance().getNode());
+        identityEntity.setIsAssociate(true);
+        new IdentityDbManager().insertData(identityEntity,null);
     }
 
     private Handler handler = new Handler() {

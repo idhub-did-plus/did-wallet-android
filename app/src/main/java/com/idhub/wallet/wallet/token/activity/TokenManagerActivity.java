@@ -55,20 +55,11 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
         TokenManagerAdapter adapter = new TokenManagerAdapter(this);
         recyclerView.setAdapter(adapter);
         List<AssetsModel> assetsList = TokenTypeManager.getAssetsList();
-        String node = WalletNoteSharedPreferences.getInstance().getNode();
         ArrayList<AssetsModel> list = new ArrayList<>();
         //过滤 显示对应ropsten或mainnet上的contractAddress
-       if (WalletNodeManager.MAINNET.equals(node)) {
-            for (AssetsModel assetsModel : assetsList) {
-                if (!TextUtils.isEmpty(assetsModel.getMainContractAddress())) {
-                    list.add(assetsModel);
-                }
-            }
-        }else {
-            for (AssetsModel assetsModel : assetsList) {
-                if (!TextUtils.isEmpty(assetsModel.getRopstenContractAddress())) {
-                    list.add(assetsModel);
-                }
+        for (AssetsModel assetsModel : assetsList) {
+            if (!TextUtils.isEmpty(assetsModel.getCurrentContractAddress())) {
+                list.add(assetsModel);
             }
         }
         adapter.addAll(list);
@@ -125,6 +116,7 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
+                mLoadingAndErrorView.setVisibility(View.GONE);
                 String message = e.getMessage();
                 if (message.contains("Empty value (0x) returned from contract")) {
                     Web3Api.searchERC20ContractAddressAssets(contractAddress,erc20observer);
@@ -140,7 +132,7 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
             }
         };
         AssetsModelDbManager assetsModelDbManager = new AssetsModelDbManager();
-        String node = WalletNoteSharedPreferences.getInstance().getNode();
+
         AsyncOperationListener listener = operation -> {
             List<AssetsModel> o = (List<AssetsModel>) operation.getResult();
             if (o != null && o.size() > 0) {
@@ -152,12 +144,11 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
         };
 
         //过滤 显示对应ropsten或mainnet上的contractAddress
-        if (WalletNodeManager.MAINNET.equals(node)) {
-            assetsModelDbManager.queryByMainContractAddressKey(contractAddress,listener);
-        }else {
-            assetsModelDbManager.queryByRopstenContractAddressKey(contractAddress, listener);
-        }
-
+        assetsModelDbManager.queryCurrentNodeContractAddressKey(contractAddress,listener);
+//        if (WalletNodeManager.MAINNET.equals(node)) {
+//        }else {
+//            assetsModelDbManager.queryByRopstenContractAddressKey(contractAddress, listener);
+//        }
 
     }
 }

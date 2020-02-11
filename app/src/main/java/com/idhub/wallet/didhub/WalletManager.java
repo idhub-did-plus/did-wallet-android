@@ -1,6 +1,7 @@
 package com.idhub.wallet.didhub;
 
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -23,12 +24,14 @@ import com.idhub.wallet.didhub.util.BIP44Util;
 import com.idhub.wallet.didhub.util.MnemonicUtil;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.didhub.util.PrivateKeyValidator;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.utils.LogUtils;
 
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.wallet.DeterministicKeyChain;
 import org.bitcoinj.wallet.DeterministicSeed;
 import org.json.JSONObject;
+import org.web3j.crypto.Keys;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,6 +100,7 @@ public class WalletManager {
                     }
 
                     if (keystore != null) {
+                        Log.e("LYW", "scanWallets: " + keystore.toString() );
                         keystoreMap.put(keystore.getId(), keystore);
                     }
                 } catch (Exception ex) {
@@ -278,22 +282,23 @@ public class WalletManager {
     }
 
     public static String getDefaultAddress() {
-        String address = "";
-        if (keystoreMap.size() > 0) {
-            for (WalletKeystore keystore : keystoreMap.values()) {
-                if (keystore.getWallet().isDefaultAddress()) {
-                    address = NumericUtil.prependHexPrefix(keystore.getAddress());
-                }
-            }
-        }
-        return address;
+//        String address = "";
+//        if (keystoreMap.size() > 0) {
+//            for (WalletKeystore keystore : keystoreMap.values()) {
+//                if (keystore.getWallet().isCurrentDefaultAddress()) {
+//                    address = NumericUtil.prependHexPrefix(keystore.getAddress());
+//                }
+//            }
+//        }
+        return new IdentityDbManager().getDefaultAddress();
     }
     public static WalletKeystore getDefaultKeystore() {
         WalletKeystore walletKeystore = null;
-        if (keystoreMap.size() > 0) {
+        String defaultAddress = new IdentityDbManager().getDefaultAddress();
+        if (!TextUtils.isEmpty(defaultAddress) && keystoreMap.size() > 0) {
             for (WalletKeystore keystore : keystoreMap.values()) {
-                if (keystore.getWallet().isDefaultAddress()) {
-                    walletKeystore =keystore;
+                if (defaultAddress.equals(Keys.toChecksumAddress(keystore.getAddress()))) {
+                    walletKeystore = keystore;
                 }
             }
         }

@@ -31,7 +31,7 @@ public class ContractManager {
 
     private static final Logger log = LoggerFactory.getLogger(ContractManager.class);
 
-    static  Web3j web3j = ProviderFactory.getProvider().web3j();
+    static  Web3j web3j;
 
 	static IdentityRegistryInterface registry1484;
 	static  ERC1056ResolverInterface resolver1056;
@@ -46,9 +46,11 @@ public class ContractManager {
    }
 
     private static void initContract() {
+        web3j = ProviderFactory.getProvider().web3j();
         Credentials credentials = ProviderFactory.getProvider().getDefaultCredentials();
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
         String identityRegistryInterface = DeployedContractAddress.IdentityRegistryInterface;
+        Log.e("LYW", "initContract: " + identityRegistryInterface);
         if (!TextUtils.isEmpty(identityRegistryInterface)) {
             registry1484 = IdentityRegistryInterface.load(identityRegistryInterface,
                     web3j,

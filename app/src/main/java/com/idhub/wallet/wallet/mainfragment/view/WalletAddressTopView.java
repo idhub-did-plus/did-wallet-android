@@ -7,9 +7,11 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;
@@ -48,13 +50,19 @@ public class WalletAddressTopView extends ConstraintLayout implements View.OnCli
         walletKeystore = keyStore;
         mWalletName.setText(keyStore.getWallet().getName());
         mAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));
-        boolean isgl = keyStore.getWallet().isAssociate();
+        IdentityEntity identity = new IdentityDbManager().searchIdentity(keyStore.getAddress());
+        if (identity == null) {
+            mUpgradeName.setVisibility(VISIBLE);
+            mDefaultAddressName.setVisibility(GONE);
+            return;
+        }
+        boolean isgl = identity.getIsAssociate();
         if (isgl) {
             mUpgradeName.setVisibility(INVISIBLE);
         } else {
             mUpgradeName.setVisibility(VISIBLE);
         }
-        if (keyStore.getWallet().isDefaultAddress()) {
+        if (identity.getIsDefaultAddress()) {
             mDefaultAddressName.setVisibility(VISIBLE);
         } else {
             mDefaultAddressName.setVisibility(GONE);

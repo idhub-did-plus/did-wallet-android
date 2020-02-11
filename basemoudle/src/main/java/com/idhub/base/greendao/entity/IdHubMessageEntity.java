@@ -55,7 +55,7 @@ public class IdHubMessageEntity {
     public String getDefaultAddress() {
         return this.defaultAddress;
     }
-    public void setDefaultAddress(String defaultAddress) {
+    public void setCurrentDefaultAddress(String defaultAddress) {
         this.defaultAddress = defaultAddress;
     }
     public String getEin() {
@@ -69,6 +69,9 @@ public class IdHubMessageEntity {
     }
     public void setTime(String time) {
         this.time = time;
+    }
+    public void setDefaultAddress(String defaultAddress) {
+        this.defaultAddress = defaultAddress;
     }
 
 

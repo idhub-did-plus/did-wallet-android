@@ -15,16 +15,4 @@ public class WalletNodeManager {
         nodes.clear();
         nodes.addAll(ConfigPropertiesUtils.getNotes(App.getInstance()));
     }
-
-    public static String assetsGetContractAddressToNode(AssetsModel model) {
-        String contractAddress = "";
-        String node = WalletNoteSharedPreferences.getInstance().getNode();
-        if (node.equals(MAINNET)) {
-            contractAddress = model.getMainContractAddress();
-        } else {
-            contractAddress = model.getRopstenContractAddress();
-        }
-        return contractAddress;
-    }
-
 }
