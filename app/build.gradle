@@ -27,7 +27,7 @@ android {
     }
 
     buildTypes {
-        debug{
+        debug {
             //包名会根据此配置改变
 //            applicationIdSuffix ".debug"
             minifyEnabled false //开启混淆

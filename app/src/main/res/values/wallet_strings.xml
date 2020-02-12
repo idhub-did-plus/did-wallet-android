@@ -2,6 +2,8 @@
     <string name="app_name">IDHUB</string>
     <string name="wallet_me">我的</string>
     <string name="wallet_wallet">钱包</string>
+    <string name="wallet_home">首页</string>
+    <string name="wallet_dex">Dex</string>
     <string name="wallet_dapp">Dapp</string>
     <string name="wallet_history">历史</string>
     <string name="wallet_setting">设置</string>
@@ -392,4 +394,10 @@
      
     <string name="wallet_splash_identity">Identity</string>
     <string name="wallet_splash_hub">Hub</string>
+
+
+    <string name="wallet_home_search">搜索...</string>
+    <string name="wallet_home_claim">凭证</string>
+    <string name="wallet_home_hot">热点</string>
+
 </resources>
