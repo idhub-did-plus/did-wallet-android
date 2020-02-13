@@ -1,4 +1,4 @@
-package com.idhub.wallet;
+package com.idhub.wallet.main;
 
 import android.os.Bundle;
 import androidx.annotation.NonNull;

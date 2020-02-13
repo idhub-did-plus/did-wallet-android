@@ -13,14 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.idhub.base.greendao.entity.AssetsContractAddress;
-import com.idhub.base.node.WalletNoteSharedPreferences;
-import com.idhub.wallet.MainBaseFragment;
+import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
@@ -34,7 +31,6 @@ import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.base.greendao.entity.AssetsModel;
-import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.wallet.info.WalletInfoActivity;
 import com.idhub.wallet.wallet.mainfragment.adapter.SelectWalletAdapter;
 import com.idhub.wallet.wallet.mainfragment.view.WalletAddressTopView;

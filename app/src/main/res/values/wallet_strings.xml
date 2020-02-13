@@ -399,5 +399,6 @@
     <string name="wallet_home_search">搜索...</string>
     <string name="wallet_home_claim">凭证</string>
     <string name="wallet_home_hot">热点</string>
+    <string name="wallet_upload_identity_information">上传身份信息</string>
 
 </resources>

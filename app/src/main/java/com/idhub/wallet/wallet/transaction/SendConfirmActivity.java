@@ -9,7 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.idhub.wallet.MainActivity;
+import com.idhub.wallet.main.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.InputDialogFragment;
@@ -26,9 +26,7 @@ import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
 import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
 import com.idhub.wallet.net.parameter.EthTransactionParam;
-import com.idhub.base.node.WalletNodeManager;
 import com.idhub.wallet.utils.ToastUtils;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import org.web3j.crypto.Keys;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;

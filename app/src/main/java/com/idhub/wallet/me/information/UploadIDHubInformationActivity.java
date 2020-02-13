@@ -16,7 +16,7 @@ import com.idhub.magic.common.ustorage.entity.IdentityInfo;
 import com.idhub.magic.common.ustorage.entity.component.Address;
 import com.idhub.magic.common.ustorage.entity.component.AddressElement;
 import com.idhub.magic.common.ustorage.entity.component.Name;
-import com.idhub.wallet.MainActivity;
+import com.idhub.wallet.main.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.country.Country;

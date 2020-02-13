@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.idhub.base.ui.ViewCalculateUtil;
-import com.idhub.wallet.MainBaseFragment;
+import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.home.adapter.MainEpidemicAdapter;
 import com.idhub.wallet.home.adapter.MainEpidemicBean;

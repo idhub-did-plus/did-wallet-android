@@ -1,16 +1,13 @@
 package com.idhub.wallet.common.activity;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -18,17 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.idhub.base.ui.UIUtils;
 import com.idhub.magic.clientlib.ApiFactory;
-import com.idhub.magic.clientlib.local.ContractManager;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.service.DeployedContractAddress;
-import com.idhub.wallet.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.sharepreference.Identity1484To1056BindSharedPreferences;
-import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
 import com.idhub.wallet.common.statusbar.StatusBarUtil;
 import com.idhub.base.launage.LocalUtils;
-import com.idhub.wallet.createmanager.UpgradeActivity;
-import com.idhub.wallet.createmanager.walletrecover.WalletIdentityRecoveryActivity;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;

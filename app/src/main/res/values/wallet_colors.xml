@@ -60,4 +60,10 @@
     <color name="wallet_color_f1f1f1">#f1f1f1</color>
     <color name="wallet_color_F2443D">#F2443D</color>
     <color name="wallet_color_686868">#686868</color>
+    <color name="wallet_color_F87868">#F87868</color>
+    <color name="wallet_color_4FAEFD">#4FAEFD</color>
+    <color name="wallet_color_F79357">#F79357</color>
+    <color name="wallet_color_A2A2A2">#A2A2A2</color>
+    <color name="wallet_color_f5f5f5">#F5f5f5</color>
+    <color name="wallet_color_C2C2C2">#C2C2C2</color>
 </resources>

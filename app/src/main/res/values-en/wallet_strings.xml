@@ -424,6 +424,7 @@
     <string name="wallet_home_search">Search...</string>
     <string name="wallet_home_claim">CLAIM</string>
     <string name="wallet_home_hot">HOT</string>
+    <string name="wallet_upload_identity_information">Upload Identity Information</string>
 
 
 </resources>

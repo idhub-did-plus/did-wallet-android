@@ -1,15 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".dex.DexFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="DexFragment" />
+    <include
+        android:id="@+id/top_view"
+        layout="@layout/wallet_main_top_title_view" />
 
-</FrameLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_dex_content_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wallet_white_bg_radius_4"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/top_view">
+
+        <TextView
+            android:id="@+id/pay_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Pay"
+            android:textColor="@color/wallet_color_A2A2A2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/pay_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/pay_name">
+
+            <EditText
+                android:id="@+id/pay_value"
+                android:layout_width="0dp"
+                android:hint="0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null" />
+
+            <ImageView
+                android:id="@+id/pay_coin_img"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:src="@mipmap/wallet_idhub" />
+
+            <TextView
+                android:id="@+id/pay_coin_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IDHUB"
+                android:textColor="@color/wallet_black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/dex_right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/wallet_main_dex_right_arrow" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/pay_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Balance：0"
+            android:textColor="@color/wallet_color_A2A2A2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pay_layout" />
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/wallet_line_gray"
+            app:layout_constraintTop_toBottomOf="@id/pay_balance" />
+
+        <ImageView
+            android:id="@+id/dex_change"
+            app:layout_constraintTop_toTopOf="@id/pay_balance"
+            app:layout_constraintRight_toRightOf="@id/pay_layout"
+            android:src="@mipmap/wallet_main_dex_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/get_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Get"
+            android:textColor="@color/wallet_color_A2A2A2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line" />
+        <LinearLayout
+            android:id="@+id/get_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/get_name">
+
+            <EditText
+                android:id="@+id/get_value"
+                android:layout_width="0dp"
+                android:hint="0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null" />
+
+            <ImageView
+                android:id="@+id/get_coin_img"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:src="@mipmap/wallet_idhub" />
+
+            <TextView
+                android:id="@+id/get_coin_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ANKR"
+                android:textColor="@color/wallet_black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/get_right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/wallet_main_dex_right_arrow" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/get_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Balance：0"
+            android:textColor="@color/wallet_color_A2A2A2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/get_layout" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/coin_exchange_rate"
+        android:text="1 BNB = ~ 10736.5 ANKR"
+        android:layout_width="0dp"
+        app:layout_constraintTop_toBottomOf="@id/main_dex_content_container"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center"
+        android:textColor="@color/wallet_color_A2A2A2"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/next"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="NEXT"
+        android:textSize="14sp"
+        android:background="@drawable/wallet_btn_yellow_radius_4"
+        android:textColor="@color/wallet_white"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/coin_exchange_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</androidx.constraintlayout.widget.ConstraintLayout>

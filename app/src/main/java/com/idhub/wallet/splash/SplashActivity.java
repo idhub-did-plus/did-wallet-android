@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.idhub.wallet.MainActivity;
+import com.idhub.wallet.main.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.utils.ToastUtils;

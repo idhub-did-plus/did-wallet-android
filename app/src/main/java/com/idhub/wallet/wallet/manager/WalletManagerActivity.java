@@ -7,11 +7,11 @@ import androidx.annotation.Nullable;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.Gravity;
+
 import android.view.View;
 
 import com.idhub.base.greendao.entity.IdentityEntity;
-import com.idhub.wallet.MainActivity;
+import com.idhub.wallet.main.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.MessageDialogFragment;
@@ -22,8 +22,6 @@ import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.greendao.IdentityDbManager;
-import com.idhub.wallet.wallet.adapter.WalletSettingListAdapter;
-import com.idhub.wallet.wallet.mainfragment.adapter.SelectWalletAdapter;
 
 import java.util.Hashtable;
 import java.util.Iterator;

@@ -3,27 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/wallet_color_f5f5f5"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".dapp.DappFragment">
 
     <include
         android:id="@+id/title"
-        layout="@layout/wallet_common_title_layout"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
+        layout="@layout/wallet_main_top_title_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_dapp_url"
-        android:background="@drawable/wallet_dapp_edittext"
+        android:background="@drawable/wallet_white_bg_radius_8"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_width="0dp"
         android:singleLine="true"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
+        android:typeface="monospace"
         android:hint="@string/wallet_dapp_search_hint"
         android:textSize="15sp"
         android:textColor="@color/wallet_text_gray_color"

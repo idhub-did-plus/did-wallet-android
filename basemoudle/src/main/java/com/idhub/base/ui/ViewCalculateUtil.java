@@ -4,6 +4,7 @@ package com.idhub.base.ui;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -11,8 +12,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class ViewCalculateUtil
-{
+public class ViewCalculateUtil {
     private static final String TAG = ViewCalculateUtil.class.getSimpleName();
 
     /**
@@ -26,37 +26,27 @@ public class ViewCalculateUtil
      * @param lefMargin
      * @param rightMargin
      */
-    public static void setViewLayoutParam(View view, int width, int height, int topMargin, int bottomMargin, int lefMargin, int rightMargin)
-    {
+    public static void setViewLayoutParam(View view, int width, int height, int topMargin, int bottomMargin, int lefMargin, int rightMargin) {
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
 
-        if (layoutParams != null)
-        {
-            if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT)
-            {
+        if (layoutParams != null) {
+            if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT) {
                 layoutParams.width = UIUtils.getInstance().getWidth(width);
-            }
-            else
-            {
+            } else {
                 layoutParams.width = width;
             }
-            if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT)
-            {
-                layoutParams.height = UIUtils.getInstance( ).getHeight(height);
-            }
-            else
-            {
+            if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT) {
+                layoutParams.height = UIUtils.getInstance().getHeight(height);
+            } else {
                 layoutParams.height = height;
             }
 
-            layoutParams.topMargin = UIUtils.getInstance( ).getHeight(topMargin);
-            layoutParams.bottomMargin = UIUtils.getInstance( ).getHeight(bottomMargin);
-            layoutParams.leftMargin = UIUtils.getInstance( ).getWidth(lefMargin);
-            layoutParams.rightMargin = UIUtils.getInstance( ).getWidth(rightMargin);
+            layoutParams.topMargin = UIUtils.getInstance().getHeight(topMargin);
+            layoutParams.bottomMargin = UIUtils.getInstance().getHeight(bottomMargin);
+            layoutParams.leftMargin = UIUtils.getInstance().getWidth(lefMargin);
+            layoutParams.rightMargin = UIUtils.getInstance().getWidth(rightMargin);
             view.setLayoutParams(layoutParams);
-        }
-        else
-        {
+        } else {
         }
     }
 
@@ -70,31 +60,24 @@ public class ViewCalculateUtil
      * @param rightMargin
      */
     public static void setViewFrameLayoutParam(View view, int width, int height, int topMargin, int bottomMargin, int lefMargin,
-                                               int rightMargin)
-    {
+                                               int rightMargin) {
 
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) view.getLayoutParams();
-        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.width = UIUtils.getInstance( ).getWidth(width);
-        }
-        else
-        {
+        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.width = UIUtils.getInstance().getWidth(width);
+        } else {
             layoutParams.width = width;
         }
-        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.height = UIUtils.getInstance( ).getHeight(height);
-        }
-        else
-        {
+        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.height = UIUtils.getInstance().getHeight(height);
+        } else {
             layoutParams.height = height;
         }
 
-        layoutParams.topMargin = UIUtils.getInstance( ).getHeight(topMargin);
-        layoutParams.bottomMargin = UIUtils.getInstance( ).getHeight(bottomMargin);
-        layoutParams.leftMargin = UIUtils.getInstance( ).getWidth(lefMargin);
-        layoutParams.rightMargin = UIUtils.getInstance( ).getWidth(rightMargin);
+        layoutParams.topMargin = UIUtils.getInstance().getHeight(topMargin);
+        layoutParams.bottomMargin = UIUtils.getInstance().getHeight(bottomMargin);
+        layoutParams.leftMargin = UIUtils.getInstance().getWidth(lefMargin);
+        layoutParams.rightMargin = UIUtils.getInstance().getWidth(rightMargin);
         view.setLayoutParams(layoutParams);
     }
 
@@ -107,12 +90,11 @@ public class ViewCalculateUtil
      * @param leftpadding
      * @param rightPadding
      */
-    public static void setViewPadding(View view, int topPadding, int bottomPadding, int leftpadding, int rightPadding)
-    {
-        view.setPadding(UIUtils.getInstance( ).getWidth(leftpadding),
-                UIUtils.getInstance( ).getHeight(topPadding),
-                UIUtils.getInstance( ).getWidth(rightPadding),
-                UIUtils.getInstance( ).getHeight(bottomPadding));
+    public static void setViewPadding(View view, int topPadding, int bottomPadding, int leftpadding, int rightPadding) {
+        view.setPadding(UIUtils.getInstance().getWidth(leftpadding),
+                UIUtils.getInstance().getHeight(topPadding),
+                UIUtils.getInstance().getWidth(rightPadding),
+                UIUtils.getInstance().getHeight(bottomPadding));
     }
 
     /**
@@ -121,9 +103,12 @@ public class ViewCalculateUtil
      * @param view
      * @param size
      */
-    public static void setTextSize(TextView view, int size)
-    {
-        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, UIUtils.getInstance( ).getHeight(size));
+    public static void setTextSize(TextView view, int size) {
+        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, UIUtils.getInstance().getHeight(size));
+    }
+
+    public static void setTextSize(EditText view, int size) {
+        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, UIUtils.getInstance().getHeight(size));
     }
 
     /**
@@ -133,76 +118,39 @@ public class ViewCalculateUtil
      * @param width
      * @param height
      */
-    public static void setViewLinearLayoutParam(View view, int width, int height)
-    {
+    public static void setViewLinearLayoutParam(View view, int width, int height) {
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
-        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.width = UIUtils.getInstance( ).getWidth(width);
-        }
-        else
-        {
+        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.width = UIUtils.getInstance().getWidth(width);
+        } else {
             layoutParams.width = width;
         }
-        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.height = UIUtils.getInstance( ).getHeight(height);
-        }
-        else
-        {
+        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.height = UIUtils.getInstance().getHeight(height);
+        } else {
             layoutParams.height = height;
         }
 
         view.setLayoutParams(layoutParams);
     }
 
-    public static void setViewGroupLayoutParam(View view, int width, int height)
-    {
+    public static void setViewGroupLayoutParam(View view, int width, int height) {
 
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.width = UIUtils.getInstance( ).getWidth(width);
-        }
-        else
-        {
+        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.width = UIUtils.getInstance().getWidth(width);
+        } else {
             layoutParams.width = width;
         }
-        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.height = UIUtils.getInstance( ).getHeight(height);
-        }
-        else
-        {
+        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.height = UIUtils.getInstance().getHeight(height);
+        } else {
             layoutParams.height = height;
         }
         view.setLayoutParams(layoutParams);
     }
-    public static void setViewGroupLayoutParam(View view, int width, int height, int topMargin, int bottomMargin, int lefMargin,
-                                               int rightMargin)
-    {
 
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.width = UIUtils.getInstance( ).getWidth(width);
-        }
-        else
-        {
-            layoutParams.width = width;
-        }
-        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.height = UIUtils.getInstance( ).getHeight(height);
-        }
-        else
-        {
-            layoutParams.height = height;
-        }
-
-        view.setLayoutParams(layoutParams);
-    }
     /**
      * 设置LinearLayout中 view的高度宽度
      *
@@ -211,31 +159,53 @@ public class ViewCalculateUtil
      * @param height
      */
     public static void setViewLinearLayoutParam(View view, int width, int height, int topMargin, int bottomMargin, int lefMargin,
-                                                int rightMargin)
-    {
+                                                int rightMargin) {
 
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
-        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.width = UIUtils.getInstance( ).getWidth(width);
-        }
-        else
-        {
+        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.width = UIUtils.getInstance().getWidth(width);
+        } else {
             layoutParams.width = width;
         }
-        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.height = UIUtils.getInstance( ).getHeight(height);
-        }
-        else
-        {
+        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.height = UIUtils.getInstance().getHeight(height);
+        } else {
             layoutParams.height = height;
         }
 
-        layoutParams.topMargin = UIUtils.getInstance( ).getHeight(topMargin);
-        layoutParams.bottomMargin = UIUtils.getInstance( ).getHeight(bottomMargin);
-        layoutParams.leftMargin = UIUtils.getInstance( ).getWidth(lefMargin);
-        layoutParams.rightMargin = UIUtils.getInstance( ).getWidth(rightMargin);
+        layoutParams.topMargin = UIUtils.getInstance().getHeight(topMargin);
+        layoutParams.bottomMargin = UIUtils.getInstance().getHeight(bottomMargin);
+        layoutParams.leftMargin = UIUtils.getInstance().getWidth(lefMargin);
+        layoutParams.rightMargin = UIUtils.getInstance().getWidth(rightMargin);
+        view.setLayoutParams(layoutParams);
+    }
+
+    /**
+     * 设置ConstraintLayout中 view的高度宽度
+     *
+     * @param view
+     * @param width
+     * @param height
+     */
+    public static void setViewConstraintLayoutParam(View view, int width, int height, int topMargin, int bottomMargin, int lefMargin,
+                                                    int rightMargin) {
+
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.width = UIUtils.getInstance().getWidth(width);
+        } else {
+            layoutParams.width = width;
+        }
+        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.height = UIUtils.getInstance().getHeight(height);
+        } else {
+            layoutParams.height = height;
+        }
+
+        layoutParams.topMargin = UIUtils.getInstance().getHeight(topMargin);
+        layoutParams.bottomMargin = UIUtils.getInstance().getHeight(bottomMargin);
+        layoutParams.leftMargin = UIUtils.getInstance().getWidth(lefMargin);
+        layoutParams.rightMargin = UIUtils.getInstance().getWidth(rightMargin);
         view.setLayoutParams(layoutParams);
     }
     /**
@@ -245,32 +215,19 @@ public class ViewCalculateUtil
      * @param width
      * @param height
      */
-    public static void setViewConstraintLayoutParam(View view, int width, int height, int topMargin, int bottomMargin, int lefMargin,
-                                                int rightMargin)
-    {
+    public static void setViewConstraintLayoutParam(View view, int width, int height) {
 
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
-        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.width = UIUtils.getInstance( ).getWidth(width);
-        }
-        else
-        {
+        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.width = UIUtils.getInstance().getWidth(width);
+        } else {
             layoutParams.width = width;
         }
-        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.height = UIUtils.getInstance( ).getHeight(height);
-        }
-        else
-        {
+        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.height = UIUtils.getInstance().getHeight(height);
+        } else {
             layoutParams.height = height;
         }
-
-        layoutParams.topMargin = UIUtils.getInstance( ).getHeight(topMargin);
-        layoutParams.bottomMargin = UIUtils.getInstance( ).getHeight(bottomMargin);
-        layoutParams.leftMargin = UIUtils.getInstance( ).getWidth(lefMargin);
-        layoutParams.rightMargin = UIUtils.getInstance( ).getWidth(rightMargin);
         view.setLayoutParams(layoutParams);
     }
     /**
@@ -281,31 +238,24 @@ public class ViewCalculateUtil
      * @param height
      */
     public static void setViewRelativeLayoutParam(View view, int width, int height, int topMargin, int bottomMargin, int lefMargin,
-                                                    int rightMargin)
-    {
+                                                  int rightMargin) {
 
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) view.getLayoutParams();
-        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.width = UIUtils.getInstance( ).getWidth(width);
-        }
-        else
-        {
+        if (width != RelativeLayout.LayoutParams.MATCH_PARENT && width != RelativeLayout.LayoutParams.WRAP_CONTENT && width != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.width = UIUtils.getInstance().getWidth(width);
+        } else {
             layoutParams.width = width;
         }
-        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT)
-        {
-            layoutParams.height = UIUtils.getInstance( ).getHeight(height);
-        }
-        else
-        {
+        if (height != RelativeLayout.LayoutParams.MATCH_PARENT && height != RelativeLayout.LayoutParams.WRAP_CONTENT && height != RelativeLayout.LayoutParams.FILL_PARENT) {
+            layoutParams.height = UIUtils.getInstance().getHeight(height);
+        } else {
             layoutParams.height = height;
         }
 
-        layoutParams.topMargin = UIUtils.getInstance( ).getHeight(topMargin);
-        layoutParams.bottomMargin = UIUtils.getInstance( ).getHeight(bottomMargin);
-        layoutParams.leftMargin = UIUtils.getInstance( ).getWidth(lefMargin);
-        layoutParams.rightMargin = UIUtils.getInstance( ).getWidth(rightMargin);
+        layoutParams.topMargin = UIUtils.getInstance().getHeight(topMargin);
+        layoutParams.bottomMargin = UIUtils.getInstance().getHeight(bottomMargin);
+        layoutParams.leftMargin = UIUtils.getInstance().getWidth(lefMargin);
+        layoutParams.rightMargin = UIUtils.getInstance().getWidth(rightMargin);
         view.setLayoutParams(layoutParams);
     }
 }

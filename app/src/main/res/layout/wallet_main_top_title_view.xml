@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.idhub.wallet.main.MainTopTitleView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_top_title_bg"
+    android:layout_height="70dp"
+    android:background="@mipmap/wallet_main_top_title_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/main_left_menu"
+        android:src="@mipmap/wallet_main_menu"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/title"
+        android:text="DEX"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:textColor="@color/wallet_white"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/main_scan"
+        android:src="@mipmap/wallet_main_scan_icon"
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content" />
+</com.idhub.wallet.main.MainTopTitleView>

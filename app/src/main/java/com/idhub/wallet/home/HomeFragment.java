@@ -3,9 +3,7 @@ package com.idhub.wallet.home;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.text.TextPaint;
@@ -14,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.idhub.wallet.MainBaseFragment;
+import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.home.fragment.ClaimFragment;
 import com.idhub.wallet.home.fragment.HotFragment;

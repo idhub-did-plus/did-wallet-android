@@ -1,16 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     tools:context=".home.fragment.ClaimFragment">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/claim_upload_information_bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="claimFragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@mipmap/wallet_claim_upload_info_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/claim_upload_info_title"
+            android:text="@string/wallet_upload_identity_information"
+            android:layout_width="wrap_content"
+            android:textColor="@color/wallet_white"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/claim_upload_info_arrow"
+            android:src="@mipmap/wallet_claim_upload_info_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/idhub_claims"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IDHub Claims"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="20sp"
+        android:typeface="serif"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/claim_upload_information_bg" />
+
+    <LinearLayout
+        android:id="@+id/idhub_claim_vip_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@mipmap/wallet_claim_idhub_vip_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idhub_claims">
+
+        <TextView
+            android:id="@+id/idhub_claim_vip_title"
+            android:text="@string/wallet_idhub_vip"
+            android:layout_width="wrap_content"
+            android:textColor="@color/wallet_white"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/idhub_claim_vip_state"
+            android:background="@drawable/wallet_claims_state_bg"
+            android:text="@string/wallet_no_appply_for"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/wallet_color_F87868"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/idhub_claim_svip_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@mipmap/wallet_claim_idhub_svip_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idhub_claim_vip_bg">
+
+        <TextView
+            android:id="@+id/idhub_claim_svip_title"
+            android:text="@string/wallet_idhub_super_vip"
+            android:layout_width="wrap_content"
+            android:textColor="@color/wallet_white"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/idhub_claim_svip_state"
+            android:background="@drawable/wallet_claims_state_bg"
+            android:text="@string/wallet_no_appply_for"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/wallet_color_4FAEFD"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/security_token_claims"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Security Token Claims"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="20sp"
+        android:typeface="serif"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/idhub_claim_svip_bg" />
+    <LinearLayout
+        android:id="@+id/st_accredited_investor_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@mipmap/wallet_st_accredited_investor_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/security_token_claims">
+
+        <TextView
+            android:id="@+id/st_accredited_investor_title"
+            android:text="@string/wallet_qualified_investor"
+            android:layout_width="wrap_content"
+            android:textColor="@color/wallet_white"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/st_accredited_investor_state"
+            android:background="@drawable/wallet_claims_state_bg"
+            android:text="@string/wallet_no_appply_for"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/wallet_color_F79357"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/st_accredited_purchaser_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@mipmap/wallet_st_accredited_purchaser_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/st_accredited_investor_bg">
+
+        <TextView
+            android:id="@+id/st_accredited_purchaser_title"
+            android:text="@string/wallet_qualified_purchaser"
+            android:layout_width="wrap_content"
+            android:textColor="@color/wallet_white"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/st_accredited_purchaser_state"
+            android:background="@drawable/wallet_claims_state_bg"
+            android:text="@string/wallet_no_appply_for"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/wallet_color_4FAEFD"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/st_compliant_investor_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@mipmap/wallet_st_compliant_investor_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/st_accredited_purchaser_bg">
+
+        <TextView
+            android:id="@+id/st_compliant_investor_title"
+            android:text="@string/wallet_st_compliance_investor"
+            android:layout_width="wrap_content"
+            android:textColor="@color/wallet_white"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/st_compliant_investor_state"
+            android:background="@drawable/wallet_claims_state_bg"
+            android:text="@string/wallet_no_appply_for"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/wallet_color_F87868"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

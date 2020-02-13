@@ -1,14 +1,14 @@
-package com.idhub.wallet;
+package com.idhub.wallet.main;
 
 import android.content.Context;
 
 import androidx.fragment.app.Fragment;
 
+import com.idhub.wallet.R;
 import com.idhub.wallet.dapp.DappFragment;
 import com.idhub.wallet.dex.DexFragment;
 import com.idhub.wallet.home.HomeFragment;
 import com.idhub.wallet.setting.SettingFragment;
-import com.idhub.wallet.me.MeFragment;
 import com.idhub.wallet.wallet.mainfragment.WalletFragment;
 
 public class MainChannelFragmentFactory {
