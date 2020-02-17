@@ -16,12 +16,22 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />
 
-    <View
-        android:id="@+id/line"
+    <LinearLayout
+        android:id="@+id/line_layout"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/wallet_container" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@color/wallet_white"
+        app:layout_constraintTop_toBottomOf="@id/wallet_container"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="1dp">
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/wallet_line_gray"
+           />
+    </LinearLayout>
+
 
     <include
         android:id="@+id/message_container"
@@ -30,7 +40,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line" />
+        app:layout_constraintTop_toBottomOf="@id/line_layout" />
 
     <include
         android:id="@+id/node_container"
@@ -41,12 +51,21 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/message_container" />
 
-    <View
-        android:id="@+id/line1"
+    <LinearLayout
+        android:id="@+id/line1_layout"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/node_container" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@color/wallet_white"
+        app:layout_constraintTop_toBottomOf="@id/node_container"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="1dp">
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/wallet_line_gray"
+            />
+    </LinearLayout>
 
     <include
         android:id="@+id/language_container"
@@ -55,7 +74,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line1" />
+        app:layout_constraintTop_toBottomOf="@id/line1_layout" />
 
     <include
         android:id="@+id/user_agreement_container"
@@ -66,12 +85,21 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/language_container" />
 
-    <View
-        android:id="@+id/line2"
+    <LinearLayout
+        android:id="@+id/line2_layout"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/user_agreement_container" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@color/wallet_white"
+        app:layout_constraintTop_toBottomOf="@id/user_agreement_container"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="1dp">
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/wallet_line_gray"
+            />
+    </LinearLayout>
 
     <include
         android:id="@+id/about_container"
@@ -80,7 +108,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line2" />
+        app:layout_constraintTop_toBottomOf="@id/line2_layout" />
 
 
     <include

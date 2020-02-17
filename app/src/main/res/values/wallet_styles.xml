@@ -63,4 +63,5 @@
         <item name="android:windowBackground">@color/wallet_transparent</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
 </resources>

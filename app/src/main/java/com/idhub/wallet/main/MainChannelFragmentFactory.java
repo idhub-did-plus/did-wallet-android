@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.fragment.app.Fragment;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.assets.AssetsFragment;
 import com.idhub.wallet.dapp.DappFragment;
 import com.idhub.wallet.dex.DexFragment;
 import com.idhub.wallet.home.HomeFragment;
@@ -21,7 +22,7 @@ public class MainChannelFragmentFactory {
         } else if (context.getResources().getString(R.string.wallet_home).equals(title)) {
             return new HomeFragment();
         } else if (context.getResources().getString(R.string.wallet_assets).equals(title)) {
-            return new WalletFragment();
+            return new AssetsFragment();
         } else if (context.getResources().getString(R.string.wallet_dapp).equals(title)) {
             return new DappFragment();
         } else if (context.getResources().getString(R.string.wallet_setting).equals(title)) {

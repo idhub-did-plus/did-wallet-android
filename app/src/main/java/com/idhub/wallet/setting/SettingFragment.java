@@ -58,11 +58,11 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
         aboutContainer.setOnClickListener(this);
 
         View lineView = view.findViewById(R.id.line);
-        ViewCalculateUtil.setViewConstraintLayoutParam(lineView, ViewGroup.LayoutParams.MATCH_PARENT,1, 0, 0, 57, 0);
+        ViewCalculateUtil.setViewLinearLayoutParam(lineView, ViewGroup.LayoutParams.MATCH_PARENT,1, 0, 0, 57, 0);
         View line1View = view.findViewById(R.id.line1);
-        ViewCalculateUtil.setViewConstraintLayoutParam(line1View, ViewGroup.LayoutParams.MATCH_PARENT,1, 0, 0, 57, 0);
+        ViewCalculateUtil.setViewLinearLayoutParam(line1View,ViewGroup.LayoutParams.MATCH_PARENT,1, 0, 0, 57, 0);
         View line2View = view.findViewById(R.id.line2);
-        ViewCalculateUtil.setViewConstraintLayoutParam(line2View, ViewGroup.LayoutParams.MATCH_PARENT,1, 0, 0, 57, 0);
+        ViewCalculateUtil.setViewLinearLayoutParam(line2View, ViewGroup.LayoutParams.MATCH_PARENT,1, 0, 0, 57, 0);
         MainTopTitleView mainTopTitleView = view.findViewById(R.id.title);
         mainTopTitleView.setScanIsVisible(View.GONE);
         mainTopTitleView.setMenuIsVisible(View.GONE);
