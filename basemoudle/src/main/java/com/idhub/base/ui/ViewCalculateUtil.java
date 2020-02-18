@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+/**
+ * 适配屏幕
+ */
 public class ViewCalculateUtil {
     private static final String TAG = ViewCalculateUtil.class.getSimpleName();
 

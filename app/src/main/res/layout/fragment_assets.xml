@@ -17,6 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,7 +25,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/assets_top_bg"
@@ -94,25 +95,71 @@
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/claims_layout">
 
+                <TextView
+                    android:id="@+id/wallet_name"
+                    tools:text="wallet"
+                    android:textSize="12sp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="16dp"
+                    android:textColor="@color/wallet_text_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:id="@+id/line"
+                    android:background="@color/wallet_line_gray"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+
+                <TextView
+                    android:id="@+id/wallet_address"
+                    tools:text="0x995f7a7025e9964…ea5Aebc88a0a"
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    android:ellipsize="middle"
+                    android:gravity="center"
+                    android:drawablePadding="15dp"
+                    android:drawableRight="@mipmap/wallet_assets_qr_code_icon"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="16dp"
+                    android:textColor="@color/wallet_color_686868"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <com.idhub.wallet.common.tablayout.TabLayout
-                android:id="@+id/tab_layout"
+            <LinearLayout
+                android:id="@+id/tab_layout_view"
                 android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:layout_marginLeft="16dp"
-                android:paddingBottom="5dp"
-                android:layout_marginTop="16dp"
-                app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-                app:wallet_tabSelectedTextColor="@color/wallet_main_yellow_color"
-                android:layout_marginRight="16dp"
-                app:wallet_tabTextColor="@color/wallet_text_black"
-                android:background="@drawable/wallet_white_bg_radius_4"
-                app:layout_constraintTop_toBottomOf="@id/wallet_info"
-                app:wallet_tabIndicatorHeight="1dp"
-                app:wallet_tabIndicatorWidth="8dp"
-                app:wallet_tabIndicatorColor="@color/wallet_main_yellow_color"
-                />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginRight="6dp"
+                android:background="@mipmap/wallet_assets_tab_bg"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/wallet_info">
+
+                <com.idhub.wallet.common.tablayout.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="34dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="17dp"
+                    android:background="@color/wallet_white"
+                    android:paddingBottom="5dp"
+                    app:wallet_tabIndicatorColor="@color/wallet_main_yellow_color"
+                    app:wallet_tabIndicatorHeight="1dp"
+                    app:wallet_tabIndicatorWidth="8dp"
+                    app:wallet_tabSelectedTextColor="@color/wallet_main_yellow_color"
+                    app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                    app:wallet_tabTextColor="@color/wallet_text_black"
+                    app:wallet_tabTextSize="11sp" />
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/assets_name"
@@ -125,14 +172,54 @@
                 android:textSize="20sp"
                 android:typeface="serif"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+                app:layout_constraintTop_toBottomOf="@id/tab_layout_view" />
 
-            <androidx.viewpager.widget.ViewPager
+            <com.idhub.wallet.common.viewpager.AutoHeightViewpager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="470dp"
+                android:layout_height="570dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/assets_name" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <LinearLayout
+        android:id="@+id/tab_layout_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:background="@color/wallet_color_f5f5f5"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/title">
+
+        <LinearLayout
+            android:id="@+id/tan_layout_view2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="9dp"
+            android:layout_marginRight="6dp"
+            android:background="@mipmap/wallet_assets_tab_bg"
+            android:gravity="center">
+
+            <com.idhub.wallet.common.tablayout.TabLayout
+                android:id="@+id/tab_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/wallet_white"
+                android:paddingBottom="5dp"
+                app:wallet_tabIndicatorColor="@color/wallet_main_yellow_color"
+                app:wallet_tabIndicatorHeight="1dp"
+                app:wallet_tabIndicatorWidth="8dp"
+                app:wallet_tabSelectedTextColor="@color/wallet_main_yellow_color"
+                app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                app:wallet_tabTextColor="@color/wallet_text_black"
+                app:wallet_tabTextSize="11sp" />
+        </LinearLayout>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

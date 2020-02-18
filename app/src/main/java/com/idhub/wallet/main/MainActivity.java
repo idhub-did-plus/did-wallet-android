@@ -90,6 +90,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     private JSONObject mIdHubLoginJwtJsonObject;
     private String signMessage;
     private LoadingAndErrorView mLoadingAndErrorView;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +206,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     private void initView() {
 
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        tabLayout = findViewById(R.id.tab_layout);
         ViewCalculateUtil.setViewConstraintLayoutParam(tabLayout, ViewPager.LayoutParams.MATCH_PARENT, 49);
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -434,5 +435,9 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         } else {
             super.onBackPressed();
         }
+    }
+
+    public int getTabLayoutHeight() {
+        return tabLayout.getHeight();
     }
 }

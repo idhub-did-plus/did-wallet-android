@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.base.ui.ViewCalculateUtil;
+import com.idhub.wallet.assets.fragment.STMainView;
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.home.adapter.MainEpidemicAdapter;
@@ -23,6 +25,7 @@ import com.idhub.wallet.home.adapter.STRecommendAdapter;
 import com.idhub.wallet.home.adapter.STRecommendBean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,21 +78,17 @@ public class HotFragment extends MainBaseFragment {
         View newsContainer = view.findViewById(R.id.news_container);
         TextView newsTitle = view.findViewById(R.id.news_title);
         ImageView newsMoreImage = view.findViewById(R.id.news_more_image);
-        View firstStView = view.findViewById(R.id.first_st);
-        View secondStView = view.findViewById(R.id.second_st);
-        View thirdStView = view.findViewById(R.id.third_st);
-        View fourthStView = view.findViewById(R.id.fourth_st);
-        View fifthStView = view.findViewById(R.id.fifth_st);
-        View sixthStView = view.findViewById(R.id.sixth_st);
-        View seventhStView = view.findViewById(R.id.seventh_st);
-        ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 140, 87, 8, 0, 16, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, 109, 64, 5, 0, 0, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 107, 64, 0, 0, 5, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 0, 0, 0, 0, 5, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(fifthStView, 56, 95, 0, 0, 5, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(sixthStView, 56, 95, 0, 0, 5, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(seventhStView, 0, 56, 0, 0, 0, 0);
 
+        STMainView stView = view.findViewById(R.id.st_view);
+        List<AssetsModel> assetsModels = new ArrayList<>();
+        assetsModels.add(new AssetsModel());
+        assetsModels.add(new AssetsModel());
+//        assetsModels.add(new AssetsModel());
+//        assetsModels.add(new AssetsModel());
+//        assetsModels.add(new AssetsModel());
+//        assetsModels.add(new AssetsModel());
+//        assetsModels.add(new AssetsModel());
+        stView.setData(assetsModels);
 //        ViewCalculateUtil.setViewLinearLayoutParam(newsContainer, 358, 111, 14, 0, 8, 8);
 //        ViewCalculateUtil.setViewConstraintLayoutParam(newsTitle, ViewGroup.LayoutParams.WRAP_CONTENT, 22, 34, 0, 24, 0);
 //        ViewCalculateUtil.setViewConstraintLayoutParam(newsMoreImage, 29, 12, 10, 0, 0, 0);

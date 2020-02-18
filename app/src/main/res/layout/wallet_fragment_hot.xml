@@ -8,9 +8,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -77,285 +77,20 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/new_st_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:text="NEW ST"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="20sp"
+            android:typeface="serif" />
 
-            <TextView
-                android:id="@+id/new_st_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:text="NEW ST"
-                android:textColor="@color/wallet_text_black"
-                android:textSize="20sp"
-                android:typeface="serif"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/first_st"
-                android:layout_width="140dp"
-                android:layout_height="87dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/wallet_st_shape_first_top_left_radius"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/new_st_title">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Ethereum"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="16sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="-0.65%"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:src="@mipmap/wallet_st_bitcoin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/second_st"
-                android:layout_width="109dp"
-                android:layout_height="64dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/wallet_st_shape_second_bottom_left_radius"
-                app:layout_constraintLeft_toLeftOf="@id/first_st"
-                app:layout_constraintTop_toBottomOf="@id/first_st">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Ethereum"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="16sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="7dp"
-                    android:text="+0.65%"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/third_st"
-                android:layout_width="107dp"
-                android:layout_height="64dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/wallet_st_shape_third"
-                app:layout_constraintLeft_toRightOf="@id/second_st"
-                app:layout_constraintTop_toTopOf="@id/second_st">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Litecoin"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="16sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="7dp"
-                    android:text="+0.65%"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/fourth_st"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/wallet_st_shape_fourth"
-                app:layout_constraintBottom_toBottomOf="@id/first_st"
-                app:layout_constraintLeft_toRightOf="@id/first_st"
-                app:layout_constraintRight_toRightOf="@id/third_st"
-                app:layout_constraintTop_toTopOf="@id/first_st">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Bitcoin"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="16sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="+24.18%"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="14sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/fifth_st"
-                android:layout_width="56dp"
-                android:layout_height="95dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/wallet_st_shape_fifth"
-                app:layout_constraintBottom_toBottomOf="@id/third_st"
-                app:layout_constraintLeft_toRightOf="@id/third_st">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Binple"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="16sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="-10.09%"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/wallet_st_binple"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/sixth_st"
-                android:layout_width="56dp"
-                android:layout_height="95dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/wallet_st_shape_sixth"
-                app:layout_constraintBottom_toBottomOf="@id/third_st"
-                app:layout_constraintLeft_toRightOf="@id/fifth_st">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Binple"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="16sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="-10.09%"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/seventh_st"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:background="@drawable/wallet_st_shape_seventh_top_right_radius"
-                app:layout_constraintLeft_toLeftOf="@id/fifth_st"
-                app:layout_constraintRight_toRightOf="@id/sixth_st"
-                app:layout_constraintTop_toTopOf="@id/first_st">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="18dp"
-                    android:text="USDT"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="14sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="8dp"
-                    android:text="+8.53%"
-                    android:textColor="@color/wallet_white"
-                    android:textSize="12sp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:src="@mipmap/wallet_st_litecoin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <include
+            android:id="@+id/st_view"
+            layout="@layout/wallet_st_main_view" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
