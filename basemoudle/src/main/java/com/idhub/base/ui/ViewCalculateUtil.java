@@ -211,6 +211,22 @@ public class ViewCalculateUtil {
         layoutParams.rightMargin = UIUtils.getInstance().getWidth(rightMargin);
         view.setLayoutParams(layoutParams);
     }
+
+    public static void setViewConstraintLayoutLeftToRightParam(View view, int leftToRight) {
+
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+
+        layoutParams.leftToRight = leftToRight;
+//        layoutParams.leftToLeft = leftToLeft;
+//        layoutParams.rightToRight = rightToRight;
+//        layoutParams.rightToLeft = rightToLeft;
+//        layoutParams.topToTop = topToTop;
+//        layoutParams.topToBottom = topToBottom;
+//        layoutParams.bottomToBottom = bottomToBottom;
+//        layoutParams.bottomToTop = bottomToTop;
+        view.setLayoutParams(layoutParams);
+    }
+
     /**
      * 设置ConstraintLayout中 view的高度宽度
      *
@@ -233,6 +249,7 @@ public class ViewCalculateUtil {
         }
         view.setLayoutParams(layoutParams);
     }
+
     /**
      * 设置RelativeLayout中 view的高度宽度
      *

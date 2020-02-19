@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.base.node.WalletNoteSharedPreferences;
+import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import com.idhub.magic.common.service.DeployedContractAddress;
@@ -87,7 +88,9 @@ public class WalletIdentityRecoveryActivity extends BaseActivity implements View
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_recovery_identity));
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
-        findViewById(R.id.tv_import).setOnClickListener(this);
+        View btnView = findViewById(R.id.tv_import);
+        btnView.setOnClickListener(this);
+        ViewCalculateUtil.setViewConstraintLayoutParam(btnView, 315, 45, 50, 0, 30, 30);
         mTopView = findViewById(R.id.top_view);
         mTopView.setData(getString(R.string.wallet_recovery_identity_from_mnemonic_tip), getString(R.string.wallet_edit_mnemonic_tip));
     }

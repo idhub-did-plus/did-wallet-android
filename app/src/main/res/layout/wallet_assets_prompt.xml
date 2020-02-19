@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.idhub.wallet.assets.view.AssetsPromptView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/identity_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/wallet_color_005FC7"
+            android:scaleType="center"
+            android:src="@mipmap/wallet_identity_icon"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/identity_title"
+            android:layout_width="343dp"
+            android:layout_height="0dp"
+            android:background="@drawable/wallet_identity_prompt_top_bg"
+            android:drawableRight="@mipmap/wallet_identity_prompt_detail"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="9dp"
+            android:text="Digital identity"
+            android:textColor="@color/wallet_white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/identity_icon"
+            app:layout_constraintLeft_toRightOf="@id/identity_icon"
+            app:layout_constraintTop_toTopOf="@id/identity_icon" />
+
+        <ImageView
+            android:id="@+id/identity_bottom_bg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/wallet_identity_prompt_bottom_bg"
+            app:layout_constraintLeft_toLeftOf="@id/identity_icon"
+            app:layout_constraintRight_toRightOf="@id/identity_title"
+            app:layout_constraintTop_toBottomOf="@id/identity_icon" />
+
+        <TextView
+            android:id="@+id/identity_content_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
+            android:layout_marginTop="18dp"
+            android:drawableLeft="@mipmap/wallet_identity_prompt_content_icon"
+            android:drawablePadding="16dp"
+            android:text="Understand the role of digital identity"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/identity_icon" />
+
+        <TextView
+            android:id="@+id/identity_content_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@mipmap/wallet_identity_prompt_content_icon"
+            android:drawablePadding="16dp"
+            android:text="Digital identity of the upgrade process"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/identity_content_1"
+            app:layout_constraintTop_toBottomOf="@id/identity_content_1" />
+
+        <TextView
+            android:id="@+id/identity_content_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@mipmap/wallet_identity_prompt_content_icon"
+            android:drawablePadding="16dp"
+            android:text="Digital identity credential acquisition"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/identity_content_2"
+            app:layout_constraintTop_toBottomOf="@id/identity_content_2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/st_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/wallet_st_prompt_icon"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/st_title"
+            android:layout_width="343dp"
+            android:layout_height="0dp"
+            android:background="@drawable/wallet_identity_prompt_top_bg"
+            android:drawableRight="@mipmap/wallet_identity_prompt_detail"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="9dp"
+            android:text="Security Token"
+            android:textColor="@color/wallet_white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/st_icon"
+            app:layout_constraintLeft_toRightOf="@id/st_icon"
+            app:layout_constraintTop_toTopOf="@id/st_icon" />
+
+        <ImageView
+            android:id="@+id/st_bottom_bg"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/wallet_st_prompt_bottom_bg"
+            app:layout_constraintLeft_toLeftOf="@id/st_icon"
+            app:layout_constraintRight_toRightOf="@id/st_title"
+            app:layout_constraintTop_toBottomOf="@id/st_icon" />
+
+        <TextView
+            android:id="@+id/st_content_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="48dp"
+            android:layout_marginTop="18dp"
+            android:text="Content introduction of token assets"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/st_icon" />
+
+        <TextView
+            android:id="@+id/st_content_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Add token assets"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="@id/st_content_1"
+            app:layout_constraintTop_toBottomOf="@id/st_content_1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.idhub.wallet.assets.view.AssetsPromptView>

@@ -2,9 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/wallet_main_yellow_color"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".assets.fragment.STAssetsFragment">
+
+    <include
+        android:id="@+id/assets_prompt"
+        layout="@layout/wallet_assets_prompt" />
+
+    <include
+        android:id="@+id/st_content"
+        android:visibility="gone"
+        layout="@layout/wallet_st_main_view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

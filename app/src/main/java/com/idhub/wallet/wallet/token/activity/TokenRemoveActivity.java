@@ -55,6 +55,9 @@ public class TokenRemoveActivity extends BaseActivity {
         new AssetsModelDbManager().queryAll(operation -> {
             if (operation.isCompletedSucessfully()) {
                 List<AssetsModel> result = (List<AssetsModel>) operation.getResult();
+                for (AssetsModel assetsModel : result) {
+                    assetsModel.getContractAddresses();
+                }
                 ArrayList<AssetsModel> list = new ArrayList<>();
                 //过滤 显示对应ropsten或mainnet上的contractAddress
                 for (AssetsModel assetsModel : result) {

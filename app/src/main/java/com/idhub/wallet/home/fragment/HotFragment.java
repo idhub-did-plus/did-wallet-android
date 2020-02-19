@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.base.ui.ViewCalculateUtil;
-import com.idhub.wallet.assets.fragment.STMainView;
+import com.idhub.wallet.assets.view.STMainView;
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.home.adapter.MainEpidemicAdapter;
@@ -83,11 +83,11 @@ public class HotFragment extends MainBaseFragment {
         List<AssetsModel> assetsModels = new ArrayList<>();
         assetsModels.add(new AssetsModel());
         assetsModels.add(new AssetsModel());
-//        assetsModels.add(new AssetsModel());
-//        assetsModels.add(new AssetsModel());
-//        assetsModels.add(new AssetsModel());
-//        assetsModels.add(new AssetsModel());
-//        assetsModels.add(new AssetsModel());
+        assetsModels.add(new AssetsModel());
+        assetsModels.add(new AssetsModel());
+        assetsModels.add(new AssetsModel());
+        assetsModels.add(new AssetsModel());
+        assetsModels.add(new AssetsModel());
         stView.setData(assetsModels);
 //        ViewCalculateUtil.setViewLinearLayoutParam(newsContainer, 358, 111, 14, 0, 8, 8);
 //        ViewCalculateUtil.setViewConstraintLayoutParam(newsTitle, ViewGroup.LayoutParams.WRAP_CONTENT, 22, 34, 0, 24, 0);

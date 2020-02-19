@@ -79,8 +79,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="23dp"
                 android:layout_marginTop="16dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/head">
+
+                <ImageView
+                    android:id="@+id/claims_idhub_vip"
+                    android:layout_width="18dp"
+                    android:layout_height="23dp"
+                    android:src="@mipmap/wallet_idhub_vip" />
+
+                <ImageView
+                    android:id="@+id/claims_idhub_svip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:src="@mipmap/wallet_idhub_svip" />
+
+                <ImageView
+                    android:id="@+id/claims_idhub_investor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:src="@mipmap/wallet_idhub_investor" />
+
+                <ImageView
+                    android:id="@+id/claims_idhub_purchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:src="@mipmap/wallet_idhub_purchaser" />
+
+                <ImageView
+                    android:id="@+id/claims_idhub_compliant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:src="@mipmap/wallet_idhub_compliant" />
 
             </LinearLayout>
 
@@ -97,37 +132,37 @@
 
                 <TextView
                     android:id="@+id/wallet_name"
-                    tools:text="wallet"
-                    android:textSize="12sp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginLeft="16dp"
-                    android:textColor="@color/wallet_text_black"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/wallet_text_black"
+                    android:textSize="12sp"
+                    tools:text="wallet" />
 
                 <View
                     android:id="@+id/line"
-                    android:background="@color/wallet_line_gray"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@color/wallet_line_gray" />
 
                 <TextView
                     android:id="@+id/wallet_address"
-                    tools:text="0x995f7a7025e9964…ea5Aebc88a0a"
-                    android:textSize="16sp"
-                    android:singleLine="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:drawableRight="@mipmap/wallet_assets_qr_code_icon"
+                    android:drawablePadding="15dp"
                     android:ellipsize="middle"
                     android:gravity="center"
-                    android:drawablePadding="15dp"
-                    android:drawableRight="@mipmap/wallet_assets_qr_code_icon"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="16dp"
+                    android:singleLine="true"
                     android:textColor="@color/wallet_color_686868"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="16sp"
+                    tools:text="0x995f7a7025e9964…ea5Aebc88a0a" />
             </LinearLayout>
 
             <LinearLayout
@@ -163,14 +198,15 @@
 
             <TextView
                 android:id="@+id/assets_name"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:drawableRight="@mipmap/wallet_assets_right_arrow"
                 android:text="@string/wallet_assets"
                 android:textColor="@color/wallet_text_black"
                 android:textSize="20sp"
-                android:typeface="serif"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tab_layout_view" />
 
@@ -188,9 +224,9 @@
         android:id="@+id/tab_layout_layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
         android:background="@color/wallet_color_f5f5f5"
         android:orientation="vertical"
+        android:paddingTop="8dp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/title">
 

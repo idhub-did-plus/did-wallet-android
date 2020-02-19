@@ -24,6 +24,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AssetsModelDbManager implements ModelDbManager<AssetsModel> {
 
+    public List<AssetsModel> querySTAssets() {
+        DaoSession daoSession = App.getInstance().getmDaoSession();
+        WhereCondition eq = AssetsModelDao.Properties.Type.eq(TransactionTokenType.ERC1400);
+        List<AssetsModel> assetsModels = daoSession.queryBuilder(AssetsModel.class).where(eq).build().list();
+        return assetsModels;
+    }
+
     public void queryAll(AsyncOperationListener listener) {
         Observable.create((ObservableOnSubscribe<AssetsModel>) emitter -> {
             DaoSession daoSession = App.getInstance().getmDaoSession();
