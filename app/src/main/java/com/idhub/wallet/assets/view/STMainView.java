@@ -181,6 +181,10 @@ public class STMainView extends ConstraintLayout {
                 ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 123, 64, 0, 0, 5, 0);
                 ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 95, 87, 0, 0, 5, 0);
                 ViewCalculateUtil.setViewConstraintLayoutParam(seventhStView, 0, 156, 0, 0, 5, 16);
+                ViewCalculateUtil.setViewConstraintLayoutrightToRightParam(seventhValueView, -1);
+                ViewCalculateUtil.setViewConstraintLayoutLeftToLeftParam(seventhValueView, R.id.seventh_name);
+                ViewCalculateUtil.setViewConstraintLayoutParam(seventhValueView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 54, 0, 0, 0);
+
                 sixthStView.setVisibility(View.GONE);
                 seventhStView.setVisibility(View.VISIBLE);
                 firstNameView.setText(assetsModels.get(0).getSymbol());

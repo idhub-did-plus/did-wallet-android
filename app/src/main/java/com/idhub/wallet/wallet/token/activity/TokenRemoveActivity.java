@@ -3,6 +3,7 @@ package com.idhub.wallet.wallet.token.activity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +43,7 @@ public class TokenRemoveActivity extends BaseActivity {
     }
 
     private void initView() {
-        TitleLayout titleLayout = findViewById(R.id.title);
+        @SuppressLint("WrongViewCast") TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_main_asserts_manager));
         RecyclerView recyclerView = findViewById(R.id.token_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

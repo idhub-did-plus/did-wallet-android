@@ -227,6 +227,66 @@ public class ViewCalculateUtil {
         view.setLayoutParams(layoutParams);
     }
 
+    public static void setViewConstraintLayoutLeftToLeftParam(View view, int leftToLeft) {
+
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+
+//        layoutParams.leftToRight = leftToRight;
+        layoutParams.leftToLeft = leftToLeft;
+//        layoutParams.rightToRight = rightToRight;
+//        layoutParams.rightToLeft = rightToLeft;
+//        layoutParams.topToTop = topToTop;
+//        layoutParams.topToBottom = topToBottom;
+//        layoutParams.bottomToBottom = bottomToBottom;
+//        layoutParams.bottomToTop = bottomToTop;
+        view.setLayoutParams(layoutParams);
+    }
+
+    public static void setViewConstraintLayoutrightToRightParam(View view, int rightToRight) {
+
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+
+//        layoutParams.leftToRight = leftToRight;
+//        layoutParams.leftToLeft = leftToLeft;
+        layoutParams.rightToRight = rightToRight;
+//        layoutParams.rightToLeft = rightToLeft;
+//        layoutParams.topToTop = topToTop;
+//        layoutParams.topToBottom = topToBottom;
+//        layoutParams.bottomToBottom = bottomToBottom;
+//        layoutParams.bottomToTop = bottomToTop;
+        view.setLayoutParams(layoutParams);
+    }
+
+    public static void setViewConstraintLayoutTopToTopParam(View view, int topToTop) {
+
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+
+//        layoutParams.leftToRight = leftToRight;
+//        layoutParams.leftToLeft = leftToLeft;
+//        layoutParams.rightToRight = rightToRight;
+//        layoutParams.rightToLeft = rightToLeft;
+        layoutParams.topToTop = topToTop;
+//        layoutParams.topToBottom = topToBottom;
+//        layoutParams.bottomToBottom = bottomToBottom;
+//        layoutParams.bottomToTop = bottomToTop;
+        view.setLayoutParams(layoutParams);
+    }
+
+    public static void setViewConstraintLayoutBottomToBottomParam(View view, int bottomToBottom) {
+
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) view.getLayoutParams();
+
+//        layoutParams.leftToRight = leftToRight;
+//        layoutParams.leftToLeft = leftToLeft;
+//        layoutParams.rightToRight = rightToRight;
+//        layoutParams.rightToLeft = rightToLeft;
+        layoutParams.topToTop = bottomToBottom;
+//        layoutParams.topToBottom = topToBottom;
+//        layoutParams.bottomToBottom = bottomToBottom;
+//        layoutParams.bottomToTop = bottomToTop;
+        view.setLayoutParams(layoutParams);
+    }
+
     /**
      * 设置ConstraintLayout中 view的高度宽度
      *
