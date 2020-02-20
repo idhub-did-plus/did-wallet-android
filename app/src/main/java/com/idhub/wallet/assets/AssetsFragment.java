@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.base.ui.UIUtils;
 import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.R;
@@ -32,10 +33,12 @@ import com.idhub.wallet.assets.fragment.TokenFragment;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.tablayout.TabLayout;
+import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.main.MainActivity;
 import com.idhub.wallet.me.VipStateType;
 import com.idhub.wallet.wallet.token.activity.TokenManagerActivity;
@@ -56,6 +59,16 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
     private WalletKeystore mDidHubMnemonicKeyStore;
     private TextView walletName;
     private TextView walletAddress;
+    private IdentityEntity defaultIdentity;
+
+    private boolean[] claims = new boolean[5];
+    private ImageView vipView;
+    private ImageView svipView;
+    private ImageView investorView;
+    private ImageView purchaseView;
+    private ImageView compliantView;
+    private View upgradeBtn;
+    private TextView upgradeValueView;
 
     public AssetsFragment() {
 
@@ -105,9 +118,10 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         View lineView = view.findViewById(R.id.line);
         ViewCalculateUtil.setViewLinearLayoutParam(lineView, ViewGroup.LayoutParams.MATCH_PARENT, 1, 5, 0, 16, 16);
 
-        View upgradeBtn = view.findViewById(R.id.upgrade_btn_layout);
+        upgradeBtn = view.findViewById(R.id.upgrade_btn_layout);
+        upgradeBtn.setOnClickListener(this);
         View upgradeIcon = view.findViewById(R.id.upgrade_icon);
-        TextView upgradeValue = view.findViewById(R.id.upgrade_value);
+        upgradeValueView = view.findViewById(R.id.upgrade_value);
         View claimsLayout = view.findViewById(R.id.claims_layout);
         View walletInfoLayout = view.findViewById(R.id.wallet_info);
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
@@ -137,8 +151,8 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
 
         ViewCalculateUtil.setViewConstraintLayoutParam(walletInfoLayout, ViewGroup.LayoutParams.MATCH_PARENT, 61, 16, 0, 16, 16);
         ViewCalculateUtil.setViewConstraintLayoutParam(claimsLayout, ViewGroup.LayoutParams.MATCH_PARENT, 23, 16, 0, 0, 0);
-        ViewCalculateUtil.setTextSize(upgradeValue, 12);
-        ViewCalculateUtil.setViewLinearLayoutParam(upgradeValue, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0, 8, 10);
+        ViewCalculateUtil.setTextSize(upgradeValueView, 12);
+        ViewCalculateUtil.setViewLinearLayoutParam(upgradeValueView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0, 8, 10);
         ViewCalculateUtil.setViewLinearLayoutParam(upgradeIcon, 17, 16, 0, 0, 12, 0);
         ViewCalculateUtil.setViewConstraintLayoutParam(upgradeBtn, ViewGroup.LayoutParams.WRAP_CONTENT, 30, 0, 0, 0, 16);
         ViewCalculateUtil.setViewConstraintLayoutParam(headView, 72, 72, 24, 0, 0, 0);
@@ -166,46 +180,73 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
             }
         });
         //claims
-        ImageView vipView = view.findViewById(R.id.claims_idhub_vip);
-        ImageView svipView = view.findViewById(R.id.claims_idhub_svip);
-        ImageView investorView = view.findViewById(R.id.claims_idhub_investor);
-        ImageView purchaseView = view.findViewById(R.id.claims_idhub_purchase);
-        ImageView compliantView = view.findViewById(R.id.claims_idhub_compliant);
+        vipView = view.findViewById(R.id.claims_idhub_vip);
+        svipView = view.findViewById(R.id.claims_idhub_svip);
+        investorView = view.findViewById(R.id.claims_idhub_investor);
+        purchaseView = view.findViewById(R.id.claims_idhub_purchase);
+        compliantView = view.findViewById(R.id.claims_idhub_compliant);
         ViewCalculateUtil.setViewLinearLayoutParam(vipView, 18, 23);
         ViewCalculateUtil.setViewLinearLayoutParam(svipView, 18, 23, 0, 0, 13, 0);
         ViewCalculateUtil.setViewLinearLayoutParam(investorView, 24, 20, 0, 0, 11, 0);
         ViewCalculateUtil.setViewLinearLayoutParam(purchaseView, 24, 18, 0, 0, 8, 0);
         ViewCalculateUtil.setViewLinearLayoutParam(compliantView, 24, 20, 0, 0, 8, 0);
+        updateData();
+    }
+
+    private void updateData() {
+        //TODO:观察者模式
+        //claims
         WalletVipSharedPreferences vipSharedPreferences = WalletVipSharedPreferences.getInstance();
         String idhubVipState = vipSharedPreferences.getIdhubVipState();
         if (VipStateType.HAVE_APPLY_FOR.equals(idhubVipState)) {
+            claims[0] = true;
             vipView.setImageResource(R.mipmap.wallet_idhub_vip);
         } else {
+            claims[0] = false;
             vipView.setImageResource(R.mipmap.wallet_idhub_vip_default);
         }
         String idhubSuperVipState = vipSharedPreferences.getIdhubSuperVipState();
         if (VipStateType.HAVE_APPLY_FOR.equals(idhubSuperVipState)) {
+            claims[1] = true;
             svipView.setImageResource(R.mipmap.wallet_idhub_svip);
         } else {
+            claims[1] = false;
             svipView.setImageResource(R.mipmap.wallet_idhub_svip_default);
         }
         String investorVipState = vipSharedPreferences.getQualifiedInvestorVipState();
         if (VipStateType.HAVE_APPLY_FOR.equals(investorVipState)) {
+            claims[2] = true;
             investorView.setImageResource(R.mipmap.wallet_idhub_investor);
         } else {
+            claims[2] = false;
             investorView.setImageResource(R.mipmap.wallet_idhub_investor_default);
         }
         String purchaserVipState = vipSharedPreferences.getQualifiedPurchaserVipState();
         if (VipStateType.HAVE_APPLY_FOR.equals(purchaserVipState)) {
+            claims[3] = true;
             purchaseView.setImageResource(R.mipmap.wallet_idhub_purchaser);
         } else {
+            claims[3] = false;
             purchaseView.setImageResource(R.mipmap.wallet_idhub_purchaser_default);
         }
         String complianceInvestorVipState = vipSharedPreferences.getComplianceInvestorVipState();
         if (VipStateType.HAVE_APPLY_FOR.equals(complianceInvestorVipState)) {
+            claims[4] = true;
             compliantView.setImageResource(R.mipmap.wallet_idhub_compliant);
         } else {
+            claims[4] = false;
             compliantView.setImageResource(R.mipmap.wallet_idhub_compliant_default);
+        }
+        //身份
+        defaultIdentity = new IdentityDbManager().getDefaultIdentity();
+        if (defaultIdentity == null) {
+            upgradeBtn.setVisibility(View.VISIBLE);
+            upgradeValueView.setText("升级身份");
+        } else if (claims[0] && claims[1] && claims[2] && claims[3] && claims[4]) {
+            upgradeBtn.setVisibility(View.GONE);
+        } else {
+            upgradeBtn.setVisibility(View.VISIBLE);
+            upgradeValueView.setText("申请凭证");
         }
     }
 
@@ -219,6 +260,18 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.assets_name:
                 TokenManagerActivity.startAction(getContext());
+                break;
+            case R.id.upgrade_btn_layout:
+                //升级身份 或 申请claim
+                if (defaultIdentity == null) {
+                    //shengji
+                    WalletKeystore didHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
+                    if (didHubMnemonicKeyStore != null) {
+                        UpgradeActivity.startAction(getContext(), didHubMnemonicKeyStore.getId());
+                    }
+                } else {
+                    ClaimsActivity.startAction(getContext());
+                }
                 break;
         }
     }

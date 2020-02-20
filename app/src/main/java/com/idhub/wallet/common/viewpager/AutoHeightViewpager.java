@@ -2,6 +2,7 @@ package com.idhub.wallet.common.viewpager;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -41,10 +42,25 @@ public class AutoHeightViewpager extends ViewPager {
         this.canScroll = canScroll;
     }
 
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        return canScroll;
+//    }
+
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return canScroll;
+        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+            Log.e("LYW" ,"onInterceptTouchEvent:1 " );
+            return canScroll;
+        } else {
+            Log.e("LYW" ,"onInterceptTouchEvent:2 " );
+            return super.onInterceptTouchEvent(ev);
+        }
     }
 
-
+    @Override
+    public boolean canScrollHorizontally(int direction) {
+        return false;
+    }
 }

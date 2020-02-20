@@ -24,7 +24,8 @@
         android:theme="@style/WalletAppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".wallet.token.activity.TokenRemoveActivity"></activity>
+        <activity android:name=".assets.ClaimsActivity"></activity>
+        <activity android:name=".wallet.token.activity.TokenRemoveActivity" />
         <activity android:name=".setting.UserInfoShowActivity" />
         <activity android:name=".common.zxinglib.QrCodeActivity" />
         <activity android:name=".setting.LanguagesActivity" />
@@ -107,7 +108,6 @@
         <activity
             android:name=".wallet.transaction.SendConfirmActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".common.zxinglib.widget.crop.CropImageActivity"
             android:screenOrientation="portrait" />
