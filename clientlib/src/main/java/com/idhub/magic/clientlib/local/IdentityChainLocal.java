@@ -135,15 +135,9 @@ public class IdentityChainLocal implements IdentityChain, IdentityChainViewer {
                     } else {
                         List<IdentityCreatedEventResponse> es = ContractManager.getRegistry1484()
                                 .getIdentityCreatedEvents(transactionReceipt);
-                        if (es != null) {
-                            Log.e("LYW", "listen: " + es.size());
-                        } else {
-                            Log.e("LYW", "listen:null " );
-                        }
                         listener.result(es.get(0));
                     }
                 }).exceptionally(transactionReceipt -> {
-                    Log.e("LYW", "listen: " + transactionReceipt.getMessage() );
                     el.error(transactionReceipt.getMessage());
                     return null;
                 });

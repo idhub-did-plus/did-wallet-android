@@ -47,21 +47,21 @@ public class MnemonicBackupHintActivity extends BaseActivity implements View.OnC
         TextView tvBackupTwo1 = findViewById(R.id.tv_backup_two_1);
         TextView tvBackupTwo2 = findViewById(R.id.tv_backup_two_2);
 
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTwo1, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 33, 25);
+        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTwo1, 0 ,ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
         ViewCalculateUtil.setTextSize(tvBackupTwo1, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTwo2, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 33, 25);
+        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTwo2, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
         ViewCalculateUtil.setTextSize(tvBackupTwo2, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTwo, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 30, 0, 25, 25);
+        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTwo, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 30, 0, 0, 25);
         ViewCalculateUtil.setTextSize(tvBackupTwo, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupFirst2, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 33, 25);
+        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupFirst2, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
         ViewCalculateUtil.setTextSize(tvBackupFirst2, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupFirst1, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 33, 25);
+        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupFirst1, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
         ViewCalculateUtil.setTextSize(tvBackupFirst1, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupFirst, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 30, 0, 25, 0);
+        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupFirst, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 30, 0, 0, 25);
         ViewCalculateUtil.setTextSize(tvBackupFirst, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(titleView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 64, 0, 25, 0);
+        ViewCalculateUtil.setViewConstraintLayoutParam(titleView, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 64, 0, 25, 25);
         ViewCalculateUtil.setTextSize(titleView, 20);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTopView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 25, 0);
+        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTopView, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
         ViewCalculateUtil.setTextSize(tvBackupTopView, 13);
 
     }

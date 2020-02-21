@@ -246,7 +246,6 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void handleIdentityErrorMessage(String message) {
-        Log.e("LYW", "handleIdentityErrorMessage: " + message );
         Message messageError = Message.obtain();
         messageError.what = 2;
         messageError.obj = message;

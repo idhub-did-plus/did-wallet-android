@@ -21,6 +21,7 @@ import com.idhub.wallet.me.information.AccreditedPurchaserActivity;
 import com.idhub.wallet.me.information.IDHubSVIPActivity;
 import com.idhub.wallet.me.information.IDHubVIPActivity;
 import com.idhub.wallet.me.information.STCompliantInvestorActivity;
+import com.idhub.wallet.me.information.UploadInformationTypeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +39,7 @@ public class ClaimFragment extends MainBaseFragment implements View.OnClickListe
     private View stAccreditedContainer;
     private View stAccreditedPurchaserContainer;
     private View stCompliantContainer;
+    private View infoBgContainer;
 
     public ClaimFragment() {
         // Required empty public constructor
@@ -69,7 +71,8 @@ public class ClaimFragment extends MainBaseFragment implements View.OnClickListe
     }
 
     private void initView(View view) {
-        View infoBgContainer = view.findViewById(R.id.claim_upload_information_bg);
+        infoBgContainer = view.findViewById(R.id.claim_upload_information_bg);
+        infoBgContainer.setOnClickListener(this);
         TextView uploadTitleView = view.findViewById(R.id.claim_upload_info_title);
         ImageView arrowView = view.findViewById(R.id.claim_upload_info_arrow);
         TextView idhubClaimsView = view.findViewById(R.id.idhub_claims);
@@ -158,6 +161,9 @@ public class ClaimFragment extends MainBaseFragment implements View.OnClickListe
             AccreditedPurchaserActivity.startAction(getContext());
         } else if (v == stCompliantContainer) {
             STCompliantInvestorActivity.startAction(getContext());
+        } else if (v == infoBgContainer) {
+            //上传信息
+            UploadInformationTypeActivity.startAction(getContext());
         }
     }
     @Override

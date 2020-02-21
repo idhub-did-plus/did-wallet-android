@@ -43,7 +43,6 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
         super.onFinishInflate();
         mBackImageView = findViewById(R.id.back_icon);
         ViewCalculateUtil.setViewPadding(mBackImageView, 10, 10, 10, 10);
-        ViewCalculateUtil.setViewConstraintLayoutParam(mBackImageView, 13, 21);
         mTitleView = findViewById(R.id.tv_title);
         mImageOneView = findViewById(R.id.image_one);
         mImageOneView.setVisibility(GONE);

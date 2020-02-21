@@ -46,33 +46,35 @@ public class TransactionActivity extends BaseActivity implements View.OnClickLis
         titleLayout.setTitle(getString(R.string.wallet_transaction));
         ImageView iconView = findViewById(R.id.coin_icon);
         Integer integer = TokenTypeManager.assetsMipmap.get(mAssetsModel.getSymbol());
-        if (integer != null){
+        if (integer != null) {
             iconView.setImageResource(integer);
-        }else if (TransactionTokenType.ETH_NAME.equals(mAssetsModel.getType())){
+        } else if (TransactionTokenType.ETH_NAME.equals(mAssetsModel.getType())) {
             iconView.setImageResource(R.mipmap.wallet_eth_icon);
-        }else {
+        } else {
             iconView.setImageResource(R.mipmap.wallet_default_token_icon);
         }
         findViewById(R.id.receive).setOnClickListener(this);
         findViewById(R.id.send).setOnClickListener(this);
-        TextView balanceAndName = findViewById(R.id.balance_and_name);
+        TextView balanceView = findViewById(R.id.balance);
+        TextView nameView = findViewById(R.id.token_name);
         String balance = "";
         if (partitionEntity != null) {
             balance = partitionEntity.balance;
             mAssetsModel.setBalance(balance);
             mAssetsModel.partition = partitionEntity.name;
         } else {
-             balance = mAssetsModel.getBalance();
+            balance = mAssetsModel.getBalance();
         }
         String s = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance), String.valueOf(Math.pow(10, Double.parseDouble(mAssetsModel.getDecimals()))));
         String symbol = mAssetsModel.getSymbol();
-        balanceAndName.setText(s + " " + symbol);
+        balanceView.setText(s);
+        nameView.setText(symbol);
         WalletKeystore currentKeyStore = WalletManager.getCurrentKeyStore();
         if (currentKeyStore != null) {
             String address = currentKeyStore.getAddress();
             mAssetsModel.setAddress(NumericUtil.prependHexPrefix(address));
         }
-}
+    }
 
     public static void srartAction(Context context, AssetsModel assetsModel) {
         Intent intent = new Intent(context, TransactionActivity.class);

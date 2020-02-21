@@ -33,6 +33,7 @@ import com.idhub.wallet.assets.fragment.TokenFragment;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.tablayout.TabLayout;
+import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletManager;
@@ -48,6 +49,8 @@ import org.web3j.crypto.Keys;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -91,6 +94,13 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         initView(view);
         mDidHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
         initData();
+        WalletUpgradeObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                //升级身份成功
+                identityData();
+            }
+        });
         return view;
     }
 
@@ -237,6 +247,10 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
             claims[4] = false;
             compliantView.setImageResource(R.mipmap.wallet_idhub_compliant_default);
         }
+        identityData();
+    }
+
+    private void identityData(){
         //身份
         defaultIdentity = new IdentityDbManager().getDefaultIdentity();
         if (defaultIdentity == null) {
@@ -249,7 +263,6 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
             upgradeValueView.setText("申请凭证");
         }
     }
-
     private int getTopViewHeight() {
         int height = UIUtils.getInstance().getHeight(80);
         return height;

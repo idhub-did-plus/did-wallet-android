@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:background="@color/wallet_color_f5f5f5"
     tools:context=".assets.AssetsFragment">
 
@@ -18,8 +20,6 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
