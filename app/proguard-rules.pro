@@ -210,3 +210,6 @@ public static java.lang.String TABLENAME;
 #bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+
+#model
+-keep class com.idhub.wallet.net.collectiables.model.** {*;}

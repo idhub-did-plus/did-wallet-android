@@ -8,15 +8,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,9 +24,7 @@ import com.idhub.base.greendao.entity.IdentityEntity;
 import com.idhub.base.ui.UIUtils;
 import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.R;
-import com.idhub.wallet.assets.fragment.CollectiblesFragment;
-import com.idhub.wallet.assets.fragment.STAssetsFragment;
-import com.idhub.wallet.assets.fragment.TokenFragment;
+import com.idhub.wallet.assets.adapter.AssetsFragmentPagerAdapter;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.tablayout.TabLayout;
@@ -46,9 +41,6 @@ import com.idhub.wallet.wallet.token.activity.TokenManagerActivity;
 
 import org.web3j.crypto.Keys;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -59,7 +51,7 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
 
 
     private MainActivity mainActivity;
-    private WalletKeystore mDidHubMnemonicKeyStore;
+    public WalletKeystore mDidHubMnemonicKeyStore;
     private TextView walletName;
     private TextView walletAddress;
     private IdentityEntity defaultIdentity;
@@ -139,6 +131,7 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         View tabLayoutLayout = view.findViewById(R.id.tab_layout_view);
         View tabLayoutLayout2 = view.findViewById(R.id.tan_layout_view2);
         ViewPager viewPager = view.findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(3);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout2.setupWithViewPager(viewPager);
         String[] strings = {getString(R.string.wallet_securities), getString(R.string.wallet_token), getString(R.string.wallet_collectibles)};

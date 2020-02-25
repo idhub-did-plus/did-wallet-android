@@ -51,10 +51,8 @@ public class AutoHeightViewpager extends ViewPager {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_MOVE) {
-            Log.e("LYW" ,"onInterceptTouchEvent:1 " );
             return canScroll;
         } else {
-            Log.e("LYW" ,"onInterceptTouchEvent:2 " );
             return super.onInterceptTouchEvent(ev);
         }
     }

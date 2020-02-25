@@ -11,6 +11,8 @@ import com.idhub.magic.common.contracts.IdentityRegistryInterface;
 import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.contract.EIP20Interface;
 import com.idhub.wallet.contract.ERC1400;
+import com.idhub.wallet.contract.ERC721;
+import com.idhub.wallet.contract.ERC721Enumerable;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
@@ -59,6 +61,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.idhub.wallet.net.Web3Api.mWeb3j;
 import static com.idhub.wallet.net.Web3Api.sNode;
 
 
@@ -88,7 +91,8 @@ public class ExampleUnitTest {
         EthGetBalance ethGetBalance = web3j.ethGetBalance("0x70d76f5B27ee05CCF0e0fa67aE72EcB203069b77", DefaultBlockParameterName.LATEST).send();
         System.out.println(ethGetBalance.getBalance());
 
-
+//        ERC721 erc721 = ERC721.deploy(mWeb3j, credentials, contractGasProvider).send();
+        ERC721Enumerable erc721Enumerable = ERC721Enumerable.deploy(mWeb3j, credentials, contractGasProvider).send();
 //        Credentials credentials1 = Credentials.create("CBCB558CFB5CA8EF584D6BF5AD2744B9D6352209F5E0721B362946C8B5FF5F42");
 //
 //        EthGetTransactionCount send = web3j.ethGetTransactionCount("0x70d76f5B27ee05CCF0e0fa67aE72EcB203069b77", DefaultBlockParameterName.LATEST).send();//获取noce

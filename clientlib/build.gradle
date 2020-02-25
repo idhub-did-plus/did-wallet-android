@@ -32,8 +32,6 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    api 'com.squareup.retrofit2:retrofit:2.3.0'
-    api 'com.squareup.retrofit2:converter-jackson:2.0.0'
     api project(path: ':etherscan')
     api project(path: ':commom')
     api project(path: ':module_update')

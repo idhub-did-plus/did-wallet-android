@@ -1,4 +1,4 @@
-package com.idhub.wallet.assets;
+package com.idhub.wallet.assets.adapter;
 
 import android.content.Context;
 import android.view.ViewGroup;
@@ -7,7 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.idhub.wallet.assets.AssetsChannelFragmentFactory;
 import com.idhub.wallet.main.MainChannelFragmentFactory;
 
 public class AssetsFragmentPagerAdapter extends FragmentPagerAdapter {
