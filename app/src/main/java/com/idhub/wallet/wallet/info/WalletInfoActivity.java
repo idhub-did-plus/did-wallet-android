@@ -114,7 +114,6 @@ public class WalletInfoActivity extends BaseActivity implements View.OnClickList
 
     private void initData() {
         WalletKeystore keyStore = WalletManager.getKeyStore(mID);
-        String address = keyStore.getAddress();
         mDefaultKeystore = WalletManager.getDefaultKeystore();
         mWalletNameView.setText(keyStore.getWallet().getName());
         mWalletAddressView.setText(Keys.toChecksumAddress(NumericUtil.prependHexPrefix(keyStore.getAddress())));

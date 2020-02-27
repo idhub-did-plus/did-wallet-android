@@ -83,8 +83,8 @@ public class InputPasswordActivity extends BaseActivity implements View.OnClickL
         View contentBottomView = findViewById(R.id.tv_warning_bottom);
         ViewCalculateUtil.setViewConstraintLayoutParam(createName, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 20, 0, 25, 25);
         ViewCalculateUtil.setTextSize(createName,15);
-        ViewCalculateUtil.setViewConstraintLayoutParam(contentTopView,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,5,0,25,25);
-        ViewCalculateUtil.setViewConstraintLayoutParam(contentBottomView,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,5,0,25,25);
+        ViewCalculateUtil.setViewLinearLayoutParam(contentTopView,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,5,0,25,25);
+        ViewCalculateUtil.setViewLinearLayoutParam(contentBottomView,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,5,0,25,25);
     }
 
 

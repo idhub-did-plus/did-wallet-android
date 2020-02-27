@@ -134,10 +134,13 @@ public class TagFlowLayout extends FlowLayout
             tagViewContainer.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    doSelect(finalTagViewContainer, position);
-                    if (mOnTagClickListener != null) {
-                        mOnTagClickListener.onTagClick(finalTagViewContainer, position,
-                                TagFlowLayout.this);
+                    boolean checked = finalTagViewContainer.isChecked();
+                    if (!checked) {
+                        doSelect(finalTagViewContainer, position);
+                        if (mOnTagClickListener != null) {
+                            mOnTagClickListener.onTagClick(finalTagViewContainer, position,
+                                    TagFlowLayout.this);
+                        }
                     }
                 }
             });
@@ -157,17 +160,17 @@ public class TagFlowLayout extends FlowLayout
         return new HashSet<Integer>(mSelectedView);
     }
 
-    private void setChildChecked(int position, TagView view) {
+    public void setChildChecked(int position, TagView view) {
         view.setChecked(true);
-        mTagAdapter.onSelected(position, view.getTagView());
+        mTagAdapter.onSelected(position, view);
     }
 
-    private void setChildUnChecked(int position, TagView view) {
+    public void setChildUnChecked(int position, TagView view) {
         view.setChecked(false);
-        mTagAdapter.unSelected(position, view.getTagView());
+        mTagAdapter.unSelected(position, view);
     }
 
-    private void doSelect(TagView child, int position) {
+    public void doSelect(TagView child, int position) {
         if (!child.isChecked()) {
             //处理max_select=1的情况
             if (mSelectedMax == 1 && mSelectedView.size() == 1) {

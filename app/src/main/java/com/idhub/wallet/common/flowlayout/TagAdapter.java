@@ -15,6 +15,7 @@ public abstract class TagAdapter<T> {
     private OnDataChangedListener mOnDataChangedListener;
     @Deprecated
     private HashSet<Integer> mCheckedPosList = new HashSet<Integer>();
+    private SelectListener selectListener;
 
     public TagAdapter(List<T> datas) {
         mTagDatas = datas;
@@ -84,13 +85,20 @@ public abstract class TagAdapter<T> {
 
     public abstract View getView(FlowLayout parent, int position, T t);
 
-
-    public void onSelected(int position, View view){
-        Log.d("zhy","onSelected " + position);
+    public void setSelectListener(SelectListener selectListener){
+        this.selectListener = selectListener;
     }
 
-    public void unSelected(int position, View view){
-        Log.d("zhy","unSelected " + position);
+    public void onSelected(int position, TagView view){
+        if (selectListener != null) {
+            selectListener.onSelected(position, view);
+        }
+    }
+
+    public void unSelected(int position, TagView view){
+        if (selectListener != null) {
+            selectListener.unSelected(position, view);
+        }
     }
 
     public boolean setSelected(int position, T t) {
@@ -98,4 +106,9 @@ public abstract class TagAdapter<T> {
     }
 
 
+    public interface SelectListener{
+        void onSelected(int position, TagView view);
+
+        void unSelected(int position, TagView view);
+    }
 }

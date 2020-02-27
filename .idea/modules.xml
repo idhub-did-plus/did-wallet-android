@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/basemoudle/basemoudle.iml" filepath="$PROJECT_DIR$/basemoudle/basemoudle.iml" />
-      <module fileurl="file://$PROJECT_DIR$/clientlib/clientlib.iml" filepath="$PROJECT_DIR$/clientlib/clientlib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commom/commom.iml" filepath="$PROJECT_DIR$/commom/commom.iml" />
-      <module fileurl="file://$PROJECT_DIR$/config/config.iml" filepath="$PROJECT_DIR$/config/config.iml" />
-      <module fileurl="file://$PROJECT_DIR$/did-wallet-android.iml" filepath="$PROJECT_DIR$/did-wallet-android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/etherscan/etherscan.iml" filepath="$PROJECT_DIR$/etherscan/etherscan.iml" />
-      <module fileurl="file://$PROJECT_DIR$/module_update/module_update.iml" filepath="$PROJECT_DIR$/module_update/module_update.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="did-wallet-android/app" />
+      <module fileurl="file://$PROJECT_DIR$/basemoudle/basemoudle.iml" filepath="$PROJECT_DIR$/basemoudle/basemoudle.iml" group="did-wallet-android/basemoudle" />
+      <module fileurl="file://$PROJECT_DIR$/clientlib/clientlib.iml" filepath="$PROJECT_DIR$/clientlib/clientlib.iml" group="did-wallet-android/clientlib" />
+      <module fileurl="file://$PROJECT_DIR$/commom/commom.iml" filepath="$PROJECT_DIR$/commom/commom.iml" group="did-wallet-android/commom" />
+      <module fileurl="file://$PROJECT_DIR$/config/config.iml" filepath="$PROJECT_DIR$/config/config.iml" group="did-wallet-android/config" />
+      <module fileurl="file://$PROJECT_DIR$/did-wallet-android.iml" filepath="$PROJECT_DIR$/did-wallet-android.iml" group="did-wallet-android" />
+      <module fileurl="file://$PROJECT_DIR$/etherscan/etherscan.iml" filepath="$PROJECT_DIR$/etherscan/etherscan.iml" group="did-wallet-android/etherscan" />
+      <module fileurl="file://$PROJECT_DIR$/module_update/module_update.iml" filepath="$PROJECT_DIR$/module_update/module_update.iml" group="did-wallet-android/module_update" />
     </modules>
   </component>
 </project>

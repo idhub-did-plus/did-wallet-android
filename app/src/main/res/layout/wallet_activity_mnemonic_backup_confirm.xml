@@ -9,112 +9,105 @@
         android:id="@+id/title"
         layout="@layout/wallet_common_title_layout"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_backup_top"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:layout_marginLeft="25dp"
-        android:text="@string/wallet_backup_mnemonic"
-        android:textColor="@color/wallet_black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginRight="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title" />
-
-    <TextView
-        android:id="@+id/tv_backup_hint"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:textSize="13sp"
-        android:textColor="@color/wallet_text_gray_color"
-        android:text="@string/wallet_backup_confirm_hint"
-        app:layout_constraintLeft_toLeftOf="@id/tv_backup_top"
-        app:layout_constraintRight_toRightOf="@id/tv_backup_top"
-        app:layout_constraintTop_toBottomOf="@id/tv_backup_top" />
-
-    <TextView
-        android:id="@+id/warning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/wallet_background_orange"
-        android:textSize="13sp"
-        android:padding="5dp"
-        android:visibility="invisible"
-        android:textColor="@color/wallet_white"
-        android:text="@string/wallet_mnemonic_order_error"
-        app:layout_constraintLeft_toLeftOf="@id/tv_backup_top"
-        app:layout_constraintTop_toBottomOf="@id/tv_backup_hint" />
-
-    <View
-        android:id="@+id/v_line_1"
+<ScrollView
+    android:layout_width="match_parent"
+    app:layout_constraintTop_toBottomOf="@id/title"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_height="0dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/warning" />
+        android:layout_height="match_parent">
 
-    <com.idhub.wallet.common.flowlayout.TagFlowLayout
-        android:id="@+id/mnemonic_confirm"
-        android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:minHeight="100dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/v_line_1"
-        app:max_select="1"
-        app:tag_gravity="left" />
+        <TextView
+            android:id="@+id/tv_backup_top"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:layout_marginLeft="25dp"
+            android:text="@string/wallet_backup_mnemonic"
+            android:textColor="@color/wallet_black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginRight="25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_backup_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textSize="13sp"
+            android:textColor="@color/wallet_text_gray_color"
+            android:text="@string/wallet_backup_confirm_hint"
+            app:layout_constraintLeft_toLeftOf="@id/tv_backup_top"
+            app:layout_constraintRight_toRightOf="@id/tv_backup_top"
+            app:layout_constraintTop_toBottomOf="@id/tv_backup_top" />
+
+        <TextView
+            android:id="@+id/warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/wallet_background_orange"
+            android:textSize="13sp"
+            android:padding="5dp"
+            android:visibility="gone"
+            android:textColor="@color/wallet_white"
+            android:text="@string/wallet_mnemonic_order_error"
+            app:layout_constraintLeft_toLeftOf="@id/tv_backup_top"
+            app:layout_constraintTop_toBottomOf="@id/tv_backup_hint" />
+
+        <com.idhub.wallet.common.flowlayout.TagFlowLayout
+            android:id="@+id/mnemonic_confirm"
+            android:layout_width="0dp"
+            android:layout_height="219dp"
+            android:background="@drawable/wallet_rectangle_line_4"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:minHeight="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/warning"
+            app:max_select="1"
+            app:tag_gravity="left" />
 
 
-    <View
-        android:id="@+id/v_line_2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/mnemonic_confirm" />
 
+        <com.idhub.wallet.common.flowlayout.TagFlowLayout
+            android:id="@+id/mnemonic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            app:max_select="-1"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mnemonic_confirm"
+            app:tag_gravity="left" />
 
-    <com.idhub.wallet.common.flowlayout.TagFlowLayout
-        android:id="@+id/mnemonic"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/v_line_2"
-        app:max_select="1"
-        app:tag_gravity="left" />
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="match_parent"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/wallet_main_btn_background"
+            android:gravity="center"
+            android:text="@string/wallet_finish"
+            android:textColor="@color/wallet_white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mnemonic"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
 
-    <TextView
-        android:id="@+id/tv_next"
-        android:layout_width="match_parent"
-        android:layout_marginRight="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/wallet_main_btn_background"
-        android:gravity="center"
-        android:text="@string/wallet_finish"
-        android:textColor="@color/wallet_white"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/mnemonic"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
