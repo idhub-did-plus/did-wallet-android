@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="@dimen/dp_147"
+    android:layout_marginLeft="@dimen/dp_8"
+    android:layout_marginRight="@dimen/dp_8"
+    android:layout_height="@dimen/dp_97"
+    android:background="@drawable/wallet_home_main_epidemic_item_shape"
     android:orientation="vertical">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_epidemic_item_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/wallet_home_main_epidemic_item_shape">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bitcoin"
+            android:layout_marginTop="@dimen/dp_12"
+            android:textSize="@dimen/font_sp_14"
             android:textColor="@color/wallet_text_black"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -26,6 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+10.00%"
+            android:textSize="@dimen/font_sp_14"
+            android:layout_marginTop="@dimen/dp_8"
             android:textColor="@color/wallet_color_F2443D"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -36,6 +37,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+10.00%"
+            android:layout_marginTop="@dimen/dp_8"
+            android:textSize="@dimen/dp_12"
             android:textColor="@color/wallet_color_F2443D"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/value2"
@@ -46,10 +49,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+10.00%"
+            android:textSize="@dimen/dp_12"
             android:textColor="@color/wallet_color_F2443D"
             app:layout_constraintLeft_toRightOf="@id/value1"
             app:layout_constraintTop_toTopOf="@id/value1"
             app:layout_constraintRight_toRightOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

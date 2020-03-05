@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
@@ -61,30 +60,32 @@ public class InputPasswordActivity extends BaseActivity implements View.OnClickL
         titleLayout.setTitle(getString(R.string.wallet_create_wallet));
         View btnView = findViewById(R.id.tv_create);
         btnView.setOnClickListener(this);
-        ViewCalculateUtil.setViewConstraintLayoutParam(btnView, ViewGroup.LayoutParams.MATCH_PARENT, 45, 50, 0, 30, 30);
 
         mWalletName = findViewById(R.id.et_wallet_name);
-        ViewCalculateUtil.setViewConstraintLayoutParam(mWalletName, ViewGroup.LayoutParams.MATCH_PARENT, 50, 15, 0, 25, 25);
+
         mWalletName.setHint(getString(R.string.wallet_wallet_name));
         mPassword = findViewById(R.id.et_password);
-        ViewCalculateUtil.setViewConstraintLayoutParam(mPassword, ViewGroup.LayoutParams.MATCH_PARENT, 50, 10, 0, 25, 25);
         mPassword.setHint(getString(R.string.wallet_password));
         mPasswordRepeat = findViewById(R.id.et_password_again);
-        ViewCalculateUtil.setViewConstraintLayoutParam(mPasswordRepeat, ViewGroup.LayoutParams.MATCH_PARENT, 50, 10, 0, 25, 25);
+
         mPasswordRepeat.setHint(getString(R.string.wallet_password_again));
         mPasswordHint = findViewById(R.id.et_password_tip);
-        ViewCalculateUtil.setViewConstraintLayoutParam(mPasswordHint, ViewGroup.LayoutParams.MATCH_PARENT, 50, 10, 0, 25, 25);
         mPasswordHint.setHint(getString(R.string.wallet_password_tip));
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(btnView, ViewGroup.LayoutParams.MATCH_PARENT, 45, 50, 0, 30, 30);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(mWalletName, ViewGroup.LayoutParams.MATCH_PARENT, 50, 15, 0, 25, 25);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(mPasswordRepeat, ViewGroup.LayoutParams.MATCH_PARENT, 50, 10, 0, 25, 25);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(mPassword, ViewGroup.LayoutParams.MATCH_PARENT, 50, 10, 0, 25, 25);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(mPasswordHint, ViewGroup.LayoutParams.MATCH_PARENT, 50, 10, 0, 25, 25);
 
 
         TextView createName = findViewById(R.id.tv_create_name);
         View contentTopView = findViewById(R.id.tv_warning_top);
         View contentBottomView = findViewById(R.id.tv_warning_bottom);
-        ViewCalculateUtil.setViewConstraintLayoutParam(createName, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 20, 0, 25, 25);
-        ViewCalculateUtil.setTextSize(createName,15);
-        ViewCalculateUtil.setViewLinearLayoutParam(contentTopView,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,5,0,25,25);
-        ViewCalculateUtil.setViewLinearLayoutParam(contentBottomView,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,5,0,25,25);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(createName, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 20, 0, 25, 25);
+//        ViewCalculateUtil.setTextSize(createName,15);
+//        ViewCalculateUtil.setViewLinearLayoutParam(contentTopView,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,5,0,25,25);
+//        ViewCalculateUtil.setViewLinearLayoutParam(contentBottomView,ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,5,0,25,25);
     }
 
 

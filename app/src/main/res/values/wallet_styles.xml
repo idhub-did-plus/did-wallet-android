@@ -17,11 +17,11 @@
      <item name="android:layout_height">wrap_content</item>
      <item name="android:background">@drawable/wallet_rectangle_line_10</item>
      <item name="android:gravity">left</item>
-     <item name="android:textSize">13sp</item>
+     <item name="android:textSize">@dimen/font_sp_13</item>
      <item name="android:textColorHint">@color/wallet_create_wallet_hint</item>
-     <item name="android:padding">15dp</item>
-     <item name="android:layout_marginLeft">25dp</item>
-     <item name="android:layout_marginRight">25dp</item>
+     <item name="android:padding">@dimen/dp_15</item>
+     <item name="android:layout_marginLeft">@dimen/dp_25</item>
+     <item name="android:layout_marginRight">@dimen/dp_25</item>
     </style>
 
     <style name="WalletCommonButton">

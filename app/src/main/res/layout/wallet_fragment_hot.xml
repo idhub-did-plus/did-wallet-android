@@ -16,28 +16,28 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/news_container"
             android:layout_width="match_parent"
-            android:layout_height="111dp"
+            android:layout_height="@dimen/dp_111"
             android:background="@mipmap/wallet_shadow_background">
 
             <TextView
                 android:id="@+id/news_title"
                 android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="34dp"
+                android:layout_height="@dimen/dp_22"
+                android:layout_marginLeft="@dimen/dp_24"
+                android:layout_marginTop="@dimen/dp_34"
                 android:includeFontPadding="false"
                 android:text="News"
                 android:textColor="@color/wallet_black"
-                android:textSize="16sp"
+                android:textSize="@dimen/font_sp_16"
                 android:typeface="serif"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/news_more_image"
-                android:layout_width="29dp"
-                android:layout_height="12dp"
-                android:layout_marginTop="10dp"
+                android:layout_width="@dimen/dp_29"
+                android:layout_height="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_10"
                 android:background="@drawable/wallet_news_more_shape"
                 android:scaleType="center"
                 android:src="@mipmap/wallet_right_arrow_home_news"
@@ -49,27 +49,27 @@
                 android:id="@+id/news_line"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="22dp"
-                android:layout_marginBottom="22dp"
+                android:layout_marginLeft="@dimen/dp_12"
+                android:layout_marginTop="@dimen/dp_22"
+                android:layout_marginBottom="@dimen/dp_22"
                 android:background="@color/wallet_line_gray"
                 app:layout_constraintLeft_toRightOf="@id/news_title" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="63dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginRight="21dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginRight="@dimen/dp_21"
+                android:layout_marginBottom="@dimen/dp_24"
                 android:ellipsize="end"
-                android:lineSpacingExtra="4.5dp"
+                android:lineSpacingExtra="@dimen/dp_4_half"
                 android:lines="3"
                 android:text="With over 100 tokens deployed and 12 with
  five or more tokenholders, we’ve built the
  infrastructure to make the integration…"
                 android:textColor="@color/wallet_black"
-                android:textSize="14sp"
+                android:textSize="@dimen/font_sp_14"
                 android:typeface="serif"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/news_line"
@@ -81,71 +81,65 @@
             android:id="@+id/new_st_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
             android:text="NEW ST"
             android:textColor="@color/wallet_text_black"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_sp_20"
             android:typeface="serif" />
 
         <include
             android:id="@+id/st_view"
             layout="@layout/wallet_st_main_view" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <TextView
+            android:id="@+id/st_recommend_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_24"
+            android:text="ST Recommend"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="@dimen/font_sp_20"
+            android:typeface="serif"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/st_recommend_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginRight="@dimen/dp_6"
+            app:layout_constraintTop_toBottomOf="@id/st_recommend_title" />
 
-            <TextView
-                android:id="@+id/st_recommend_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="24dp"
-                android:text="ST Recommend"
-                android:textColor="@color/wallet_text_black"
-                android:textSize="20sp"
-                android:typeface="serif"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/main_epidemic_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_24"
+            android:text="Main Epidemic"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="@dimen/font_sp_20"
+            android:typeface="serif"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.core.widget.NestedScrollView
-                android:id="@+id/scroll_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/st_recommend_title">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/st_recommend_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </androidx.core.widget.NestedScrollView>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_epidemic_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginRight="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_epidemic_title" />
 
-            <TextView
-                android:id="@+id/main_epidemic_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="24dp"
-                android:text="Main Epidemic"
-                android:textColor="@color/wallet_text_black"
-                android:textSize="20sp"
-                android:typeface="serif"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/main_epidemic_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/main_epidemic_title" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
 

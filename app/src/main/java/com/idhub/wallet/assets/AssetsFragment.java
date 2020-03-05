@@ -21,8 +21,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.idhub.base.greendao.entity.IdentityEntity;
-import com.idhub.base.ui.UIUtils;
-import com.idhub.base.ui.ViewCalculateUtil;
+
 import com.idhub.wallet.R;
 import com.idhub.wallet.assets.adapter.AssetsFragmentPagerAdapter;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
@@ -43,6 +42,8 @@ import org.web3j.crypto.Keys;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import me.jessyan.autosize.utils.AutoSizeUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -112,13 +113,8 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         Glide.with(this).load(userBasicInfo.headPath).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(headView);
 
         walletName = view.findViewById(R.id.wallet_name);
-        ViewCalculateUtil.setTextSize(walletName, 12);
-        ViewCalculateUtil.setViewLinearLayoutParam(walletName, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 6, 0, 16, 16);
         walletAddress = view.findViewById(R.id.wallet_address);
-        ViewCalculateUtil.setTextSize(walletAddress, 16);
-        ViewCalculateUtil.setViewLinearLayoutParam(walletAddress, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 4, 0, 16, 16);
         View lineView = view.findViewById(R.id.line);
-        ViewCalculateUtil.setViewLinearLayoutParam(lineView, ViewGroup.LayoutParams.MATCH_PARENT, 1, 5, 0, 16, 16);
 
         upgradeBtn = view.findViewById(R.id.upgrade_btn_layout);
         upgradeBtn.setOnClickListener(this);
@@ -140,32 +136,9 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         TextView assetsName = view.findViewById(R.id.assets_name);
         assetsName.setOnClickListener(this);
 
-        //适配
-        ViewCalculateUtil.setViewConstraintLayoutParam(viewPager, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 8, 0, 0, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(assetsName, ViewGroup.LayoutParams.MATCH_PARENT, 22, 16, 0, 16, 16);
-        ViewCalculateUtil.setTextSize(assetsName, 16);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tabLayoutLayout, ViewGroup.LayoutParams.MATCH_PARENT, 60, 9, 0, 6, 6);
-        ViewCalculateUtil.setViewLinearLayoutParam(tabLayoutLayout2, ViewGroup.LayoutParams.MATCH_PARENT, 60, 9, 0, 6, 6);
-        ViewCalculateUtil.setViewLinearLayoutParam(tabLayout, ViewGroup.LayoutParams.MATCH_PARENT, 40, 0, 0, 10, 10);
-        ViewCalculateUtil.setViewPadding(tabLayout, 5, 7, 0, 0);
-
-        ViewCalculateUtil.setViewLinearLayoutParam(tabLayout2, ViewGroup.LayoutParams.MATCH_PARENT, 40, 0, 0, 10, 10);
-        ViewCalculateUtil.setViewPadding(tabLayout2, 5, 7, 0, 0);
-
-        ViewCalculateUtil.setViewConstraintLayoutParam(walletInfoLayout, ViewGroup.LayoutParams.MATCH_PARENT, 61, 16, 0, 16, 16);
-        ViewCalculateUtil.setViewConstraintLayoutParam(claimsLayout, ViewGroup.LayoutParams.MATCH_PARENT, 23, 16, 0, 0, 0);
-        ViewCalculateUtil.setTextSize(upgradeValueView, 12);
-        ViewCalculateUtil.setViewLinearLayoutParam(upgradeValueView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0, 0, 8, 10);
-        ViewCalculateUtil.setViewLinearLayoutParam(upgradeIcon, 17, 16, 0, 0, 12, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(upgradeBtn, ViewGroup.LayoutParams.WRAP_CONTENT, 30, 0, 0, 0, 16);
-        ViewCalculateUtil.setViewConstraintLayoutParam(headView, 72, 72, 24, 0, 0, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(topBg, ViewGroup.LayoutParams.MATCH_PARENT, 177);
-
         //滑动的距离，判断当滑动到顶部的时候，计算viewpager的高度进行设置。
         NestedScrollView nestedScrollView = view.findViewById(R.id.scroll_view);
-
         View topTabLayoutLayout = view.findViewById(R.id.tab_layout_layout2);
-        ViewCalculateUtil.setViewPadding(topTabLayoutLayout, 6, 0, 0, 0);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -188,11 +161,6 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         investorView = view.findViewById(R.id.claims_idhub_investor);
         purchaseView = view.findViewById(R.id.claims_idhub_purchase);
         compliantView = view.findViewById(R.id.claims_idhub_compliant);
-        ViewCalculateUtil.setViewLinearLayoutParam(vipView, 18, 23);
-        ViewCalculateUtil.setViewLinearLayoutParam(svipView, 18, 23, 0, 0, 13, 0);
-        ViewCalculateUtil.setViewLinearLayoutParam(investorView, 24, 20, 0, 0, 11, 0);
-        ViewCalculateUtil.setViewLinearLayoutParam(purchaseView, 24, 18, 0, 0, 8, 0);
-        ViewCalculateUtil.setViewLinearLayoutParam(compliantView, 24, 20, 0, 0, 8, 0);
         updateData();
     }
 
@@ -257,7 +225,7 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         }
     }
     private int getTopViewHeight() {
-        int height = UIUtils.getInstance().getHeight(80);
+        int height = AutoSizeUtils.dp2px(getContext(),80);
         return height;
     }
 

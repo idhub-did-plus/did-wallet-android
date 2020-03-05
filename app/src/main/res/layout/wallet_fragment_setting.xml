@@ -12,25 +12,27 @@
         layout="@layout/wallet_main_set_item_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/line_layout"
         android:layout_width="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="1dp"
         android:background="@color/wallet_white"
-        app:layout_constraintTop_toBottomOf="@id/wallet_container"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_height="1dp">
+        app:layout_constraintTop_toBottomOf="@id/wallet_container">
+
         <View
             android:id="@+id/line"
-            android:layout_width="match_parent"
+            android:layout_width="318dp"
             android:layout_height="1dp"
-            android:background="@color/wallet_line_gray"
-           />
-    </LinearLayout>
+            android:layout_gravity="right"
+            android:background="@color/wallet_line_gray" />
+    </FrameLayout>
 
 
     <include
@@ -47,25 +49,26 @@
         layout="@layout/wallet_main_set_item_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/message_container" />
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/line1_layout"
         android:layout_width="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="1dp"
         android:background="@color/wallet_white"
-        app:layout_constraintTop_toBottomOf="@id/node_container"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_height="1dp">
+        app:layout_constraintTop_toBottomOf="@id/node_container">
+
         <View
-            android:id="@+id/line1"
-            android:layout_width="match_parent"
+            android:layout_width="318dp"
             android:layout_height="1dp"
-            android:background="@color/wallet_line_gray"
-            />
-    </LinearLayout>
+            android:layout_gravity="right"
+            android:background="@color/wallet_line_gray" />
+    </FrameLayout>
 
     <include
         android:id="@+id/language_container"
@@ -81,25 +84,26 @@
         layout="@layout/wallet_main_set_item_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/language_container" />
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/line2_layout"
         android:layout_width="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="1dp"
         android:background="@color/wallet_white"
-        app:layout_constraintTop_toBottomOf="@id/user_agreement_container"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_height="1dp">
+        app:layout_constraintTop_toBottomOf="@id/user_agreement_container">
+
         <View
-            android:id="@+id/line2"
-            android:layout_width="match_parent"
+            android:layout_width="318dp"
             android:layout_height="1dp"
-            android:background="@color/wallet_line_gray"
-            />
-    </LinearLayout>
+            android:layout_gravity="right"
+            android:background="@color/wallet_line_gray" />
+    </FrameLayout>
 
     <include
         android:id="@+id/about_container"
@@ -114,8 +118,6 @@
     <include
         android:id="@+id/title"
         layout="@layout/wallet_main_top_title_view"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

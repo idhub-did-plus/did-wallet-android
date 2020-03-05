@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/first_st"
-        android:layout_width="117dp"
-        android:layout_height="87dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="@dimen/dp_140"
+        android:layout_height="@dimen/dp_87"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_8"
         android:background="@drawable/wallet_st_shape_first_top_left_radius"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,15 +17,15 @@
 
         <TextView
             android:id="@+id/first_name"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_12"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="Ethereum"
             android:textColor="@color/wallet_white"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_sp_16"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,11 +34,11 @@
             android:id="@+id/first_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginBottom="@dimen/dp_12"
             android:text="-0.65%"
             android:textColor="@color/wallet_white"
-            android:textSize="14sp"
+            android:textSize="@dimen/font_sp_14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -47,7 +46,7 @@
             android:id="@+id/first_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="@dimen/dp_5"
             android:src="@mipmap/wallet_st_bitcoin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
@@ -55,9 +54,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/second_st"
-        android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="@dimen/dp_109"
+        android:layout_height="@dimen/dp_64"
+        android:layout_marginTop="@dimen/dp_5"
         android:background="@drawable/wallet_st_shape_second_bottom_left_radius"
         app:layout_constraintLeft_toLeftOf="@id/first_st"
         app:layout_constraintTop_toBottomOf="@id/first_st">
@@ -67,13 +66,13 @@
             android:id="@+id/second_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_8"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="Ethedscsjdlm"
             android:textColor="@color/wallet_white"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_sp_16"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -82,11 +81,11 @@
             android:id="@+id/second_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginBottom="@dimen/dp_7"
             android:text="+0.65%"
             android:textColor="@color/wallet_white"
-            android:textSize="14sp"
+            android:textSize="@dimen/font_sp_14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -94,9 +93,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/third_st"
-        android:layout_width="107dp"
-        android:layout_height="64dp"
-        android:layout_marginLeft="5dp"
+        android:layout_width="@dimen/dp_107"
+        android:layout_height="@dimen/dp_64"
+        android:layout_marginLeft="@dimen/dp_5"
         android:background="@drawable/wallet_st_shape_third"
         app:layout_constraintLeft_toRightOf="@id/second_st"
         app:layout_constraintTop_toTopOf="@id/second_st">
@@ -106,13 +105,13 @@
             android:id="@+id/third_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_8"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="Litecoids,mf,sdnf,n"
             android:textColor="@color/wallet_white"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_sp_16"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -121,11 +120,11 @@
             android:id="@+id/third_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginBottom="7dp"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginBottom="@dimen/dp_7"
             android:text="+0.65%"
             android:textColor="@color/wallet_white"
-            android:textSize="14sp"
+            android:textSize="@dimen/font_sp_14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -133,9 +132,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fourth_st"
-        android:layout_width="76dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="5dp"
+        android:layout_width="@dimen/dp_76"
+        android:layout_height="@dimen/dp_0"
+        android:layout_marginLeft="@dimen/dp_5"
         android:background="@drawable/wallet_st_shape_fourth"
         app:layout_constraintBottom_toBottomOf="@id/first_st"
         app:layout_constraintLeft_toRightOf="@id/first_st"
@@ -146,13 +145,13 @@
             android:id="@+id/fourth_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_12"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="Bitcoin"
             android:textColor="@color/wallet_white"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_sp_16"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -161,11 +160,11 @@
             android:id="@+id/fourth_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_12"
             android:text="+24.18%"
             android:textColor="@color/wallet_white"
-            android:textSize="14sp"
+            android:textSize="@dimen/font_sp_14"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -173,7 +172,7 @@
             android:id="@+id/fourth_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="@dimen/dp_5"
             android:src="@mipmap/wallet_st_litecoin"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -182,11 +181,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fifth_st"
-        android:layout_width="56dp"
-        android:layout_height="95dp"
-        android:layout_marginLeft="5dp"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_95"
+        android:layout_marginLeft="@dimen/dp_5"
         android:background="@drawable/wallet_st_shape_fifth"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/third_st"
         app:layout_constraintLeft_toRightOf="@id/third_st">
 
@@ -195,13 +193,13 @@
             android:id="@+id/fifth_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginTop="@dimen/dp_12"
             android:ellipsize="end"
             android:singleLine="true"
             android:text="Binple"
             android:textColor="@color/wallet_white"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_sp_16"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -210,11 +208,11 @@
             android:id="@+id/fifth_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginBottom="@dimen/dp_8"
             android:text="-10.09%"
             android:textColor="@color/wallet_white"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_sp_12"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -229,11 +227,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sixth_st"
-        android:layout_width="56dp"
-        android:layout_height="95dp"
-        android:layout_marginLeft="5dp"
+        android:layout_width="@dimen/dp_56"
+        android:layout_height="@dimen/dp_95"
+        android:layout_marginLeft="@dimen/dp_5"
         android:background="@drawable/wallet_st_shape_sixth"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/third_st"
         app:layout_constraintLeft_toRightOf="@id/fifth_st">
 
@@ -242,13 +239,13 @@
             android:id="@+id/sixth_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
+            android:layout_marginLeft="@dimen/dp_4"
             android:singleLine="true"
             android:ellipsize="end"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/dp_12"
             android:text="Binple"
             android:textColor="@color/wallet_white"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_sp_16"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -257,11 +254,11 @@
             android:id="@+id/sixth_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="@dimen/dp_4"
+            android:layout_marginBottom="@dimen/dp_8"
             android:text="-10.09%"
             android:textColor="@color/wallet_white"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_sp_12"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -269,12 +266,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/seventh_st"
-        android:layout_width="117dp"
-        android:layout_height="56dp"
+        android:layout_width="@dimen/dp_117"
+        android:layout_height="@dimen/dp_56"
         android:layout_marginLeft="5dp"
         android:background="@drawable/wallet_st_shape_seventh_top_right_radius"
         app:layout_constraintLeft_toRightOf="@id/fourth_st"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/first_st">
 
 
@@ -282,13 +278,13 @@
             android:id="@+id/seventh_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="18dp"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:layout_marginTop="@dimen/dp_18"
             android:singleLine="true"
             android:ellipsize="end"
             android:text="USDT"
             android:textColor="@color/wallet_white"
-            android:textSize="14sp"
+            android:textSize="@dimen/font_sp_14"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -297,11 +293,11 @@
             android:id="@+id/seventh_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_8"
             android:text="+8.53%"
             android:textColor="@color/wallet_white"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_sp_12"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -309,7 +305,7 @@
             android:id="@+id/seventh_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="@dimen/dp_5"
             android:src="@mipmap/wallet_st_litecoin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />

@@ -1,74 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.idhub.wallet.assets.view.TokenItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_marginLeft="16dp"
-        android:id="@+id/container_view"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/wallet_white_bg_radius_4"
-        android:layout_height="64dp">
+    android:layout_width="@dimen/dp_343"
+    android:layout_height="@dimen/dp_64"
+    app:layout_constraintLeft_toLeftOf="parent"
+    android:layout_marginLeft="@dimen/dp_16"
+    app:layout_constraintRight_toRightOf="parent"
+    android:layout_marginTop="@dimen/dp_8"
+    android:background="@drawable/wallet_white_bg_radius_4"
+    app:layout_constraintTop_toTopOf="parent">
 
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="14dp"
-            android:src="@mipmap/wallet_default_token_icon"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="@dimen/dp_36"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_14"
+        android:src="@mipmap/wallet_default_token_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:text="ETH"
-            android:layout_marginTop="13dp"
-            android:textColor="@color/wallet_text_black"
-            android:textSize="14sp"
-            app:layout_constraintLeft_toRightOf="@id/icon"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_13"
+        android:text="ETH"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="@dimen/font_sp_14"
+        app:layout_constraintLeft_toRightOf="@id/icon"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/rate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="≈217.4210 (USD)"
-            android:textColor="@color/wallet_color_A2A2A2"
-            android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/name" />
+    <TextView
+        android:id="@+id/rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="≈217.4210 (USD)"
+        android:textColor="@color/wallet_color_A2A2A2"
+        android:textSize="@dimen/font_sp_12"
+        app:layout_constraintLeft_toLeftOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/name" />
 
-        <TextView
-            android:id="@+id/value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:text="519.19"
-            android:layout_marginRight="16dp"
-            android:textColor="@color/wallet_text_black"
-            android:textSize="14sp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginRight="@dimen/dp_16"
+        android:text="519.19"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="@dimen/font_sp_14"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/percent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+7.12%"
-            android:layout_marginRight="16dp"
-            android:textColor="@color/wallet_color_31B27A"
-            android:textSize="12sp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/value" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/percent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dp_16"
+        android:text="+7.12%"
+        android:textColor="@color/wallet_color_31B27A"
+        android:textSize="@dimen/font_sp_12"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/value" />
 </com.idhub.wallet.assets.view.TokenItemView>

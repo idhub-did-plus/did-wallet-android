@@ -13,8 +13,8 @@
        app:layout_constraintTop_toTopOf="parent"
        app:layout_constraintLeft_toLeftOf="parent"
        app:layout_constraintRight_toRightOf="parent"
-       android:layout_marginLeft="16dp"
-       android:layout_marginRight="16dp"
+       android:layout_marginLeft="@dimen/dp_8"
+       android:layout_marginRight="@dimen/dp_8"
        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.idhub.base.ui.UIUtils;
 import com.idhub.magic.clientlib.ApiFactory;
 import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
 import com.idhub.magic.common.service.DeployedContractAddress;
@@ -59,7 +58,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UIUtils.getInstance(this);
         LocalUtils.setApplicationLanguage(this);
         StatusBarUtil.setImmersiveStatusBar(this, true);
     }

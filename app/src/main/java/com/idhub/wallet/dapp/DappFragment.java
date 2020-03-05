@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
-import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.title.TitleLayout;
@@ -38,8 +37,8 @@ public class DappFragment extends MainBaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.wallet_fragment_dapp, container, false);
         mUrlEdit = view.findViewById(R.id.et_dapp_url);
-        ViewCalculateUtil.setTextSize(mUrlEdit,15);
-        ViewCalculateUtil.setViewConstraintLayoutParam(mUrlEdit, 335, 40, 15, 0, 0, 0);
+//        ViewCalculateUtil.setTextSize(mUrlEdit,15);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(mUrlEdit, 335, 40, 15, 0, 0, 0);
         mUrlEdit.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 String url = mUrlEdit.getText().toString();

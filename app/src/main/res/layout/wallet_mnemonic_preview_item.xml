@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mnemonic_layout"
+    android:layout_marginTop="@dimen/dp_10"
+    android:layout_marginLeft="@dimen/dp_7"
+    android:layout_marginRight="@dimen/dp_7"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -13,14 +16,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_10"
         android:background="@drawable/memonic_selected"
         android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
+        android:paddingLeft="@dimen/dp_15"
+        android:paddingTop="@dimen/dp_7"
+        android:paddingRight="@dimen/dp_15"
+        android:textSize="@dimen/font_sp_15"
+        android:paddingBottom="@dimen/dp_7"
         android:textColor="@color/wallet_text_black"
         tools:text="@string/wallet_designated_amount" />
 

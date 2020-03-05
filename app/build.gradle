@@ -84,4 +84,5 @@ dependencies {
     implementation project(path: ':clientlib')
     implementation project(path: ':basemoudle')
     implementation files('libs/SQLiteStudioRemote.jar')
+    implementation 'me.jessyan:autosize:1.2.0'
 }

@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.R;
 
 public class MainTopTitleView extends ConstraintLayout {
@@ -26,11 +25,11 @@ public class MainTopTitleView extends ConstraintLayout {
         menuView = findViewById(R.id.main_left_menu);
         scanView = findViewById(R.id.main_scan);
         TextView titleView = findViewById(R.id.title);
-        ViewCalculateUtil.setViewGroupLayoutParam(bgView, LayoutParams.MATCH_PARENT, 64);
-        ViewCalculateUtil.setViewConstraintLayoutParam(menuView, 17, 16, 36, 0, 15, 0);
-        ViewCalculateUtil.setViewConstraintLayoutParam(scanView, 17, 17, 33, 0, 0, 18);
-        ViewCalculateUtil.setViewConstraintLayoutParam(titleView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 30, 0, 0, 0);
-        ViewCalculateUtil.setTextSize(titleView, 17);
+//        ViewCalculateUtil.setViewGroupLayoutParam(bgView, LayoutParams.MATCH_PARENT, 64);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(menuView, 17, 16, 36, 0, 15, 0);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(scanView, 17, 17, 33, 0, 0, 18);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(titleView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 30, 0, 0, 0);
+//        ViewCalculateUtil.setTextSize(titleView, 17);
     }
 
     public void setScanIsVisible(int visible) {

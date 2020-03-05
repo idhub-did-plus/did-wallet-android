@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/wallet_color_f5f5f5"
     tools:context=".dex.DexFragment">
 
     <include
@@ -12,10 +13,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_dex_content_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dp_343"
+        android:layout_height="@dimen/dp_204"
         android:background="@drawable/wallet_white_bg_radius_4"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/dp_16"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_view">
 
@@ -23,9 +25,10 @@
             android:id="@+id/pay_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
             android:text="Pay"
+            android:textSize="@dimen/font_sp_12"
             android:textColor="@color/wallet_color_A2A2A2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,15 +44,20 @@
             <EditText
                 android:id="@+id/pay_value"
                 android:layout_width="0dp"
+                android:layout_marginLeft="@dimen/dp_16"
                 android:hint="0"
+                android:text="0"
+                android:textSize="@dimen/font_sp_19"
+                android:layout_marginRight="@dimen/dp_16"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null" />
 
             <ImageView
                 android:id="@+id/pay_coin_img"
-                android:layout_width="31dp"
-                android:layout_height="31dp"
+                android:layout_width="@dimen/dp_31"
+                android:layout_height="@dimen/dp_31"
+                android:layout_marginRight="@dimen/dp_16"
                 android:src="@mipmap/wallet_idhub" />
 
             <TextView
@@ -57,13 +65,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="IDHUB"
+                android:layout_marginRight="@dimen/dp_16"
                 android:textColor="@color/wallet_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/font_sp_14" />
 
             <ImageView
                 android:id="@+id/dex_right_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_17"
                 android:src="@mipmap/wallet_main_dex_right_arrow" />
         </LinearLayout>
 
@@ -72,8 +82,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="7dp"
             android:text="Balance：0"
+            android:textSize="@dimen/font_sp_12"
             android:textColor="@color/wallet_color_A2A2A2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/pay_layout" />
@@ -83,12 +94,15 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/wallet_line_gray"
+            android:layout_marginTop="@dimen/dp_7"
             app:layout_constraintTop_toBottomOf="@id/pay_balance" />
 
         <ImageView
             android:id="@+id/dex_change"
             app:layout_constraintTop_toTopOf="@id/pay_balance"
             app:layout_constraintRight_toRightOf="@id/pay_layout"
+            android:layout_marginTop="@dimen/dp_7"
+            android:layout_marginRight="@dimen/dp_59"
             android:src="@mipmap/wallet_main_dex_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -97,8 +111,8 @@
             android:id="@+id/get_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_16"
             android:text="Get"
             android:textColor="@color/wallet_color_A2A2A2"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -114,29 +128,34 @@
             <EditText
                 android:id="@+id/get_value"
                 android:layout_width="0dp"
+                android:layout_marginLeft="@dimen/dp_16"
                 android:hint="0"
+                android:textSize="@dimen/font_sp_19"
+                android:layout_marginRight="@dimen/dp_16"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@null" />
 
             <ImageView
                 android:id="@+id/get_coin_img"
-                android:layout_width="31dp"
-                android:layout_height="31dp"
+                android:layout_width="@dimen/dp_31"
+                android:layout_height="@dimen/dp_31"
+                android:layout_marginRight="@dimen/dp_16"
                 android:src="@mipmap/wallet_idhub" />
 
             <TextView
                 android:id="@+id/get_coin_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ANKR"
+                android:text="IDHUB"
+                android:layout_marginRight="@dimen/dp_16"
                 android:textColor="@color/wallet_black"
-                android:textSize="14sp" />
+                android:textSize="@dimen/font_sp_14" />
 
             <ImageView
-                android:id="@+id/get_right_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp_17"
                 android:src="@mipmap/wallet_main_dex_right_arrow" />
         </LinearLayout>
 
@@ -144,8 +163,10 @@
             android:id="@+id/get_balance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_7"
+            android:textSize="@dimen/font_sp_12"
+            android:layout_marginBottom="@dimen/dp_8"
             android:text="Balance：0"
             android:textColor="@color/wallet_color_A2A2A2"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -157,6 +178,8 @@
         android:id="@+id/coin_exchange_rate"
         android:text="1 BNB = ~ 10736.5 ANKR"
         android:layout_width="0dp"
+        android:layout_marginTop="@dimen/dp_24"
+        android:textSize="@dimen/font_sp_11"
         app:layout_constraintTop_toBottomOf="@id/main_dex_content_container"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -169,11 +192,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="NEXT"
-        android:textSize="14sp"
+        android:layout_marginTop="@dimen/dp_24"
+        android:textSize="@dimen/font_sp_14"
         android:background="@drawable/wallet_btn_yellow_radius_4"
         android:textColor="@color/wallet_white"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/coin_exchange_rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="@dimen/dp_343"
+        android:layout_height="@dimen/dp_40" />
 </androidx.constraintlayout.widget.ConstraintLayout>

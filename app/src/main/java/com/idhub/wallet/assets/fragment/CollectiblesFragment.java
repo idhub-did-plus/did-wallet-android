@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.R;
 import com.idhub.wallet.assets.AssetsFragment;
 import com.idhub.wallet.assets.adapter.CollectionAdapter;
@@ -61,9 +60,7 @@ public class CollectiblesFragment extends Fragment {
 
     private void initView(View view) {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        ViewCalculateUtil.setViewConstraintLayoutParam(recyclerView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,0,0,8,8);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-//        layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new StaggeredDividerItemDecoration(getContext(),16));
 
@@ -83,12 +80,11 @@ public class CollectiblesFragment extends Fragment {
             CollectionHttpMethod.getInstance().collections(new ResourceSubscriber<List<Collection>>() {
                 @Override
                 public void onNext(List<Collection> collections) {
-//                    List<Collection> objects = new ArrayList<>();
-//                    Log.e("LYW", "onNext: " + collections.size());
-//                    for (int i = 0; i < 20; i++) {
-//                        objects.addAll(collections);
-//                    }
-                    adapter.addAll(collections);
+                    List<Collection> objects = new ArrayList<>();
+                    for (int i = 0; i < 20; i++) {
+                        objects.addAll(collections);
+                    }
+                    adapter.addAll(objects);
                 }
 
                 @Override

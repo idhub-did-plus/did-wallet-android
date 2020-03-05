@@ -4,16 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/wallet_color_f5f5f5"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="@color/wallet_color_f5f5f5"
     tools:context=".assets.AssetsFragment">
 
     <include
         android:id="@+id/title"
         layout="@layout/wallet_main_top_title_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -39,9 +37,9 @@
 
             <ImageView
                 android:id="@+id/head"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:layout_marginTop="23dp"
+                android:layout_width="@dimen/dp_72"
+                android:layout_height="@dimen/dp_72"
+                android:layout_marginTop="@dimen/dp_23"
                 android:src="@mipmap/wallet_default_head"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -50,8 +48,8 @@
             <LinearLayout
                 android:id="@+id/upgrade_btn_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_marginRight="16dp"
+                android:layout_height="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_16"
                 android:background="@drawable/wallet_upgrade_btn_bg"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -61,61 +59,62 @@
 
                 <ImageView
                     android:id="@+id/upgrade_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
+                    android:layout_marginLeft="@dimen/dp_12"
                     android:src="@mipmap/wallet_upgrade_icon" />
 
                 <TextView
                     android:id="@+id/upgrade_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_marginRight="@dimen/dp_10"
                     android:text="@string/wallet_upgrade"
-                    android:textColor="@color/wallet_white" />
+                    android:textColor="@color/wallet_white"
+                    android:textSize="@dimen/font_sp_8" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/claims_layout"
                 android:layout_width="match_parent"
-                android:layout_height="23dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="@dimen/dp_23"
+                android:layout_marginTop="@dimen/dp_16"
                 android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/head">
 
                 <ImageView
                     android:id="@+id/claims_idhub_vip"
-                    android:layout_width="18dp"
-                    android:layout_height="23dp"
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_23"
                     android:src="@mipmap/wallet_idhub_vip" />
 
                 <ImageView
                     android:id="@+id/claims_idhub_svip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
+                    android:layout_width="@dimen/dp_18"
+                    android:layout_height="@dimen/dp_23"
+                    android:layout_marginLeft="@dimen/dp_13"
                     android:src="@mipmap/wallet_idhub_svip" />
 
                 <ImageView
                     android:id="@+id/claims_idhub_investor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="11dp"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_20"
+                    android:layout_marginLeft="@dimen/dp_11"
                     android:src="@mipmap/wallet_idhub_investor" />
 
                 <ImageView
                     android:id="@+id/claims_idhub_purchase"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_18"
                     android:layout_marginLeft="8dp"
                     android:src="@mipmap/wallet_idhub_purchaser" />
 
                 <ImageView
                     android:id="@+id/claims_idhub_compliant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dp_24"
+                    android:layout_height="@dimen/dp_20"
                     android:layout_marginLeft="8dp"
                     android:src="@mipmap/wallet_idhub_compliant" />
 
@@ -124,10 +123,10 @@
             <LinearLayout
                 android:id="@+id/wallet_info"
                 android:layout_width="match_parent"
-                android:layout_height="61dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_height="@dimen/dp_60"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginRight="@dimen/dp_16"
                 android:background="@drawable/wallet_white_bg_radius_4"
                 android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/claims_layout">
@@ -136,34 +135,35 @@
                     android:id="@+id/wallet_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_6"
                     android:textColor="@color/wallet_text_black"
-                    android:textSize="12sp"
+                    android:textSize="@dimen/font_sp_12"
                     tools:text="wallet" />
 
                 <View
                     android:id="@+id/line"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_height="@dimen/dp_1"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:layout_marginRight="@dimen/dp_15"
                     android:background="@color/wallet_line_gray" />
 
                 <TextView
                     android:id="@+id/wallet_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="@dimen/dp_16"
+                    android:layout_marginTop="@dimen/dp_4"
+                    android:layout_marginRight="@dimen/dp_15"
                     android:drawableRight="@mipmap/wallet_assets_qr_code_icon"
-                    android:drawablePadding="15dp"
+                    android:drawablePadding="@dimen/dp_15"
                     android:ellipsize="middle"
                     android:gravity="center"
                     android:singleLine="true"
                     android:textColor="@color/wallet_color_686868"
-                    android:textSize="16sp"
+                    android:textSize="@dimen/font_sp_16"
                     tools:text="0x995f7a7025e9964…ea5Aebc88a0a" />
             </LinearLayout>
 
@@ -171,9 +171,9 @@
                 android:id="@+id/tab_layout_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="9dp"
-                android:layout_marginRight="6dp"
+                android:layout_marginLeft="@dimen/dp_6"
+                android:layout_marginTop="@dimen/dp_9"
+                android:layout_marginRight="@dimen/dp_6"
                 android:background="@mipmap/wallet_assets_tab_bg"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/wallet_info">
@@ -181,20 +181,20 @@
                 <com.idhub.wallet.common.tablayout.TabLayout
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="34dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="17dp"
+                    android:layout_height="@dimen/dp_34"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginTop="@dimen/dp_17"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_17"
                     android:background="@color/wallet_white"
-                    android:paddingBottom="5dp"
+                    android:paddingBottom="@dimen/dp_5"
                     app:wallet_tabIndicatorColor="@color/wallet_main_yellow_color"
-                    app:wallet_tabIndicatorHeight="1dp"
-                    app:wallet_tabIndicatorWidth="8dp"
+                    app:wallet_tabIndicatorHeight="@dimen/dp_1"
+                    app:wallet_tabIndicatorWidth="@dimen/dp_8"
                     app:wallet_tabSelectedTextColor="@color/wallet_main_yellow_color"
                     app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                     app:wallet_tabTextColor="@color/wallet_text_black"
-                    app:wallet_tabTextSize="11sp" />
+                    app:wallet_tabTextSize="@dimen/font_sp_11" />
             </LinearLayout>
 
 
@@ -202,21 +202,21 @@
                 android:id="@+id/assets_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="@dimen/dp_16"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_marginRight="@dimen/dp_16"
                 android:drawableRight="@mipmap/wallet_assets_right_arrow"
                 android:text="@string/wallet_assets"
                 android:textColor="@color/wallet_text_black"
-                android:textSize="20sp"
+                android:textSize="@dimen/font_sp_20"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tab_layout_view" />
 
             <com.idhub.wallet.common.viewpager.AutoHeightViewpager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="570dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
                 app:layout_constraintTop_toBottomOf="@id/assets_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -228,7 +228,6 @@
         android:layout_height="wrap_content"
         android:background="@color/wallet_color_f5f5f5"
         android:orientation="vertical"
-        android:paddingTop="8dp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/title">
 
@@ -236,28 +235,57 @@
             android:id="@+id/tan_layout_view2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
-            android:layout_marginTop="9dp"
-            android:layout_marginRight="6dp"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_6"
             android:background="@mipmap/wallet_assets_tab_bg"
-            android:gravity="center">
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/wallet_info">
 
             <com.idhub.wallet.common.tablayout.TabLayout
                 android:id="@+id/tab_layout2"
                 android:layout_width="match_parent"
-                android:layout_height="34dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="@dimen/dp_34"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_17"
+                android:layout_marginRight="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_17"
                 android:background="@color/wallet_white"
-                android:paddingBottom="5dp"
+                android:paddingBottom="@dimen/dp_5"
                 app:wallet_tabIndicatorColor="@color/wallet_main_yellow_color"
-                app:wallet_tabIndicatorHeight="1dp"
-                app:wallet_tabIndicatorWidth="8dp"
+                app:wallet_tabIndicatorHeight="@dimen/dp_1"
+                app:wallet_tabIndicatorWidth="@dimen/dp_8"
                 app:wallet_tabSelectedTextColor="@color/wallet_main_yellow_color"
                 app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                 app:wallet_tabTextColor="@color/wallet_text_black"
-                app:wallet_tabTextSize="11sp" />
+                app:wallet_tabTextSize="@dimen/font_sp_11" />
         </LinearLayout>
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/tan_layout_view2"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginLeft="@dimen/dp_6"-->
+        <!--            android:layout_marginTop="@dimen/dp_9"-->
+        <!--            android:layout_marginRight="@dimen/dp_6"-->
+        <!--            android:background="@mipmap/wallet_assets_tab_bg"-->
+        <!--            android:gravity="center">-->
+
+        <!--            <com.idhub.wallet.common.tablayout.TabLayout-->
+        <!--                android:id="@+id/tab_layout2"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="@dimen/dp_34"-->
+        <!--                android:layout_marginLeft="@dimen/dp_10"-->
+        <!--                android:layout_marginRight="@dimen/dp_10"-->
+        <!--                android:background="@color/wallet_white"-->
+        <!--                android:paddingBottom="@dimen/dp_5"-->
+        <!--                app:wallet_tabIndicatorColor="@color/wallet_main_yellow_color"-->
+        <!--                app:wallet_tabIndicatorHeight="@dimen/dp_1"-->
+        <!--                app:wallet_tabIndicatorWidth="@dimen/dp_8"-->
+        <!--                app:wallet_tabSelectedTextColor="@color/wallet_main_yellow_color"-->
+        <!--                app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"-->
+        <!--                app:wallet_tabTextColor="@color/wallet_text_black"-->
+        <!--                app:wallet_tabTextSize="@dimen/font_sp_11" />-->
+        <!--        </LinearLayout>-->
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

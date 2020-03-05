@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.flowlayout.FlowLayout;
@@ -61,10 +62,8 @@ public class MnemonicBackupConfirmActivity extends BaseActivity implements View.
                 TextView textView = tv.findViewById(R.id.mnemonic_preview_item);
                 ImageView errorView = tv.findViewById(R.id.memonic_error_icon);
                 View view = tv.findViewById(R.id.mnemonic_layout);
-                ViewCalculateUtil.setViewGroupLayoutParam(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                ViewCalculateUtil.setViewConstraintLayoutParam(textView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 10, 0, 10, 0);
-                ViewCalculateUtil.setViewPadding(textView,7,7,15,15);
-                ViewCalculateUtil.setTextSize(textView,15);
+                view.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
                 textView.setText(confirmMnemonic.data);
                 if (confirmMnemonic.isCorrect) {
                     errorView.setVisibility(View.GONE);
@@ -82,9 +81,7 @@ public class MnemonicBackupConfirmActivity extends BaseActivity implements View.
                 View tv = layoutInflater.inflate(R.layout.wallet_mnemonic_item,
                         parent, false);
                 TextView textView = tv.findViewById(R.id.mnemonic_preview_item);
-                ViewCalculateUtil.setViewPadding(textView,7,7,15,15);
-                ViewCalculateUtil.setTextSize(textView,15);
-//                textView.setBackgroundColor(getResources().getColor(R.color.wallet_line_gray));
+
                 textView.setText(s);
                 return tv;
             }
@@ -166,16 +163,6 @@ public class MnemonicBackupConfirmActivity extends BaseActivity implements View.
         View btnView = findViewById(R.id.tv_next);
         btnView.setOnClickListener(this);
         mWarningView = findViewById(R.id.warning);
-        TextView backUpTitle = findViewById(R.id.tv_backup_top);
-        TextView backUpHintTitle = findViewById(R.id.tv_backup_hint);
-        ViewCalculateUtil.setTextSize(backUpTitle, 20);
-        ViewCalculateUtil.setViewConstraintLayoutParam(backUpHintTitle,0, ViewGroup.LayoutParams.WRAP_CONTENT,5,0,25,25);
-        ViewCalculateUtil.setViewConstraintLayoutParam(backUpTitle,0, ViewGroup.LayoutParams.WRAP_CONTENT,20,0,25,25);
-        ViewCalculateUtil.setTextSize(backUpHintTitle, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(mTagFlowMnemonicConfirmLayout,0, 219,15,0,25,25);
-        ViewCalculateUtil.setViewPadding(mTagFlowMnemonicConfirmLayout, 15, 15, 15, 15);
-        ViewCalculateUtil.setViewConstraintLayoutParam(mTagFlowMnemonicLayout,0, ViewGroup.LayoutParams.WRAP_CONTENT,20,0,25,25);
-        ViewCalculateUtil.setViewConstraintLayoutParam(btnView, ViewGroup.LayoutParams.MATCH_PARENT, 45,28,15,30,30);
 
     }
 

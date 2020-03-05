@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.idhub.wallet.setting.SetItemView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/item_bg"
-    android:gravity="center_vertical"
     android:background="@color/wallet_white"
+    android:gravity="center_vertical"
     android:orientation="horizontal">
 
 
@@ -12,26 +12,35 @@
         android:id="@+id/set_item_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_9"
+        android:layout_marginBottom="@dimen/dp_7"
         android:src="@mipmap/wallet_main_set_message" />
 
     <TextView
         android:id="@+id/set_item_name"
-        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_weight="1"
         android:text="@string/wallet_message_center"
         android:textColor="@color/wallet_black"
-        android:textSize="16sp" />
+        android:textSize="@dimen/font_sp_15" />
+
     <TextView
         android:id="@+id/value"
-        android:visibility="gone"
         android:layout_width="wrap_content"
+        android:textSize="@dimen/font_sp_12"
         android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginRight="@dimen/dp_11"
         android:text="Main Wallet"
         android:textColor="@color/wallet_color_C2C2C2" />
+
     <ImageView
         android:id="@+id/set_item_arrow_right"
         android:layout_width="wrap_content"
+        android:layout_marginRight="@dimen/dp_16"
         android:layout_height="wrap_content"
         android:src="@mipmap/wallet_arrow_right" />
 </com.idhub.wallet.setting.SetItemView>

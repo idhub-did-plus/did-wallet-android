@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.SignMessageDialogFragment;
@@ -207,7 +206,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
 
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
         tabLayout = findViewById(R.id.tab_layout);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tabLayout, ViewPager.LayoutParams.MATCH_PARENT, 49);
+//        ViewCalculateUtil.setViewConstraintLayoutParam(tabLayout, ViewPager.LayoutParams.MATCH_PARENT, 49);
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -259,8 +258,8 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         View view = tab.getCustomView();
         TextView txt_title = view.findViewById(R.id.tab_name);
         ImageView img_title = view.findViewById(R.id.tab_image);
-        ViewCalculateUtil.setTextSize(txt_title, 10);
-        ViewCalculateUtil.setViewLinearLayoutParam(img_title,26,26);
+//        ViewCalculateUtil.setTextSize(txt_title, 10);
+//        ViewCalculateUtil.setViewLinearLayoutParam(img_title,26,26);
         txt_title.setTextColor(getResources().getColor(R.color.wallet_text_title_color));
         img_title.setImageResource(tabIcons[tab.getPosition()]);
     }

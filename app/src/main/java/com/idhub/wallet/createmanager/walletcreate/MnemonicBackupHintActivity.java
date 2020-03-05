@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 
@@ -30,7 +29,6 @@ public class MnemonicBackupHintActivity extends BaseActivity implements View.OnC
     private void initView() {
         View btnView = findViewById(R.id.tv_next);
         btnView.setOnClickListener(this);
-        ViewCalculateUtil.setViewConstraintLayoutParam(btnView, ViewGroup.LayoutParams.MATCH_PARENT, 45, 50, 0, 30, 30);
 
         mMnemonic = getIntent().getStringExtra("data");
 //        TitleLayout titleLayout = findViewById(R.id.title);
@@ -46,23 +44,6 @@ public class MnemonicBackupHintActivity extends BaseActivity implements View.OnC
         TextView tvBackupTwo = findViewById(R.id.tv_backup_two);
         TextView tvBackupTwo1 = findViewById(R.id.tv_backup_two_1);
         TextView tvBackupTwo2 = findViewById(R.id.tv_backup_two_2);
-
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTwo1, 0 ,ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
-        ViewCalculateUtil.setTextSize(tvBackupTwo1, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTwo2, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
-        ViewCalculateUtil.setTextSize(tvBackupTwo2, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTwo, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 30, 0, 0, 25);
-        ViewCalculateUtil.setTextSize(tvBackupTwo, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupFirst2, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
-        ViewCalculateUtil.setTextSize(tvBackupFirst2, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupFirst1, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
-        ViewCalculateUtil.setTextSize(tvBackupFirst1, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupFirst, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 30, 0, 0, 25);
-        ViewCalculateUtil.setTextSize(tvBackupFirst, 13);
-        ViewCalculateUtil.setViewConstraintLayoutParam(titleView, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 64, 0, 25, 25);
-        ViewCalculateUtil.setTextSize(titleView, 20);
-        ViewCalculateUtil.setViewConstraintLayoutParam(tvBackupTopView, 0, ViewGroup.LayoutParams.WRAP_CONTENT, 5, 0, 0, 25);
-        ViewCalculateUtil.setTextSize(tvBackupTopView, 13);
 
     }
 

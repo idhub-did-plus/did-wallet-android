@@ -16,11 +16,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.idhub.base.ui.UIUtils;
-import com.idhub.base.ui.ViewCalculateUtil;
+
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.statusbar.SystemBarTintManager;
 import com.idhub.wallet.utils.UnitUtils;
+
+import me.jessyan.autosize.utils.AutoSizeUtils;
 
 public class TitleLayout extends ConstraintLayout implements View.OnClickListener {
 
@@ -42,7 +43,6 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
     protected void onFinishInflate() {
         super.onFinishInflate();
         mBackImageView = findViewById(R.id.back_icon);
-        ViewCalculateUtil.setViewPadding(mBackImageView, 10, 10, 10, 10);
         mTitleView = findViewById(R.id.tv_title);
         mImageOneView = findViewById(R.id.image_one);
         mImageOneView.setVisibility(GONE);
@@ -124,7 +124,7 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
             int mScreenWidth = displayMetrics.widthPixels;
             int paddingTop = SystemBarTintManager.getStatusBarHeight(getContext());
             titleView.setPadding(titleView.getPaddingLeft(), paddingTop, titleView.getPaddingRight(), titleView.getPaddingBottom());
-            RelativeLayout.LayoutParams localObject = new RelativeLayout.LayoutParams(mScreenWidth,UIUtils.getInstance().getHeight(48)  + paddingTop);
+            RelativeLayout.LayoutParams localObject = new RelativeLayout.LayoutParams(mScreenWidth, AutoSizeUtils.dp2px(getContext(),48) + paddingTop);
             titleView.setLayoutParams(localObject);
         }
     }

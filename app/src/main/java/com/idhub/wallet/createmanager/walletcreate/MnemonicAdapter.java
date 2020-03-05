@@ -4,10 +4,13 @@ import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.idhub.base.ui.ViewCalculateUtil;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.recyclerview.BaseRecyclerAdapter;
 import com.idhub.wallet.common.recyclerview.RecyclerViewHolder;
+
+import me.jessyan.autosize.utils.AutoSizeUtils;
 
 public class MnemonicAdapter extends BaseRecyclerAdapter<String> {
 
@@ -21,9 +24,10 @@ public class MnemonicAdapter extends BaseRecyclerAdapter<String> {
     @Override
     protected void bindViewWithHolder(int position, RecyclerViewHolder holder, String item) {
         TextView textView = holder.getTextView(R.id.mnemonic_preview_item);
-        ViewCalculateUtil.setViewConstraintLayoutParam(textView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 10, 0, 7, 7);
-        ViewCalculateUtil.setViewPadding(textView, 5, 5, 0, 0);
-        ViewCalculateUtil.setTextSize(textView, 15);
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        textView.setLayoutParams(params);
+        textView.setPadding(0, AutoSizeUtils.dp2px(context,7), 0, AutoSizeUtils.dp2px(context,7));
+
         textView.setTextColor(context.getResources().getColor(R.color.wallet_text_black));
         textView.setText(item);
     }

@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.idhub.base.greendao.entity.AssetsModel;
-import com.idhub.base.ui.ViewCalculateUtil;
 import com.idhub.wallet.assets.view.STMainView;
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
@@ -53,9 +52,11 @@ public class HotFragment extends MainBaseFragment {
         stRecommendRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         STRecommendAdapter stRecommendAdapter = new STRecommendAdapter(getContext());
         stRecommendRecyclerView.setAdapter(stRecommendAdapter);
-        ViewCalculateUtil.setViewConstraintLayoutParam(view.findViewById(R. id.scroll_view), ViewGroup.LayoutParams.MATCH_PARENT,  ViewGroup.LayoutParams.WRAP_CONTENT, 8, 0, 8, 8  );
 
         ArrayList<STRecommendBean> items = new ArrayList<>();
+        items.add(new STRecommendBean("Ning De Shi Dai","+10.00%"));
+        items.add(new STRecommendBean("Ning De Shi Dai","+10.00%"));
+        items.add(new STRecommendBean("Ning De Shi Dai","+10.00%"));
         items.add(new STRecommendBean("Ning De Shi Dai","+10.00%"));
         items.add(new STRecommendBean("Ning De Shi Dai","+10.00%"));
         items.add(new STRecommendBean("Ning De Shi Dai","+10.00%"));
@@ -66,7 +67,6 @@ public class HotFragment extends MainBaseFragment {
         mainEpidemicRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
         MainEpidemicAdapter mainEpidemicAdapter = new MainEpidemicAdapter(getContext());
         mainEpidemicRecyclerView.setAdapter(mainEpidemicAdapter);
-        ViewCalculateUtil.setViewConstraintLayoutParam(mainEpidemicRecyclerView, ViewGroup.LayoutParams.MATCH_PARENT,  ViewGroup.LayoutParams.WRAP_CONTENT, 8, 16, 8, 8);
         ArrayList<MainEpidemicBean> mainEpidemicBeans = new ArrayList<>();
         mainEpidemicBeans.add(new MainEpidemicBean("Bitcoin", "≈2854.77（USD）", "+36.68", "+1.30%"));
         mainEpidemicBeans.add(new MainEpidemicBean("Ethereum", "≈2854.77（USD）", "+36.68", "+1.30%"));
@@ -89,10 +89,6 @@ public class HotFragment extends MainBaseFragment {
         assetsModels.add(new AssetsModel());
         assetsModels.add(new AssetsModel());
         stView.setData(assetsModels);
-//        ViewCalculateUtil.setViewLinearLayoutParam(newsContainer, 358, 111, 14, 0, 8, 8);
-//        ViewCalculateUtil.setViewConstraintLayoutParam(newsTitle, ViewGroup.LayoutParams.WRAP_CONTENT, 22, 34, 0, 24, 0);
-//        ViewCalculateUtil.setViewConstraintLayoutParam(newsMoreImage, 29, 12, 10, 0, 0, 0);
-//        ViewCalculateUtil.setTextSize(newsTitle,16);
     }
 
     @Override

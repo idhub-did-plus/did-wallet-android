@@ -8,10 +8,10 @@
 
     <ImageView
         android:id="@+id/location_icon"
-        android:layout_width="19dp"
-        android:layout_height="23dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="31dp"
+        android:layout_width="@dimen/dp_19"
+        android:layout_height="@dimen/dp_23"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_31"
         android:src="@mipmap/wallet_location"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,22 +20,22 @@
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="@dimen/dp_4"
         android:drawableRight="@mipmap/wallet_down_arrow"
-        android:drawablePadding="3dp"
+        android:drawablePadding="@dimen/dp_3"
         android:text="CHINA"
         android:textColor="@color/wallet_black"
-        android:textSize="12sp"
+        android:textSize="@dimen/font_sp_12"
         app:layout_constraintBottom_toBottomOf="@id/location_icon"
         app:layout_constraintLeft_toRightOf="@id/location_icon"
         app:layout_constraintTop_toTopOf="@id/location_icon" />
 
     <LinearLayout
         android:id="@+id/search"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="16dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_16"
         android:background="@drawable/wallet_search_background"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -45,9 +45,9 @@
         app:layout_constraintTop_toTopOf="@id/location_icon">
 
         <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
             android:src="@mipmap/wallet_search" />
 
         <TextView
@@ -61,7 +61,7 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="@dimen/dp_16"
         android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/search">
 
@@ -69,19 +69,19 @@
             android:id="@+id/tv_claim_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="17dp"
+            android:layout_marginLeft="@dimen/dp_17"
             android:text="@string/wallet_home_claim"
             android:textColor="@color/wallet_black"
-            android:textSize="16dp" />
+            android:textSize="@dimen/font_sp_16" />
 
         <TextView
             android:id="@+id/tv_hot_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
+            android:layout_marginLeft="@dimen/dp_24"
             android:text="@string/wallet_home_hot"
             android:textColor="@color/wallet_black"
-            android:textSize="24dp"
+            android:textSize="@dimen/dp_24"
             android:textStyle="bold" />
     </LinearLayout>
 

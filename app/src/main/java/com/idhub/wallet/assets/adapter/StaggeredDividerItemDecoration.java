@@ -7,7 +7,8 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.idhub.base.ui.UIUtils;
+import me.jessyan.autosize.utils.AutoSizeUtils;
+
 
 public class StaggeredDividerItemDecoration extends RecyclerView.ItemDecoration {
     private Context context;
@@ -23,7 +24,7 @@ public class StaggeredDividerItemDecoration extends RecyclerView.ItemDecoration 
         int position = parent.getChildAdapterPosition(view);
 //        int interval = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX,
 //                this.interval, context.getResources().getDisplayMetrics());
-        int interval = UIUtils.getInstance().getHeight(this.interval);
+        int interval = AutoSizeUtils.dp2px(context,this.interval);
 //        // 中间间隔
 //        if (position % 2 == 0) {
 //            outRect.left = 0;

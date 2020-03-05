@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/wallet_color_f5f5f5"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".dapp.DappFragment">
 
     <include
         android:id="@+id/title"
         layout="@layout/wallet_main_top_title_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_64"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_dapp_url"
+        android:layout_width="@dimen/dp_335"
+        android:layout_height="@dimen/dp_40"
+        android:layout_marginTop="@dimen/dp_15"
         android:background="@drawable/wallet_white_bg_radius_8"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_width="0dp"
-        android:singleLine="true"
-        android:paddingLeft="15dp"
-        android:typeface="monospace"
         android:hint="@string/wallet_dapp_search_hint"
-        android:textSize="15sp"
-        android:textColor="@color/wallet_text_gray_color"
-        android:layout_marginLeft="20dp"
         android:imeOptions="actionDone"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_height="40dp" />
+        android:paddingLeft="@dimen/dp_15"
+        android:singleLine="true"
+        android:textColor="@color/wallet_text_gray_color"
+        android:textSize="@dimen/font_sp_15"
+        android:typeface="monospace"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
