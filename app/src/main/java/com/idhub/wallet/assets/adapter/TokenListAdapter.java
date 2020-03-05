@@ -76,7 +76,9 @@ public class TokenListAdapter extends BaseRecyclerAdapter<AssetsModel> {
         setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int pos) {
-                if (!TextUtils.isEmpty(model.getBalance())) {
+                String balance1 = model.getBalance();
+
+                if (!TextUtils.isEmpty(balance1)) {
                     TransactionActivity.srartAction(itemView.getContext(), model);
                 }
             }

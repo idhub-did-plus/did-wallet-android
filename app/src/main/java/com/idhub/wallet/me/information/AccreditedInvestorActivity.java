@@ -81,10 +81,10 @@ public class AccreditedInvestorActivity extends BaseActivity implements View.OnC
             if (TextUtils.isEmpty(content)){
                 applyBtn.setText(getString(R.string.wallet_submit));
                 applyBtn.setOnClickListener(this);
-                applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
+                applyBtn.setBackgroundResource(R.drawable.wallet_main_btn_background);
             }else {
                 applyBtn.setText(getString(R.string.wallet_apply_for));
-                applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
+                applyBtn.setBackgroundResource(R.drawable.wallet_main_btn_background);
                 applyBtn.setOnClickListener(this);
                 setApplyContent(content);
             }
@@ -98,7 +98,7 @@ public class AccreditedInvestorActivity extends BaseActivity implements View.OnC
             setApplyContent(content);
         }else if (VipStateType.REFUSED_APPLY_FOR.equals(state)) {
             applyBtn.setText(getString(R.string.wallet_again_apply_for));
-            applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
+            applyBtn.setBackgroundResource(R.drawable.wallet_main_btn_background);
             applyBtn.setOnClickListener(this);
             setApplyContent(content);
         }

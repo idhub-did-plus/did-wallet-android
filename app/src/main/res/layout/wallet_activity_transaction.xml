@@ -29,11 +29,11 @@
         android:id="@+id/balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="100dp"
         android:textColor="@color/wallet_main_yellow_color"
         android:textSize="52sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
         tools:text="10" />
@@ -42,11 +42,11 @@
         android:id="@+id/split_line"
         android:layout_width="32dp"
         android:layout_height="61dp"
-        android:text="/"
         android:layout_marginRight="20dp"
+        android:includeFontPadding="false"
+        android:text="/"
         android:textColor="@color/wallet_color_E8E8E8"
         android:textSize="58sp"
-        android:includeFontPadding="false"
         app:layout_constraintBottom_toBottomOf="@id/balance"
         app:layout_constraintRight_toLeftOf="@id/coin_icon"
         app:layout_constraintTop_toTopOf="@id/balance" />
@@ -65,52 +65,59 @@
 
     <LinearLayout
         android:id="@+id/receive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:orientation="vertical"
+        android:layout_width="@dimen/dp_305"
+        android:layout_height="@dimen/dp_52"
+        android:layout_marginTop="@dimen/dp_90"
+        android:background="@color/wallet_main_yellow_color"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/send"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/balance">
 
         <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:background="@drawable/wallet_circle_blue"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
             android:scaleType="center"
-            android:src="@mipmap/wallet_send" />
+            android:src="@mipmap/transaction_receive_icon" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
             android:text="@string/wallet_receive"
-            android:textColor="@color/wallet_main_blue_color" />
+            android:textColor="@color/wallet_white"
+            android:textSize="@dimen/font_sp_20" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toRightOf="@id/receive"
+        android:layout_width="@dimen/dp_305"
+        android:layout_height="@dimen/dp_52"
+        android:layout_marginTop="@dimen/dp_52"
+        android:background="@color/wallet_main_yellow_color"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/receive">
+        app:layout_constraintTop_toBottomOf="@id/receive">
 
         <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
             android:scaleType="center"
-            android:src="@mipmap/wallet_receive" />
+            android:src="@mipmap/transaction_send_icon" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
             android:text="@string/wallet_send"
-            android:textColor="@color/wallet_main_blue_color" />
+            android:textColor="@color/wallet_white"
+            android:textSize="@dimen/font_sp_20" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

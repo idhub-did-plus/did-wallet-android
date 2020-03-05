@@ -90,4 +90,7 @@
     <dimen name="dp_315">315dp</dimen>
     <dimen name="dp_325">325dp</dimen>
     <dimen name="dp_219">219dp</dimen>
+    <dimen name="dp_305">305dp</dimen>
+    <dimen name="dp_52">52dp</dimen>
+    <dimen name="dp_90">90dp</dimen>
 </resources>

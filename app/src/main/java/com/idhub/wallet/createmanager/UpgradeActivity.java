@@ -133,7 +133,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
         NestedScrollView scrollView = findViewById(R.id.sv_upgrade);
         if (scrollView.getMeasuredHeight() == 0) {
-            mUpgradeView.setBackgroundResource(R.drawable.wallet_shape_button);
+            mUpgradeView.setBackgroundResource(R.drawable.wallet_main_btn_background);
             mUpgradeView.setOnClickListener(UpgradeActivity.this);
         }
         scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
@@ -141,7 +141,7 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
             int height = view.getMeasuredHeight();
             int measuredHeight = v.getMeasuredHeight();
             if (scrollY + measuredHeight == height) {
-                mUpgradeView.setBackgroundResource(R.drawable.wallet_shape_button);
+                mUpgradeView.setBackgroundResource(R.drawable.wallet_main_btn_background);
                 mUpgradeView.setOnClickListener(UpgradeActivity.this);
             }
         });

@@ -76,10 +76,10 @@ public class AccreditedPurchaserActivity extends BaseActivity implements View.On
             if (TextUtils.isEmpty(content)){
                 applyBtn.setText(getString(R.string.wallet_submit));
                 applyBtn.setOnClickListener(this);
-                applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
+                applyBtn.setBackgroundResource(R.drawable.wallet_main_btn_background);
             }else {
                 applyBtn.setText(getString(R.string.wallet_apply_for));
-                applyBtn.setBackgroundResource(R.drawable.wallet_shape_button);
+                applyBtn.setBackgroundResource(R.drawable.wallet_main_btn_background);
                 applyBtn.setOnClickListener(this);
                 setApplyContent(content);
             }

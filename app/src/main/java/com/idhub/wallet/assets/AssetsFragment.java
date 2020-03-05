@@ -216,12 +216,12 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         defaultIdentity = new IdentityDbManager().getDefaultIdentity();
         if (defaultIdentity == null) {
             upgradeBtn.setVisibility(View.VISIBLE);
-            upgradeValueView.setText("升级身份");
+            upgradeValueView.setText(getString(R.string.wallet_upgrade_identity));
         } else if (claims[0] && claims[1] && claims[2] && claims[3] && claims[4]) {
             upgradeBtn.setVisibility(View.GONE);
         } else {
             upgradeBtn.setVisibility(View.VISIBLE);
-            upgradeValueView.setText("申请凭证");
+            upgradeValueView.setText(getString(R.string.wallet_apply_claims));
         }
     }
     private int getTopViewHeight() {
