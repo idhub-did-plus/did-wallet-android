@@ -3,7 +3,8 @@ package com.idhub.wallet.net.collectiables;
 
 import com.idhub.base.net.ApiServiceFactory;
 import com.idhub.base.net.BaseRtHttpMethod;
-import com.idhub.wallet.net.collectiables.model.Collection;
+import com.idhub.wallet.net.collectiables.model.AssetsCollections;
+import com.idhub.wallet.net.collectiables.model.Collections;
 
 import java.util.List;
 
@@ -27,9 +28,14 @@ public class CollectionHttpMethod extends BaseRtHttpMethod {
         return LoginMethodHolder.INSTANCE;
     }
 
-    //藏品列表
-    public ResourceSubscriber collections(ResourceSubscriber<List<Collection>> subscriber, String asset_owner) {
+
+    public ResourceSubscriber collections(ResourceSubscriber<List<Collections>> subscriber, String asset_owner) {
         tocompose(loginService.collections(asset_owner), subscriber);
+        return subscriber;
+    }
+
+    public ResourceSubscriber assets(ResourceSubscriber<AssetsCollections> subscriber, String limit, String owner) {
+        tocompose(loginService.assets(limit, owner), subscriber);
         return subscriber;
     }
 

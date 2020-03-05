@@ -16,12 +16,16 @@ import android.view.ViewGroup;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.assets.AssetsFragment;
+import com.idhub.wallet.assets.CollectionListActivity;
 import com.idhub.wallet.assets.adapter.CollectionAdapter;
 import com.idhub.wallet.assets.adapter.StaggeredDividerItemDecoration;
+import com.idhub.wallet.common.recyclerview.BaseRecyclerAdapter;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.net.collectiables.CollectionHttpMethod;
-import com.idhub.wallet.net.collectiables.model.Collection;
+import com.idhub.wallet.net.collectiables.model.AssetsCollectionItem;
+import com.idhub.wallet.net.collectiables.model.AssetsCollections;
+import com.idhub.wallet.net.collectiables.model.Collections;
 import com.idhub.wallet.utils.LogUtils;
 
 import org.web3j.crypto.Keys;
@@ -67,6 +71,13 @@ public class CollectiblesFragment extends Fragment {
         recyclerView.setItemAnimator(null);
         adapter = new CollectionAdapter(getContext());
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int pos) {
+                AssetsCollectionItem itemObject = adapter.getItemObject(pos);
+                CollectionListActivity.startAction(getContext(),itemObject);
+            }
+        });
     }
 
     private void initData() {
@@ -77,12 +88,13 @@ public class CollectiblesFragment extends Fragment {
             if (mDidHubMnemonicKeyStore == null) {
                 return;
             }
-            CollectionHttpMethod.getInstance().collections(new ResourceSubscriber<List<Collection>>() {
+            CollectionHttpMethod.getInstance().assets(new ResourceSubscriber<AssetsCollections>() {
                 @Override
-                public void onNext(List<Collection> collections) {
-                    List<Collection> objects = new ArrayList<>();
+                public void onNext(AssetsCollections collections) {
+                    List<AssetsCollectionItem> objects = new ArrayList<>();
+                    List<AssetsCollectionItem> assets = collections.assets;
                     for (int i = 0; i < 20; i++) {
-                        objects.addAll(collections);
+                        objects.addAll(assets);
                     }
                     adapter.addAll(objects);
                 }
@@ -96,7 +108,7 @@ public class CollectiblesFragment extends Fragment {
                 public void onComplete() {
 
                 }
-            }, Keys.toChecksumAddress(NumericUtil.prependHexPrefix(mDidHubMnemonicKeyStore.getAddress())));
+            },String.valueOf(300), Keys.toChecksumAddress(NumericUtil.prependHexPrefix(mDidHubMnemonicKeyStore.getAddress())));
         }
 
 

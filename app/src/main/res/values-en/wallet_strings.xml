@@ -427,5 +427,7 @@
     <string name="wallet_upload_identity_information">Upload Identity Information</string>
 
 
+    <string name="wallet_Options">Options</string>
+
 
 </resources>

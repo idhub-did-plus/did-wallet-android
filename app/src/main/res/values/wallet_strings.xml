@@ -406,4 +406,7 @@
     <string name="wallet_securities">Securities</string>
     <string name="wallet_token">Token</string>
     <string name="wallet_collectibles">Collectibles</string>
+    <string name="wallet_Options">选项</string>
+    <string name="wallet_token_id">Token ID</string>
+    <string name="wallet_last_sold_for">Last Sold For</string>
 </resources>

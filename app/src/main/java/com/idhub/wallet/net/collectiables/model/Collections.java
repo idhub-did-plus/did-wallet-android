@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Collection {
+public class Collections {
 
     /**
      * primary_asset_contracts : [{"address":"0xe5bd43166a3761628ac777bb1a42bcab13ca9495","asset_contract_type":"non-fungible","created_date":"2019-11-08T02:12:55.301292","name":"J1","nft_version":"3.0","opensea_version":null,"owner":33531,"schema_name":"ERC721","symbol":"","total_supply":"1","description":"Tradable, Collectable, Non-Fungible, Sneakrs. Powered by ethAIReum","external_link":"http://sneakrcred.com/","image_url":"https://rinkeby-storage.opensea.io/j1-1573181432.png","default_to_fiat":false,"dev_buyer_fee_basis_points":0,"dev_seller_fee_basis_points":0,"only_proxied_transfers":false,"opensea_buyer_fee_basis_points":0,"opensea_seller_fee_basis_points":250,"buyer_fee_basis_points":0,"seller_fee_basis_points":250,"payout_address":"0xfd99b5306135f3f6e1b5d18e1257875bf540eadd"}]
