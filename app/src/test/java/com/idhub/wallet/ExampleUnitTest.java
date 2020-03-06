@@ -1,68 +1,17 @@
 package com.idhub.wallet;
 
-import android.text.TextUtils;
-import android.util.Log;
-
-import com.google.common.base.Strings;
-import com.idhub.base.App;
-import com.idhub.base.node.WalletNoteSharedPreferences;
-import com.idhub.magic.common.contracts.ERC1056ResolverInterface;
-import com.idhub.magic.common.contracts.IdentityRegistryInterface;
-import com.idhub.magic.common.service.DeployedContractAddress;
 import com.idhub.wallet.contract.EIP20Interface;
-import com.idhub.wallet.contract.ERC1400;
 import com.idhub.wallet.contract.ERC721;
-import com.idhub.wallet.contract.ERC721Enumerable;
-import com.idhub.wallet.didhub.WalletInfo;
-import com.idhub.wallet.didhub.WalletManager;
-import com.idhub.wallet.didhub.address.ETHAddressValidator;
-import com.idhub.wallet.didhub.address.EthereumAddressCreator;
-import com.idhub.wallet.didhub.model.Messages;
-import com.idhub.wallet.didhub.model.TokenException;
-import com.idhub.wallet.didhub.transaction.EthereumSign;
-import com.idhub.wallet.didhub.util.BIP44Util;
-import com.idhub.wallet.didhub.util.MnemonicUtil;
-import com.idhub.wallet.greendao.AssetsModelDbManager;
-import com.idhub.wallet.net.IDHubCredentialProvider;
-import com.idhub.wallet.setting.LanguagesManager;
 
-import org.bitcoinj.crypto.DeterministicKey;
-import org.bitcoinj.wallet.DeterministicKeyChain;
-import org.bitcoinj.wallet.DeterministicSeed;
 import org.junit.Test;
 import org.web3j.crypto.Credentials;
-import org.web3j.crypto.RawTransaction;
-import org.web3j.crypto.TransactionEncoder;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameter;
-import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.DefaultBlockParameterNumber;
-import org.web3j.protocol.core.RemoteCall;
-import org.web3j.protocol.core.methods.response.EthBlock;
-import org.web3j.protocol.core.methods.response.EthBlockNumber;
-import org.web3j.protocol.core.methods.response.EthGetBalance;
-import org.web3j.protocol.core.methods.response.EthGetBlockTransactionCountByNumber;
-import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
-import org.web3j.protocol.core.methods.response.EthHashrate;
-import org.web3j.protocol.core.methods.response.EthSendTransaction;
-import org.web3j.protocol.core.methods.response.EthTransaction;
+import org.web3j.protocol.core.methods.response.EthGasPrice;
 import org.web3j.protocol.http.HttpService;
-import org.web3j.tuples.generated.Tuple4;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
-import org.web3j.utils.Convert;
-import org.web3j.utils.Numeric;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import static com.idhub.wallet.net.Web3Api.mWeb3j;
-import static com.idhub.wallet.net.Web3Api.sNode;
 
 
 /**
@@ -85,14 +34,15 @@ public class ExampleUnitTest {
         Credentials credentials = Credentials.create("0");
         ContractGasProvider contractGasProvider = new DefaultGasProvider();
 //        Web3j web3j = Web3j.build(new HttpService("https://ropsten.infura.io"));
-        Web3j web3j = Web3j.build(new HttpService("http://47.103.62.205:8001"));
+//        Web3j web3j = Web3j.build(new HttpService("http://47.103.62.205:8001"));
+        Web3j web3j = Web3j.build(new HttpService("https://rinkeby.infura.io/v3/70d406df88af453e8bc8da633b14b70c"));
 //        EthTransaction send = web3j.ethGetTransactionByHash("0xfc2572cfdc312fc2c80273ee858693ed8af1fec6f78566e06786a2c7e22dc3d6").send();
 
-        EthGetBalance ethGetBalance = web3j.ethGetBalance("0x70d76f5B27ee05CCF0e0fa67aE72EcB203069b77", DefaultBlockParameterName.LATEST).send();
-        System.out.println(ethGetBalance.getBalance());
+//        EthGetBalance ethGetBalance = web3j.ethGetBalance("0x70d76f5B27ee05CCF0e0fa67aE72EcB203069b77", DefaultBlockParameterName.LATEST).send();
+//        System.out.println(ethGetBalance.getBalance());
 
 //        ERC721 erc721 = ERC721.deploy(mWeb3j, credentials, contractGasProvider).send();
-        ERC721Enumerable erc721Enumerable = ERC721Enumerable.deploy(mWeb3j, credentials, contractGasProvider).send();
+//        ERC721Enumerable erc721Enumerable = ERC721Enumerable.deploy(mWeb3j, credentials, contractGasProvider).send();
 //        Credentials credentials1 = Credentials.create("CBCB558CFB5CA8EF584D6BF5AD2744B9D6352209F5E0721B362946C8B5FF5F42");
 //
 //        EthGetTransactionCount send = web3j.ethGetTransactionCount("0x70d76f5B27ee05CCF0e0fa67aE72EcB203069b77", DefaultBlockParameterName.LATEST).send();//获取noce
@@ -154,6 +104,19 @@ public class ExampleUnitTest {
 //            languages.put(Locale.ENGLISH.toLanguageTag(), "ENGLISH");
 //            languages.put(Locale.CHINESE.toLanguageTag(), "CHINESE");
 //        String s = languages.get("");
+//        System.out.println(s);
+        EIP20Interface load = EIP20Interface.load("0xe5bd43166a3761628ac777bb1a42bcab13ca9495", web3j, credentials, new DefaultGasProvider());
+        String send = load.symbol().send();
+        String name = load.name().send();
+        BigInteger decimal = load.decimals().send();
+
+        System.out.println(send);
+        System.out.println(name);
+        System.out.println(decimal);
+        ERC721 erc721 = ERC721.load("0x16baf0de678e52367adc69fd067e5edd1d33e3bf", web3j, credentials, new DefaultGasProvider());
+
+//        EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
+//        String s = ethGasPrice.getGasPrice().toString();
 //        System.out.println(s);
     }
 }

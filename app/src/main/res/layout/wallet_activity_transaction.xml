@@ -15,53 +15,59 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+
+    <TextView
+        android:id="@+id/balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_80"
+        android:textColor="@color/wallet_main_yellow_color"
+        android:textSize="52sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        tools:text="1013.1231" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/split_line"-->
+<!--        android:layout_width="32dp"-->
+<!--        android:layout_height="61dp"-->
+<!--        android:layout_marginRight="20dp"-->
+<!--        android:includeFontPadding="false"-->
+<!--        android:text="/"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:textColor="@color/wallet_color_E8E8E8"-->
+<!--        android:textSize="58sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/balance"-->
+<!--        app:layout_constraintRight_toLeftOf="@id/coin_icon"-->
+<!--        app:layout_constraintTop_toTopOf="@id/balance" />-->
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center"
+    app:layout_constraintTop_toBottomOf="@id/balance"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    android:layout_height="wrap_content">
+
     <ImageView
         android:id="@+id/coin_icon"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginRight="10dp"
         android:src="@mipmap/wallet_eth_icon"
-        app:layout_constraintBottom_toBottomOf="@id/balance"
-        app:layout_constraintRight_toLeftOf="@id/token_name"
-        app:layout_constraintTop_toTopOf="@id/balance" />
-
-    <TextView
-        android:id="@+id/balance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="100dp"
-        android:textColor="@color/wallet_main_yellow_color"
-        android:textSize="52sp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        tools:text="10" />
-
-    <TextView
-        android:id="@+id/split_line"
-        android:layout_width="32dp"
-        android:layout_height="61dp"
-        android:layout_marginRight="20dp"
-        android:includeFontPadding="false"
-        android:text="/"
-        android:textColor="@color/wallet_color_E8E8E8"
-        android:textSize="58sp"
-        app:layout_constraintBottom_toBottomOf="@id/balance"
-        app:layout_constraintRight_toLeftOf="@id/coin_icon"
-        app:layout_constraintTop_toTopOf="@id/balance" />
-
+        />
     <TextView
         android:id="@+id/token_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="30dp"
         android:textColor="@color/wallet_black"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/balance"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/balance"
         tools:text="ETH" />
+</LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/receive"

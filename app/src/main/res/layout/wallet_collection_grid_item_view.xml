@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/wallet_white_bg_radius_4"
     android:orientation="vertical">
@@ -10,8 +11,8 @@
         android:id="@+id/collection_image"
         android:layout_width="@dimen/dp_164"
         android:layout_height="wrap_content"
+        android:scaleType="center"
         android:src="@mipmap/ceshi"
-        android:scaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +26,20 @@
         android:textColor="@color/wallet_text_black"
         android:textSize="@dimen/font_sp_14"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/collection_image"
+        tools:text="aaa" />
+
+    <TextView
+        android:id="@+id/collection_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_2"
         android:layout_marginBottom="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@id/collection_image" />
+        android:textColor="@color/wallet_text_black"
+        android:textSize="@dimen/font_sp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/collection_name"
+        app:layout_constraintTop_toBottomOf="@id/collection_name"
+        tools:text="11" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

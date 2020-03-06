@@ -1,9 +1,12 @@
 package com.idhub.wallet.net.collectiables.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 import java.util.List;
 
-public class AssetsCollectionItem implements Serializable {
+public class AssetsCollectionItem implements Parcelable {
 
     /**
      * token_id : 728
@@ -48,19 +51,80 @@ public class AssetsCollectionItem implements Serializable {
     public String name;
     public String description;
     public String external_link;
-    public AssetContractBean asset_contract;
     public String permalink;
-    public CollectionBean collection;
     public double decimals;
-
     public String current_price;
     public String current_escrow_price;
     public boolean is_presale;
+
+    public CollectionBean collection;
+    public AssetContractBean asset_contract;
     public CollectionLastSaleBean last_sale;
 
+    protected AssetsCollectionItem(Parcel in) {
+        token_id = in.readString();
+        num_sales = in.readDouble();
+        image_url = in.readString();
+        image_preview_url = in.readString();
+        image_thumbnail_url = in.readString();
+        image_original_url = in.readString();
+        animation_url = in.readString();
+        animation_original_url = in.readString();
+        name = in.readString();
+        description = in.readString();
+        external_link = in.readString();
+        permalink = in.readString();
+        collection = in.readParcelable(CollectionBean.class.getClassLoader());
+        asset_contract = in.readParcelable(AssetContractBean.class.getClassLoader());
+        last_sale = in.readParcelable(CollectionLastSaleBean.class.getClassLoader());
+        decimals = in.readDouble();
+        current_price = in.readString();
+        current_escrow_price = in.readString();
+        is_presale = in.readByte() != 0;
+    }
+
+    public static final Creator<AssetsCollectionItem> CREATOR = new Creator<AssetsCollectionItem>() {
+        @Override
+        public AssetsCollectionItem createFromParcel(Parcel in) {
+            return new AssetsCollectionItem(in);
+        }
+
+        @Override
+        public AssetsCollectionItem[] newArray(int size) {
+            return new AssetsCollectionItem[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(token_id);
+        dest.writeDouble(num_sales);
+        dest.writeString(image_url);
+        dest.writeString(image_preview_url);
+        dest.writeString(image_thumbnail_url);
+        dest.writeString(image_original_url);
+        dest.writeString(animation_url);
+        dest.writeString(animation_original_url);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(external_link);
+        dest.writeString(permalink);
+        dest.writeParcelable(collection, flags);
+        dest.writeParcelable(asset_contract, flags);
+        dest.writeParcelable(last_sale, flags);
+        dest.writeDouble(decimals);
+        dest.writeString(current_price);
+        dest.writeString(current_escrow_price);
+        dest.writeByte((byte) (is_presale ? 1 : 0));
+    }
 
 
-    public static class CollectionBean implements Serializable{
+    public static class CollectionBean implements Parcelable{
         /**
          * banner_image_url : null
          * chat_url : null
@@ -111,6 +175,69 @@ public class AssetsCollectionItem implements Serializable {
         public String slug;
         public String wiki_url;
 
+        protected CollectionBean(Parcel in) {
+            created_date = in.readString();
+            default_to_fiat = in.readByte() != 0;
+            description = in.readString();
+            dev_buyer_fee_basis_points = in.readString();
+            dev_seller_fee_basis_points = in.readString();
+            external_url = in.readString();
+            featured = in.readByte() != 0;
+            hidden = in.readByte() != 0;
+            image_url = in.readString();
+            is_subject_to_whitelist = in.readByte() != 0;
+            large_image_url = in.readString();
+            name = in.readString();
+            only_proxied_transfers = in.readByte() != 0;
+            opensea_buyer_fee_basis_points = in.readString();
+            opensea_seller_fee_basis_points = in.readString();
+            payout_address = in.readString();
+            require_email = in.readByte() != 0;
+            short_description = in.readString();
+            slug = in.readString();
+            wiki_url = in.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(created_date);
+            dest.writeByte((byte) (default_to_fiat ? 1 : 0));
+            dest.writeString(description);
+            dest.writeString(dev_buyer_fee_basis_points);
+            dest.writeString(dev_seller_fee_basis_points);
+            dest.writeString(external_url);
+            dest.writeByte((byte) (featured ? 1 : 0));
+            dest.writeByte((byte) (hidden ? 1 : 0));
+            dest.writeString(image_url);
+            dest.writeByte((byte) (is_subject_to_whitelist ? 1 : 0));
+            dest.writeString(large_image_url);
+            dest.writeString(name);
+            dest.writeByte((byte) (only_proxied_transfers ? 1 : 0));
+            dest.writeString(opensea_buyer_fee_basis_points);
+            dest.writeString(opensea_seller_fee_basis_points);
+            dest.writeString(payout_address);
+            dest.writeByte((byte) (require_email ? 1 : 0));
+            dest.writeString(short_description);
+            dest.writeString(slug);
+            dest.writeString(wiki_url);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        public static final Creator<CollectionBean> CREATOR = new Creator<CollectionBean>() {
+            @Override
+            public CollectionBean createFromParcel(Parcel in) {
+                return new CollectionBean(in);
+            }
+
+            @Override
+            public CollectionBean[] newArray(int size) {
+                return new CollectionBean[size];
+            }
+        };
     }
 
 }

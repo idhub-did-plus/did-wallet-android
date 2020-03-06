@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".assets.CollectionOptionsActivity">
+
+    <include
+        android:id="@+id/title"
+        layout="@layout/wallet_common_title_layout"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sell_on_opensea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_32"
+        android:drawableLeft="@mipmap/wallet_collection_sell_icon"
+        android:drawablePadding="@dimen/dp_16"
+        android:text="@string/wallet_sell_on_openSea"
+        android:textSize="@dimen/font_sp_18"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title" />
+
+    <TextView
+        android:id="@+id/view_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_24"
+        android:drawableLeft="@mipmap/wallet_collection_view_icon"
+        android:drawablePadding="@dimen/dp_16"
+        android:text="@string/wallet_View_on"
+        android:textSize="@dimen/font_sp_18"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sell_on_opensea" />
+</androidx.constraintlayout.widget.ConstraintLayout>

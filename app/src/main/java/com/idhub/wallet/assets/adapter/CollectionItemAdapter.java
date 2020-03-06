@@ -17,7 +17,7 @@ public class CollectionItemAdapter extends BaseRecyclerAdapter<AssetsCollectionI
     @Override
     protected void bindViewWithHolder(int position, RecyclerViewHolder holder, AssetsCollectionItem item) {
         ImageView imageView = holder.getImageView(R.id.image);
-        Glide.with(imageView).load(item.image_url).into(imageView);
+        Glide.with(imageView).load(item.image_original_url).into(imageView);
         holder.setText(R.id.name, item.name);
         holder.setText(R.id.description, item.description);
     }

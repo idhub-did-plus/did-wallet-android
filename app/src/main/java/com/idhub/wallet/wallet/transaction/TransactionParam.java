@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.dapp.entity.Transaction;
+import com.idhub.wallet.net.collectiables.model.AssetsCollectionItem;
 
 
 public class TransactionParam  implements Parcelable {
@@ -13,6 +14,7 @@ public class TransactionParam  implements Parcelable {
     public String type;
     public Transaction transaction;//用做dapp交易
     public AssetsModel assetsModel; //用做资产交易
+    public AssetsCollectionItem assetsCollectionItem;//erc721交易
 
     public TransactionParam() {
     }
@@ -23,6 +25,7 @@ public class TransactionParam  implements Parcelable {
         type = in.readString();
         transaction = in.readParcelable(Transaction.class.getClassLoader());
         assetsModel = in.readParcelable(AssetsModel.class.getClassLoader());
+        assetsCollectionItem = in.readParcelable(AssetsCollectionItem.class.getClassLoader());
     }
 
     @Override
@@ -32,6 +35,7 @@ public class TransactionParam  implements Parcelable {
         dest.writeString(type);
         dest.writeParcelable(transaction, flags);
         dest.writeParcelable(assetsModel, flags);
+        dest.writeParcelable(assetsCollectionItem, flags);
     }
 
     @Override

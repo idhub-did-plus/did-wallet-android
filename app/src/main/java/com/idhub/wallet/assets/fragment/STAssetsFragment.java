@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.base.greendao.entity.AssetsModel;
+import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.R;
 import com.idhub.wallet.assets.view.STMainView;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
@@ -42,7 +43,7 @@ public class STAssetsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.wallet_fragment_stassets, container, false);
-        initview(view);
+        initView(view);
         initData();
         WalletAddAssetsObservable.getInstance().addObserver(new Observer() {
             @Override
@@ -50,10 +51,17 @@ public class STAssetsFragment extends Fragment {
                 initData();
             }
         });
+        WalletNodeSelectedObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                initData();
+            }
+        });
+
         return view;
     }
 
-    private void initview(View view) {
+    private void initView(View view) {
         promptView = view.findViewById(R.id.assets_prompt);
         stMainView = view.findViewById(R.id.st_content);
     }

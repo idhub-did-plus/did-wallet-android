@@ -5,4 +5,5 @@ public class TransactionTokenType {
     public static final String ETH_NAME = "ETH";
     public static final String ERC20 = "ERC20";
     public static final String ERC1400 = "ERC1400";
+    public static final String ERC721 = "ERC721";
 }

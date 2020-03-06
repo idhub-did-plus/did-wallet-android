@@ -409,4 +409,7 @@
     <string name="wallet_Options">选项</string>
     <string name="wallet_token_id">Token ID</string>
     <string name="wallet_last_sold_for">Last Sold For</string>
+    <string name="wallet_send_to">Send to</string>
+    <string name="wallet_sell_on_openSea">Sell on OpenSea</string>
+    <string name="wallet_View_on">View on </string>
 </resources>

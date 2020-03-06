@@ -98,6 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:text="Partition"
         android:textSize="16sp"
@@ -111,6 +112,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="5dp"
         android:textSize="13sp"
+        android:visibility="gone"
         android:layout_marginRight="12dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -121,9 +123,46 @@
         android:id="@+id/line3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:visibility="gone"
         android:layout_marginTop="10dp"
         android:background="@color/wallet_line_gray"
         app:layout_constraintTop_toBottomOf="@id/partition" />
+
+
+    <TextView
+        android:id="@+id/token_id_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/wallet_token_id"
+        android:visibility="gone"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line3" />
+
+    <TextView
+        android:id="@+id/token_id"
+        android:layout_width="0dp"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:textSize="13sp"
+        android:layout_marginRight="12dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/token_id_name"
+        tools:text="2132" />
+
+    <View
+        android:id="@+id/line6"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/wallet_line_gray"
+        app:layout_constraintTop_toBottomOf="@id/token_id" />
 
     <TextView
         android:id="@+id/gas_name"
@@ -134,7 +173,7 @@
         android:text="@string/wallet_gas_amount"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line3" />
+        app:layout_constraintTop_toBottomOf="@id/line6" />
 
     <TextView
         android:id="@+id/gas_amount"

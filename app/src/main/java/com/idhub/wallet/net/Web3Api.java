@@ -12,6 +12,7 @@ import com.idhub.wallet.common.sharepreference.WalletTransactionSharpreference;
 import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.contract.EIP20Interface;
 import com.idhub.wallet.contract.ERC1400;
+import com.idhub.wallet.contract.ERC721;
 import com.idhub.wallet.didhub.WalletInfo;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
@@ -29,6 +30,7 @@ import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.core.methods.response.EthGasPrice;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
@@ -287,6 +289,15 @@ public class Web3Api {
         WalletInfo walletInfo = new WalletInfo(WalletManager.getCurrentKeyStore());
         String privateKey = walletInfo.exportPrivateKey(password);
         return Credentials.create(privateKey);
+    }
+
+
+    public static void sendERC721Transaction(String password,  String contractAddress,String fromAddress, String toAddress,String gasPrice, String gasLimit,  String tokenId,DisposableSubscriber<TransactionReceipt> disposableSubscriber){
+        Credentials credentials = getCredentials(password);
+        StaticGasProvider staticGasProvider = new DefaultGasProvider();
+        ERC721 erc721 = ERC721.load(contractAddress, mWeb3j, credentials, staticGasProvider);
+        erc721.safeTransferFrom(fromAddress,toAddress, new BigInteger(tokenId)).flowable().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(disposableSubscriber);
+
     }
 
 }

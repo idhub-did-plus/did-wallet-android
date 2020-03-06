@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.net.Web3Api;
+import com.idhub.wallet.net.collectiables.model.AssetsCollectionItem;
 import com.idhub.wallet.net.parameter.ERC1400TransactionParam;
 import com.idhub.wallet.net.parameter.EthTransactionParam;
 import com.idhub.wallet.utils.ToastUtils;
@@ -59,6 +61,10 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
     private TransactionParam mTransactionParam;
     private TransactionDialog dialog;
 
+    private View mTokenIdBottomLineView;
+    private View mTokenIdNameView;
+    private TextView mTokenIdView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +75,10 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         mTransactionParam = (TransactionParam) data;
+        if (TextUtils.isEmpty(mTransactionParam.type)) {
+            finish();
+            return;
+        }
         initView();
         initData();
     }
@@ -93,6 +103,17 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
             }
             mSendAmountView.setText(value + " " + assetsModel.getSymbol());
             mFromAddressView.setText(Keys.toChecksumAddress(assetsModel.getAddress()));
+            byte[] partition = assetsModel.partition;
+            if (partition != null) {
+                mPartitionName.setVisibility(View.VISIBLE);
+                mPartitionView.setVisibility(View.VISIBLE);
+                mLineView.setVisibility(View.VISIBLE);
+                mPartitionView.setText(NumericUtil.prependHexPrefix(NumericUtil.bytesToHex(partition)));
+            } else {
+                mPartitionName.setVisibility(View.GONE);
+                mPartitionView.setVisibility(View.GONE);
+                mLineView.setVisibility(View.GONE);
+            }
         }
         mGasPrice = WalletTransactionSharpreference.getInstance().getGasPrice();
         switch (mTransactionParam.type) {
@@ -110,23 +131,27 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
                 mGasLimit = String.valueOf(transaction.gasLimit);
                 mGasPrice = transaction.gasPrice.toString();
                 break;
+            case TransactionTokenType.ERC721:
+                AssetsCollectionItem collectionItem = mTransactionParam.assetsCollectionItem;
+                if (collectionItem != null) {
+                    mFromAddressView.setText(Keys.toChecksumAddress(WalletManager.getCurrentKeyStore().getAddress()));
+                    mSendAmountView.setText(collectionItem.name);
+                    mTokenIdBottomLineView.setVisibility(View.VISIBLE);
+                    mTokenIdNameView.setVisibility(View.VISIBLE);
+                    mTokenIdView.setVisibility(View.VISIBLE);
+                    mTokenIdView.setText(collectionItem.token_id);
+                } else {
+                    finish();
+                    return;
+                }
+                mGasLimit = WalletTransactionSharpreference.getInstance().getERC721GasLimit();
+                break;
         }
         setGasAmount();
-        byte[] partition = assetsModel.partition;
-        if (partition != null) {
-            mPartitionName.setVisibility(View.VISIBLE);
-            mPartitionView.setVisibility(View.VISIBLE);
-            mLineView.setVisibility(View.VISIBLE);
-            mPartitionView.setText(NumericUtil.prependHexPrefix(NumericUtil.bytesToHex(partition)));
-        } else {
-            mPartitionName.setVisibility(View.GONE);
-            mPartitionView.setVisibility(View.GONE);
-            mLineView.setVisibility(View.GONE);
-        }
+
     }
 
     private void setGasAmount() {
-        Log.e("LYW", "initData: " + mGasLimit + " " + mGasPrice);
         BigInteger bigIntegerGasLimit = new BigInteger(mGasLimit);
         BigInteger bigIntegerGasPrice = new BigInteger(mGasPrice);
         BigInteger gasEthAmount = bigIntegerGasLimit.multiply(bigIntegerGasPrice);
@@ -148,6 +173,12 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
         mPartitionView = findViewById(R.id.partition);
         mLineView = findViewById(R.id.line3);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
+
+
+        mTokenIdBottomLineView = findViewById(R.id.line6);
+        mTokenIdNameView = findViewById(R.id.token_id_name);
+        mTokenIdView = findViewById(R.id.token_id);
+
     }
 
 
@@ -206,6 +237,7 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
     private void transaction(String data) {
         String type = mTransactionParam.type;
         AssetsModel assetsModel = mTransactionParam.assetsModel;
+        AssetsCollectionItem assetsCollectionItem = mTransactionParam.assetsCollectionItem;
         String toAddress = mTransactionParam.toAddress;
         String value = mTransactionParam.value;
         switch (type) {
@@ -289,6 +321,35 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
                 break;
             case TransactionTokenType.WEB3_DAPP:
                 signWeb3DAppTransaction(data);
+                break;
+            case TransactionTokenType.ERC721:
+                Web3Api.sendERC721Transaction(data, assetsCollectionItem.asset_contract.address,mFromAddressView.getText().toString(),toAddress, mGasPrice, mGasLimit, assetsCollectionItem.token_id, new DisposableSubscriber<TransactionReceipt>() {
+                    @Override
+                    public void onNext(TransactionReceipt transactionReceipt) {
+                        String status = transactionReceipt.getStatus();
+                        if ("0x1".equals(status)) {
+                            //成功
+                            ToastUtils.showShortToast(getString(R.string.wallet_transaction_success));
+                            MainActivity.startAction(SendConfirmActivity.this, "transaction");
+                        } else {
+                            String transactionHash = transactionReceipt.getTransactionHash();
+                            Log.e("LYW", "onNext: " + transactionHash );
+                            ToastUtils.showShortToast(getString(R.string.wallet_transaction_fail));
+                        }
+                        mLoadingAndErrorView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        ToastUtils.showShortToast(t.getMessage());
+                        mLoadingAndErrorView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
                 break;
         }
 

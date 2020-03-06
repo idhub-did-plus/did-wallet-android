@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.idhub.base.greendao.entity.AssetsModel;
+import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.R;
 import com.idhub.wallet.assets.adapter.TokenListAdapter;
 import com.idhub.wallet.common.recyclerview.BaseRecyclerAdapter;
@@ -50,6 +51,12 @@ public class TokenFragment extends Fragment {
         initView(view);
         initData();
         WalletAddAssetsObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                initData();
+            }
+        });
+        WalletNodeSelectedObservable.getInstance().addObserver(new Observer() {
             @Override
             public void update(Observable o, Object arg) {
                 initData();

@@ -14,15 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.R;
 import com.idhub.wallet.assets.AssetsFragment;
 import com.idhub.wallet.assets.CollectionListActivity;
 import com.idhub.wallet.assets.adapter.CollectionAdapter;
 import com.idhub.wallet.assets.adapter.StaggeredDividerItemDecoration;
+import com.idhub.wallet.assets.model.CollectionTokenBean;
 import com.idhub.wallet.common.recyclerview.BaseRecyclerAdapter;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.net.collectiables.CollectionHttpMethod;
+import com.idhub.wallet.net.collectiables.model.AssetContractBean;
 import com.idhub.wallet.net.collectiables.model.AssetsCollectionItem;
 import com.idhub.wallet.net.collectiables.model.AssetsCollections;
 import com.idhub.wallet.net.collectiables.model.Collections;
@@ -31,7 +34,10 @@ import com.idhub.wallet.utils.LogUtils;
 import org.web3j.crypto.Keys;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import io.reactivex.subscribers.ResourceSubscriber;
 
@@ -59,6 +65,14 @@ public class CollectiblesFragment extends Fragment {
         View view = inflater.inflate(R.layout.wallet_fragment_collectibles, container, false);
         initView(view);
         initData();
+        WalletNodeSelectedObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                //节点切换
+                initData();
+            }
+        });
+
         return view;
     }
 
@@ -67,15 +81,14 @@ public class CollectiblesFragment extends Fragment {
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new StaggeredDividerItemDecoration(getContext(),16));
-
         recyclerView.setItemAnimator(null);
         adapter = new CollectionAdapter(getContext());
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int pos) {
-                AssetsCollectionItem itemObject = adapter.getItemObject(pos);
-                CollectionListActivity.startAction(getContext(),itemObject);
+                CollectionTokenBean tokenBean = adapter.getItemObject(pos);
+                CollectionListActivity.startAction(getContext(),tokenBean);
             }
         });
     }
@@ -91,12 +104,24 @@ public class CollectiblesFragment extends Fragment {
             CollectionHttpMethod.getInstance().assets(new ResourceSubscriber<AssetsCollections>() {
                 @Override
                 public void onNext(AssetsCollections collections) {
-                    List<AssetsCollectionItem> objects = new ArrayList<>();
                     List<AssetsCollectionItem> assets = collections.assets;
-                    for (int i = 0; i < 20; i++) {
-                        objects.addAll(assets);
+                    //处理数据，将相同合约合并展示一次
+                    HashMap<String, CollectionTokenBean> map = new HashMap<String, CollectionTokenBean>();
+                    for (AssetsCollectionItem asset : assets) {
+                        String address = asset.asset_contract.address;
+                        CollectionTokenBean collectionTokenBean = map.get(address);
+                        if (collectionTokenBean == null) {
+                            AssetContractBean contractBean = asset.asset_contract;
+                            ArrayList<AssetsCollectionItem> assetsCollectionItem = new ArrayList<>();
+                            assetsCollectionItem.add(asset);
+                            CollectionTokenBean tokenBean = new CollectionTokenBean(contractBean.address,contractBean.image_url,contractBean.description,contractBean.name, assetsCollectionItem);
+                            map.put(address, tokenBean);
+                        } else {
+                            collectionTokenBean.assetsCollectionItem.add(asset);
+                        }
                     }
-                    adapter.addAll(objects);
+
+                    adapter.addAll(new ArrayList<>(map.values()));
                 }
 
                 @Override

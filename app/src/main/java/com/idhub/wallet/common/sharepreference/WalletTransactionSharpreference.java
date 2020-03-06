@@ -13,6 +13,7 @@ public class WalletTransactionSharpreference {
     private String WALLET_GAS_ETH_LIMIT = "wallet_gas_eth_limit";
     private String WALLET_GAS_ERC20_LIMIT = "wallet_gas_erc20_limit";
     private String WALLET_GAS_ST_LIMIT = "wallet_gas_st_limit";
+    private String WALLET_GAS_ERC721_LIMIT = "wallet_gas_erc721_limit";
 
     private WalletTransactionSharpreference() {
         sharedPreferences = App.getInstance().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
@@ -59,6 +60,14 @@ public class WalletTransactionSharpreference {
     public void setSTGasLimit(String gasLimit) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.putString(WALLET_GAS_ST_LIMIT, gasLimit).apply();
+    }
+    public String getERC721GasLimit() {
+        return sharedPreferences.getString(WALLET_GAS_ERC721_LIMIT, "500000");
+    }
+
+    public void setERC721GasLimit(String gasLimit) {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putString(WALLET_GAS_ERC721_LIMIT, gasLimit).apply();
     }
 
 }
