@@ -1,6 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:orientation="vertical"
+    tools:parentTag="LinearLayout">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/middle_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="10dp"
+        android:text="@string/wallet_gender"
+        android:textColor="@color/wallet_color_202020"
+        android:textSize="@dimen/font_sp_14" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_11"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/male_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/gender_selected"
+            android:paddingLeft="8dp"
+            android:text="@string/wallet_gender_boy"
+            android:textColor="@color/wallet_color_202020"
+            android:textSize="@dimen/font_sp_16" />
+
+        <RadioButton
+            android:id="@+id/female_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_28"
+            android:button="@drawable/gender_selected"
+            android:paddingLeft="8dp"
+            android:text="@string/wallet_gender_girl"
+            android:textColor="@color/wallet_color_202020"
+            android:textSize="@dimen/font_sp_16" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="9dp"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@color/wallet_color_E8E8E8" />
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/birthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="10dp"
+        android:text="@string/wallet_phone_number"
+        android:textColor="@color/wallet_color_202020"
+        android:textSize="@dimen/font_sp_14" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_phone_dialing_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:minWidth="40dp"
+            android:text="+" />
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_3"
+            android:background="@null"
+            android:maxLines="1"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/wallet_color_202020"
+            android:textSize="@dimen/font_sp_16"
+            tools:hint="@string/wallet_phone_number" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@color/wallet_color_E8E8E8" />
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/nationality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/country_of_residence"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/base_info_save"
+        android:layout_width="@dimen/dp_313"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@drawable/wallet_btn_yellow_radius_4"
+        android:gravity="center"
+        android:text="@string/wallet_save"
+        android:textColor="@color/wallet_white"
+        android:textSize="@dimen/font_sp_18" />
+</merge>

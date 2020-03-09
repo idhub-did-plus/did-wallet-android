@@ -52,6 +52,8 @@ public class CollectiblesFragment extends Fragment implements View.OnClickListen
 
     private CollectionAdapter adapter;
     private TextView mOpenSeaLinkView;
+    private View mEmptyCollectionView;
+    private RecyclerView mRecyclerView;
 
     public CollectiblesFragment() {
         // Required empty public constructor
@@ -81,15 +83,17 @@ public class CollectiblesFragment extends Fragment implements View.OnClickListen
     }
 
     private void initView(View view) {
+        mEmptyCollectionView = view.findViewById(R.id.empty_collection);
+        mEmptyCollectionView.setOnClickListener(this);
         mOpenSeaLinkView = view.findViewById(R.id.opensea_link);
         mOpenSeaLinkView.setOnClickListener(this);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        mRecyclerView = view.findViewById(R.id.recycler_view);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new StaggeredDividerItemDecoration(getContext(), 16));
-        recyclerView.setItemAnimator(null);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.addItemDecoration(new StaggeredDividerItemDecoration(getContext(), 16));
+        mRecyclerView.setItemAnimator(null);
         adapter = new CollectionAdapter(getContext());
-        recyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int pos) {
@@ -131,8 +135,12 @@ public class CollectiblesFragment extends Fragment implements View.OnClickListen
                         }
 
                         adapter.addAll(new ArrayList<>(map.values()));
+                        mRecyclerView.setVisibility(View.VISIBLE);
                         mOpenSeaLinkView.setVisibility(View.VISIBLE);
+                        mEmptyCollectionView.setVisibility(View.GONE);
                     } else {
+                        mRecyclerView.setVisibility(View.GONE);
+                        mEmptyCollectionView.setVisibility(View.VISIBLE);
                         mOpenSeaLinkView.setVisibility(View.GONE);
                     }
                 }
@@ -154,7 +162,7 @@ public class CollectiblesFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if (v == mOpenSeaLinkView) {
+        if (v == mOpenSeaLinkView || v == mEmptyCollectionView) {
             //goto opensea
             Web3Activity.startAction(getContext(), CollectionContent.OPEN_SEA_LINK);
         }

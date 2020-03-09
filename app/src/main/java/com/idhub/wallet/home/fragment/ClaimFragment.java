@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.idhub.wallet.auth.AutoInfoActivity;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
@@ -131,7 +132,8 @@ public class ClaimFragment extends MainBaseFragment implements View.OnClickListe
             STCompliantInvestorActivity.startAction(getContext());
         } else if (v == infoBgContainer) {
             //上传信息
-            UploadInformationTypeActivity.startAction(getContext());
+            AutoInfoActivity.startAction(getContext());
+//            UploadInformationTypeActivity.startAction(getContext());
         }
     }
     @Override

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:orientation="vertical"
+    tools:parentTag="LinearLayout">
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/postal_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/province"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/neighborhood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.idhub.wallet.auth.InformationItemLayout
+        android:id="@+id/address_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="10dp"
+        android:text="@string/wallet_address_proof_document"
+        android:textColor="@color/wallet_color_202020"
+        android:textSize="@dimen/font_sp_14" />
+
+    <com.idhub.wallet.auth.InformationFileLayout
+        android:id="@+id/address_file"
+        android:layout_width="@dimen/dp_313"
+        android:layout_height="@dimen/dp_42"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_7" />
+
+    <TextView
+        android:id="@+id/base_info_save"
+        android:layout_width="@dimen/dp_313"
+        android:layout_height="@dimen/dp_40"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp_15"
+        android:layout_marginBottom="@dimen/dp_20"
+        android:background="@drawable/wallet_btn_yellow_radius_4"
+        android:gravity="center"
+        android:text="@string/wallet_save"
+        android:textColor="@color/wallet_white"
+        android:textSize="@dimen/font_sp_18" />
+</merge>

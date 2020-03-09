@@ -144,6 +144,7 @@
     <string name="wallet_repeat">文件名重复</string>
     <string name="wallet_edit_after_again_upload">请修改之后再次上传</string>
     <string name="wallet_id_photo_positive">身份证件正面照片</string>
+    <string name="wallet_id_card">身份证件</string>
     <string name="wallet_id_photo_negative">身份证件反面照片</string>
     <string name="wallet_passport_photo">护照照片</string>
     <string name="wallet_bank_balance_document">银行余额证明文件</string>
@@ -413,4 +414,10 @@
     <string name="wallet_sell_on_openSea">Sell on OpenSea</string>
     <string name="wallet_View_on">View on </string>
     <string name="find_more_on_opensea">Find more on OpenSea</string>
+    <string name="basic_information">基本信息</string>
+    <string name="identity_information">证件信息</string>
+    <string name="taxpayer_information">纳税人信息</string>
+    <string name="credit_information">信用信息</string>
+    <string name="address_information">地址信息</string>
+    <string name="assets_information">资产证明</string>
 </resources>

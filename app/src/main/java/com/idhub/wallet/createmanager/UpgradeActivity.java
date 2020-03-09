@@ -272,8 +272,8 @@ public class UpgradeActivity extends BaseActivity implements View.OnClickListene
                     } else {
                         //生成恢复地址recoverAddress和助记词。助记词备份完之后提交create 成功之后保存recoverAddress
                         createRecoverAddressAndMnemonic();
+                        mLoadingAndErrorView.setVisibility(View.GONE);
                     }
-                    mLoadingAndErrorView.setVisibility(View.GONE);
                 } else {
                     mLoadingAndErrorView.setVisibility(View.GONE);
                     ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
