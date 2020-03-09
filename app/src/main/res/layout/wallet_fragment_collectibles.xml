@@ -17,4 +17,16 @@
        android:layout_marginRight="@dimen/dp_8"
        android:layout_height="wrap_content"/>
 
+   <TextView
+       android:id="@+id/opensea_link"
+       android:paddingTop="16dp"
+       android:visibility="gone"
+       android:textSize="@dimen/font_sp_16"
+       android:textColor="@color/wallet_main_yellow_color"
+       android:paddingBottom="16dp"
+       android:gravity="center"
+       android:text="@string/find_more_on_opensea"
+       app:layout_constraintTop_toBottomOf="@id/recycler_view"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -412,4 +412,5 @@
     <string name="wallet_send_to">Send to</string>
     <string name="wallet_sell_on_openSea">Sell on OpenSea</string>
     <string name="wallet_View_on">View on </string>
+    <string name="find_more_on_opensea">Find more on OpenSea</string>
 </resources>

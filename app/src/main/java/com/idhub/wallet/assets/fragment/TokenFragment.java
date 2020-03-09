@@ -23,6 +23,7 @@ import com.idhub.wallet.common.recyclerview.BaseRecyclerAdapter;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.TransactionTokenType;
+import com.idhub.wallet.wallet.token.activity.TokenManagerActivity;
 import com.idhub.wallet.wallet.transaction.TransactionActivity;
 
 import java.util.ArrayList;
@@ -71,6 +72,12 @@ public class TokenFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TokenListAdapter(getContext());
         recyclerView.setAdapter(adapter);
+        view.findViewById(R.id.assets_name).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TokenManagerActivity.startAction(getContext());
+            }
+        });
     }
 
     private void initData() {

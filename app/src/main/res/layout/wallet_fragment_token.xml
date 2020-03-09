@@ -3,10 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".assets.fragment.TokenFragment">
+
+    <TextView
+        android:id="@+id/assets_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:drawableRight="@mipmap/wallet_assets_right_arrow"
+        android:text="@string/wallet_assets"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="@dimen/font_sp_20" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
+        android:layout_marginTop="@dimen/dp_8"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

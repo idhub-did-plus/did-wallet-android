@@ -18,6 +18,7 @@ import com.idhub.wallet.assets.view.STMainView;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.TransactionTokenType;
+import com.idhub.wallet.wallet.token.activity.TokenManagerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,12 @@ public class STAssetsFragment extends Fragment {
     }
 
     private void initView(View view) {
+        view.findViewById(R.id.assets_name).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TokenManagerActivity.startAction(getContext());
+            }
+        });
         promptView = view.findViewById(R.id.assets_prompt);
         stMainView = view.findViewById(R.id.st_content);
     }

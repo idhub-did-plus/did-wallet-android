@@ -198,26 +198,11 @@
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/assets_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp_16"
-                android:layout_marginTop="@dimen/dp_16"
-                android:layout_marginRight="@dimen/dp_16"
-                android:drawableRight="@mipmap/wallet_assets_right_arrow"
-                android:text="@string/wallet_assets"
-                android:textColor="@color/wallet_text_black"
-                android:textSize="@dimen/font_sp_20"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tab_layout_view" />
-
             <com.idhub.wallet.common.viewpager.AutoHeightViewpager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_8"
-                app:layout_constraintTop_toBottomOf="@id/assets_name" />
+                app:layout_constraintTop_toBottomOf="@id/tab_layout_view" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

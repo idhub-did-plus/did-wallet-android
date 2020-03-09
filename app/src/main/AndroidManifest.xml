@@ -24,7 +24,8 @@
         android:theme="@style/WalletAppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".assets.CollectionOptionsActivity"></activity>
+        <activity android:name=".auth.AutoInfoActivity"></activity>
+        <activity android:name=".assets.CollectionOptionsActivity" />
         <activity android:name=".assets.CollectionTransactionActivity" />
         <activity android:name=".assets.CollectionDetailActivity" />
         <activity android:name=".assets.CollectionListActivity" />

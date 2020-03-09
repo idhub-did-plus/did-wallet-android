@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.R;
@@ -22,8 +23,10 @@ import com.idhub.wallet.assets.adapter.CollectionAdapter;
 import com.idhub.wallet.assets.adapter.StaggeredDividerItemDecoration;
 import com.idhub.wallet.assets.model.CollectionTokenBean;
 import com.idhub.wallet.common.recyclerview.BaseRecyclerAdapter;
+import com.idhub.wallet.dapp.Web3Activity;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
+import com.idhub.wallet.net.collectiables.CollectionContent;
 import com.idhub.wallet.net.collectiables.CollectionHttpMethod;
 import com.idhub.wallet.net.collectiables.model.AssetContractBean;
 import com.idhub.wallet.net.collectiables.model.AssetsCollectionItem;
@@ -44,10 +47,11 @@ import io.reactivex.subscribers.ResourceSubscriber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CollectiblesFragment extends Fragment {
+public class CollectiblesFragment extends Fragment implements View.OnClickListener {
 
 
     private CollectionAdapter adapter;
+    private TextView mOpenSeaLinkView;
 
     public CollectiblesFragment() {
         // Required empty public constructor
@@ -77,18 +81,22 @@ public class CollectiblesFragment extends Fragment {
     }
 
     private void initView(View view) {
+        mOpenSeaLinkView = view.findViewById(R.id.opensea_link);
+        mOpenSeaLinkView.setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new StaggeredDividerItemDecoration(getContext(),16));
+        recyclerView.addItemDecoration(new StaggeredDividerItemDecoration(getContext(), 16));
         recyclerView.setItemAnimator(null);
         adapter = new CollectionAdapter(getContext());
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int pos) {
-                CollectionTokenBean tokenBean = adapter.getItemObject(pos);
-                CollectionListActivity.startAction(getContext(),tokenBean);
+                if (pos >= 0) {
+                    CollectionTokenBean tokenBean = adapter.getItemObject(pos);
+                    CollectionListActivity.startAction(getContext(), tokenBean);
+                }
             }
         });
     }
@@ -106,37 +114,49 @@ public class CollectiblesFragment extends Fragment {
                 public void onNext(AssetsCollections collections) {
                     List<AssetsCollectionItem> assets = collections.assets;
                     //处理数据，将相同合约合并展示一次
-                    HashMap<String, CollectionTokenBean> map = new HashMap<String, CollectionTokenBean>();
-                    for (AssetsCollectionItem asset : assets) {
-                        String address = asset.asset_contract.address;
-                        CollectionTokenBean collectionTokenBean = map.get(address);
-                        if (collectionTokenBean == null) {
-                            AssetContractBean contractBean = asset.asset_contract;
-                            ArrayList<AssetsCollectionItem> assetsCollectionItem = new ArrayList<>();
-                            assetsCollectionItem.add(asset);
-                            CollectionTokenBean tokenBean = new CollectionTokenBean(contractBean.address,contractBean.image_url,contractBean.description,contractBean.name, assetsCollectionItem);
-                            map.put(address, tokenBean);
-                        } else {
-                            collectionTokenBean.assetsCollectionItem.add(asset);
+                    if (assets != null && assets.size() > 0) {
+                        HashMap<String, CollectionTokenBean> map = new HashMap<String, CollectionTokenBean>();
+                        for (AssetsCollectionItem asset : assets) {
+                            String address = asset.asset_contract.address;
+                            CollectionTokenBean collectionTokenBean = map.get(address);
+                            if (collectionTokenBean == null) {
+                                AssetContractBean contractBean = asset.asset_contract;
+                                ArrayList<AssetsCollectionItem> assetsCollectionItem = new ArrayList<>();
+                                assetsCollectionItem.add(asset);
+                                CollectionTokenBean tokenBean = new CollectionTokenBean(contractBean.address, contractBean.image_url, contractBean.description, contractBean.name, assetsCollectionItem);
+                                map.put(address, tokenBean);
+                            } else {
+                                collectionTokenBean.assetsCollectionItem.add(asset);
+                            }
                         }
-                    }
 
-                    adapter.addAll(new ArrayList<>(map.values()));
+                        adapter.addAll(new ArrayList<>(map.values()));
+                        mOpenSeaLinkView.setVisibility(View.VISIBLE);
+                    } else {
+                        mOpenSeaLinkView.setVisibility(View.GONE);
+                    }
                 }
 
                 @Override
                 public void onError(Throwable t) {
-                    LogUtils.e("LYW", "onError: " + t.getMessage() );
+                    LogUtils.e("LYW", "onError: " + t.getMessage());
                 }
 
                 @Override
                 public void onComplete() {
 
                 }
-            },String.valueOf(300), Keys.toChecksumAddress(NumericUtil.prependHexPrefix(mDidHubMnemonicKeyStore.getAddress())));
+            }, String.valueOf(300), Keys.toChecksumAddress(NumericUtil.prependHexPrefix(mDidHubMnemonicKeyStore.getAddress())));
         }
 
 
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v == mOpenSeaLinkView) {
+            //goto opensea
+            Web3Activity.startAction(getContext(), CollectionContent.OPEN_SEA_LINK);
+        }
+    }
 }

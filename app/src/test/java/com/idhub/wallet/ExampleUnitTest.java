@@ -105,16 +105,11 @@ public class ExampleUnitTest {
 //            languages.put(Locale.CHINESE.toLanguageTag(), "CHINESE");
 //        String s = languages.get("");
 //        System.out.println(s);
-        EIP20Interface load = EIP20Interface.load("0xe5bd43166a3761628ac777bb1a42bcab13ca9495", web3j, credentials, new DefaultGasProvider());
-        String send = load.symbol().send();
-        String name = load.name().send();
-        BigInteger decimal = load.decimals().send();
+//        EIP20Interface load = EIP20Interface.load("0xe5bd43166a3761628ac777bb1a42bcab13ca9495", web3j, credentials, new DefaultGasProvider());
 
-        System.out.println(send);
-        System.out.println(name);
-        System.out.println(decimal);
         ERC721 erc721 = ERC721.load("0x16baf0de678e52367adc69fd067e5edd1d33e3bf", web3j, credentials, new DefaultGasProvider());
-
+        BigInteger integer = erc721.balanceOf("0x00fe6efe5565e76905f39d603d8da3bf96e316e4").send();
+        System.out.println(integer);
 //        EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
 //        String s = ethGasPrice.getGasPrice().toString();
 //        System.out.println(s);

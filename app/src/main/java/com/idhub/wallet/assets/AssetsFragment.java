@@ -133,8 +133,6 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         String[] strings = {getString(R.string.wallet_securities), getString(R.string.wallet_token), getString(R.string.wallet_collectibles)};
         AssetsFragmentPagerAdapter adapter = new AssetsFragmentPagerAdapter(getChildFragmentManager(), getContext(), strings);
         viewPager.setAdapter(adapter);
-        TextView assetsName = view.findViewById(R.id.assets_name);
-        assetsName.setOnClickListener(this);
 
         //滑动的距离，判断当滑动到顶部的时候，计算viewpager的高度进行设置。
         NestedScrollView nestedScrollView = view.findViewById(R.id.scroll_view);
@@ -232,9 +230,6 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.assets_name:
-                TokenManagerActivity.startAction(getContext());
-                break;
             case R.id.upgrade_btn_layout:
                 //升级身份 或 申请claim
                 if (defaultIdentity == null) {
