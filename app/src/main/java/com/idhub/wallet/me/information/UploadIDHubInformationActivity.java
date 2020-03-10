@@ -198,7 +198,7 @@ public class UploadIDHubInformationActivity extends BaseActivity implements View
         mNeighborhoodView = findViewById(R.id.neighborhood);
         mNeighborhoodView.setData(getString(R.string.wallet_neighborhood), getString(R.string.wallet_please_input) + getString(R.string.wallet_neighborhood));
         mAddressDetailView = findViewById(R.id.address_detail);
-        mAddressDetailView.setData(getString(R.string.wallet_address_detail), getString(R.string.wallet_address_detail_hint));
+        mAddressDetailView.setData(getString(R.string.wallet_street), getString(R.string.wallet_street_hint));
 
 
         mEmailView = findViewById(R.id.email);
@@ -408,7 +408,7 @@ public class UploadIDHubInformationActivity extends BaseActivity implements View
             elements.add(addressNeighborhoodElement);
 
             AddressElement addressDetailElement = new AddressElement();
-            addressDetailElement.name = getString(R.string.wallet_address_detail);
+            addressDetailElement.name = getString(R.string.wallet_street);
             addressDetailElement.value = addressDetail;
             elements.add(addressDetailElement);
 

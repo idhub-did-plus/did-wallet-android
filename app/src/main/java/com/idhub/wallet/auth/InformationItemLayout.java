@@ -45,4 +45,12 @@ public class InformationItemLayout extends LinearLayout {
     public void setValue(String value) {
         valueView.setText(value);
     }
+
+    public void setEditable(boolean isEditable) {
+        valueView.setFocusable(isEditable);
+    }
+
+    public String getValue() {
+        return valueView.getText().toString();
+    }
 }

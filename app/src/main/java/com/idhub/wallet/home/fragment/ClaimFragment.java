@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.idhub.wallet.auth.AutoInfoActivity;
+import com.idhub.wallet.auth.AuthInfoActivity;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
@@ -21,7 +21,6 @@ import com.idhub.wallet.me.information.AccreditedPurchaserActivity;
 import com.idhub.wallet.me.information.IDHubSVIPActivity;
 import com.idhub.wallet.me.information.IDHubVIPActivity;
 import com.idhub.wallet.me.information.STCompliantInvestorActivity;
-import com.idhub.wallet.me.information.UploadInformationTypeActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -132,7 +131,7 @@ public class ClaimFragment extends MainBaseFragment implements View.OnClickListe
             STCompliantInvestorActivity.startAction(getContext());
         } else if (v == infoBgContainer) {
             //上传信息
-            AutoInfoActivity.startAction(getContext());
+            AuthInfoActivity.startAction(getContext());
 //            UploadInformationTypeActivity.startAction(getContext());
         }
     }

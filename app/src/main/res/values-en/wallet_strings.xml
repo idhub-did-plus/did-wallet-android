@@ -200,8 +200,9 @@
     <string name="wallet_tax_number">Tax ID</string>
     <string name="wallet_ssn_number">Social Security Number</string>
     <string name="wallet_street">Street</string>
-    <string name="wallet_address_country_hint">Same as country of residence</string>
     <string name="wallet_street_hint">(Include house number, street name and apartment number)</string>
+
+    <string name="wallet_address_country_hint">Same as country of residence</string>
     <string name="wallet_address_country">Country</string>
     <string name="wallet_postal_code">Zip/Postal Code</string>
     <string name="wallet_city">City</string>

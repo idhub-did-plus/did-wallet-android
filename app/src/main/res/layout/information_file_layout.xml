@@ -3,12 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:orientation="vertical"
     android:gravity="center"
+    tools:orientation="vertical"
     tools:parentTag="android.widget.LinearLayout">
 
+    <ImageView
+        android:id="@+id/file_add_icon"
+        android:layout_width="@dimen/dp_26"
+        android:layout_height="@dimen/dp_26"
+        android:src="@mipmap/upload_file_icon" />
+
+    <ImageView
+        android:id="@+id/file"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <TextView
+        android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
         android:text="@string/wallet_id_photo_positive" />
 </merge>

@@ -170,15 +170,16 @@
     <string name="wallet_phone_number">手机号</string>
     <string name="wallet_tax_number">纳税号</string>
     <string name="wallet_ssn_number">社保号</string>
-    <string name="wallet_street">Street</string>
+    <string name="wallet_street">详细地址</string>
+    <string name="wallet_street_hint">（包括乡镇、街道、小区、门牌号等）</string>
+
     <string name="wallet_address_country">国家</string>
     <string name="wallet_address_country_hint">同居住国</string>
     <string name="wallet_postal_code">邮编</string>
     <string name="wallet_city">省份</string>
     <string name="wallet_state">城市</string>
     <string name="wallet_neighborhood">区县</string>
-    <string name="wallet_address_detail">详细地址</string>
-    <string name="wallet_address_detail_hint">（包括乡镇、街道、小区、门牌号等）</string>
+
     <string name="wallet_email">邮箱</string>
     <string name="wallet_gender_boy">男</string>
     <string name="wallet_gender_girl">女</string>
@@ -273,7 +274,6 @@
     <string name="wallet_no_empty_private_key">私钥不能为空</string>
     <string name="wallet_has_wallet">钱包地址已经存在</string>
     <string name="wallet_other_identify_wallet">该钱包已经升级不同数字身份</string>
-    <string name="wallet_street_hint">(Include house number, street name and apartment number)</string>
 
     <string name="wallet_no_empty_wallet_name">钱包名不能为空</string>
 
