@@ -39,6 +39,7 @@ public class CountryPickerDialog extends AppCompatDialog {
                         new Locale(locale.getLanguage(), country2.getIsoCode()).getDisplayCountry());
             }
         });
+        setCanceledOnTouchOutside(true);
     }
 
     @Override

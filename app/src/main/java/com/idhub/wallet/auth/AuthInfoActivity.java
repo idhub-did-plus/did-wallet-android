@@ -1,12 +1,14 @@
 package com.idhub.wallet.auth;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -42,6 +44,7 @@ import com.idhub.wallet.utils.FileUtils;
 import com.idhub.wallet.utils.ToastUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +52,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import io.reactivex.Observable;
 import io.reactivex.observers.DisposableObserver;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -58,7 +65,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AuthInfoActivity extends BaseActivity {
+public class AuthInfoActivity extends BaseActivity implements SaveClickListener {
 
     private BaseInformationLayout mBaseInformationLayout;
     private IdentityInformationLayout mIdentityInformationLayout;
@@ -71,6 +78,7 @@ public class AuthInfoActivity extends BaseActivity {
     private LoadingAndErrorView mLoadingAndErrorView;
     private WalletKeystore mDefaultKeystore;
     private UploadFileDbManager mUploadFileDbManager;
+    private String psd;
 
     public static void startAction(Context context) {
         Intent intent = new Intent(context, AuthInfoActivity.class);
@@ -97,7 +105,7 @@ public class AuthInfoActivity extends BaseActivity {
     }
 
     private void initView() {
-        TitleLayout titleLayout = findViewById(R.id.title);
+        @SuppressLint("WrongViewCast") TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_id_hub_information_title));
 
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
@@ -152,112 +160,23 @@ public class AuthInfoActivity extends BaseActivity {
                 mAssetsInformationLayout.setFileInfo(map);
             }
         });
-        mBaseInformationLayout.setSaveClickListener(new SaveClickListener() {
-            @Override
-            public void click(UploadIDHubInfoEntity uploadIDHubInfoEntity) {
-                inputPasswordDialogShow(uploadIDHubInfoEntity);
-            }
-        });
-
-        mIdentityInformationLayout.setSaveClickListener(new SaveClickListener() {
-            @Override
-            public void click(UploadIDHubInfoEntity uploadIDHubInfoEntity) {
-
-            }
-        });
+        mBaseInformationLayout.setSaveClickListener(this);
+        mIdentityInformationLayout.setSaveClickListener(this);
+        mTaxpayerInformationLayout.setSaveClickListener(this);
+        mCreditInformationLayout.setSaveClickListener(this);
+        mAddressInformationLayout.setSaveClickListener(this);
+        mAssetsInformationLayout.setSaveClickListener(this);
     }
 
-    private void upload(UploadIDHubInfoEntity uploadIDHubInfoEntity, String privateKey) {
-        IdentityArchive identityArchive = new IdentityArchive();
-        BasicInfo basicInfo = new BasicInfo();
-        basicInfo.setTaxId(uploadIDHubInfoEntity.getTaxNumber());
-        basicInfo.setEmail(uploadIDHubInfoEntity.getEmail());
-        basicInfo.setSsn(uploadIDHubInfoEntity.getSsnNumber());
-
-        IdentityInfo identityInfo = new IdentityInfo();
-        Name name = new Name();
-        name.setFirstName(uploadIDHubInfoEntity.getFirstName());
-        name.setMiddleName(uploadIDHubInfoEntity.getMiddleName());
-        name.setLastName(uploadIDHubInfoEntity.getLastName());
-        Address address = new Address();
-        address.setPostalCode(uploadIDHubInfoEntity.getPostalCode());
-        ArrayList<AddressElement> elements = new ArrayList<>();
-
-        AddressElement addressDetailElement = new AddressElement();
-        addressDetailElement.name = getString(R.string.wallet_street);
-        addressDetailElement.value = uploadIDHubInfoEntity.getStreet();
-        elements.add(addressDetailElement);
-
-        AddressElement addressCountryElement = new AddressElement();
-        addressCountryElement.name = getString(R.string.wallet_address_country);
-        addressCountryElement.value = uploadIDHubInfoEntity.getAddressCountryCode();
-        elements.add(addressCountryElement);
-
-        AddressElement addressCityElement = new AddressElement();
-        addressCityElement.name = getString(R.string.wallet_city);
-        addressCityElement.value = uploadIDHubInfoEntity.getCity();
-        elements.add(addressCityElement);
-
-        AddressElement addressStateElement = new AddressElement();
-        addressStateElement.name = getString(R.string.wallet_state);
-        addressStateElement.value = uploadIDHubInfoEntity.getState();
-        elements.add(addressStateElement);
-
-        AddressElement addressNeighborhoodElement = new AddressElement();
-        addressNeighborhoodElement.name = getString(R.string.wallet_neighborhood);
-        addressNeighborhoodElement.value = uploadIDHubInfoEntity.getNeighborhood();
-        elements.add(addressNeighborhoodElement);
-
-        address.setAddressSequence(elements);
-        identityInfo.setName(name);
-        identityInfo.setAddress(address);
-        identityInfo.setGender(uploadIDHubInfoEntity.getGender());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date parse = sdf.parse(uploadIDHubInfoEntity.getBirthday());
-            identityInfo.setBirthday(parse);
-        } catch (ParseException e) {
-            e.printStackTrace();
+    private void inputPasswordDialogShow(UploadDataParam uploadDataParam) {
+        WalletInfo walletInfo = new WalletInfo(mDefaultKeystore);
+        if (!TextUtils.isEmpty(psd)) {
+            submit(uploadDataParam, walletInfo.exportPrivateKey(psd));
+            return;
         }
-        identityInfo.setCountry(uploadIDHubInfoEntity.getCountryIsoCode());
-        identityInfo.setResidenceCountry(uploadIDHubInfoEntity.getResidenceCountryIsoCode());
-        identityInfo.setIdcardNumber(uploadIDHubInfoEntity.getIdcardNumber());
-        identityInfo.setPassportNumber(uploadIDHubInfoEntity.getPassportNumber());
-        identityInfo.setPhoneNumber(uploadIDHubInfoEntity.getPhone());
-
-        identityArchive.setIdentityInfo(identityInfo);
-        identityArchive.setBasicInfo(basicInfo);
-        IDHubCredentialProvider.setDefaultCredentials(privateKey);
-        Call<MagicResponse> call = ApiFactory.getArchiveStorage().storeArchive(identityArchive, WalletManager.getDefaultAddress());
-        call.enqueue(new Callback<MagicResponse>() {
-            @Override
-            public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
-                mLoadingAndErrorView.onGone();
-                MagicResponse body = response.body();
-                if (body != null && body.isSuccess()) {
-                    ToastUtils.showShortToast(getString(R.string.wallet_upload_success));
-                    MainActivity.startAction(AuthInfoActivity.this, "upload_information");
-                    finish();
-                } else {
-                    ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<MagicResponse> call, Throwable t) {
-                mLoadingAndErrorView.onGone();
-                ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));
-            }
-        });
-
-    }
-
-
-    private void inputPasswordDialogShow(UploadIDHubInfoEntity uploadIDHubInfoEntity) {
         InputDialogFragment instance = InputDialogFragment.getInstance("idhub_information", getString(R.string.wallet_default_address_password), InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         instance.show(getSupportFragmentManager(), "input_dialog_fragment");
         instance.setInputDialogFragmentListener((data, source) -> {
-            WalletInfo walletInfo = new WalletInfo(mDefaultKeystore);
             walletInfo.verifyPassword(data, new DisposableObserver<Boolean>() {
                 @Override
                 protected void onStart() {
@@ -268,7 +187,8 @@ public class AuthInfoActivity extends BaseActivity {
                 @Override
                 public void onNext(Boolean aBoolean) {
                     if (aBoolean) {
-                        submit(uploadIDHubInfoEntity, walletInfo.exportPrivateKey(data));
+                        psd = data;
+                        submit(uploadDataParam, walletInfo.exportPrivateKey(data));
                     } else {
                         ToastUtils.showShortToast(getString(R.string.wallet_input_password_false));
                         mLoadingAndErrorView.onGone();
@@ -290,76 +210,159 @@ public class AuthInfoActivity extends BaseActivity {
         });
     }
 
-    private void submit(UploadIDHubInfoEntity uploadIDHubInfoEntity, String exportPrivateKey) {
-        if (uploadIDHubInfoEntity != null) {
+
+    private void submit(UploadDataParam uploadDataParam, String exportPrivateKey) {
+        //更新数据库
+        mLoadingAndErrorView.onLoading();
+        if (uploadDataParam.uploadIDHubInfoEntity != null) {
             if (mUploadIDHubInfoEntity == null) {
-                Log.e("LYW", "click: null ");
-                uploadIDHubInfoDbManager.insertData(uploadIDHubInfoEntity, null);
+                uploadIDHubInfoDbManager.insertData(uploadDataParam.uploadIDHubInfoEntity, null);
             } else {
-                Log.e("LYW", "click: ");
-                uploadIDHubInfoDbManager.update(uploadIDHubInfoEntity);
+                uploadIDHubInfoDbManager.update(uploadDataParam.uploadIDHubInfoEntity);
             }
-            upload(uploadIDHubInfoEntity, exportPrivateKey);
         }
+        List<UploadFileEntity> entities = uploadDataParam.entities;
+        if (entities != null && entities.size() > 0) {
+            mUploadFileDbManager.insertListData(entities, null);
+        }
+        upload(uploadDataParam, exportPrivateKey);
     }
 
+    private void upload(UploadDataParam uploadDataParam, String privateKey) {
+        //初始化
+        IDHubCredentialProvider.setDefaultCredentials(privateKey);
+        ExecutorService exec = Executors.newCachedThreadPool();
 
-    private void uploadFile() {
-        //弹框
-//        boolean isSubmit = mUploadFileEntity.isSubmit;
-//        if (isSubmit) {
-//            ToastUtils.showShortToast(getString(R.string.wallet_already_upload_success));
-//            return;
-//        }
-//        File file = new File(mUploadFileEntity.getFilePath());
-//        double fileSize = FileUtils.FormetMBFileSize(FileUtils.getFileSize(file));
-//        Log.e("LYW", "uploadFile: " +fileSize );
-//        if (fileSize > 20) {
-//            ToastUtils.showShortToast(getString(R.string.wallet_file_size_20));
-//            return;
-//        }
-//        mLoadingAndErrorView.setVisibility(View.VISIBLE);
-//        IDHubCredentialProvider.setDefaultCredentials(mPrivateKey);
-//        MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
-//
-//        String defaultAddress = NumericUtil.prependHexPrefix(mDefaultKeystore.getAddress());
-//        ApiFactory.getArchiveStorage().uploadMaterial(defaultAddress, FileType.fileTypes.get(mUploadFileEntity.getType()), mUploadFileEntity.getName(), filePart).enqueue(new Callback<MagicResponse>() {
-//            @Override
-//            public void onResponse(Call<MagicResponse> call, Response<MagicResponse> response) {
-//                MagicResponse magicResponse = response.body();
-//                if (magicResponse != null && magicResponse.isSuccess()) {
-//                    //接口提交成功之后
-//                    mUploadFileEntity.isSubmit = true;
-//                    mUploadFileAdapter.setDataItem(mUploadFileEntity);
-//                    if (mRepeatTypesList.size() > 0) {
-//                        for (String type : mRepeatTypesList) {
-//                            mUploadFileDbManager.deleteByType(type);
-//                        }
-//                    }
-//                    mUploadFileDbManager.insertData(mUploadFileEntity, operation -> {
-//                        boolean completed = operation.isCompleted();
-//
-//                    });
-//                    ToastUtils.showShortToast(getString(R.string.wallet_upload_success));
-//                    mLoadingAndErrorView.setVisibility(View.GONE);
-//                } else {
-//                    ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));
-//                    mLoadingAndErrorView.setVisibility(View.GONE);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<MagicResponse> call, Throwable t) {
-//                Log.e("LYW", "onFailure: " + t.getMessage());
-//                t.printStackTrace();
-//                ToastUtils.showShortToast(getString(R.string.wallet_upload_fail));
-//                mLoadingAndErrorView.setVisibility(View.GONE);
-//            }
-//        });
+        UploadIDHubInfoEntity uploadIDHubInfoEntity = uploadDataParam.uploadIDHubInfoEntity;
+        List<UploadFileEntity> fileEntities = uploadDataParam.entities;
+        //计数器
+        int netNum = 0;
+        if (uploadIDHubInfoEntity != null) {
+            netNum++;
+        }
+        if (fileEntities != null && fileEntities.size() > 0) {
+            netNum = netNum + fileEntities.size();
+        }
+        CountDownLatch countDownLatch = new CountDownLatch(netNum);
+
+        //创建线程
+        ArrayList<Thread> threads = new ArrayList<>();
+        //个人信息上传
+        if (uploadIDHubInfoEntity != null) {
+            IdentityArchive identityArchive = new IdentityArchive();
+            BasicInfo basicInfo = new BasicInfo();
+            basicInfo.setTaxId(uploadIDHubInfoEntity.getTaxNumber());
+            basicInfo.setEmail(uploadIDHubInfoEntity.getEmail());
+            basicInfo.setSsn(uploadIDHubInfoEntity.getSsnNumber());
+
+            IdentityInfo identityInfo = new IdentityInfo();
+            Name name = new Name();
+            name.setFirstName(uploadIDHubInfoEntity.getFirstName());
+            name.setMiddleName(uploadIDHubInfoEntity.getMiddleName());
+            name.setLastName(uploadIDHubInfoEntity.getLastName());
+            Address address = new Address();
+            address.setPostalCode(uploadIDHubInfoEntity.getPostalCode());
+            ArrayList<AddressElement> elements = new ArrayList<>();
+
+            AddressElement addressDetailElement = new AddressElement();
+            addressDetailElement.name = getString(R.string.wallet_street);
+            addressDetailElement.value = uploadIDHubInfoEntity.getStreet();
+            elements.add(addressDetailElement);
+
+            AddressElement addressCountryElement = new AddressElement();
+            addressCountryElement.name = getString(R.string.wallet_address_country);
+            addressCountryElement.value = uploadIDHubInfoEntity.getAddressCountryCode();
+            elements.add(addressCountryElement);
+
+            AddressElement addressCityElement = new AddressElement();
+            addressCityElement.name = getString(R.string.wallet_city);
+            addressCityElement.value = uploadIDHubInfoEntity.getCity();
+            elements.add(addressCityElement);
+
+            AddressElement addressStateElement = new AddressElement();
+            addressStateElement.name = getString(R.string.wallet_state);
+            addressStateElement.value = uploadIDHubInfoEntity.getState();
+            elements.add(addressStateElement);
+
+            AddressElement addressNeighborhoodElement = new AddressElement();
+            addressNeighborhoodElement.name = getString(R.string.wallet_neighborhood);
+            addressNeighborhoodElement.value = uploadIDHubInfoEntity.getNeighborhood();
+            elements.add(addressNeighborhoodElement);
+
+            address.setAddressSequence(elements);
+            identityInfo.setName(name);
+            identityInfo.setAddress(address);
+            identityInfo.setGender(uploadIDHubInfoEntity.getGender());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date parse = sdf.parse(uploadIDHubInfoEntity.getBirthday());
+                identityInfo.setBirthday(parse);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            identityInfo.setCountry(uploadIDHubInfoEntity.getCountryIsoCode());
+            identityInfo.setResidenceCountry(uploadIDHubInfoEntity.getResidenceCountryIsoCode());
+            identityInfo.setIdcardNumber(uploadIDHubInfoEntity.getIdcardNumber());
+            identityInfo.setPassportNumber(uploadIDHubInfoEntity.getPassportNumber());
+            identityInfo.setPhoneNumber(uploadIDHubInfoEntity.getPhone());
+
+            identityArchive.setIdentityInfo(identityInfo);
+            identityArchive.setBasicInfo(basicInfo);
+            //网络请求，开启异步线程
+            threads.add(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        ApiFactory.getArchiveStorage().storeArchive(identityArchive, WalletManager.getDefaultAddress()).execute();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    countDownLatch.countDown();
+                }
+            }));
+        }
+
+        //文件
+        if (fileEntities != null && fileEntities.size() > 0) {
+
+            for (UploadFileEntity fileEntity : fileEntities) {
+                threads.add(new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            File file = new File(fileEntity.getFilePath());
+                            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", fileEntity.getName(), RequestBody.create(MediaType.parse("image/*"), file));
+                            ApiFactory.getArchiveStorage().uploadMaterial(WalletManager.getDefaultAddress(), FileType.fileTypes.get(fileEntity.getType()), fileEntity.getName(), filePart).execute();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        countDownLatch.countDown();
+                    }
+                }));
+            }
+        }
+        for (Thread thread : threads) {
+            exec.execute(thread);
+        }
+        //计时器，所有线程执行完毕，更新提示ui
+        exec.execute(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    countDownLatch.await();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mLoadingAndErrorView.onGone();
+                            ToastUtils.showShortToast(getString(R.string.wallet_upload_finish));
+                        }
+                    });
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }));
     }
-
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -372,5 +375,11 @@ public class AuthInfoActivity extends BaseActivity {
                 finish();
             }
         }
+    }
+
+    //保存回调事件
+    @Override
+    public void click(UploadDataParam uploadDataParam) {
+        inputPasswordDialogShow(uploadDataParam);
     }
 }

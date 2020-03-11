@@ -26,7 +26,7 @@ public class UploadFileDbManager implements ModelDbManager<UploadFileEntity> {
         if (list != null && list.size() > 0) {
             AsyncSession asyncSession = App.getInstance().getmDaoSession().startAsyncSession();
             asyncSession.setListenerMainThread(listener);
-            asyncSession.insertInTx(UploadFileEntity.class, list);
+            asyncSession.insertOrReplaceInTx(UploadFileEntity.class, list);
         }
     }
 

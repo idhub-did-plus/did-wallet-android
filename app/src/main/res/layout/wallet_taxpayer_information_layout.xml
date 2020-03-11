@@ -7,12 +7,12 @@
     tools:orientation="vertical"
     tools:parentTag="LinearLayout">
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/tax_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/ssn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -34,7 +34,7 @@
         android:layout_marginTop="@dimen/dp_7" />
 
     <TextView
-        android:id="@+id/base_info_save"
+        android:id="@+id/info_save"
         android:layout_width="@dimen/dp_313"
         android:layout_height="@dimen/dp_40"
         android:layout_gravity="center"

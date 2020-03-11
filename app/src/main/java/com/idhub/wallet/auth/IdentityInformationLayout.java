@@ -11,36 +11,38 @@ import androidx.annotation.Nullable;
 import com.idhub.base.greendao.entity.UploadFileEntity;
 import com.idhub.base.greendao.entity.UploadIDHubInfoEntity;
 import com.idhub.wallet.R;
+import com.idhub.wallet.utils.FileUtils;
+import com.idhub.wallet.utils.ToastUtils;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class IdentityInformationLayout extends LinearLayout {
+public class IdentityInformationLayout extends InformationItemLayout {
 
-    private InformationItemLayout idView;
-    private InformationItemLayout passportView;
-    private SaveClickListener saveClickListener;
-    private UploadIDHubInfoEntity uploadInfo;
+    private InformationKeyValueLayout idView;
+    private InformationKeyValueLayout passportView;
     private InformationFileLayout idCardFontFileView;
     private InformationFileLayout idCardBackFileView;
     private InformationFileLayout passportFileView;
+    private UploadFileEntity idFontEntity;
+    private UploadFileEntity idBackEntity;
+    private UploadFileEntity passportEntity;
 
     public IdentityInformationLayout(Context context) {
         super(context);
-        init();
     }
 
     public IdentityInformationLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     public IdentityInformationLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
     }
 
-    private void init() {
+    protected void init() {
         setOrientation(VERTICAL);
         Context context = getContext();
         inflate(context, R.layout.wallet_identity_information_layout, this);
@@ -57,15 +59,12 @@ public class IdentityInformationLayout extends LinearLayout {
         passportFileView = findViewById(R.id.passport_file);
         passportFileView.setNameValue(getContext().getString(R.string.wallet_passport_photo));
 
-        findViewById(R.id.info_save).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save();
-            }
-        });
+        findViewById(R.id.info_save).setOnClickListener(saveBtnClickListener);
     }
 
-    private void save() {
+
+    @Override
+    public boolean saveData() {
         String idNumber = idView.getValue();
         String passport = passportView.getValue();
         if (uploadInfo == null) {
@@ -74,46 +73,56 @@ public class IdentityInformationLayout extends LinearLayout {
         uploadInfo.setIdcardNumber(idNumber);
         uploadInfo.setPassportNumber(passport);
 
+        //判断数据库中已经有数据进行更改，没有数据进行添加
         //文件
-        String filePath = idCardFontFileView.getFilePath();
-        if (!TextUtils.isEmpty(filePath)) {
-
+        String idFontFilePath = idCardFontFileView.getFilePath();
+        if (!addFileEntity(idFontEntity, getContext().getString(R.string.wallet_id_photo_positive), idFontFilePath)) {
+            return false;
         }
 
-        if (saveClickListener != null) {
-            saveClickListener.click(uploadInfo);
+
+        String idBackFilePath = idCardBackFileView.getFilePath();
+        if (!addFileEntity(idBackEntity,getContext().getString(R.string.wallet_id_photo_negative),idBackFilePath)) {
+            return false;
         }
+
+        String passportFilePath = passportFileView.getFilePath();
+        if (!addFileEntity(passportEntity,getContext().getString(R.string.wallet_passport_photo),passportFilePath)) {
+            return false;
+        }
+
+        return true;
     }
 
+
     public void setFileInfo(Map<String, UploadFileEntity> map) {
+        //保留数据库查询的实例
         //身份证正面
-        UploadFileEntity idFontEntity = map.get(getContext().getString(R.string.wallet_id_photo_positive));
+        idFontEntity = map.get(getContext().getString(R.string.wallet_id_photo_positive));
         if (idFontEntity != null) {
             String filePath = idFontEntity.getFilePath();
             idCardFontFileView.setFile(filePath);
         }
         //身份证反面
-        UploadFileEntity idBackEntity = map.get(getContext().getString(R.string.wallet_id_photo_negative));
+        idBackEntity = map.get(getContext().getString(R.string.wallet_id_photo_negative));
         if (idBackEntity != null) {
             String filePath = idBackEntity.getFilePath();
             idCardBackFileView.setFile(filePath);
         }
         //护照
-        UploadFileEntity passportEntity = map.get(getContext().getString(R.string.wallet_passport_photo));
+        passportEntity = map.get(getContext().getString(R.string.wallet_passport_photo));
         if (passportEntity != null) {
             String filePath = passportEntity.getFilePath();
             passportFileView.setFile(filePath);
         }
     }
 
-
-    public void setUploadInfo(UploadIDHubInfoEntity uploadInfo) {
-        this.uploadInfo = uploadInfo;
+    @Override
+    public void setInformation() {
         idView.setValue(uploadInfo.getIdcardNumber());
         passportView.setValue(uploadInfo.getPassportNumber());
     }
 
-    public void setSaveClickListener(SaveClickListener saveClickListener) {
-        this.saveClickListener = saveClickListener;
-    }
+
+
 }

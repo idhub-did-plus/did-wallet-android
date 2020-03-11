@@ -12,6 +12,10 @@ import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
 
 import java.math.BigInteger;
+import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -113,5 +117,42 @@ public class ExampleUnitTest {
 //        EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
 //        String s = ethGasPrice.getGasPrice().toString();
 //        System.out.println(s);
+    }
+
+
+    @Test
+    public void testThread(){
+        long l = System.currentTimeMillis();
+
+        CountDownLatch countDownLatch = new CountDownLatch(3);
+        ExecutorService exec = Executors.newCachedThreadPool();
+        for (int i = 0; i < 3; i++) {
+            Thread command = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Random random = new Random();
+                        int i1 = random.nextInt(3);
+                        System.out.println(i1);
+                        Thread.sleep(i1 * 1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    countDownLatch.countDown();
+                }
+            });
+            exec.execute(command);
+        }
+        try {
+            System.out.println("begin");
+            countDownLatch.await();
+            long l1 = System.currentTimeMillis() - l;
+            System.out.println(l1);
+            System.out.println("end");
+            System.out.println("123");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        exec.shutdown();
     }
 }

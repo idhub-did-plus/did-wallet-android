@@ -88,7 +88,7 @@
         android:layout_marginTop="@dimen/dp_7" />
 
     <TextView
-        android:id="@+id/base_info_save"
+        android:id="@+id/info_save"
         android:layout_width="@dimen/dp_313"
         android:layout_height="@dimen/dp_40"
         android:layout_gravity="center"

@@ -7,17 +7,17 @@
     tools:orientation="vertical"
     tools:parentTag="LinearLayout">
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/first_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/middle_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/last_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -70,7 +70,7 @@
         android:layout_marginRight="@dimen/dp_16"
         android:background="@color/wallet_color_E8E8E8" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/birthday"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -98,7 +98,11 @@
         <TextView
             android:id="@+id/tv_phone_dialing_code"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:hint="@string/phone_area_id"
+            android:textSize="@dimen/font_sp_16"
+            android:textColor="@color/wallet_text_black"
+            android:layout_height="match_parent"
             android:minWidth="40dp" />
 
         <EditText
@@ -123,17 +127,17 @@
         android:layout_marginRight="@dimen/dp_16"
         android:background="@color/wallet_color_E8E8E8" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/nationality"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/country_of_residence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

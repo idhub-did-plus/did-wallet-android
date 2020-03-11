@@ -7,7 +7,7 @@
     tools:orientation="vertical"
     tools:parentTag="LinearLayout">
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/identity_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -40,7 +40,7 @@
             android:layout_marginLeft="@dimen/dp_13" />
     </LinearLayout>
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/passport_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

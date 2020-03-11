@@ -7,34 +7,34 @@
     tools:orientation="vertical"
     tools:parentTag="LinearLayout">
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/country"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/postal_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/province"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/neighborhood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <com.idhub.wallet.auth.InformationItemLayout
+    <com.idhub.wallet.auth.InformationKeyValueLayout
         android:id="@+id/address_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

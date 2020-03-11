@@ -3,6 +3,7 @@ package com.idhub.wallet.common.flowlayout;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.core.text.TextUtilsCompat;
@@ -87,6 +88,7 @@ public class FlowLayout extends ViewGroup {
                 lineWidth = childWidth;
                 height += lineHeight;
                 lineHeight = childHeight;
+                Log.e("LYW", "onMeasure:1 " );
             } else {
                 lineWidth += childWidth;
                 lineHeight = Math.max(lineHeight, childHeight);
