@@ -3,6 +3,7 @@ package com.idhub.wallet.wallet.manager;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ import org.web3j.crypto.Keys;
 public class WalletManageItemView extends LinearLayout implements View.OnClickListener {
 
     private TextView nameView;
-    private View upgradeView;
+    private ImageView upgradeView;
     private TextView addressView;
     private View defaultAddressView;
     private WalletKeystore store;
@@ -35,7 +36,7 @@ public class WalletManageItemView extends LinearLayout implements View.OnClickLi
         upgradeView = findViewById(R.id.upgrade_icon);
         addressView = findViewById(R.id.wallet_address);
         defaultAddressView = findViewById(R.id.tv_default);
-        findViewById(R.id.ct_address_view).setOnClickListener(this);
+        findViewById(R.id.upgrade_icon).setOnClickListener(this);
     }
 
     public void setData(WalletKeystore store) {
@@ -49,9 +50,9 @@ public class WalletManageItemView extends LinearLayout implements View.OnClickLi
         }
         boolean associate = identity.getIsAssociate();
         if (associate) {
-            upgradeView.setVisibility(GONE);
+            upgradeView.setImageResource(R.mipmap.wallet_manger_info_icon);
         } else {
-            upgradeView.setVisibility(VISIBLE);
+            upgradeView.setImageResource(R.mipmap.wallet_manager_upgrade_icon);
         }
         if (identity.getIsDefaultAddress()) {
             defaultAddressView.setVisibility(VISIBLE);
@@ -64,7 +65,7 @@ public class WalletManageItemView extends LinearLayout implements View.OnClickLi
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
-            case R.id.ct_address_view:
+            case R.id.upgrade_icon:
                 if (store != null)
                     WalletInfoActivity.startAction(getContext(), store.getId());
                 break;

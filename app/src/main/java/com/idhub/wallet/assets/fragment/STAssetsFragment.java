@@ -16,6 +16,7 @@ import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.R;
 import com.idhub.wallet.assets.view.STMainView;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
+import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.greendao.AssetsModelDbManager;
 import com.idhub.wallet.greendao.TransactionTokenType;
 import com.idhub.wallet.wallet.token.activity.TokenManagerActivity;
@@ -38,6 +39,12 @@ public class STAssetsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private Observer obsever = new Observer() {
+        @Override
+        public void update(Observable o, Object arg) {
+            initData();
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,19 +53,9 @@ public class STAssetsFragment extends Fragment {
         View view = inflater.inflate(R.layout.wallet_fragment_stassets, container, false);
         initView(view);
         initData();
-        WalletAddAssetsObservable.getInstance().addObserver(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                initData();
-            }
-        });
-        WalletNodeSelectedObservable.getInstance().addObserver(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                initData();
-            }
-        });
-
+        WalletAddAssetsObservable.getInstance().addObserver(obsever);
+        WalletNodeSelectedObservable.getInstance().addObserver(obsever);
+        WalletSelectedObservable.getInstance().addObserver(obsever);
         return view;
     }
 

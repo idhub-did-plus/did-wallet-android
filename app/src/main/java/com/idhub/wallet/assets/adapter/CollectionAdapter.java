@@ -35,7 +35,7 @@ public class CollectionAdapter extends BaseRecyclerAdapter<CollectionTokenBean> 
     @Override
     protected void bindViewWithHolder(int position, RecyclerViewHolder holder, CollectionTokenBean item) {
         ImageView imageView = holder.getImageView(R.id.collection_image);
-        Glide.with(imageView.getContext()).load(item.image_url).placeholder(R.mipmap.cryptokitties_logo).into(imageView);
+        Glide.with(imageView.getContext()).load(item.image_url).placeholder(R.mipmap.collection_default).into(imageView);
         holder.setText(R.id.collection_name, item.name);
 //        int i = randomHeight();
 //        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(AutoSizeUtils.dp2px(context, 164),AutoSizeUtils.dp2px(context, i) );

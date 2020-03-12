@@ -27,7 +27,9 @@ import com.idhub.wallet.assets.adapter.AssetsFragmentPagerAdapter;
 import com.idhub.wallet.common.sharepreference.UserBasicInfoSharpreference;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.tablayout.TabLayout;
+import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
+import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletManager;
@@ -85,7 +87,6 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_assets, container, false);
         initView(view);
-        mDidHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
         initData();
         WalletUpgradeObservable.getInstance().addObserver(new Observer() {
             @Override
@@ -94,10 +95,29 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
                 identityData();
             }
         });
+        WalletSelectedObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                setWalletInfo();
+            }
+        });
+        WalletVipStateObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                setClaimIconInfo();
+            }
+        });
         return view;
     }
 
     private void initData() {
+        setClaimIconInfo();
+        identityData();
+        setWalletInfo();
+    }
+
+    private void setWalletInfo() {
+        mDidHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
         if (mDidHubMnemonicKeyStore == null) {
             return;
         }
@@ -159,11 +179,9 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         investorView = view.findViewById(R.id.claims_idhub_investor);
         purchaseView = view.findViewById(R.id.claims_idhub_purchase);
         compliantView = view.findViewById(R.id.claims_idhub_compliant);
-        updateData();
     }
 
-    private void updateData() {
-        //TODO:观察者模式
+    private void setClaimIconInfo() {
         //claims
         WalletVipSharedPreferences vipSharedPreferences = WalletVipSharedPreferences.getInstance();
         String idhubVipState = vipSharedPreferences.getIdhubVipState();
@@ -206,7 +224,6 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
             claims[4] = false;
             compliantView.setImageResource(R.mipmap.wallet_idhub_compliant_default);
         }
-        identityData();
     }
 
     private void identityData(){

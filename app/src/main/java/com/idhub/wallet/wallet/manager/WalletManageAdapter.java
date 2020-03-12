@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;

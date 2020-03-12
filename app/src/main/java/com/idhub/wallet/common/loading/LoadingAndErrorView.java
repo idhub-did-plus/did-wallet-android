@@ -42,7 +42,6 @@ public class LoadingAndErrorView extends RelativeLayout {
 
             }
         });
-
     }
 
 

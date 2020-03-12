@@ -75,12 +75,16 @@ public class InformationFileLayout extends LinearLayout implements SelectUploadF
     }
 
     public void setThisOrientation(int orientation) {
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        this.setLayoutParams(layoutParams);
         if (orientation == HORIZONTAL) {
             LayoutParams params = new LayoutParams(nameView.getLayoutParams());
-            params.topMargin = 0;
+            params.topMargin =  AutoSizeUtils.dp2px(getContext(), 12);
             params.bottomMargin = 0;
             params.leftMargin = AutoSizeUtils.dp2px(getContext(), 7);
-            params.rightMargin = 0;
+            params.rightMargin =  AutoSizeUtils.dp2px(getContext(), 12);
             nameView.setLayoutParams(params);
         }
         setOrientation(orientation);

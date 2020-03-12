@@ -2,15 +2,19 @@ package com.idhub.wallet.wallet.manager;
 
 import android.content.Context;
 import android.content.Intent;
+
 import androidx.annotation.Nullable;
 
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.View;
 
 import com.idhub.base.greendao.entity.IdentityEntity;
+import com.idhub.wallet.common.sharepreference.WalletOtherInfoSharpreference;
+import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.main.MainActivity;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
@@ -63,6 +67,16 @@ public class WalletManagerActivity extends BaseActivity implements MessageDialog
             mDidHubMnemonicKeyStores.add(walletKeystores.get(key));
         }
         WalletManageAdapter walletManageAdapter = new WalletManageAdapter(this);
+        walletManageAdapter.setOnItemClickListener(new WalletManageAdapter.OnWalletItemClickListener() {
+            @Override
+            public void itemClick(String id) {
+                boolean b = WalletOtherInfoSharpreference.getInstance().setSelectedId(id);
+                if (b) {
+                    WalletSelectedObservable.getInstance().update();
+                    finish();
+                }
+            }
+        });
         walletManageAdapter.addDatas(mDidHubMnemonicKeyStores);
         recyclerView.setAdapter(walletManageAdapter);
     }
@@ -74,7 +88,7 @@ public class WalletManagerActivity extends BaseActivity implements MessageDialog
                 //再次创建的时候需要检查未升级的时候需要提醒用户去升级才能继续创建钱包
                 boolean b = checkAddressRegisterIDHub();
                 if (b) {
-                    InputPasswordActivity.startActionForResult(this, 100,true);
+                    InputPasswordActivity.startActionForResult(this, 100, true);
                 } else {
                     MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_tip), getString(R.string.wallet_go_upgrade));
                     messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
@@ -83,7 +97,7 @@ public class WalletManagerActivity extends BaseActivity implements MessageDialog
                 break;
             case R.id.tv_import:
                 if (checkAddressRegisterIDHub()) {
-                    ImportWalletActivity.startActionForResult(this,101);
+                    ImportWalletActivity.startActionForResult(this, 101);
                 } else {
                     MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upgrade_tip), getString(R.string.wallet_go_upgrade));
                     messageDialogFragment.show(getSupportFragmentManager(), "message_dialog_fragment");
@@ -112,10 +126,10 @@ public class WalletManagerActivity extends BaseActivity implements MessageDialog
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 100 && resultCode == RESULT_OK) {
-            MainActivity.startAction(this,"add");
+            MainActivity.startAction(this, "add");
             finish();
         } else if (requestCode == 101 && resultCode == RESULT_OK) {
-            MainActivity.startAction(this,"add");
+            MainActivity.startAction(this, "add");
             finish();
         }
     }

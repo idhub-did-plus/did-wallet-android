@@ -23,6 +23,8 @@ import com.idhub.wallet.assets.adapter.CollectionAdapter;
 import com.idhub.wallet.assets.adapter.StaggeredDividerItemDecoration;
 import com.idhub.wallet.assets.model.CollectionTokenBean;
 import com.idhub.wallet.common.recyclerview.BaseRecyclerAdapter;
+import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
+import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.dapp.Web3Activity;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
@@ -58,7 +60,12 @@ public class CollectiblesFragment extends Fragment implements View.OnClickListen
     public CollectiblesFragment() {
         // Required empty public constructor
     }
-
+    private Observer obsever = new Observer() {
+        @Override
+        public void update(Observable o, Object arg) {
+            initData();
+        }
+    };
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -71,14 +78,8 @@ public class CollectiblesFragment extends Fragment implements View.OnClickListen
         View view = inflater.inflate(R.layout.wallet_fragment_collectibles, container, false);
         initView(view);
         initData();
-        WalletNodeSelectedObservable.getInstance().addObserver(new Observer() {
-            @Override
-            public void update(Observable o, Object arg) {
-                //节点切换
-                initData();
-            }
-        });
-
+        WalletNodeSelectedObservable.getInstance().addObserver(obsever);
+        WalletSelectedObservable.getInstance().addObserver(obsever);
         return view;
     }
 
