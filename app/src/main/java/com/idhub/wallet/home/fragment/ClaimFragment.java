@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.idhub.wallet.auth.AuthInfoActivity;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
+import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.me.VipStateType;
@@ -21,6 +22,10 @@ import com.idhub.wallet.me.information.AccreditedPurchaserActivity;
 import com.idhub.wallet.me.information.IDHubSVIPActivity;
 import com.idhub.wallet.me.information.IDHubVIPActivity;
 import com.idhub.wallet.me.information.STCompliantInvestorActivity;
+import com.idhub.wallet.me.information.UploadInformationTypeActivity;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -52,6 +57,12 @@ public class ClaimFragment extends MainBaseFragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.wallet_fragment_claim, container, false);
         initView(view);
         initData();
+        WalletVipStateObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                initData();
+            }
+        });
         return view;
     }
 
@@ -132,7 +143,6 @@ public class ClaimFragment extends MainBaseFragment implements View.OnClickListe
         } else if (v == infoBgContainer) {
             //上传信息
             AuthInfoActivity.startAction(getContext());
-//            UploadInformationTypeActivity.startAction(getContext());
         }
     }
     @Override

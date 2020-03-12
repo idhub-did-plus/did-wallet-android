@@ -29,6 +29,7 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
 
     private ZXingView mZXingView;
     private boolean isOff;
+    private View mBackView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,13 @@ public class QrCodeActivity extends BaseActivity implements QRCodeView.Delegate 
 
     private void initView() {
         mZXingView = findViewById(R.id.zxingview);
+        mBackView = findViewById(R.id.back_icon);
+        mBackView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mZXingView.setDelegate(this);
         View captureView = findViewById(R.id.capture_view);
         captureView.setSelected(true);

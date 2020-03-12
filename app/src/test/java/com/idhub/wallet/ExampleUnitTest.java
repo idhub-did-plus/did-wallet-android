@@ -1,12 +1,10 @@
 package com.idhub.wallet;
 
-import com.idhub.wallet.contract.EIP20Interface;
 import com.idhub.wallet.contract.ERC721;
 
 import org.junit.Test;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.methods.response.EthGasPrice;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
@@ -154,5 +152,11 @@ public class ExampleUnitTest {
             e.printStackTrace();
         }
         exec.shutdown();
+    }
+
+    @Test
+    public void testAES(){
+        String encrypt = AES256Utils.encrypt("13017559662", "30b5ebd2ee7566b8");
+        System.out.println(encrypt);
     }
 }

@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ import com.idhub.wallet.didhub.transaction.EthereumSign;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.TransactionRecordDbManager;
 import com.idhub.base.greendao.entity.TransactionRecordEntity;
+import com.idhub.wallet.net.IDHubCredentialProvider;
 import com.idhub.wallet.setting.NotificationUtils;
 import com.idhub.wallet.utils.ToastUtils;
 import com.idhub.wallet.wallet.mainfragment.QRCodeType;
@@ -90,7 +93,7 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     private String signMessage;
     private LoadingAndErrorView mLoadingAndErrorView;
     private TabLayout tabLayout;
-
+    private Handler claimEventHandler = new ClaimEventHandler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,8 +173,22 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
                 new TransactionRecordDbManager().insertListDataTo50Datas(transactionRecordEntities);
             }
         });
-
+        claimEvent();
         return true;
+    }
+
+    private void claimEvent() {
+        String defaultAddress = WalletManager.getDefaultAddress();
+        if (TextUtils.isEmpty(defaultAddress)) {
+            defaultAddress = WalletManager.getCurrentKeyStore().getAddress();
+        }
+        IDHubCredentialProvider.setsDefaultAddress(NumericUtil.prependHexPrefix(defaultAddress));
+        ApiFactory.getEventListenerService().listen(e -> {
+            Message obtain = Message.obtain();
+            obtain.what = 1;
+            obtain.obj = e;
+            claimEventHandler.sendMessage(obtain);
+        });
     }
 
     @Override
@@ -203,7 +220,6 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     }
 
     private void initView() {
-
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
         tabLayout = findViewById(R.id.tab_layout);
 //        ViewCalculateUtil.setViewConstraintLayoutParam(tabLayout, ViewPager.LayoutParams.MATCH_PARENT, 49);
