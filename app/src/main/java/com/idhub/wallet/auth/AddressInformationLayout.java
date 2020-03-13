@@ -67,7 +67,6 @@ public class AddressInformationLayout extends InformationItemLayout {
         addressDetailView = findViewById(R.id.address_detail);
         addressDetailView.setContent(context.getString(R.string.wallet_street), context.getString(R.string.wallet_street_hint));
         addressFileView = findViewById(R.id.address_file);
-        addressFileView.setNameValue(getContext().getString(R.string.wallet_address_proof_document));
         addressFileView.setThisOrientation(LinearLayout.HORIZONTAL);
 
         findViewById(R.id.base_info_save).setOnClickListener(saveBtnClickListener);

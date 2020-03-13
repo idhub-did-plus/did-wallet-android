@@ -142,7 +142,7 @@ public class SelectUploadFileTypeDialogFragment extends DialogFragment implement
 
     private void selectFile() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("application/pdf").addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*").addCategory(Intent.CATEGORY_OPENABLE);
         if (getContext().getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
             try {
                 startActivityForResult(Intent.createChooser(intent, "Choose File"), REQUEST_SELECT_FILE_CODE);

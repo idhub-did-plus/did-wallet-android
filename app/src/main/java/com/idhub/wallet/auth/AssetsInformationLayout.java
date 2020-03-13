@@ -43,24 +43,24 @@ public class AssetsInformationLayout extends InformationItemLayout {
         inflate(getContext(), R.layout.wallet_assets_information_layout, this);
         bankBalanceFileLayout = findViewById(R.id.bank_balance_file);
         bankBalanceFileLayout.setThisOrientation(LinearLayout.HORIZONTAL);
-        bankBalanceFileLayout.setNameValue(getContext().getString(R.string.wallet_bank_balance_document));
+//        bankBalanceFileLayout.setNameValue(getContext().getString(R.string.wallet_bank_balance_document));
 
         bankFlowFileLayout = findViewById(R.id.bank_flow_file);
         bankFlowFileLayout.setThisOrientation(LinearLayout.HORIZONTAL);
-        bankFlowFileLayout.setNameValue(getContext().getString(R.string.wallet_bank_flow_file));
+//        bankFlowFileLayout.setNameValue(getContext().getString(R.string.wallet_bank_flow_file));
 
 
         agencyFileLayout = findViewById(R.id.evaluation_agency_is_assessment_file);
         agencyFileLayout.setThisOrientation(LinearLayout.HORIZONTAL);
-        agencyFileLayout.setNameValue(getContext().getString(R.string.wallet_evaluation_agency_is_assessment_document));
+//        agencyFileLayout.setNameValue(getContext().getString(R.string.wallet_evaluation_agency_is_assessment_document));
 
         cfaFileLayout = findViewById(R.id.cfa_net_assets_file);
         cfaFileLayout.setThisOrientation(LinearLayout.HORIZONTAL);
-        cfaFileLayout.setNameValue(getContext().getString(R.string.wallet_cfa_net_assets_certification_document));
+//        cfaFileLayout.setNameValue(getContext().getString(R.string.wallet_cfa_net_assets_certification_document));
 
         housingFileLayout = findViewById(R.id.non_self_occupied_housing_file);
         housingFileLayout.setThisOrientation(LinearLayout.HORIZONTAL);
-        housingFileLayout.setNameValue(getContext().getString(R.string.wallet_property_certificate_for_non_self_occupied_housing));
+//        housingFileLayout.setNameValue(getContext().getString(R.string.wallet_property_certificate_for_non_self_occupied_housing));
 
         findViewById(R.id.info_save).setOnClickListener(saveBtnClickListener);
     }

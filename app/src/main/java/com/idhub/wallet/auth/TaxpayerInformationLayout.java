@@ -48,8 +48,8 @@ public class TaxpayerInformationLayout extends InformationItemLayout {
         ssnView = findViewById(R.id.ssn);
         ssnView.setContent(context.getString(R.string.wallet_ssn_number), context.getString(R.string.wallet_please_input) + " " + context.getString(R.string.wallet_ssn_number));
         taxFileLayout = findViewById(R.id.tax_file);
-        taxFileLayout.setNameValue(getContext().getString(R.string.wallet_tax_document));
         taxFileLayout.setThisOrientation(LinearLayout.HORIZONTAL);
+//        taxFileLayout.setNameValue(getContext().getString(R.string.wallet_tax_document));
         findViewById(R.id.info_save).setOnClickListener(saveBtnClickListener);
     }
 

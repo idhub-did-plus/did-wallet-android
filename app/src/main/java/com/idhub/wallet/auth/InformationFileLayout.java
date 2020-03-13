@@ -51,6 +51,7 @@ public class InformationFileLayout extends LinearLayout implements SelectUploadF
         setOrientation(VERTICAL);
         setBackgroundResource(R.drawable.information_file_bg);
         setGravity(Gravity.CENTER);
+        this.setMinimumHeight(AutoSizeUtils.dp2px(getContext(), 42));
         inflate(getContext(), R.layout.information_file_layout, this);
         nameView = findViewById(R.id.name);
         fileAddIconView = findViewById(R.id.file_add_icon);
@@ -70,24 +71,22 @@ public class InformationFileLayout extends LinearLayout implements SelectUploadF
 
     }
 
-    public void setNameValue(String value) {
-        nameView.setText(value);
-    }
 
     public void setThisOrientation(int orientation) {
+        this.setOrientation(orientation);
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
-        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        layoutParams.width = AutoSizeUtils.dp2px(getContext(), 313);
         layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         this.setLayoutParams(layoutParams);
         if (orientation == HORIZONTAL) {
             LayoutParams params = new LayoutParams(nameView.getLayoutParams());
-            params.topMargin =  AutoSizeUtils.dp2px(getContext(), 12);
+            params.topMargin = 0;
             params.bottomMargin = 0;
             params.leftMargin = AutoSizeUtils.dp2px(getContext(), 7);
-            params.rightMargin =  AutoSizeUtils.dp2px(getContext(), 12);
+            params.rightMargin = AutoSizeUtils.dp2px(getContext(), 12);
             nameView.setLayoutParams(params);
         }
-        setOrientation(orientation);
+       requestLayout();
     }
 
     @Override

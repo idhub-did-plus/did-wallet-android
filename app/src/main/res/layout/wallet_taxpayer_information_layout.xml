@@ -29,7 +29,7 @@
     <com.idhub.wallet.auth.InformationFileLayout
         android:id="@+id/tax_file"
         android:layout_width="@dimen/dp_313"
-        android:layout_height="@dimen/dp_42"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_7" />
 

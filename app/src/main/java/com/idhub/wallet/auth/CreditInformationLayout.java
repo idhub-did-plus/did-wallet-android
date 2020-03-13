@@ -34,7 +34,7 @@ public class CreditInformationLayout extends InformationItemLayout {
         setOrientation(VERTICAL);
         inflate(getContext(), R.layout.wallet_credit_information_layout, this);
         creditFileLayout = findViewById(R.id.credit_report_file);
-        creditFileLayout.setNameValue(getContext().getString(R.string.wallet_credit_report));
+//        creditFileLayout.setNameValue(getContext().getString(R.string.wallet_credit_report));
         creditFileLayout.setThisOrientation(LinearLayout.HORIZONTAL);
         findViewById(R.id.base_info_save).setOnClickListener(saveBtnClickListener);
     }

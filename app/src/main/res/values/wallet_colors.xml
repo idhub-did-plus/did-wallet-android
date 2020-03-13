@@ -11,7 +11,7 @@
     <color name="wallet_blue">#3b9bff</color>
     <color name="wallet_blue_text">#3b9bff</color>
     <color name="wallet_white">#ffffff</color>
-    <color name="wallet_black">#191c1e</color>
+    <color name="wallet_black">#000000</color>
     <color name="wallet_text_grey">#818d96</color>
     <color name="wallet_text_black">#333333</color>
     <color name="wallet_text_orange">#7c6800</color>
@@ -72,4 +72,5 @@
     <color name="wallet_color_E8E8E8">#E8E8E8</color>
     <color name="wallet_color_D9D9D9">#D9D9D9</color>
     <color name="wallet_color_202020">#202020</color>
+    <color name="wallet_color_ee000000">#aa000000</color>
 </resources>

@@ -19,7 +19,7 @@
     <com.idhub.wallet.auth.InformationFileLayout
         android:id="@+id/bank_balance_file"
         android:layout_width="@dimen/dp_313"
-        android:layout_height="@dimen/dp_42"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_7" />
 
@@ -35,7 +35,7 @@
     <com.idhub.wallet.auth.InformationFileLayout
         android:id="@+id/bank_flow_file"
         android:layout_width="@dimen/dp_313"
-        android:layout_height="@dimen/dp_42"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_7" />
 
@@ -51,7 +51,7 @@
     <com.idhub.wallet.auth.InformationFileLayout
         android:id="@+id/evaluation_agency_is_assessment_file"
         android:layout_width="@dimen/dp_313"
-        android:layout_height="@dimen/dp_42"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_7" />
 
@@ -67,7 +67,7 @@
     <com.idhub.wallet.auth.InformationFileLayout
         android:id="@+id/cfa_net_assets_file"
         android:layout_width="@dimen/dp_313"
-        android:layout_height="@dimen/dp_42"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_7" />
 
@@ -83,7 +83,7 @@
     <com.idhub.wallet.auth.InformationFileLayout
         android:id="@+id/non_self_occupied_housing_file"
         android:layout_width="@dimen/dp_313"
-        android:layout_height="@dimen/dp_42"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/dp_7" />
 

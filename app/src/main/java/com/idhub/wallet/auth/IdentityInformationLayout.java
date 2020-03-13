@@ -53,11 +53,11 @@ public class IdentityInformationLayout extends InformationItemLayout {
         passportView.setContent(context.getString(R.string.wallet_passport_number), context.getString(R.string.wallet_please_input) + context.getString(R.string.wallet_passport_number));
 
         idCardFontFileView = findViewById(R.id.id_card_font);
-        idCardFontFileView.setNameValue(getContext().getString(R.string.wallet_id_photo_positive));
+//        idCardFontFileView.setNameValue(getContext().getString(R.string.wallet_id_photo_positive));
         idCardBackFileView = findViewById(R.id.id_card_back);
-        idCardBackFileView.setNameValue(getContext().getString(R.string.wallet_id_photo_negative));
+//        idCardBackFileView.setNameValue(getContext().getString(R.string.wallet_id_photo_negative));
         passportFileView = findViewById(R.id.passport_file);
-        passportFileView.setNameValue(getContext().getString(R.string.wallet_passport_photo));
+//        passportFileView.setNameValue(getContext().getString(R.string.wallet_passport_photo));
 
         findViewById(R.id.info_save).setOnClickListener(saveBtnClickListener);
     }

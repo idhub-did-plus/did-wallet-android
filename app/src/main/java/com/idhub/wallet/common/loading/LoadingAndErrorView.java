@@ -51,8 +51,8 @@ public class LoadingAndErrorView extends RelativeLayout {
 
     public void onLoading() {
         mProgressBar.setVisibility(VISIBLE);
-        mTextView.setVisibility(GONE);
-        mImageView.setVisibility(GONE);
+        mTextView.setVisibility(VISIBLE);
+        mImageView.setVisibility(VISIBLE);
         setVisibility(VISIBLE);
     }
 
@@ -67,7 +67,6 @@ public class LoadingAndErrorView extends RelativeLayout {
         mProgressBar.setVisibility(GONE);
         mTextView.setVisibility(VISIBLE);
         mImageView.setVisibility(VISIBLE);
-//        mImageView.setImageResource(R.mipmap.exchange_common_net_error);
         mTextView.setText(msg);
         setVisibility(VISIBLE);
     }
@@ -76,7 +75,6 @@ public class LoadingAndErrorView extends RelativeLayout {
         mProgressBar.setVisibility(GONE);
         mTextView.setVisibility(VISIBLE);
         mImageView.setVisibility(VISIBLE);
-//        mImageView.setImageResource(R.mipmap.exchange_common_no_data);
         mTextView.setText(msg);
         setVisibility(VISIBLE);
     }
