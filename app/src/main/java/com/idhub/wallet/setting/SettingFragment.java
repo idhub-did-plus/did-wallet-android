@@ -54,6 +54,7 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
         MainTopTitleView mainTopTitleView = view.findViewById(R.id.title);
         mainTopTitleView.setScanIsVisible(View.GONE);
         mainTopTitleView.setMenuIsVisible(View.GONE);
+        mainTopTitleView.setTitle(getString(R.string.wallet_setting_title));
         return view;
     }
 

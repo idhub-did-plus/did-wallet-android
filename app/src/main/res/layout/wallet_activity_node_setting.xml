@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/wallet_white"
     android:layout_height="match_parent"
     tools:context=".setting.NodeSettingActivity">
 
@@ -10,7 +11,7 @@
         android:id="@+id/node_select_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="16dp"
         android:text="@string/wallet_node_select"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="12dp"
@@ -20,7 +21,7 @@
         android:id="@+id/node_list"
         android:layout_width="0dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintLeft_toLeftOf="@id/node_select_name"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/node_select_name"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

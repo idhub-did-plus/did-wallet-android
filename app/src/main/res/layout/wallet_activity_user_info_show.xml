@@ -212,7 +212,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginRight="12dp"
             android:textSize="13sp"
-            android:drawableRight="@mipmap/wallet_copy_blue"
+            android:drawableRight="@mipmap/wallet_address_copy"
             android:drawablePadding="5dp"
             tools:text="sfdk000000000000000000000000000jfhssssss" />
     </LinearLayout>
@@ -250,7 +250,7 @@
             android:layout_marginLeft="16dp"
             android:textSize="13sp"
             android:layout_marginTop="5dp"
-            android:drawableRight="@mipmap/wallet_copy_blue"
+            android:drawableRight="@mipmap/wallet_address_copy"
             android:layout_marginRight="12dp"
             tools:text="sf000000000000000000000000000000000000000000000000000dkjfh" />
     </LinearLayout>

@@ -11,7 +11,7 @@
         android:layout_width="@dimen/dp_19"
         android:layout_height="@dimen/dp_23"
         android:layout_marginLeft="@dimen/dp_15"
-        android:layout_marginTop="@dimen/dp_31"
+        android:layout_marginTop="@dimen/dp_41"
         android:src="@mipmap/wallet_location"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

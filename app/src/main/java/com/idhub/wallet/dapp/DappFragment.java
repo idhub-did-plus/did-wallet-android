@@ -51,6 +51,7 @@ public class DappFragment extends MainBaseFragment {
         });
 
         MainTopTitleView titleView = view.findViewById(R.id.title);
+        titleView.setTitle(getString(R.string.wallet_dapp));
         titleView.setMenuIsVisible(View.GONE);
         titleView.setScanClickListener(new View.OnClickListener() {
             @Override

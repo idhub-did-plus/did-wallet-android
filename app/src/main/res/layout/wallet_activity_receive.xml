@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/wallet_line_gray"
+    android:background="@color/wallet_main_yellow_color"
     tools:context=".wallet.transaction.ReceiveActivity">
 
     <include
         android:id="@+id/title"
         layout="@layout/wallet_common_title_layout"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +21,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/wallet_top_circle_blue"
+        android:background="@drawable/wallet_top_circle_gray"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/title">
 
@@ -33,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
-            android:textColor="@color/wallet_white"
+            android:textColor="@color/wallet_main_yellow_color"
             android:textSize="20dp"
             tools:text="ETH" />
 
@@ -45,7 +43,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="12dp"
             android:drawablePadding="5dp"
-            android:textColor="@color/wallet_white"
+            android:textColor="@color/wallet_main_yellow_color"
             android:drawableRight="@mipmap/wallet_address_copy"
             android:textSize="12dp"
             tools:text="0xA69eB82e584bD2EdBcD792CcdAAF2de607b2e8Ab" />
@@ -66,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:textColor="@color/wallet_black"
+            android:textColor="@color/wallet_main_yellow_color"
             android:textSize="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -98,7 +96,7 @@
             android:paddingTop="25dp"
             android:paddingBottom="25dp"
             android:text="@string/wallet_designated_amount"
-            android:textColor="@color/wallet_main_blue_color"
+            android:textColor="@color/wallet_main_yellow_color"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

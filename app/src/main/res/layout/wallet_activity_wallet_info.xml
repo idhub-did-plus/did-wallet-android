@@ -47,7 +47,7 @@
             android:singleLine="true"
             android:layout_marginTop="6dp"
             android:ellipsize="middle"
-            android:drawableRight="@mipmap/wallet_copy_blue"
+            android:drawableRight="@mipmap/wallet_address_copy"
             app:layout_constraintLeft_toLeftOf="@id/tv_wallet_name"
             app:layout_constraintTop_toBottomOf="@id/tv_wallet_name"
             app:layout_constraintBottom_toBottomOf="parent"

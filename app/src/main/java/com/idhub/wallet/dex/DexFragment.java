@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
+import com.idhub.wallet.main.MainTopTitleView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +54,10 @@ public class DexFragment extends MainBaseFragment {
         TextView coinExchangeRateView = view.findViewById(R.id.coin_exchange_rate);
         View btnView = view.findViewById(R.id.next);
 
+        MainTopTitleView mainTopTitleView = view.findViewById(R.id.top_view);
+        mainTopTitleView.setTitle(getString(R.string.wallet_dex));
+        mainTopTitleView.setMenuIsVisible(View.GONE);
+        mainTopTitleView.setScanIsVisible(View.GONE);
 
     }
 

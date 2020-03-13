@@ -100,6 +100,9 @@ public class ReceiveActivity extends BaseActivity implements View.OnClickListene
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_receive));
+        titleLayout.setBackGroundColor(R.color.wallet_main_yellow_color);
+        titleLayout.setTitleColor(R.color.wallet_white);
+        titleLayout.setBackImg(R.mipmap.wallet_back_white_icon);
         mNameView = findViewById(R.id.name);
         mAddressView = findViewById(R.id.address);
         mAddressView.setOnClickListener(this);

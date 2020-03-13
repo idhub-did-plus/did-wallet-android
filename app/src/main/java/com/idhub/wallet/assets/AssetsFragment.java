@@ -30,6 +30,7 @@ import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
 import com.idhub.wallet.common.walletobservable.WalletUpgradeObservable;
 import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
+import com.idhub.wallet.common.zxinglib.QrCodeActivity;
 import com.idhub.wallet.createmanager.UpgradeActivity;
 import com.idhub.wallet.createmanager.UserBasicInfoEntity;
 import com.idhub.wallet.didhub.WalletManager;
@@ -37,6 +38,7 @@ import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.main.MainActivity;
+import com.idhub.wallet.main.MainTopTitleView;
 import com.idhub.wallet.me.VipStateType;
 import com.idhub.wallet.wallet.token.activity.TokenManagerActivity;
 
@@ -126,6 +128,13 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
+        MainTopTitleView topTitleView = view.findViewById(R.id.title);
+        topTitleView.setScanClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QrCodeActivity.startAction(getActivity(), 100);
+            }
+        });
         View topBg = view.findViewById(R.id.assets_top_bg);
         ImageView headView = view.findViewById(R.id.head);
         //设置头像

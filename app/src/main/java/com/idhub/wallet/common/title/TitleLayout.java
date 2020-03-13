@@ -92,6 +92,14 @@ public class TitleLayout extends ConstraintLayout implements View.OnClickListene
         mTitleView.setText(title);
     }
 
+    public void setTitleColor(int resId) {
+        mTitleView.setTextColor(getResources().getColor(resId));
+    }
+
+    public void setBackGroundColor(int resId) {
+        this.setBackgroundColor(getResources().getColor(resId));
+    }
+
     public void setFirstImageAndClickCallBack(int imageOneResId, OnImageClickCallbackListener onImageClickCallbackListener) {
         mOnFirstClickCallbackListener = onImageClickCallbackListener;
         if (imageOneResId != -1) {

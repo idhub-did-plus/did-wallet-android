@@ -13,6 +13,7 @@ public class MainTopTitleView extends ConstraintLayout {
 
     private View scanView;
     private View menuView;
+    private TextView titleView;
 
     public MainTopTitleView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -24,12 +25,17 @@ public class MainTopTitleView extends ConstraintLayout {
         View bgView = findViewById(R.id.main_top_title_bg);
         menuView = findViewById(R.id.main_left_menu);
         scanView = findViewById(R.id.main_scan);
-        TextView titleView = findViewById(R.id.title);
+        titleView = findViewById(R.id.title);
 //        ViewCalculateUtil.setViewGroupLayoutParam(bgView, LayoutParams.MATCH_PARENT, 64);
 //        ViewCalculateUtil.setViewConstraintLayoutParam(menuView, 17, 16, 36, 0, 15, 0);
 //        ViewCalculateUtil.setViewConstraintLayoutParam(scanView, 17, 17, 33, 0, 0, 18);
 //        ViewCalculateUtil.setViewConstraintLayoutParam(titleView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 30, 0, 0, 0);
 //        ViewCalculateUtil.setTextSize(titleView, 17);
+    }
+
+    public void setTitle(String title) {
+        titleView.setVisibility(VISIBLE);
+        titleView.setText(title);
     }
 
     public void setScanIsVisible(int visible) {
@@ -40,6 +46,7 @@ public class MainTopTitleView extends ConstraintLayout {
         scanView.setVisibility(VISIBLE);
         scanView.setOnClickListener(clickListener);
     }
+
     public void setMenuIsVisible(int visible) {
         menuView.setVisibility(visible);
     }

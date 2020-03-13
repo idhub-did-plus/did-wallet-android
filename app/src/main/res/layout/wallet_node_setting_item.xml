@@ -4,28 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_16"
+    android:layout_marginLeft="@dimen/dp_16"
+    android:layout_marginRight="@dimen/dp_16"
+    android:background="@mipmap/wallet_shadow_bg"
     tools:context=".setting.message.transaction.TransactionMessageFragment">
+
 
     <TextView
         android:id="@+id/node_path"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_16"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:textSize="16sp"
-        app:layout_constraintRight_toLeftOf="@id/node_select_image"
         android:textColor="@color/wallet_text_black"
+        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/node_select_image"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="2019/08/30 17:08" />
 
     <ImageView
         android:id="@+id/node_select_image"
-        android:src="@mipmap/wallet_node_select"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:src="@mipmap/wallet_node_select"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
