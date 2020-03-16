@@ -90,6 +90,7 @@ public class AuthInfoActivity extends BaseActivity implements SaveClickListener 
         super.onCreate(savedInstanceState);
         mDefaultKeystore = WalletManager.getDefaultKeystore();
         if (mDefaultKeystore == null) {
+            ToastUtils.showShortToast(getString(R.string.wallet_upload_upgrade_tip));
             finish();
             return;
         }

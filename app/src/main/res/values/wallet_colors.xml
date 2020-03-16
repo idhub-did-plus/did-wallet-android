@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3b9bff</color>
-    <color name="colorPrimaryDark">#3b9bff</color>
+    <color name="colorPrimary">#F9A822</color>
+    <color name="colorPrimaryDark">#F9A822</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="wallet_line_gray">#EDEDED</color>
     <color name="wallet_line_shape">#F0F0F0</color>
     <color name="wallet_hint_text">#aaaaaa</color>
     <color name="wallet_line_gray_deep">#eeeeee</color>
-    <color name="wallet_blue">#3b9bff</color>
-    <color name="wallet_blue_text">#3b9bff</color>
     <color name="wallet_white">#ffffff</color>
     <color name="wallet_black">#000000</color>
     <color name="wallet_text_grey">#818d96</color>

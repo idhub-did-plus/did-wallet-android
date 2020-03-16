@@ -1,4 +1,4 @@
-package com.idhub.wallet.wallet.mainfragment;
+package com.idhub.wallet.setting.message.moretransaction;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.idhub.wallet.R;
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
-import com.idhub.wallet.wallet.adapter.WalletListAdapter;
+import com.idhub.wallet.wallet.manager.WalletManageAdapter;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 
 import java.util.Hashtable;
@@ -26,12 +26,10 @@ import java.util.LinkedList;
 
 public class WalletListDialog extends Dialog implements View.OnClickListener {
 
-    private String mAddress;
     private WalletListSelectItemListener mWalletListSelectItemListener;
 
-    public WalletListDialog(Context context,String address) {
+    public WalletListDialog(Context context) {
         super(context, R.style.WalletShowDialog);
-        mAddress = address;
         View view = LayoutInflater.from(context).inflate(R.layout.wallet_dialog_fragment_wallet_list,null);
         setContentView(view);
         Window window = getWindow();
@@ -61,7 +59,7 @@ public class WalletListDialog extends Dialog implements View.OnClickListener {
             String key = iterator.next();
             didHubMnemonicKeyStores.add(walletKeystores.get(key));
         }
-        WalletListAdapter walletListAdapter = new WalletListAdapter(getContext(),mAddress);
+        WalletManageAdapter walletListAdapter = new WalletManageAdapter(getContext());
         walletListAdapter.setOnItemClickListener(id -> {
             dismiss();
             if (mWalletListSelectItemListener != null) {

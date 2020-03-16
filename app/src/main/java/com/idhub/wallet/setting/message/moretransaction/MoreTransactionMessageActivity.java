@@ -10,17 +10,18 @@ import android.widget.TextView;
 
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
+import com.idhub.wallet.common.loading.LoadingAndErrorView;
 import com.idhub.wallet.common.tablayout.TabLayout;
 import com.idhub.wallet.common.title.TitleLayout;
 
 import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.util.NumericUtil;
-import com.idhub.wallet.wallet.mainfragment.WalletListDialog;
 
 public class MoreTransactionMessageActivity extends BaseActivity implements View.OnClickListener, WalletListDialog.WalletListSelectItemListener {
 
     private String mSearchAddress = WalletManager.getAddress();
     private TextView mAddressView;
+    private LoadingAndErrorView loadingAndErrorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,16 @@ public class MoreTransactionMessageActivity extends BaseActivity implements View
         MoreMessageFragmentPagerAdapter adapter = new MoreMessageFragmentPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        loadingAndErrorView = findViewById(R.id.loading_and_error);
     }
 
+    public void setLoadingShow(boolean isShow) {
+        if (isShow) {
+            loadingAndErrorView.setVisibility(View.VISIBLE);
+        } else {
+            loadingAndErrorView.setVisibility(View.GONE);
+        }
+    }
     public String getWalletAddress(){
         return mSearchAddress;
     }
@@ -55,7 +64,7 @@ public class MoreTransactionMessageActivity extends BaseActivity implements View
     public void onClick(View v) {
         if (v == mAddressView) {
             //选择钱包地址
-            WalletListDialog walletListDialog = new WalletListDialog(this, mSearchAddress);
+            WalletListDialog walletListDialog = new WalletListDialog(this);
             walletListDialog.setWalletListSelectItemListener(this);
             walletListDialog.show();
         }

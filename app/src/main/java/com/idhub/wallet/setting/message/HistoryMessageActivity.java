@@ -27,12 +27,13 @@ public class HistoryMessageActivity extends BaseActivity {
     private void initView() {
         TitleLayout titleLayout = findViewById(R.id.title);
         titleLayout.setTitle(getString(R.string.wallet_message_center));
-        titleLayout.setFirstTextAndClickCallBack(getString(R.string.wallet_more_detail), new TitleLayout.OnImageClickCallbackListener() {
+        titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_more_message, new TitleLayout.OnImageClickCallbackListener() {
             @Override
             public void onImageClick() {
                 MoreTransactionMessageActivity.startAction(HistoryMessageActivity.this);
             }
         });
+
         ViewPager viewPager = findViewById(R.id.view_pager);
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         MessageFragmentPagerAdapter adapter = new MessageFragmentPagerAdapter(getSupportFragmentManager(), this);

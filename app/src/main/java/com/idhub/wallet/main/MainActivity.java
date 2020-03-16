@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.assets.AssetsFragment;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.dialog.SignMessageDialogFragment;
 import com.idhub.wallet.common.loading.LoadingAndErrorView;
@@ -232,7 +233,8 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
             @Override
             public void onPageSelected(int position) {
                 Fragment fragment = adapter.getCurrentFragment();
-                if (fragment instanceof WalletFragment) {
+                //刷新fragment的view，解决资产页监听数据变化后，刷新需要手动滑动的问题
+                if (fragment instanceof AssetsFragment) {
                     View view = fragment.getView();
                     if (view != null) {
                         view.requestLayout();

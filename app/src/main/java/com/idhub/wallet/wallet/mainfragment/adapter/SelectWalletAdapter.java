@@ -13,13 +13,10 @@ import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.wallet.mainfragment.view.SelectWalletItemView;
-import com.idhub.wallet.wallet.mainfragment.view.WalletItemView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 
 public class SelectWalletAdapter extends RecyclerView.Adapter<SelectWalletAdapter.WalletListAdapterViewHolder> {
 

@@ -45,9 +45,12 @@ public class TokenListAdapter extends BaseRecyclerAdapter<AssetsModel> {
         String contractAddress = model.getCurrentContractAddress();
         String address = WalletManager.getAddress();
         String balance = model.getBalance();
+        Log.e("LYW", "bindViewWithHolder: " + balance );
         if (TextUtils.isEmpty(balance)) {
+            Log.e("LYW", "bindViewWithHolder:1 " );
             itemView.setBalance("-");
         } else {
+            Log.e("LYW", "bindViewWithHolder:2 ");
             itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance), String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals())))));
         }
         if (TransactionTokenType.ERC20.equals(model.getType())) {
@@ -59,6 +62,13 @@ public class TokenListAdapter extends BaseRecyclerAdapter<AssetsModel> {
                     String balanceStr = NumericUtil.ethBigIntegerToNumberViewPointAfterFour(bigInteger, String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals()))));
                     itemView.setBalance(balanceStr);
                 }
+
+                @Override
+                public void onError(Throwable t) {
+                    super.onError(t);
+                    model.setBalance(null);
+                    itemView.setBalance("-");
+                }
             });
         } else if (TransactionTokenType.ETH_NAME.equals(model.getType())) {
             Web3Api.searchBalance(address, new Web3jSubscriber<EthGetBalance>() {
@@ -69,6 +79,13 @@ public class TokenListAdapter extends BaseRecyclerAdapter<AssetsModel> {
                     String balance = String.valueOf(balance1);
                     model.setBalance(balance);
                     itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(balance1, String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals())))));
+                }
+
+                @Override
+                public void onError(Throwable t) {
+                    super.onError(t);
+                    model.setBalance(null);
+                    itemView.setBalance("-");
                 }
             });
         }

@@ -12,8 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.idhub.wallet.auth.AuthInfoActivity;
+import com.idhub.wallet.common.dialog.MessageDialogFragment;
 import com.idhub.wallet.common.sharepreference.WalletVipSharedPreferences;
 import com.idhub.wallet.common.walletobservable.WalletVipStateObservable;
+import com.idhub.wallet.createmanager.UpgradeActivity;
+import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.me.VipStateType;
@@ -142,6 +146,20 @@ public class ClaimFragment extends MainBaseFragment implements View.OnClickListe
             STCompliantInvestorActivity.startAction(getContext());
         } else if (v == infoBgContainer) {
             //上传信息
+            if (WalletManager.getDefaultKeystore() == null) {
+                MessageDialogFragment messageDialogFragment = MessageDialogFragment.getInstance(getString(R.string.wallet_upload_upgrade_tip), getString(R.string.wallet_go_upgrade));
+                messageDialogFragment.show(getActivity().getSupportFragmentManager(), "message_dialog_fragment");
+                messageDialogFragment.setMessagePasswordDialogFragmentListener(new MessageDialogFragment.MessageDialogFragmentListener() {
+                    @Override
+                    public void confirm() {
+                        WalletKeystore didHubMnemonicKeyStore = WalletManager.getCurrentKeyStore();
+                        if (didHubMnemonicKeyStore != null) {
+                            UpgradeActivity.startAction(getActivity(), didHubMnemonicKeyStore.getId());
+                        }
+                    }
+                });
+                return;
+            }
             AuthInfoActivity.startAction(getContext());
         }
     }

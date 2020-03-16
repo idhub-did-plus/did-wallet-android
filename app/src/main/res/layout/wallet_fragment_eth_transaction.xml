@@ -19,11 +19,5 @@
         android:layout_height="match_parent"
         android:background="@color/wallet_white" />
 
-    <include
-        android:id="@+id/loading_and_error"
-        layout="@layout/wallet_common_loading_and_error"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
 
 </FrameLayout>

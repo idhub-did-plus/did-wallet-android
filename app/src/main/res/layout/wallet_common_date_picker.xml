@@ -37,7 +37,7 @@
             android:layout_centerVertical="true"
             android:padding="10dp"
             android:text="@string/wallet_confirm"
-            android:textColor="@color/wallet_blue_text"
+            android:textColor="@color/wallet_main_yellow_color"
             android:textSize="16sp" />
 
     </RelativeLayout>

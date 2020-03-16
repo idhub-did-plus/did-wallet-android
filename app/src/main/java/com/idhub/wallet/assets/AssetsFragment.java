@@ -40,6 +40,7 @@ import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.main.MainActivity;
 import com.idhub.wallet.main.MainTopTitleView;
 import com.idhub.wallet.me.VipStateType;
+import com.idhub.wallet.wallet.mainfragment.WalletFragment;
 import com.idhub.wallet.wallet.token.activity.TokenManagerActivity;
 
 import org.web3j.crypto.Keys;
@@ -135,7 +136,6 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
                 QrCodeActivity.startAction(getActivity(), 100);
             }
         });
-        View topBg = view.findViewById(R.id.assets_top_bg);
         ImageView headView = view.findViewById(R.id.head);
         //设置头像
         UserBasicInfoEntity userBasicInfo = UserBasicInfoSharpreference.getInstance().getUserBasicInfo();
@@ -143,7 +143,7 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
 
         walletName = view.findViewById(R.id.wallet_name);
         walletAddress = view.findViewById(R.id.wallet_address);
-        View lineView = view.findViewById(R.id.line);
+
 
         upgradeBtn = view.findViewById(R.id.upgrade_btn_layout);
         upgradeBtn.setOnClickListener(this);
@@ -162,7 +162,6 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         String[] strings = {getString(R.string.wallet_securities), getString(R.string.wallet_token), getString(R.string.wallet_collectibles)};
         AssetsFragmentPagerAdapter adapter = new AssetsFragmentPagerAdapter(getChildFragmentManager(), getContext(), strings);
         viewPager.setAdapter(adapter);
-
         //滑动的距离，判断当滑动到顶部的时候，计算viewpager的高度进行设置。
         NestedScrollView nestedScrollView = view.findViewById(R.id.scroll_view);
         View topTabLayoutLayout = view.findViewById(R.id.tab_layout_layout2);
@@ -235,7 +234,7 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void identityData(){
+    private void identityData() {
         //身份
         defaultIdentity = new IdentityDbManager().getDefaultIdentity();
         if (defaultIdentity == null) {
@@ -248,8 +247,9 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
             upgradeValueView.setText(getString(R.string.wallet_apply_claims));
         }
     }
+
     private int getTopViewHeight() {
-        int height = AutoSizeUtils.dp2px(getContext(),80);
+        int height = AutoSizeUtils.dp2px(getContext(), 80);
         return height;
     }
 

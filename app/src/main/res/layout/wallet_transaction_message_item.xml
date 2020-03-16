@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@mipmap/wallet_shadow_bg"
+    android:paddingTop="5dp"
+    android:layout_marginLeft="7dp"
+    android:layout_marginRight="7dp"
+    android:paddingBottom="15dp"
     tools:context=".setting.message.transaction.TransactionMessageFragment">
 
     <!--    <ImageView-->
@@ -19,26 +24,29 @@
         android:id="@+id/tv_from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/wallet_text_background_grey"
-        android:padding="5dp"
+        android:textStyle="bold"
+        android:text="From"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="16sp"
+        android:typeface="serif"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/time"
-        android:text="From" />
+        app:layout_constraintTop_toBottomOf="@id/time" />
 
     <TextView
         android:id="@+id/tv_from_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_from"
-        app:layout_constraintLeft_toRightOf="@id/tv_from"
-        android:ellipsize="middle"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
+        android:ellipsize="middle"
+        android:typeface="serif"
+        android:textSize="14sp"
+        android:textColor="@color/wallet_text_black"
         android:singleLine="true"
+        app:layout_constraintLeft_toLeftOf="@id/tv_from"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_from"
+        app:layout_constraintTop_toBottomOf="@id/tv_from"
         tools:text="0x4c000E507bE6663e264a1A21507a69Bfa5035D95" />
 
 
@@ -46,26 +54,29 @@
         android:id="@+id/tv_to"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:background="@drawable/wallet_text_background_grey"
-        android:padding="5dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_from"
-        android:text="To" />
+        android:textStyle="bold"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="16sp"
+        android:typeface="serif"
+        android:text="To"
+        app:layout_constraintLeft_toLeftOf="@id/tv_from"
+        app:layout_constraintTop_toBottomOf="@id/tv_from_address" />
 
     <TextView
         android:id="@+id/tv_to_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="3dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_to"
-        android:ellipsize="middle"
         android:layout_marginRight="10dp"
+        android:ellipsize="middle"
         android:singleLine="true"
-        app:layout_constraintLeft_toRightOf="@id/tv_to"
+        android:typeface="serif"
+        android:textSize="14sp"
+        android:textColor="@color/wallet_text_black"
+        app:layout_constraintLeft_toLeftOf="@id/tv_to"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_to"
+        app:layout_constraintTop_toBottomOf="@id/tv_to"
         tools:text="0x4c000E507bE6663e264a1A21507a69Bfa5035D95" />
 
 
@@ -73,8 +84,8 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/wallet_text_black"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -96,7 +107,9 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:text="0.0001"
-        android:textColor="@color/wallet_blue_text"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/name"
+        android:textColor="@color/wallet_main_yellow_color"
         app:layout_constraintRight_toLeftOf="@id/name"
         app:layout_constraintTop_toTopOf="@id/name" />
 
@@ -104,17 +117,12 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:text="ETH"
-        android:textColor="@color/wallet_blue_text"
-        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/wallet_main_yellow_color"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_to" />
+        app:layout_constraintTop_toBottomOf="@id/tv_to_address" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/wallet_line_gray_deep"
-        app:layout_constraintTop_toBottomOf="@id/name" />
 </com.idhub.wallet.setting.message.transaction.TransactionMessageItemView>

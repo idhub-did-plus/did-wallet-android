@@ -23,8 +23,10 @@
         android:layout_marginTop="6dp"
         app:tabRippleColor="@android:color/transparent"
         app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        app:wallet_tabSelectedTextColor="@color/wallet_blue"
-        app:wallet_tabTextColor="@color/wallet_text_grey"
+        app:wallet_tabSelectedTextColor="@color/wallet_main_yellow_color"
+        app:wallet_tabTextColor="@color/wallet_color_A2A2A2"
+        app:wallet_tabIndicatorHeight="2dp"
+        app:wallet_tabIndicatorWidth="45dp"
         app:wallet_tabTextSize="14sp" />
 
     <View

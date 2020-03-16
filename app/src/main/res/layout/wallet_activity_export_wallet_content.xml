@@ -19,11 +19,11 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabSelectedTextColor="@color/wallet_blue_text"
+        app:tabSelectedTextColor="@color/wallet_main_yellow_color"
         app:tabTextColor="@color/wallet_text_grey"
         app:tabRippleColor="@android:color/transparent"
         app:tabIndicatorHeight="2dp"
-        app:tabIndicatorColor="@color/wallet_blue_text"
+        app:tabIndicatorColor="@color/wallet_main_yellow_color"
         app:tabTextAppearance="@style/WalletTabLayout"
         app:layout_constraintTop_toBottomOf="@id/title" />
 

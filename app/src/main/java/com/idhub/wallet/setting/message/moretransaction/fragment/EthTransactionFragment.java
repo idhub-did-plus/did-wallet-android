@@ -43,7 +43,6 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
     private RecyclerView mRecyclerView;
     private EthTransactionMessageAdapter mAdapter;
     private TextView mEmptyView;
-    private LoadingAndErrorView mLoadingAndErrorView;
     private MoreTransactionMessageActivity mActivity;
     private static final int MAX_END_BLOCK = 999999999;
     private int mPage;
@@ -75,10 +74,9 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setTransactionMesageLoadListener(this);
         mEmptyView = view.findViewById(R.id.message_empty);
-        mLoadingAndErrorView = view.findViewById(R.id.loading_and_error);
         mRecyclerView.setVisibility(View.GONE);
         mEmptyView.setVisibility(View.GONE);
-        mLoadingAndErrorView.setVisibility(View.VISIBLE);
+        mActivity.setLoadingShow(true);
         TransactionObservable.getInstance().addObserver(this);
         initData();
         return view;
@@ -94,7 +92,7 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
 
     private void loadData() {
         Observable.create((ObservableOnSubscribe<List<Tx>>) emitter -> {
-            List<Tx> txs = etherScanApi.account().txs(mAddress, 0, MAX_END_BLOCK, String.valueOf(mPage), mOffset,"desc");
+            List<Tx> txs = etherScanApi.account().txs(mAddress, 0, MAX_END_BLOCK, String.valueOf(mPage), mOffset, "desc");
             emitter.onNext(txs);
             emitter.onComplete();
         })
@@ -104,7 +102,7 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
                     @Override
                     protected void onStart() {
                         super.onStart();
-                        mLoadingAndErrorView.setVisibility(View.VISIBLE);
+                        mActivity.setLoadingShow(true);
                     }
 
                     @Override
@@ -127,7 +125,7 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
                             }
                         } else {
                             if (size <= 0) {
-                                ToastUtils.showShortToast( getString(R.string.wallet_no_data));
+                                ToastUtils.showShortToast(getString(R.string.wallet_no_data));
                             }
                             mAdapter.addDatas(recordEntities);
                         }
@@ -142,14 +140,14 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
                     public void onError(Throwable e) {
                         mEmptyView.setText(e.getMessage());
                         mEmptyView.setVisibility(View.VISIBLE);
-                        mLoadingAndErrorView.setVisibility(View.GONE);
+                        mActivity.setLoadingShow(false);
                         e.printStackTrace();
                         ToastUtils.showShortToast(e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-                        mLoadingAndErrorView.setVisibility(View.GONE);
+                        mActivity.setLoadingShow(false);
                     }
                 });
 
@@ -162,7 +160,7 @@ public class EthTransactionFragment extends Fragment implements EthTransactionMe
             mPage++;
             loadData();
         } else {
-            ToastUtils.showShortToast( getString(R.string.wallet_no_data));
+            ToastUtils.showShortToast(getString(R.string.wallet_no_data));
         }
     }
 

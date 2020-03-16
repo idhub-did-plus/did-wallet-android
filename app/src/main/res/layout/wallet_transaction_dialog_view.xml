@@ -37,7 +37,7 @@
         android:gravity="center"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:textColor="@color/wallet_blue"
+        android:textColor="@color/wallet_main_yellow_color"
         android:text="确定"
         android:textSize="15sp"
         android:layout_width="match_parent"

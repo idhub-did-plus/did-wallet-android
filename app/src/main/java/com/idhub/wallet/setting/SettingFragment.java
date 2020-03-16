@@ -9,6 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
+import com.idhub.wallet.didhub.WalletManager;
+import com.idhub.wallet.didhub.keystore.WalletKeystore;
 import com.idhub.wallet.main.MainBaseFragment;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.title.TitleLayout;
@@ -16,11 +19,16 @@ import com.idhub.wallet.main.MainTopTitleView;
 import com.idhub.wallet.setting.message.HistoryMessageActivity;
 import com.idhub.wallet.wallet.manager.WalletManagerActivity;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SettingFragment extends MainBaseFragment implements View.OnClickListener {
 
+
+    private SetItemView walletContainer;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -31,9 +39,9 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.wallet_fragment_setting, container, false);
-        SetItemView walletContainer = view.findViewById(R.id.wallet_container);
+        walletContainer = view.findViewById(R.id.wallet_container);
         walletContainer.setData(R.mipmap.wallet_main_set_wallet, getString(R.string.wallet_wallet_manager));
-        walletContainer.setValue("Main");
+        initData();
         walletContainer.setOnClickListener(this);
         SetItemView messageContainer = view.findViewById(R.id.message_container);
         messageContainer.setData(R.mipmap.wallet_main_set_message,getString(R.string.wallet_message_center));
@@ -55,7 +63,20 @@ public class SettingFragment extends MainBaseFragment implements View.OnClickLis
         mainTopTitleView.setScanIsVisible(View.GONE);
         mainTopTitleView.setMenuIsVisible(View.GONE);
         mainTopTitleView.setTitle(getString(R.string.wallet_setting_title));
+        WalletSelectedObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                initData();
+            }
+        });
         return view;
+    }
+
+    private void initData() {
+        WalletKeystore currentKeyStore = WalletManager.getCurrentKeyStore();
+        if (currentKeyStore != null) {
+            walletContainer.setValue(currentKeyStore.getWallet().getName());
+        }
     }
 
     @Override

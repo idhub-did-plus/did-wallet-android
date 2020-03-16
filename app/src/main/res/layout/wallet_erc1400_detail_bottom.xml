@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:textSize="16sp"
         android:layout_marginLeft="12dp"
-        android:textColor="@color/wallet_blue_text"
+        android:textColor="@color/wallet_main_yellow_color"
         app:layout_constraintTop_toTopOf="@id/total_supply_name"
         app:layout_constraintLeft_toRightOf="@id/total_supply_name"
         android:layout_height="wrap_content" />
@@ -42,7 +42,7 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:textSize="16sp"
-        android:textColor="@color/wallet_blue_text"
+        android:textColor="@color/wallet_main_yellow_color"
         app:layout_constraintTop_toTopOf="@id/total_name"
         app:layout_constraintLeft_toLeftOf="@id/total_supply"
         android:layout_height="wrap_content" />
@@ -62,7 +62,7 @@
         android:id="@+id/symbol"
         android:layout_width="wrap_content"
         android:textSize="16sp"
-        android:textColor="@color/wallet_blue_text"
+        android:textColor="@color/wallet_main_yellow_color"
         app:layout_constraintTop_toTopOf="@id/symbol_name"
         app:layout_constraintLeft_toLeftOf="@id/total_supply"
         android:layout_height="wrap_content" />
@@ -83,7 +83,7 @@
         android:layout_width="wrap_content"
         android:textSize="16sp"
         android:text="@string/wallet_view_detail"
-        android:textColor="@color/wallet_blue_text"
+        android:textColor="@color/wallet_main_yellow_color"
         app:layout_constraintTop_toTopOf="@id/controller_name"
         app:layout_constraintLeft_toLeftOf="@id/total_supply"
         android:layout_height="wrap_content" />

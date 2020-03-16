@@ -39,16 +39,11 @@ public class TokenFragment extends Fragment {
 
 
     private TokenListAdapter adapter;
+    private RecyclerView recyclerView;
 
     public TokenFragment() {
         // Required empty public constructor
     }
-    private Observer obsever = new Observer() {
-        @Override
-        public void update(Observable o, Object arg) {
-            initData();
-        }
-    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,16 +53,31 @@ public class TokenFragment extends Fragment {
         initView(view);
         initData();
 
-        WalletAddAssetsObservable.getInstance().addObserver(obsever);
-        WalletNodeSelectedObservable.getInstance().addObserver(obsever);
-        WalletSelectedObservable.getInstance().addObserver(obsever);
+        WalletAddAssetsObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                initData();
+            }
+        });
+        WalletNodeSelectedObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                initData();
+            }
+        });
+        WalletSelectedObservable.getInstance().addObserver(new Observer() {
+            @Override
+            public void update(Observable o, Object arg) {
+                initData();
+            }
+        });
         return view;
     }
 
 
     private void initView(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
         adapter = new TokenListAdapter(getContext());
         recyclerView.setAdapter(adapter);
         view.findViewById(R.id.assets_name).setOnClickListener(new View.OnClickListener() {

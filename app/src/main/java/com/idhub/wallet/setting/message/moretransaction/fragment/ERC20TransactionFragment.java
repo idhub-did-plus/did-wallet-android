@@ -44,7 +44,7 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
     private RecyclerView mRecyclerView;
     private EthTransactionMessageAdapter mAdapter;
     private TextView mEmptyView;
-    private LoadingAndErrorView mLoadingAndErrorView;
+
     private MoreTransactionMessageActivity mActivity;
     private static final int MAX_END_BLOCK = 999999999;
     private int mPage;
@@ -76,10 +76,9 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setTransactionMesageLoadListener(this);
         mEmptyView = view.findViewById(R.id.message_empty);
-        mLoadingAndErrorView = view.findViewById(R.id.loading_and_error);
         mRecyclerView.setVisibility(View.GONE);
         mEmptyView.setVisibility(View.GONE);
-        mLoadingAndErrorView.setVisibility(View.VISIBLE);
+        mActivity.setLoadingShow(true);
         TransactionObservable.getInstance().addObserver(this);
         initData();
         return view;
@@ -105,7 +104,7 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
                     @Override
                     protected void onStart() {
                         super.onStart();
-                        mLoadingAndErrorView.setVisibility(View.VISIBLE);
+                        mActivity.setLoadingShow(true);
                     }
 
                     @Override
@@ -143,14 +142,14 @@ public class ERC20TransactionFragment extends Fragment implements EthTransaction
                     public void onError(Throwable e) {
                         mEmptyView.setText(e.getMessage());
                         mEmptyView.setVisibility(View.VISIBLE);
-                        mLoadingAndErrorView.setVisibility(View.GONE);
+                        mActivity.setLoadingShow(false);
                         e.printStackTrace();
                         ToastUtils.showShortToast(e.getMessage());
                     }
 
                     @Override
                     public void onComplete() {
-                        mLoadingAndErrorView.setVisibility(View.GONE);
+                        mActivity.setLoadingShow(false);
                     }
                 });
 

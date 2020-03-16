@@ -30,7 +30,6 @@ public class TransactionDetailActivity extends BaseActivity implements View.OnCl
         }
         mTransactionRecordEntity = (TransactionRecordEntity) o;
         setContentView(R.layout.wallet_activity_transaction_detail);
-        Log.e("LYW", "onCreate: " + mTransactionRecordEntity.getHash() );
         init();
     }
 
