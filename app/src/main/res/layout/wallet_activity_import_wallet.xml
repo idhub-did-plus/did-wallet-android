@@ -22,11 +22,11 @@
         android:layout_marginTop="6dp"
         app:tabRippleColor="@android:color/transparent"
         app:wallet_tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-        app:wallet_tabSelectedTextColor="@color/wallet_main_blue_color"
+        app:wallet_tabSelectedTextColor="@color/wallet_main_yellow_color"
         app:wallet_tabTextColor="@color/wallet_text_grey"
         app:wallet_tabIndicatorHeight="1dp"
         app:wallet_tabIndicatorWidth = "60dp"
-        app:wallet_tabIndicatorColor="@color/wallet_main_blue_color"
+        app:wallet_tabIndicatorColor="@color/wallet_main_yellow_color"
         app:wallet_tabTextSize="14sp" />
 
     <View

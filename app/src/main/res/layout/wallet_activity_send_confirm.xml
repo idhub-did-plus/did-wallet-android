@@ -16,195 +16,180 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/send_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        tools:text="-1 ETH" />
-
-    <View
-        android:id="@+id/line1"
+    <LinearLayout
+        android:id="@+id/amount"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/send_amount" />
-
-    <TextView
-        android:id="@+id/from"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:text="From"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line1" />
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@mipmap/wallet_shadow_bg"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/title">
 
-    <TextView
-        android:id="@+id/from_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:textSize="13sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/from"
-        tools:text="0xdaskasljas" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/wallet_transfer_amount"
+            android:textColor="@color/wallet_color_A2A2A2"
+            android:textSize="@dimen/font_sp_16" />
 
-    <View
-        android:id="@+id/line2"
+        <TextView
+            android:id="@+id/send_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="-1 ETH" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/from_address" />
-
-    <TextView
-        android:id="@+id/to"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:text="To"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line2" />
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:background="@mipmap/wallet_shadow_bg"
+        app:layout_constraintTop_toBottomOf="@id/amount">
 
-    <TextView
-        android:id="@+id/to_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:textSize="13sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/to"
-        tools:text="0xdaskaslsadasdjas" />
-    <View
-        android:id="@+id/line5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/to_address" />
-    <TextView
-        android:id="@+id/partition_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:text="Partition"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line5" />
+        <TextView
+            android:id="@+id/from"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
+            android:text="From"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/partition"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:textSize="13sp"
-        android:visibility="gone"
-        android:layout_marginRight="12dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/partition_name"
-        tools:text="0xdaskaslsadasdjas" />
+        <TextView
+            android:id="@+id/from_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="@id/from"
+            app:layout_constraintTop_toBottomOf="@id/from"
+            tools:text="0xdaskasljas" />
 
-    <View
-        android:id="@+id/line3"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:visibility="gone"
-        android:layout_marginTop="10dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/partition" />
+        <TextView
+            android:id="@+id/to"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="To"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/from"
+            app:layout_constraintTop_toBottomOf="@id/from_address" />
+
+        <TextView
+            android:id="@+id/to_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="@id/from"
+            app:layout_constraintTop_toBottomOf="@id/to"
+            tools:text="0xdaskaslsadasdjas" />
 
 
-    <TextView
-        android:id="@+id/token_id_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/wallet_token_id"
-        android:visibility="gone"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line3" />
+        <TextView
+            android:id="@+id/partition_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Partition"
+            android:textColor="@color/wallet_text_black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/from"
+            app:layout_constraintTop_toBottomOf="@id/to_address" />
 
-    <TextView
-        android:id="@+id/token_id"
-        android:layout_width="0dp"
-        android:visibility="gone"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:textSize="13sp"
-        android:layout_marginRight="12dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/token_id_name"
-        tools:text="2132" />
+        <TextView
+            android:id="@+id/partition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="12dp"
+            android:textSize="13sp"
+            android:textColor="@color/wallet_text_black"
+            app:layout_constraintLeft_toLeftOf="@id/from"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/partition_name"
+            tools:text="0xdaskaslsadasdjas" />
 
-    <View
-        android:id="@+id/line6"
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="1dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/token_id" />
 
-    <TextView
-        android:id="@+id/gas_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/wallet_gas_amount"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line6" />
+        <TextView
+            android:id="@+id/token_id_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/wallet_token_id"
+            android:textSize="16sp"
+            android:textColor="@color/wallet_text_black"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@id/from"
+            app:layout_constraintTop_toBottomOf="@id/partition" />
 
-    <TextView
-        android:id="@+id/gas_amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="20dp"
-        android:drawableRight="@mipmap/wallet_arrow_right_blue"
-        android:textColor="@color/wallet_main_blue_color"
-        android:textSize="16sp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/gas_name"
-        tools:text="0.000023 ETH" />
+        <TextView
+            android:id="@+id/token_id"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="12dp"
+            android:textSize="13sp"
+            android:textColor="@color/wallet_text_black"
+            app:layout_constraintLeft_toLeftOf="@id/from"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/token_id_name"
+            tools:text="2132" />
 
-    <View
-        android:id="@+id/line4"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="15dp"
-        android:background="@color/wallet_line_gray"
-        app:layout_constraintTop_toBottomOf="@id/gas_amount" />
 
+        <TextView
+            android:id="@+id/gas_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/wallet_gas_amount"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/wallet_text_black"
+            app:layout_constraintLeft_toLeftOf="@id/from"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@id/token_id" />
+
+        <TextView
+            android:id="@+id/gas_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:drawableRight="@mipmap/wallet_arrow_right_main_color"
+            android:textColor="@color/wallet_main_yellow_color"
+            android:textSize="16sp"
+            android:drawablePadding="5dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/gas_name"
+            tools:text="0.000023 ETH" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <TextView
         android:id="@+id/tv_confirm"
         style="@style/WalletCommonButton"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="14dp"
         android:text="@string/wallet_confirm"
-        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

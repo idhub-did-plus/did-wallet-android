@@ -3,6 +3,7 @@ package com.idhub.wallet.auth;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,7 +37,7 @@ public class InformationContentView extends CardView {
     }
 
     private void init() {
-        setRadius(AutoSizeUtils.dp2px(getContext(),4));
+        setRadius(AutoSizeUtils.dp2px(getContext(), 4));
         inflate(getContext(), R.layout.wallet_information_title_layout, this);
         titleNameView = findViewById(R.id.info_title_name);
         titleIconView = findViewById(R.id.info_title_icon);
@@ -59,10 +60,17 @@ public class InformationContentView extends CardView {
 
     }
 
-    public void setContent(int resId, String title,View view) {
-        titleIconView.setImageResource(resId);
-        titleNameView.setText(title);
-        contentLayoutView.addView(view);
+    @Override
+    protected boolean addViewInLayout(View child, int index, ViewGroup.LayoutParams params) {
+        return super.addViewInLayout(child, index, params);
     }
 
+    public void setContent(int resId, String title) {
+        titleIconView.setImageResource(resId);
+        titleNameView.setText(title);
+    }
+
+    public void addView(View view) {
+        contentLayoutView.addView(view);
+    }
 }

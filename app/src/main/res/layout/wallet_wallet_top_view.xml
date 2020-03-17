@@ -83,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:text="@string/wallet_default_address"
-            android:textColor="@color/wallet_main_blue_color"
+            android:textColor="@color/wallet_main_yellow_color"
             android:textSize="11sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/middle_line"

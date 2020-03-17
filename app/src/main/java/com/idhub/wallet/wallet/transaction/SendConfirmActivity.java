@@ -61,7 +61,7 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
     private TransactionParam mTransactionParam;
     private TransactionDialog dialog;
 
-    private View mTokenIdBottomLineView;
+
     private View mTokenIdNameView;
     private TextView mTokenIdView;
 
@@ -136,7 +136,6 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
                 if (collectionItem != null) {
                     mFromAddressView.setText(Keys.toChecksumAddress(WalletManager.getCurrentKeyStore().getAddress()));
                     mSendAmountView.setText(collectionItem.name);
-                    mTokenIdBottomLineView.setVisibility(View.VISIBLE);
                     mTokenIdNameView.setVisibility(View.VISIBLE);
                     mTokenIdView.setVisibility(View.VISIBLE);
                     mTokenIdView.setText(collectionItem.token_id);
@@ -175,7 +174,6 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
 
 
-        mTokenIdBottomLineView = findViewById(R.id.line6);
         mTokenIdNameView = findViewById(R.id.token_id_name);
         mTokenIdView = findViewById(R.id.token_id);
 

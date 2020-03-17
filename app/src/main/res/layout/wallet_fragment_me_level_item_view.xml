@@ -38,7 +38,7 @@
         tools:text="pending approval"
         android:textColor="@color/wallet_white"
         android:textSize="8sp"
-        android:background="@drawable/wallet_blue_background_3"
+        android:background="@color/wallet_main_yellow_color"
         app:layout_constraintBottom_toBottomOf="parent"
         android:paddingTop="2dp"
         android:paddingBottom="2dp"

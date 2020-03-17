@@ -423,5 +423,6 @@
     <string name="phone_area_id">区号</string>
     <string name="wallet_upload_finish">上传完成</string>
     <string name="wallet_loading">正在加载...</string>
+    <string name="wallet_transfer_amount">转账金额</string>
 
 </resources>

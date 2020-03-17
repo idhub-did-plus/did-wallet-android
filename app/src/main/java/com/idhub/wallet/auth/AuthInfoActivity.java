@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -79,6 +80,13 @@ public class AuthInfoActivity extends BaseActivity implements SaveClickListener 
     private WalletKeystore mDefaultKeystore;
     private UploadFileDbManager mUploadFileDbManager;
     private String psd;
+    private InformationContentView baseInfoView;
+    private InformationContentView identityInfoView;
+    private InformationContentView taxpayerInfoView;
+    private InformationContentView creditInfoView;
+    private InformationContentView addressInfoView;
+    private InformationContentView proofInfoView;
+    private Handler handler = new Handler();
 
     public static void startAction(Context context) {
         Intent intent = new Intent(context, AuthInfoActivity.class);
@@ -102,7 +110,7 @@ public class AuthInfoActivity extends BaseActivity implements SaveClickListener 
                         100);
             }
         }
-        initView();
+
     }
 
     private void initView() {
@@ -111,31 +119,75 @@ public class AuthInfoActivity extends BaseActivity implements SaveClickListener 
 
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
 
-        InformationContentView baseInfoView = findViewById(R.id.base_info);
-        mBaseInformationLayout = new BaseInformationLayout(this);
-        baseInfoView.setContent(R.mipmap.wallet_base_info_icon, getString(R.string.basic_information), mBaseInformationLayout);
-
-        InformationContentView identityInfoView = findViewById(R.id.identity_info);
-        mIdentityInformationLayout = new IdentityInformationLayout(this);
-        identityInfoView.setContent(R.mipmap.wallet_identity_info_icon, getString(R.string.identity_information), mIdentityInformationLayout);
-
-        InformationContentView taxpayerInfoView = findViewById(R.id.taxpayer_info);
-        mTaxpayerInformationLayout = new TaxpayerInformationLayout(this);
-        taxpayerInfoView.setContent(R.mipmap.wallet_tax_info_icon, getString(R.string.taxpayer_information), mTaxpayerInformationLayout);
-
-        InformationContentView creditInfoView = findViewById(R.id.credit_info);
-        mCreditInformationLayout = new CreditInformationLayout(this);
-        creditInfoView.setContent(R.mipmap.wallet_credit_info_icon, getString(R.string.credit_information), mCreditInformationLayout);
-
-        InformationContentView addressInfoView = findViewById(R.id.address_info);
-        mAddressInformationLayout = new AddressInformationLayout(this);
-        addressInfoView.setContent(R.mipmap.wallet_address_info_icon, getString(R.string.address_information), mAddressInformationLayout);
-
-        InformationContentView proofInfoView = findViewById(R.id.assets_info);
-        mAssetsInformationLayout = new AssetsInformationLayout(this);
-        proofInfoView.setContent(R.mipmap.wallet_assets_info_icon, getString(R.string.assets_information), mAssetsInformationLayout);
+        baseInfoView = findViewById(R.id.base_info);
+        baseInfoView.setContent(R.mipmap.wallet_base_info_icon, getString(R.string.basic_information));
 
 
+        identityInfoView = findViewById(R.id.identity_info);
+        identityInfoView.setContent(R.mipmap.wallet_identity_info_icon, getString(R.string.identity_information));
+
+        taxpayerInfoView = findViewById(R.id.taxpayer_info);
+        taxpayerInfoView.setContent(R.mipmap.wallet_tax_info_icon, getString(R.string.taxpayer_information));
+
+        creditInfoView = findViewById(R.id.credit_info);
+        creditInfoView.setContent(R.mipmap.wallet_credit_info_icon, getString(R.string.credit_information));
+
+
+        addressInfoView = findViewById(R.id.address_info);
+        addressInfoView.setContent(R.mipmap.wallet_address_info_icon, getString(R.string.address_information));
+
+
+        proofInfoView = findViewById(R.id.assets_info);
+        proofInfoView.setContent(R.mipmap.wallet_assets_info_icon, getString(R.string.assets_information));
+
+
+        //延时加载，防止页面进入卡顿
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBaseInformationLayout = new BaseInformationLayout(AuthInfoActivity.this);
+                baseInfoView.addView(mBaseInformationLayout);
+
+                mIdentityInformationLayout = new IdentityInformationLayout(AuthInfoActivity.this);
+                identityInfoView.addView(mIdentityInformationLayout);
+
+                mTaxpayerInformationLayout = new TaxpayerInformationLayout(AuthInfoActivity.this);
+                taxpayerInfoView.addView(mTaxpayerInformationLayout);
+
+                mCreditInformationLayout = new CreditInformationLayout(AuthInfoActivity.this);
+                creditInfoView.addView(mCreditInformationLayout);
+
+
+                mAddressInformationLayout = new AddressInformationLayout(AuthInfoActivity.this);
+                addressInfoView.addView(mAddressInformationLayout);
+
+                mAssetsInformationLayout = new AssetsInformationLayout(AuthInfoActivity.this);
+                proofInfoView.addView(mAssetsInformationLayout);
+
+                mBaseInformationLayout.setSaveClickListener(AuthInfoActivity.this);
+                mIdentityInformationLayout.setSaveClickListener(AuthInfoActivity.this);
+                mTaxpayerInformationLayout.setSaveClickListener(AuthInfoActivity.this);
+                mCreditInformationLayout.setSaveClickListener(AuthInfoActivity.this);
+                mAddressInformationLayout.setSaveClickListener(AuthInfoActivity.this);
+                mAssetsInformationLayout.setSaveClickListener(AuthInfoActivity.this);
+                initData();
+            }
+        }, 200);
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void initData() {
         uploadIDHubInfoDbManager = new UploadIDHubInfoDbManager();
         uploadIDHubInfoDbManager.queryById(1, operation -> {
             mUploadIDHubInfoEntity = (UploadIDHubInfoEntity) operation.getResult();
@@ -161,12 +213,6 @@ public class AuthInfoActivity extends BaseActivity implements SaveClickListener 
                 mAssetsInformationLayout.setFileInfo(map);
             }
         });
-        mBaseInformationLayout.setSaveClickListener(this);
-        mIdentityInformationLayout.setSaveClickListener(this);
-        mTaxpayerInformationLayout.setSaveClickListener(this);
-        mCreditInformationLayout.setSaveClickListener(this);
-        mAddressInformationLayout.setSaveClickListener(this);
-        mAssetsInformationLayout.setSaveClickListener(this);
     }
 
     private void inputPasswordDialogShow(UploadDataParam uploadDataParam) {

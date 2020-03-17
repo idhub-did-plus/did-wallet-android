@@ -105,7 +105,7 @@
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
                 tools:text="@string/wallet_login_sign_tip"
-                android:textColor="@color/wallet_main_blue_color"
+                android:textColor="@color/wallet_main_yellow_color"
                 android:textSize="15sp" />
 
             <TextView
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:textColor="@color/wallet_main_blue_color"
+                android:textColor="@color/wallet_main_yellow_color"
                 android:textSize="15sp" />
 
         </LinearLayout>

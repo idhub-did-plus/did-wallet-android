@@ -44,7 +44,7 @@
                 android:layout_weight="1"
                 android:drawableRight="@mipmap/wallet_right_arrow"
                 android:text="@string/wallet_identity_create"
-                android:textColor="@color/wallet_main_blue_color"
+                android:textColor="@color/wallet_main_yellow_color"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -70,7 +70,7 @@
                 android:layout_weight="1"
                 android:drawableRight="@mipmap/wallet_right_arrow"
                 android:text="@string/wallet_identity_import"
-                android:textColor="@color/wallet_main_blue_color"
+                android:textColor="@color/wallet_main_yellow_color"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -96,7 +96,7 @@
                 android:layout_weight="1"
                 android:drawableRight="@mipmap/wallet_right_arrow"
                 android:text="@string/wallet_identity_recovery"
-                android:textColor="@color/wallet_main_blue_color"
+                android:textColor="@color/wallet_main_yellow_color"
                 android:textSize="15sp" />
         </LinearLayout>
 

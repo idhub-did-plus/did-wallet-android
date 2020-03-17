@@ -53,7 +53,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
         titleLayout.setFirstImageAndClickCallBack(R.mipmap.wallet_qrcode_scan, () -> {
             QrCodeActivity.startAction(this, 100);
         });
-        mNameView = findViewById(R.id.name);
+        mNameView = findViewById(R.id.token_name);
         mBalanceView = findViewById(R.id.balance);
         mAmountView = findViewById(R.id.input_amount);
         if (TransactionTokenType.ERC1400.equals(mAssetsModel.getType())) {

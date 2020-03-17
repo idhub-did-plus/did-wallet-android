@@ -71,9 +71,9 @@ public class SelectWalletItemView extends ConstraintLayout implements View.OnCli
     public void setItemIsSelect(boolean selected) {
         if (selected) {
             stateView.setVisibility(VISIBLE);
-            walletName.setTextColor(getResources().getColor(R.color.wallet_main_blue_color));
-            walletAddress.setTextColor(getResources().getColor(R.color.wallet_main_blue_color));
-            defaultWalletView.setTextColor(getResources().getColor(R.color.wallet_light_blue_color));
+            walletName.setTextColor(getResources().getColor(R.color.wallet_main_yellow_color));
+            walletAddress.setTextColor(getResources().getColor(R.color.wallet_main_yellow_color));
+            defaultWalletView.setTextColor(getResources().getColor(R.color.wallet_main_yellow_color));
             defaultWalletView.setBackground(getResources().getDrawable(R.drawable.wallet_rectangle_line_blue_4));
             upgradeImageView.setImageResource(R.mipmap.wallet_upgrade_blue_icon);
         } else {
