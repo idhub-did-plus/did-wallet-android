@@ -432,4 +432,19 @@
     <string name="wallet_id_card">ID Card</string>
 
 
+
+    //TODO: 需要重新翻译
+    <string name="wallet_upgrade_identity">upgrade</string>
+    <string name="wallet_apply_claims">Apply Claims</string>
+
+    <string name="basic_information">Base Information</string>
+    <string name="identity_information">Certificates</string>
+    <string name="taxpayer_information">Taxpayer</string>
+    <string name="credit_information">Credit</string>
+    <string name="address_information">Address</string>
+    <string name="assets_information">Assets</string>
+    <string name="phone_area_id">Region</string>
+    <string name="wallet_upload_finish">success</string>
+    <string name="wallet_loading">loading...</string>
+    <string name="wallet_transfer_amount">Transfer Amount</string>
 </resources>

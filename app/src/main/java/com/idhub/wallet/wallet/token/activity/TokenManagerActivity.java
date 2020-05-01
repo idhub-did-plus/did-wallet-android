@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.idhub.base.greendao.entity.AssetsContractAddress;
 import com.idhub.base.node.WalletNoteSharedPreferences;
 import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
@@ -55,9 +56,18 @@ public class TokenManagerActivity extends BaseActivity implements TokenManagerAd
         TokenManagerAdapter adapter = new TokenManagerAdapter(this);
         recyclerView.setAdapter(adapter);
         List<AssetsModel> assetsList = TokenTypeManager.getAssetsList();
+
         ArrayList<AssetsModel> list = new ArrayList<>();
         //过滤 显示对应ropsten或mainnet上的contractAddress
         for (AssetsModel assetsModel : assetsList) {
+//            String node = WalletNoteSharedPreferences.getInstance().getNode();
+//            String contractAddressStr = "";
+//
+//            for (AssetsContractAddress contractAddress : assetsModel.getContractAddresses()) {
+//                if (node.equals(contractAddress.getNode())) {
+//                    contractAddressStr = contractAddress.getContractAddress();
+//                }
+//            }
             if (!TextUtils.isEmpty(assetsModel.getCurrentContractAddress())) {
                 list.add(assetsModel);
             }

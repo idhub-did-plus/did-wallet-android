@@ -9,10 +9,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.wallet.R;
+import com.idhub.wallet.utils.UIUtils;
+import com.idhub.wallet.utils.ViewCalculateUtil;
+import com.idhub.wallet.wallet.token.activity.Erc1400DetailActivity;
 
 import java.util.List;
 
-public class STMainView extends ConstraintLayout {
+public class STMainView extends ConstraintLayout implements View.OnClickListener {
 
     private View firstStView;
     private View secondStView;
@@ -39,6 +42,7 @@ public class STMainView extends ConstraintLayout {
     private TextView seventhValueView;
     private View seventhIconView;
     private View fourthIconView;
+    private List<AssetsModel> assetsModels;
 
     public STMainView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,6 +51,7 @@ public class STMainView extends ConstraintLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+        UIUtils.getInstance(getContext());
         firstStView = findViewById(R.id.first_st);
         firstNameView = findViewById(R.id.first_name);
         firstValueView = findViewById(R.id.first_value);
@@ -87,11 +92,18 @@ public class STMainView extends ConstraintLayout {
         seventhIconView = findViewById(R.id.seventh_icon);
 //        ViewCalculateUtil.setTextSize(sixthNameView,14);
 //        ViewCalculateUtil.setTextSize(sixthValueView,12);
-
+        firstStView.setOnClickListener(this);
+        secondStView.setOnClickListener(this);
+        thirdStView.setOnClickListener(this);
+        fourthStView.setOnClickListener(this);
+        fifthStView.setOnClickListener(this);
+        sixthStView.setOnClickListener(this);
+        seventhStView.setOnClickListener(this);
 
     }
 
     public void setData(List<AssetsModel> assetsModels) {
+        this.assetsModels = assetsModels;
         int size = assetsModels.size();
         if (size <= 0) {
             return;
@@ -102,7 +114,7 @@ public class STMainView extends ConstraintLayout {
                 firstNameView.setText(assetsModel.getSymbol());
                 firstStView.setVisibility(VISIBLE);
                 firstStView.setBackgroundResource(R.drawable.wallet_st_shape_first);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 343, 87, 8, 0, 16, 16);
+                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 343, 87, 8, 0, 16, 16);
                 secondStView.setVisibility(View.GONE);
                 thirdStView.setVisibility(View.GONE);
                 fourthStView.setVisibility(View.GONE);
@@ -121,8 +133,8 @@ public class STMainView extends ConstraintLayout {
                 fourthIconView.setVisibility(VISIBLE);
                 firstStView.setBackgroundResource(R.drawable.wallet_st_shape_first_left_radius);
                 fourthStView.setBackgroundResource(R.drawable.wallet_st_shape_seventh_right_radius);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 169, 87, 8, 0, 16, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 169, 87, 0, 0, 5, 16);
+                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 169, 87, 8, 0, 16, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 169, 87, 0, 0, 5, 16);
                 firstNameView.setText(assetsModels.get(0).getSymbol());
                 fourthNameView.setText(assetsModels.get(1).getSymbol());
                 break;
@@ -138,9 +150,9 @@ public class STMainView extends ConstraintLayout {
                 firstStView.setBackgroundResource(R.drawable.wallet_st_shape_first_top_left_radius);
                 fourthStView.setBackgroundResource(R.drawable.wallet_st_shape_seventh_top_right_radius);
                 secondStView.setBackgroundResource(R.drawable.wallet_st_shape_second_bottom_radius);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 150, 87, 8, 0, 16, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, LayoutParams.MATCH_PARENT, 64, 5, 0, 16, 16);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 188, 87, 0, 0, 5, 16);
+                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 150, 87, 8, 0, 16, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, LayoutParams.MATCH_PARENT, 64, 5, 0, 16, 16);
+                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 188, 87, 0, 0, 5, 16);
                 firstNameView.setText(assetsModels.get(0).getSymbol());
                 fourthNameView.setText(assetsModels.get(1).getSymbol());
                 secondNameView.setText(assetsModels.get(2).getSymbol());
@@ -158,31 +170,30 @@ public class STMainView extends ConstraintLayout {
                 fourthStView.setBackgroundResource(R.drawable.wallet_st_shape_seventh_top_right_radius);
                 secondStView.setBackgroundResource(R.drawable.wallet_st_shape_second_bottom_left_radius);
                 thirdStView.setBackgroundResource(R.drawable.wallet_st_shape_third_bottom_right_radius);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 150, 87, 8, 0, 16, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, 184, 64, 5, 0, 0, 16);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 154, 64, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 188, 87, 0, 0, 5, 16);
+                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 150, 87, 8, 0, 16, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, 184, 64, 5, 0, 0, 16);
+                ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 154, 64, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 188, 87, 0, 0, 5, 16);
                 firstNameView.setText(assetsModels.get(0).getSymbol());
                 fourthNameView.setText(assetsModels.get(1).getSymbol());
                 secondNameView.setText(assetsModels.get(2).getSymbol());
                 thirdNameView.setText(assetsModels.get(3).getSymbol());
                 break;
-            case 5  :
+            case 5:
                 firstStView.setVisibility(VISIBLE);
                 secondStView.setVisibility(View.VISIBLE);
                 thirdStView.setVisibility(View.VISIBLE);
                 fourthStView.setVisibility(View.VISIBLE);
                 fifthStView.setVisibility(View.GONE);
                 seventhStView.setBackgroundResource(R.drawable.wallet_st_shape_seventh_right_radius);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 140, 87, 8, 0, 16, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, 112, 64, 5, 0, 0, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 123, 64, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 95, 87, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(seventhStView, 0, 156, 0, 0, 5, 16);
-//                ViewCalculateUtil.setViewConstraintLayoutrightToRightParam(seventhValueView, -1);
-//                ViewCalculateUtil.setViewConstraintLayoutLeftToLeftParam(seventhValueView, R.id.seventh_name);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(seventhValueView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 54, 0, 0, 0);
-
+                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 140, 87, 8, 0, 16, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, 112, 64, 5, 0, 0, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 123, 64, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 95, 87, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(seventhStView, 98, 156, 0, 0, 5, 16);
+                ViewCalculateUtil.setViewConstraintLayoutRightToRightParam(seventhValueView, -1);
+                ViewCalculateUtil.setViewConstraintLayoutLeftToLeftParam(seventhValueView, R.id.seventh_name);
+                ViewCalculateUtil.setViewConstraintLayoutParam(seventhValueView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, 54, 0, 0, 0);
                 sixthStView.setVisibility(View.GONE);
                 seventhStView.setVisibility(View.VISIBLE);
                 firstNameView.setText(assetsModels.get(0).getSymbol());
@@ -199,12 +210,12 @@ public class STMainView extends ConstraintLayout {
                 fifthStView.setVisibility(View.VISIBLE);
                 sixthStView.setVisibility(View.VISIBLE);
                 sixthStView.setBackgroundResource(R.drawable.wallet_st_shape_sixth_right_radius);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 151, 87, 8, 0, 16, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, 109, 64, 5, 0, 0, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 107, 64, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 126, 87, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(fifthStView, 56, 64, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(sixthStView, 56, 156, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 151, 87, 8, 0, 16, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, 109, 64, 5, 0, 0, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 107, 64, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 126, 87, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(fifthStView, 56, 64, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(sixthStView, 56, 156, 0, 0, 5, 0);
                 seventhStView.setVisibility(View.GONE);
                 firstNameView.setText(assetsModels.get(0).getSymbol());
                 fourthNameView.setText(assetsModels.get(1).getSymbol());
@@ -222,13 +233,13 @@ public class STMainView extends ConstraintLayout {
                 fifthStView.setVisibility(View.VISIBLE);
                 sixthStView.setVisibility(View.VISIBLE);
                 seventhStView.setVisibility(View.VISIBLE);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 140, 87, 8, 0, 16, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, 109, 64, 5, 0, 0, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 107, 64, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 76, 87, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(fifthStView, 56, 95, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(sixthStView, 56, 95, 0, 0, 5, 0);
-//                ViewCalculateUtil.setViewConstraintLayoutParam(seventhStView, 0, 56, 0, 0, 5, 16);
+                ViewCalculateUtil.setViewConstraintLayoutParam(firstStView, 140, 87, 8, 0, 16, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(secondStView, 109, 64, 5, 0, 0, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(thirdStView, 107, 64, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(fourthStView, 76, 87, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(fifthStView, 56, 95, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(sixthStView, 56, 95, 0, 0, 5, 0);
+                ViewCalculateUtil.setViewConstraintLayoutParam(seventhStView, 117, 56, 0, 0, 5, 16);
                 firstNameView.setText(assetsModels.get(0).getSymbol());
                 fourthNameView.setText(assetsModels.get(1).getSymbol());
                 secondNameView.setText(assetsModels.get(2).getSymbol());
@@ -238,5 +249,28 @@ public class STMainView extends ConstraintLayout {
                 seventhNameView.setText(assetsModels.get(6).getSymbol());
                 break;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == firstStView) {
+            startSTActivity(0);
+        } else if (v == secondStView) {
+            startSTActivity(2);
+        } else if (v == thirdStView) {
+            startSTActivity(3);
+        } else if (v == fourthStView) {
+            startSTActivity(1);
+        } else if (v == fifthStView) {
+            startSTActivity(4);
+        } else if (v == sixthStView) {
+            startSTActivity(5);
+        } else if (v == seventhStView) {
+            startSTActivity(6);
+        }
+    }
+
+    private void startSTActivity(int i) {
+        Erc1400DetailActivity.startAction(getContext(),assetsModels.get(i));
     }
 }

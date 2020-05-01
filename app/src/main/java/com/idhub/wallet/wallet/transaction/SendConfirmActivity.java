@@ -55,7 +55,6 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
 
     private View mPartitionName;
     private TextView mPartitionView;
-    private View mLineView;
 
 
     private TransactionParam mTransactionParam;
@@ -107,12 +106,10 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
             if (partition != null) {
                 mPartitionName.setVisibility(View.VISIBLE);
                 mPartitionView.setVisibility(View.VISIBLE);
-                mLineView.setVisibility(View.VISIBLE);
                 mPartitionView.setText(NumericUtil.prependHexPrefix(NumericUtil.bytesToHex(partition)));
             } else {
                 mPartitionName.setVisibility(View.GONE);
                 mPartitionView.setVisibility(View.GONE);
-                mLineView.setVisibility(View.GONE);
             }
         }
         mGasPrice = WalletTransactionSharpreference.getInstance().getGasPrice();
@@ -170,7 +167,6 @@ public class SendConfirmActivity extends BaseActivity implements View.OnClickLis
         mGasAmountView.setOnClickListener(this);
         mPartitionName = findViewById(R.id.partition_name);
         mPartitionView = findViewById(R.id.partition);
-        mLineView = findViewById(R.id.line3);
         mLoadingAndErrorView = findViewById(R.id.loading_and_error);
 
 

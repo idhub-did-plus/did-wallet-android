@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/identity_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -92,6 +93,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/st_container"
         android:layout_height="wrap_content">
 
         <ImageView

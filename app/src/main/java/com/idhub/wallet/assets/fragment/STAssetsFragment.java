@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.idhub.base.greendao.entity.AssetsModel;
 import com.idhub.base.node.WalletNodeSelectedObservable;
 import com.idhub.wallet.R;
+import com.idhub.wallet.assets.STListActivity;
 import com.idhub.wallet.assets.view.STMainView;
 import com.idhub.wallet.common.walletobservable.WalletAddAssetsObservable;
 import com.idhub.wallet.common.walletobservable.WalletSelectedObservable;
@@ -29,11 +30,12 @@ import java.util.Observer;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class STAssetsFragment extends Fragment {
+public class STAssetsFragment extends Fragment implements View.OnClickListener {
 
 
     private View promptView;
     private STMainView stMainView;
+    private View stMoreView;
 
     public STAssetsFragment() {
         // Required empty public constructor
@@ -67,6 +69,7 @@ public class STAssetsFragment extends Fragment {
             }
         });
         promptView = view.findViewById(R.id.assets_prompt);
+        stMoreView = view.findViewById(R.id.more);
         stMainView = view.findViewById(R.id.st_content);
     }
 
@@ -83,18 +86,33 @@ public class STAssetsFragment extends Fragment {
                     list.add(assetsModel);
                 }
             }
-            if (list.size() > 0) {
+            int size = list.size();
+            if (size > 0) {
                 promptView.setVisibility(View.GONE);
                 stMainView.setVisibility(View.VISIBLE);
+                stMoreView.setVisibility(View.VISIBLE);
+                stMoreView.setOnClickListener(this);
+//                if (size > 7) {
+//                } else {
+//                    stMoreView.setVisibility(View.GONE);
+//                }
                 stMainView.setData(list);
             } else {
                 stMainView.setVisibility(View.GONE);
+                stMoreView.setVisibility(View.GONE);
                 promptView.setVisibility(View.VISIBLE);
             }
         } else {
             stMainView.setVisibility(View.GONE);
+            stMoreView.setVisibility(View.GONE);
             promptView.setVisibility(View.VISIBLE);
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v == stMoreView) {
+            STListActivity.startAction(getContext());
+        }
+    }
 }

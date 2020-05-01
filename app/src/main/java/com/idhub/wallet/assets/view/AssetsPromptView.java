@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.idhub.wallet.R;
 
-public class AssetsPromptView extends LinearLayout {
+public class AssetsPromptView extends LinearLayout implements View.OnClickListener {
 
     public AssetsPromptView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -33,5 +33,21 @@ public class AssetsPromptView extends LinearLayout {
         TextView stContent1View = findViewById(R.id.st_content_1);
         TextView stContent2View = findViewById(R.id.st_content_2);
 
+        findViewById(R.id.st_container).setOnClickListener(this);
+        findViewById(R.id.identity_container).setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.identity_container:
+
+                break;
+            case R.id.st_container:
+
+                break;
+        }
     }
 }

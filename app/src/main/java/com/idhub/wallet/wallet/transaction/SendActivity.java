@@ -17,6 +17,7 @@ import com.idhub.wallet.R;
 import com.idhub.wallet.common.activity.BaseActivity;
 import com.idhub.wallet.common.title.TitleLayout;
 import com.idhub.wallet.common.zxinglib.QrCodeActivity;
+import com.idhub.wallet.didhub.WalletManager;
 import com.idhub.wallet.didhub.address.ETHAddressValidator;
 import com.idhub.wallet.didhub.util.NumericUtil;
 import com.idhub.wallet.greendao.TransactionTokenType;
@@ -127,6 +128,7 @@ public class SendActivity extends BaseActivity implements View.OnClickListener {
             ToastUtils.showShortToast(getString(R.string.wallet_send_address_false));
             return;
         }
+        mAssetsModel.setAddress(WalletManager.getAddress());
         TransactionParam transactionParam = new TransactionParam();
         transactionParam.value = amount;
         transactionParam.toAddress = toAddress;

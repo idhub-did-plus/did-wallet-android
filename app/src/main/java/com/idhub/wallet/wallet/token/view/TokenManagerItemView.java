@@ -67,7 +67,6 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
     @Override
     public void onClick(View v) {
         if (v == mTokenAdd) {
-
             long id =   new AssetsModelDbManager().insertDatasync(assetsModel);
             List<AssetsContractAddress> contractAddresses = assetsModel.getContractAddresses();
             for (AssetsContractAddress contractAddress : contractAddresses) {
@@ -82,6 +81,9 @@ public class TokenManagerItemView extends ConstraintLayout implements View.OnCli
         }
     }
 
+    public void setIconVisible(int visible){
+        mTokenAdd.setVisibility(visible);
+    }
 
     private void setAddIcon(Object o) {
         List<AssetsModel> models = (List<AssetsModel>) o;

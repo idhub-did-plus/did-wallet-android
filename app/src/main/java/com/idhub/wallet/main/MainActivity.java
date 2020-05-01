@@ -73,18 +73,18 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
     private MainFragmentPagerAdapter adapter;
 
     private int[] tabIcons = {
-            R.drawable.wallet_home_normal,
+//            R.drawable.wallet_home_normal,
             R.drawable.wallet_assets_normal,
             R.drawable.wallet_dapp_normal,
-            R.drawable.wallet_dex_normal,
+//            R.drawable.wallet_dex_normal,
             R.drawable.wallet_setting_normal
     };
 
     private int[] tabIconsPressed = {
-            R.drawable.wallet_home_selected,
+//            R.drawable.wallet_home_selected,
             R.drawable.wallet_assets_selected,
             R.drawable.wallet_dapp_selected,
-            R.drawable.wallet_dex_selected,
+//            R.drawable.wallet_dex_selected,
             R.drawable.wallet_setting_selected
     };
 
@@ -248,8 +248,10 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
 
             }
         });
-        mItems = new String[]{getResources().getString(R.string.wallet_home),getResources().getString(R.string.wallet_assets),
-                getResources().getString(R.string.wallet_dapp),getResources().getString(R.string.wallet_dex),getResources().getString(R.string.wallet_setting)};
+//        mItems = new String[]{getResources().getString(R.string.wallet_home),getResources().getString(R.string.wallet_assets),
+//                getResources().getString(R.string.wallet_dapp),getResources().getString(R.string.wallet_dex),getResources().getString(R.string.wallet_setting)};
+        mItems = new String[]{getResources().getString(R.string.wallet_assets),
+                getResources().getString(R.string.wallet_dapp),getResources().getString(R.string.wallet_setting)};
         adapter = new MainFragmentPagerAdapter(getSupportFragmentManager(), this, mItems);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -276,8 +278,6 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         View view = tab.getCustomView();
         TextView txt_title = view.findViewById(R.id.tab_name);
         ImageView img_title = view.findViewById(R.id.tab_image);
-//        ViewCalculateUtil.setTextSize(txt_title, 10);
-//        ViewCalculateUtil.setViewLinearLayoutParam(img_title,26,26);
         txt_title.setTextColor(getResources().getColor(R.color.wallet_text_title_color));
         img_title.setImageResource(tabIcons[tab.getPosition()]);
     }
@@ -295,8 +295,8 @@ public class MainActivity extends BaseActivity implements SignMessageDialogFragm
         tabLayout.getTabAt(0).setCustomView(getTabView(0));
         tabLayout.getTabAt(1).setCustomView(getTabView(1));
         tabLayout.getTabAt(2).setCustomView(getTabView(2));
-        tabLayout.getTabAt(3).setCustomView(getTabView(3));
-        tabLayout.getTabAt(4).setCustomView(getTabView(4));
+//        tabLayout.getTabAt(3).setCustomView(getTabView(3));
+//        tabLayout.getTabAt(4).setCustomView(getTabView(4));
     }
 
 

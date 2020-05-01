@@ -45,12 +45,9 @@ public class TokenListAdapter extends BaseRecyclerAdapter<AssetsModel> {
         String contractAddress = model.getCurrentContractAddress();
         String address = WalletManager.getAddress();
         String balance = model.getBalance();
-        Log.e("LYW", "bindViewWithHolder: " + balance );
         if (TextUtils.isEmpty(balance)) {
-            Log.e("LYW", "bindViewWithHolder:1 " );
             itemView.setBalance("-");
         } else {
-            Log.e("LYW", "bindViewWithHolder:2 ");
             itemView.setBalance(NumericUtil.ethBigIntegerToNumberViewPointAfterFour(new BigInteger(balance), String.valueOf(Math.pow(10, Double.parseDouble(model.getDecimals())))));
         }
         if (TransactionTokenType.ERC20.equals(model.getType())) {

@@ -28,6 +28,7 @@
         android:layout_marginLeft="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_13"
         android:text="ETH"
+        app:layout_constraintBottom_toBottomOf="@id/icon"
         android:textColor="@color/wallet_text_black"
         android:textSize="@dimen/font_sp_14"
         app:layout_constraintLeft_toRightOf="@id/icon"
@@ -37,6 +38,7 @@
         android:id="@+id/rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="≈217.4210 (USD)"
         android:textColor="@color/wallet_color_A2A2A2"
         android:textSize="@dimen/font_sp_12"
@@ -48,12 +50,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="@dimen/dp_40"
-        android:layout_marginTop="@dimen/dp_14"
         android:layout_marginRight="@dimen/dp_16"
         android:text="519.19"
         android:textColor="@color/wallet_text_black"
         android:textSize="@dimen/font_sp_14"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -61,6 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dp_16"
+        android:visibility="gone"
         android:text="+7.12%"
         android:textColor="@color/wallet_color_31B27A"
         android:textSize="@dimen/font_sp_12"

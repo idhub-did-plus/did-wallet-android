@@ -40,6 +40,7 @@ import com.idhub.wallet.greendao.IdentityDbManager;
 import com.idhub.wallet.main.MainActivity;
 import com.idhub.wallet.main.MainTopTitleView;
 import com.idhub.wallet.me.VipStateType;
+import com.idhub.wallet.setting.UserInfoShowActivity;
 import com.idhub.wallet.wallet.mainfragment.WalletFragment;
 import com.idhub.wallet.wallet.token.activity.TokenManagerActivity;
 
@@ -137,6 +138,13 @@ public class AssetsFragment extends Fragment implements View.OnClickListener {
             }
         });
         ImageView headView = view.findViewById(R.id.head);
+        headView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //个人信息
+                UserInfoShowActivity.startAction(getContext());
+            }
+        });
         //设置头像
         UserBasicInfoEntity userBasicInfo = UserBasicInfoSharpreference.getInstance().getUserBasicInfo();
         Glide.with(this).load(userBasicInfo.headPath).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE).apply(RequestOptions.bitmapTransform(new CircleCrop())).into(headView);

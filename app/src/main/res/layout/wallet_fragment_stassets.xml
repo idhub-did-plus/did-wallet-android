@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp_8"
+        android:visibility="gone"
         layout="@layout/wallet_assets_prompt" />
 
     <include
@@ -30,8 +31,19 @@
         layout="@layout/wallet_st_main_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
-        android:visibility="gone" />
+        android:layout_marginTop="@dimen/dp_8" />
 
+    <TextView
+        android:id="@+id/more"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:drawableRight="@mipmap/wallet_assets_right_arrow"
+        android:text="@string/view_more"
+        android:textColor="@color/wallet_text_black"
+        android:textSize="@dimen/font_sp_20"
+        android:layout_width="wrap_content"
+        android:drawablePadding="16dp"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
