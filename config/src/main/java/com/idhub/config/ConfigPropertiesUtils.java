@@ -41,12 +41,6 @@ public class ConfigPropertiesUtils {
         return baseUrl;
     }
 
-    public static String getBuglyAppId(Context context) {
-        Properties properties = getProperties(context);
-        String appid = properties.getProperty("buglyAppId");
-        return appid;
-    }
-
     public static String getAssets(Context context) {
         Properties properties = getProperties(context);
         String assets = properties.getProperty("tokens");

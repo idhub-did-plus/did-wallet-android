@@ -24,7 +24,8 @@
         android:theme="@style/WalletAppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
-        <activity android:name=".assets.STListActivity"></activity>
+        <activity android:name=".assets.IdentityOrStIntroduceActivity"></activity>
+        <activity android:name=".assets.STListActivity" />
         <activity
             android:name=".auth.AuthInfoActivity"
             android:windowSoftInputMode="adjustPan" />

@@ -34,7 +34,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     api project(path: ':etherscan')
     api project(path: ':commom')
-    api project(path: ':module_update')
     implementation project(path: ':basemoudle')
 
     //    api files('libs/magic-common-0.0.1-SNAPSHOT.jar')

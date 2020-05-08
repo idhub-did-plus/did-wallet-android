@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.idhub.wallet.R;
+import com.idhub.wallet.assets.IdentityOrStIntroduceActivity;
 
 public class AssetsPromptView extends LinearLayout implements View.OnClickListener {
 
@@ -43,10 +44,10 @@ public class AssetsPromptView extends LinearLayout implements View.OnClickListen
         int id = v.getId();
         switch (id) {
             case R.id.identity_container:
-
+                IdentityOrStIntroduceActivity.startAction(getContext(),0);
                 break;
             case R.id.st_container:
-
+                IdentityOrStIntroduceActivity.startAction(getContext(),1);
                 break;
         }
     }
